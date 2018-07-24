@@ -36,19 +36,19 @@ public:
 		//EBOSS,				//ボス
 		ESIZE,				//ECELLNUM サイズ
 	};
-	int editmap[11][256];				//マップ
-	int editmap_cursor[11][256];		//マップ カーソル
-	int cursor_posX;					//カーソル 場所 X
-	int cursor_posY;					//カーソル 場所 Y
-	int setcell;						//マップ 配置内容
-	unsigned int cursor_anime;			//カーソル アニメーション
-	bool guideIO;						//ガイド ON OFF
-	bool prtscrIO;						//スクリーンショット
-	CRectangle editmap_rect[11][256];	//マップ 描画
-	CTexture mTexBack;					//背景
-	CTexture mTexUI;					//UI テクスチャー
-	CTexture mTexObject;				//UI オブジェクト
-	CTexture mTexCharacter;				//UI キャラクター
+	int editmap[EDITMAP_SIZEY][EDITMAP_SIZEX];				//マップ
+	int editmap_cursor[EDITMAP_SIZEY][EDITMAP_SIZEX];		//マップ カーソル
+	int cursor_posX;										//カーソル 場所 X
+	int cursor_posY;										//カーソル 場所 Y
+	int setcell;											//マップ 配置内容
+	unsigned int cursor_anime;								//カーソル アニメーション
+	bool guideIO;											//ガイド ON OFF
+	bool prtscrIO;											//スクリーンショット
+	CRectangle editmap_rect[EDITMAP_SIZEY][EDITMAP_SIZEX];	//マップ 描画
+	CTexture mTexBack;										//背景
+	CTexture mTexUI;										//UI テクスチャー
+	CTexture mTexObject;									//UI オブジェクト
+	CTexture mTexCharacter;									//UI キャラクター
 
 	//コンストラクタ
 	CEditer(){
