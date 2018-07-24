@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<DEFECTS><DEFECT><SFA><FILEPATH>c:\googledrive\documents\visual studio 2013\projects\02_01s_test\前期制作_test\program\include\</FILEPATH><FILENAME>glut.h</FILENAME><LINE>148</LINE><COLUMN>37</COLUMN></SFA><DEFECTCODE>28251</DEFECTCODE><DESCRIPTION>'exit' に対する整合性のない注釈: このインスタンスには 注釈なし が含まれます。c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdlib.h(376) を参照してください。</DESCRIPTION><FUNCTION>exit</FUNCTION><DECORATED>exit</DECORATED><FUNCLINE>148</FUNCLINE><PATH/></DEFECT></DEFECTS>

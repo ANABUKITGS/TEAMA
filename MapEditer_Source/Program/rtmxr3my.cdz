@@ -1,0 +1,291 @@
+#include "CSceneTown.h"
+#include <windows.h>
+#include "CSceneChange.h"
+#include "CSceneGameLoad.h"
+#include "CDebugMode.h"
+#include "CParameter.h"
+
+//class CSceneChange{};
+
+void CSceneTown::Init(){
+	/*
+	Town
+	背景の配置、サイズ指定
+	*/
+	Town[0].SetVertex(-600, 600, -400, 400, true, true);  //背景
+	Town[1].SetVertex(-580, 0, -100, 380, true, true);  //左上（白）
+	Town[2].SetVertex(10, 580, 250, 380, true, true);  //右上（白）
+	Town[3].SetVertex(10, 580, -100, 240, true, true);  //右中央（白）
+	Town[4].SetVertex(-580, 580, -380, -110, true, true);  //画面下部（白）
+	Town[5].SetVertex(-570, -10, -90, 370, true, true);  //左上（黒）
+	Town[6].SetVertex(20, 570, 260, 370, true, true);  //右上（黒）
+	Town[7].SetVertex(20, 570, -90, 230, true, true);  //右中央（黒）
+	Town[8].SetVertex(-570, 570, -370, -120, true, true);  //画面下部（黒）
+
+	/*
+	Cursor
+	選択用ドットとカーソルの配置、サイズ指定
+	*/
+	Cursor[0].SetVertex(-557, -537, 320, 340, true, true);
+	Cursor[1].SetVertex(-557, -537, 250, 270, true, true);
+	Cursor[2].SetVertex(-557, -537, 180, 200, true, true);
+	Cursor[3].SetVertex(-557, -537, 110, 130, true, true);
+	Cursor[4].SetVertex(-557, -537, 40, 60, true, true);
+
+	if (!CPlayer::DebugHP){
+		CPlayer::PlayerP.GetMaxHP();
+	}
+	CPlayer::PlayerP.HealHP();
+}
+
+
+void CSceneTown::Render(int state){
+
+	//背景の描画
+	for (int i = 0; i < sizeof(Town) / sizeof(Town[0]); i++){
+		//黒描画
+		if (i == 0 || i == 5 || i == 6 || i == 7 || i == 8){
+			Town[i].Render(0, 0, 0, 1.0f);
+		}
+		//白描画
+		else{
+			Town[i].Render(1, 1, 1, 1.0f);
+		}
+	}
+
+	switch (state){
+	case 0:
+		for (int i = 0; i < sizeof(Cursor) / sizeof(Cursor[0]); i++){
+			//ドットの描画
+			if (i != mCursor)
+			{
+				Cursor[i].Render(1, 1, 1, 1.0f);
+			}
+			//矢印の描画
+			else{
+				CText::DrawStringW(L"→", Cursor[i].mLeft, Cursor[i].mBottom, 24, 1.0f, 0);
+			}
+		}
+		//場所名
+		CText::DrawStringW(L"かんていや", -527, 310, 40, 1.0f, 0);
+		CText::DrawStringW(L"みせ", -527, 240, 40, 1.0f, 0);
+		CText::DrawStringW(L"じゅく", -527, 170, 40, 1.0f, 0);
+		CText::DrawStringW(L"マイルーム", -527, 100, 40, 1.0f, 0);
+		CText::DrawStringW(L"ダンジョン", -527, 30, 40, 1.0f, 0);
+
+		//右上の表示
+		if (mCursor == 0){
+			CText::DrawStringW(L"かんていや", 120, 265, 72, 1.0f, 0);
+			CText::DrawStringW(L"ダンジョンで ひろったアイテムを かんていできる。\nアイテムの かいとりも かんてやの しごとだ。", -560, -200, 40, 1.0f, 1);
+		}
+		else if (mCursor == 1){
+			CText::DrawStringW(L"みせ", 228, 265, 72, 1.0f, 0);
+			CText::DrawStringW(L"おかねを つかってそうびを ととのえよう。", -560, -200, 40, 1.0f, 1);
+		}
+		else if (mCursor == 2){
+			CText::DrawStringW(L"じゅく", 192, 265, 72, 1.0f, 0);
+			CText::DrawStringW(L"スキルを しゅうとく、きょうかできる。", -560, -200, 40, 1.0f, 1);
+		}
+		else if (mCursor == 3){
+			CText::DrawStringW(L"マイルーム", 120, 265, 72, 1.0f, 0);
+			CText::DrawStringW(L"そうびの へんこうと ステータスの かくにんができる。", -560, -200, 40, 1.0f, 1);
+		}
+		else if (mCursor == 4){
+			CText::DrawStringW(L"ダンジョン", 120, 265, 72, 1.0f, 0);
+			CText::DrawStringW(L"ダンジョンへ いどう。", -560, -200, 40, 1.0f, 1);
+		}
+
+		break;
+		
+		//鑑定屋シーン
+	case 1:
+		CText::DrawStringW(L"かんていや", 120, 265, 72, 1.0f, 0);
+		CText::DrawStringW(L"ーーーかんていやーーー\nエンターキーでもどる", -560, -200, 40, 1.0f, 1);
+		break;
+
+		//店シーン
+	case 2:
+		CText::DrawStringW(L"みせ", 228, 265, 72, 1.0f, 1);
+		CText::DrawStringW(L"ーーーみせーーー\nエンターキーでもどる", -560, -200, 40, 1.0f, 1);
+		break;
+
+		//塾シーン
+	case 3:
+		//左上画面内表示
+		CText::DrawStringW(L"HP", -527, 310, 40, 1.0f, 0);
+		CText::DrawStringW(L"ATK", -527, 240, 40, 1.0f, 0);
+		CText::DrawStringW(L"DEF", -527, 170, 40, 1.0f, 0);
+		CText::DrawStringW(L"もどる", -527, 100, 40, 1.0f, 0);
+
+		for (int i = 0; i < 4; i++){
+			//ドットの描画
+			if (i != mCursor)
+			{
+				Cursor[i].Render(1, 1, 1, 1.0f);
+			}
+			//矢印の描画
+			else{
+				CText::DrawStringW(L"→", Cursor[i].mLeft, Cursor[i].mBottom, 24, 1.0f, 0);
+			}
+		}
+
+		//所持金の描画
+		CText::DrawStringW(L"しょじSP", -300, -50, 32, 1.0f, 0);
+		char buf[8];
+		sprintf(buf, "%5d", CPlayer::PlayerP.mMoney);
+		CText::DrawString(buf, -200, -50, 32, 1.0f, 0);
+
+		//最大HP表示
+		sprintf(buf, "%5d", CPlayer::PlayerP.mMaxHP);
+		CText::DrawString(buf, -300, 310, 40, 1.0f, 0);
+		//ATTACK表示
+		sprintf(buf, "%5d", CPlayer::PlayerP.Attack);
+		CText::DrawString(buf, -300, 240, 40, 1.0f, 0);
+		//DEFENSE表示
+		sprintf(buf, "%5d", CPlayer::PlayerP.Defense);
+		CText::DrawString(buf, -300, 170, 40, 1.0f, 0);
+
+		if (mSceneState == 10){
+			//ログ画面表示
+			if (mCursor == 0){
+				CText::DrawStringW(L"HPをきょうかできる。", -560, -200, 40, 1.0f, 1);
+			}
+			else if (mCursor == 1){
+				CText::DrawStringW(L"こうげきりょくをきょうかできる。", -560, -200, 40, 1.0f, 1);
+			}
+			else if (mCursor == 2){
+				CText::DrawStringW(L"ぼうぎょりょくをきょうかできる", -560, -200, 40, 1.0f, 1);
+			}
+		}
+		else if (mSceneState == 0 || mSceneState == 1 || mSceneState == 2){
+			CText::DrawStringW(L"Dキーでぞうか、Aキーでげんしょう。\nエンターキーでけっていしてもどる。", -560, -200, 40, 1.0f, 1);
+		}
+
+		//HP強化画面
+		if (mSceneState == 0){
+			CText::DrawStringW(L"→", -100, 310, 40, 1.0f, 1);
+		}
+
+		CText::DrawStringW(L"じゅく", 192, 265, 72, 1.0f, 1);
+		break;
+
+		//マイルーム
+	case 4:
+		CText::DrawStringW(L"マイルーム", 120, 265, 72, 1.0f, 1);
+		CText::DrawStringW(L"ーーーマイルームーーー\nエンターキーでもどる", -560, -200, 40, 1.0f, 1);
+		break;
+	}
+}
+
+
+void CSceneTown::Update(){
+
+	/*街のメイン画面*/
+	if (mTownState == 0){
+		if (CDebugMode::DebugIO == false){
+			if (CKey::Once('W')){
+				CText::ds = 0;
+				//上端なら下端に移動
+				if (mCursor == 0){
+					mCursor = 4;
+				}
+				//上端でないなら一つ上に移動
+				else{
+					mCursor--;
+				}
+			}
+
+			if (CKey::Once('S')){
+				CText::ds = 0;
+				//下端なら上端に移動
+				if (mCursor == 4){
+					mCursor = 0;
+				}
+				//下端でないなら一つ下に移動
+				else{
+					mCursor++;
+				}
+			}
+
+			/*
+			シーン切り替え
+			*/
+			if (CKey::Once(VK_RETURN)){
+				CText::ds = 0;
+				if (mCursor == 0)mTownState = KANTEI;
+				if (mCursor == 1)mTownState = MISE;
+				if (mCursor == 2)mTownState = ZYUKU;
+				if (mCursor == 3)mTownState = MYROOM;
+				if (mCursor == 4)CGameLoad::NextScene(1);
+				mCursor = 0;
+			}
+		}
+	}
+	//塾画面
+	else if (mTownState==ZYUKU){
+		if (mSceneState == 10){
+			if (CKey::Once('W')){
+				CText::ds = 0;
+				//上端なら下端に移動
+				if (mCursor == 0){
+					mCursor = 4;
+				}
+				//上端でないなら一つ上に移動
+				else{
+					mCursor--;
+				}
+			}
+
+			if (CKey::Once('S')){
+				CText::ds = 0;
+				//下端なら上端に移動
+				if (mCursor == 4){
+					mCursor = 0;
+				}
+				//下端でないなら一つ下に移動
+				else{
+					mCursor++;
+				}
+			}
+		}
+
+		//街のメイン画面に戻る
+		if (CKey::Once(VK_RETURN)){
+			if (mCursor == 0 && mSceneState == 10){
+				mSceneState = 0;
+			}
+			else if (mCursor == 1 && mSceneState == 10){
+				mSceneState = 1;
+			}
+			else if (mCursor == 2 && mSceneState == 10){
+				mSceneState = 2;
+			}
+			else if (mCursor == 3 && mSceneState == 10){
+				CText::ds = 0;
+				mTownState = 0;
+				mCursor = 0;
+			}
+			else if (mSceneState == 0){
+				mSceneState = 10;
+			}
+			else if (mSceneState == 1){
+				mSceneState = 10;
+			}
+			else if (mSceneState == 2){
+				mSceneState = 10;
+			}
+		}
+	}
+	else{
+		//街のメイン画面に戻る
+		if (CKey::Once(VK_RETURN)){
+			CText::ds = 0;
+			mTownState = 0;
+			mCursor = 0;
+		}
+	}
+
+	//描画処理呼び出し
+	Render(mTownState);
+
+}
