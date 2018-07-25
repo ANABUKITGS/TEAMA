@@ -83,7 +83,7 @@ class CRectangle : public CTask
     CRectangle(const CVector2& position, const CVector2& scale, CTexture* texture) 
         position 四角形の中心座標：ｍPositionへ代入 
         scale 四角形の幅と高さ：mScaleへ代入 
-        texture テクスチャへのポインタ　 0の場合はテクスチャなし ポインタが入力された場合、 mUvを画像の大きさで設定する
+        texture テクスチャへのポインタ　 0の場合はテクスチャなし ポインタが入力された場合mpTextureに設定し、 mUvに画像の大きさを設定する
 （２）四角形の描画 void Render() 四角形を描画する。 テクスチャが有る場合、テクスチャをマッピングして描画する。
 
 CCollisionクラス
