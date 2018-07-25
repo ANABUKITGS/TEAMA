@@ -59,7 +59,7 @@ class CTaskManager
     void Render() タスクリストの先頭から順に、タスクの描画処理を呼び出す。
 （７）タスクの削除 
     void Remove() タスクリストから、無効（mEnabledがfalse）なタスクを削除しdeleteする。
-    void Remove(CTask* task) taskに該当するタスクを、タスクリストから削除し、 deleteする。
+    CTask* Remove(CTask* task) taskに該当するタスクを、タスクリストから削除し、 deleteする。
 （８）タスクマネージャの破棄 
     void Destory() タスクリストのタスクを全て deleteし、タスクマネージャもdeleteする。
 
