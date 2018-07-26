@@ -8,10 +8,15 @@
 
 wchar_t gamepad_name[11];
 
+float move_x;
+float move_y;
+
 //初めに1回だけ実行する処理の定義
 void CMain::Init() {
 	CText::Init();
 	swprintf(gamepad_name, L"");
+	move_x = 0.0f;
+	move_x = 0.0f;
 }
 
 //繰り返し実行する処理の定義
@@ -67,5 +72,14 @@ void CMain::Update() {
 
 	else
 		swprintf(gamepad_name, L"おされていよ");
-	CText::DrawStringW(gamepad_name, -350, 250, 32, 1.0f, 3);
+	CText::DrawStringW(gamepad_name, -350 + move_x, 250 + move_y, 32, 1.0f, 3);
+
+	if (CGamePad::Push(PAD_RIGHT))
+		move_x += 1.0f;
+	if (CGamePad::Push(PAD_LEFT))
+		move_x -= 1.0f;
+	if (CGamePad::Push(PAD_UP))
+		move_y += 1.0f;
+	if (CGamePad::Push(PAD_DOWN))
+		move_y -= 1.0f;
 }
