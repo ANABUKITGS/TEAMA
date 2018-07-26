@@ -1,0 +1,4 @@
+﻿  CFrameRate.cpp
+c:\users\takuma\downloads\game\gameprogramming\cframerate.cpp(35): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 'sprintf' の宣言を確認してください。
+  GameProgramming.vcxproj -> C:\Users\Takuma\Downloads\Game\Debug\GameProgramming.exe
