@@ -1,8 +1,0 @@
-﻿  CMain.cpp
-c:\users\ren\documents\visual studio 2013\projects\タスク\gameprogramming\CMain.h(3): fatal error C1083: include ファイルを開けません。'glut.h':No such file or directory
-  CMatrix33.cpp
-CMatrix33.cpp(20): warning C4244: '初期化中' : 'double' から 'float' への変換です。データが失われる可能性があります。
-  CTask.cpp
-  CTaskManager.cpp
-  main.cpp
-main.cpp(2): fatal error C1083: include ファイルを開けません。'glew.h':No such file or directory

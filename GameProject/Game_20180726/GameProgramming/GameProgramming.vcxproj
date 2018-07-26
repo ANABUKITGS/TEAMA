@@ -79,7 +79,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CFrameRate.cpp" />
+    <ClCompile Include="CGamePad.cpp" />
     <ClCompile Include="CKey.cpp" />
     <ClCompile Include="CMain.cpp" />
     <ClCompile Include="CMatrix33.cpp" />
@@ -92,7 +92,6 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CFrameRate.h" />
     <ClInclude Include="CGamePad.h" />
     <ClInclude Include="CKey.h" />
     <ClInclude Include="CMain.h" />
