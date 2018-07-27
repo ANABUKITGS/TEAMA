@@ -1,3 +1,9 @@
-﻿  CMain.cpp
-LINK : warning LNK4098: defaultlib 'MSVCRT' は他のライブラリの使用と競合しています。/NODEFAULTLIB:library を使用してください。
-  GameProgramming.vcxproj -> C:\Users\Ren\Documents\Visual Studio 2013\Projects\タスク\Debug\GameProgramming.exe
+﻿2018/07/26 18:26:55 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "C:\Users\Game\Desktop\2018GitTest\TEAMA\GameProject\Game\GameProgramming\GameProgramming.vcxproj" (Build ターゲット)。
+     1>Link:
+         GameProgramming.vcxproj -> C:\Users\Game\Desktop\2018GitTest\TEAMA\GameProject\Game\Debug\GameProgramming.exe
+     1>プロジェクト "C:\Users\Game\Desktop\2018GitTest\TEAMA\GameProject\Game\GameProgramming\GameProgramming.vcxproj" (Build ターゲット) のビルドが完了しました。
+
+ビルドに成功しました。
+
+経過時間 00:00:00.08

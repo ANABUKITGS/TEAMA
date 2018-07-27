@@ -79,7 +79,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CCharacter.cpp" />
     <ClCompile Include="CMain.cpp" />
     <ClCompile Include="CMatrix33.cpp" />
     <ClCompile Include="CRectangle.cpp" />
@@ -90,7 +89,6 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CCharacter.h" />
     <ClInclude Include="CGamePad.h" />
     <ClInclude Include="CMain.h" />
     <ClInclude Include="CMatrix33.h" />
