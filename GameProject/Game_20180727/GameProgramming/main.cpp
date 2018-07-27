@@ -103,7 +103,7 @@ int main(void)
 
 	// ウィンドウのサイズ変更時に呼び出す処理の登録
 	glfwSetWindowSizeCallback(window, reshape);
-	reshape(window, 800, 600);
+	reshape(window, 1280, 720);
 
 	//ライトの設定（3D必要 2D不要）
 	//固定シェーダー用

@@ -2,8 +2,8 @@
 
 #include "glut.h"
 
-#define W_H		800 //Window•
-#define W_V		600 //Window‚‚³
+#define W_H		1280 //Window•
+#define W_V		720 //Window‚‚³
 
 class CMain {
 	int		mState;
