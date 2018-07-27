@@ -43,6 +43,19 @@ private:
 
 	//RスティックのY方向に入力がされているかのフラグ
 	static bool flgRstickY[256];
+
+
+	//OncePush用 Onceの時間
+	static unsigned int oncetimebutton[16];
+
+	static unsigned int oncetimeLstickX[256];
+
+	static unsigned int oncetimeLstickY[256];
+
+	static unsigned int oncetimeRstickX[256];
+
+	static unsigned int oncetimeRstickY[256];
+
 public:
 	int mButtonNum;
 	int mAxisNum;
@@ -60,5 +73,6 @@ public:
 	}
 	static bool Push(int, float);
 	static bool Once(int, float);
+	static bool OncePush(int, float);
 };
 #endif
