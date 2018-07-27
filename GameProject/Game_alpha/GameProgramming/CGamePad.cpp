@@ -34,10 +34,11 @@ unsigned int CGamePad::oncetimeRstickX[256];
 unsigned int CGamePad::oncetimeRstickY[256];
 
 CGamePad CGamePad::mGamePad;
-const unsigned char* CGamePad::mpButtons;
-const float* CGamePad::mpPositions;
+const unsigned char* CGamePad::mpButtons = 0;
+const float* CGamePad::mpPositions = 0;
 
 bool CGamePad::Push(int button, float amount){
+	if (!mpButtons || !mpPositions) return false;
 	mGamePad.Update();
 	if (button > -1)
 		return mpButtons[button];
@@ -74,6 +75,7 @@ bool CGamePad::Push(int button, float amount){
 }
 
 bool CGamePad::Once(int button, float amount){
+	if (!mpButtons || !mpPositions) return false;
 	if (button > -1){
 		//デジタル ボタンが押されているか？
 		if (mpButtons[button]) {
