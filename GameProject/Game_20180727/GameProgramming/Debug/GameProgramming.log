@@ -1,4 +1,0 @@
-﻿  CGamePad.cpp
-c:\googledrive\documents\visual studio 2013\projects\game_20180726\gameprogramming\cgamepad.cpp(30): warning C4800: 'const unsigned char' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
-c:\googledrive\documents\visual studio 2013\projects\game_20180726\gameprogramming\cgamepad.cpp(86): warning C4244: '初期化中' : 'float' から 'int' への変換です。データが失われる可能性があります。
-  GameProgramming.vcxproj -> C:\GoogleDrive\Documents\Visual Studio 2013\Projects\Game_20180726\Debug\GameProgramming.exe
