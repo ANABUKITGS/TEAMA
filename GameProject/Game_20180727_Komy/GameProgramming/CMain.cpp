@@ -79,7 +79,7 @@ void CMain::Update() {
 		swprintf(gamepad_name, L"おされてないよ");
 	CText::DrawStringW(gamepad_name, -350 + move_x, 250 + move_y, 32, 1.0f, 3);
 
-	if (CGamePad::Once(PAD_RIGHT))
+	if (CGamePad::Push(PAD_RIGHT))
 		move_x += 1.0f;
 	if (CGamePad::Push(PAD_LEFT))
 		move_x -= 1.0f;
