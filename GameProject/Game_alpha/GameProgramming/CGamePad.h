@@ -64,14 +64,14 @@ public:
 	static const float* mpPositions;
 
 	CGamePad() {
-		mEnabled = glfwJoystickPresent(GLFW_JOYSTICK_1);
-		if (!mEnabled) return;
+//		mEnabled = glfwJoystickPresent(GLFW_JOYSTICK_1);
+//		if (!mEnabled) return;
 		mpButtons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &mButtonNum);
 		mpPositions = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &mAxisNum);
 	}
 
 	void Update() {
-		if (!mEnabled) return;
+//		if (!mEnabled) return;
 		mpButtons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &mButtonNum);
 		mpPositions = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &mAxisNum);
 	}
