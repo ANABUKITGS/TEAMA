@@ -2,6 +2,7 @@
 #include "CGamePad.h"
 
 extern CMapIO mMapIO;
+extern CCharcter player;
 
 void CGame::Init(){
 	//É}ÉbÉv èâä˙âª
@@ -16,6 +17,7 @@ void CGame::Init(){
 			gamemap_rect[i][j].SetVertex(j * CELLSIZE - 640, j * CELLSIZE + CELLSIZE - 640, i * - CELLSIZE + 280, i * - CELLSIZE + CELLSIZE + 280);
 		}
 	}
+	mapsctoll_flag = false;
 
 	mTexBack.Load(".\\Data\\Images\\Map\\Background.tga");
 	mTexUI.Load(".\\Data\\Images\\Map\\MapUI.tga");
@@ -25,7 +27,29 @@ void CGame::Init(){
 }
 
 void CGame::Update(){
-	
+	Scroll();
+	if (CGamePad::Once(PAD_10)){
+		mapsctoll_flag = false;
+		for (int i = 0; i < MAP_SIZEY; i++){
+			for (int j = 0; j < MAP_SIZEX; j++){
+				gamemap_rect[i][j].mLeft += mapscrollnum;
+				gamemap_rect[i][j].mRight += mapscrollnum;
+			}
+		}
+		mapscrollnum = 0;
+	}
+}
+
+void CGame::Scroll(){
+	if (mapsctoll_flag){
+		mapscrollnum += SCROLL_SPEED;
+		for (int i = 0; i < MAP_SIZEY; i++){
+			for (int j = 0; j < MAP_SIZEX; j++){
+				gamemap_rect[i][j].mLeft -= SCROLL_SPEED;
+				gamemap_rect[i][j].mRight -= SCROLL_SPEED;
+			}
+		}
+	}
 }
 
 void CGame::Render(){

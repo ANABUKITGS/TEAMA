@@ -5,11 +5,13 @@
 #include "CRectangle.h"
 #include "CText.h"
 #include "CFileIO.h"
+#include "CCharcter.h"
 
-#define CELLSIZE		64	//マス サイズ
-#define MAP_SIZEY		11	//マップ 上限 Y
-#define MAP_SIZEX		256	//マップ 上限 X
-#define CURSOR_NUM		-1	//カーソル
+#define CELLSIZE		64		//マス サイズ
+#define MAP_SIZEY		11		//マップ 上限 Y
+#define MAP_SIZEX		256		//マップ 上限 X
+#define CURSOR_NUM		-1		//カーソル
+#define SCROLL_SPEED	2.0f	//スクロールスピード
 
 class CEditer{
 private:
@@ -49,10 +51,10 @@ public:
 	};
 
 	int editmap[MAP_SIZEY][MAP_SIZEX];				//マップ
-	CTexture mTexBack;										//背景
-	CTexture mTexUI;										//UI テクスチャー
-	CTexture mTexObject;									//UI オブジェクト
-	CTexture mTexCharacter;									//UI キャラクター
+	CTexture mTexBack;								//背景
+	CTexture mTexUI;								//UI テクスチャー
+	CTexture mTexObject;							//UI オブジェクト
+	CTexture mTexCharacter;							//UI キャラクター
 
 	void Init();
 	void Update();
@@ -61,11 +63,14 @@ public:
 
 class CGame : public CEditer{
 public:
-	int gamemap[MAP_SIZEY][MAP_SIZEX];								//マップ
-	CRectangle gamemap_rect[MAP_SIZEY][MAP_SIZEX];					//マップ 描画
+	int gamemap[MAP_SIZEY][MAP_SIZEX];				//マップ
+	float mapscrollnum;								//スクロールした量, リスタート位置までのスクロール量
+	bool mapsctoll_flag;							//スクロール 開始
+	CRectangle gamemap_rect[MAP_SIZEY][MAP_SIZEX];	//マップ 描画
 
 	void Init();
 	void Update();
+	void Scroll();
 	void Render();
 };
 #endif

@@ -3,6 +3,9 @@
 
 #include "CRectangle.h"
 #include "CTexture.h"
+#include "CGamePad.h"
+#include "CText.h"
+#include "CMap.h"
 
 class CCharcter :public CRectangle{
 public:
@@ -16,5 +19,6 @@ public:
 	void Gravity();
 	void Jump();
 	void Forward();
+	void Scroll();
 };
 #endif

@@ -1,6 +1,6 @@
 #include "CCharcter.h"
-#include "CGamePad.h"
-#include "CText.h"
+
+extern CGame mGame;
 
 #define PLAYER_VELOCITY_X 5.0f
 #define PLAYER_VELOCITY_Y 15.0f
@@ -17,6 +17,8 @@ void CCharcter::Init(){
 	mVelocityJ = PLAYER_VELOCITY_Y;
 }
 void CCharcter::Update(){
+	Scroll();
+
 	CRectangle::Update();
 	if (CGamePad::Push(PAD_3))
 		mVelocityLimit = VELOCITYX_LIMIT * 2;
@@ -41,7 +43,7 @@ void CCharcter::Update(){
 	Forward();
 	Render();
 
-	swprintf(jumptime_buf, L"mVelocityX\n%4.2f\nmVelocityG\n%4.2f\nmVelocityJ\n%4.2f", mVelocityX, mVelocityG, mVelocityJ);
+	swprintf(jumptime_buf, L"mVelocityX\n%4.2f\nmVelocityG\n%4.2f\nmVelocityJ\n%4.2f\nmPosition.x\n%4.2f\nmPosition.y\n%4.2f", mVelocityX, mVelocityG, mVelocityJ, mPosition.x, mPosition.y);
 	CText::DrawStringW(jumptime_buf, 0, 0, 32, 1.0f, 0);
 }
 //重力処理
@@ -61,8 +63,10 @@ void CCharcter::Jump(){
 }
 
 void CCharcter::Forward(){
-	if (CGamePad::Push(PAD_LSTICKX, 0.5f) && mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit)
+	if (CGamePad::Push(PAD_LSTICKX, 0.5f) && mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit){
 		mVelocityX += 0.5f;
+		mGame.mapsctoll_flag = true;
+	}
 	else if (CGamePad::Push(PAD_LSTICKX, -0.5f) && mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit)
 		mVelocityX -= 0.5f;
 	else{
@@ -72,4 +76,17 @@ void CCharcter::Forward(){
 			mVelocityX -= 0.25f;
 	}
 	mPosition.x += mVelocityX;
+}
+
+void CCharcter::Scroll(){
+	if (mGame.mapsctoll_flag){
+		//スクロール
+		mPosition.x -= SCROLL_SPEED;
+	}
+	//画面制限
+	if (mPosition.x >= 600.0f)
+		mPosition.x = 600.0f;
+
+	if (mPosition.x <= -664.0f)
+		mPosition.x = -664.0f;
 }
