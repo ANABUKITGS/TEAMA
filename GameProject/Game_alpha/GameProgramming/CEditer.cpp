@@ -31,7 +31,7 @@ void CEditer::Init(){
 }
 
 void CEditer::Update(){
-	if ((CGamePad::Once(PAD_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f)) && cursor_posY - 1 >= 0){
+	if ((CGamePad::OncePush(PAD_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f)) && cursor_posY - 1 >= 0){
 		if (editmap_rect[cursor_posY][cursor_posX].mTop + CELLSIZE >= 360){
 			for (int i = 0; i < EDITMAP_SIZEY; i++){
 				for (int j = 0; j < EDITMAP_SIZEX; j++){
@@ -44,7 +44,7 @@ void CEditer::Update(){
 		editmap_cursor[cursor_posY][cursor_posX] = ENONE;
 		cursor_posY = cursor_posY - 1;
 	}
-	if ((CGamePad::Once(PAD_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f)) && cursor_posY + 1 < EDITMAP_SIZEY){
+	if ((CGamePad::OncePush(PAD_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f)) && cursor_posY + 1 < EDITMAP_SIZEY){
 		if (editmap_rect[cursor_posY][cursor_posX].mBottom - CELLSIZE <= -360){
 			for (int i = 0; i < EDITMAP_SIZEY; i++){
 				for (int j = 0; j < EDITMAP_SIZEX; j++){
@@ -57,7 +57,7 @@ void CEditer::Update(){
 		editmap_cursor[cursor_posY][cursor_posX] = ENONE;
 		cursor_posY = cursor_posY + 1;
 	}
-	if ((CGamePad::Once(PAD_LEFT) || CGamePad::OncePush(PAD_LSTICKX, -0.5f)) && cursor_posX - 1 >= 0){
+	if ((CGamePad::OncePush(PAD_LEFT) || CGamePad::OncePush(PAD_LSTICKX, -0.5f)) && cursor_posX - 1 >= 0){
 		if (editmap_rect[cursor_posY][cursor_posX].mLeft - CELLSIZE <= -640){
 			for (int i = 0; i < EDITMAP_SIZEY; i++){
 				for (int j = 0; j < EDITMAP_SIZEX; j++){
@@ -70,7 +70,7 @@ void CEditer::Update(){
 		editmap_cursor[cursor_posY][cursor_posX] = ENONE;
 		cursor_posX = cursor_posX - 1;
 	}
-	if ((CGamePad::Once(PAD_RIGHT) || CGamePad::OncePush(PAD_LSTICKX, 0.5f)) && cursor_posX + 1 < EDITMAP_SIZEX){
+	if ((CGamePad::OncePush(PAD_RIGHT) || CGamePad::OncePush(PAD_LSTICKX, 0.5f)) && cursor_posX + 1 < EDITMAP_SIZEX){
 		if (editmap_rect[cursor_posY][cursor_posX].mRight + CELLSIZE / 2 >= 640){
 			for (int i = 0; i < EDITMAP_SIZEY; i++){
 				for (int j = 0; j < EDITMAP_SIZEX; j++){
@@ -135,19 +135,19 @@ void CEditer::Update(){
 	//	editmap_cursor[cursor_posY][cursor_posX] = ENONE;
 	//	cursor_posX = cursor_posX + 1;
 	//}
-	if (CGamePad::Once(PAD_5)){
+	if (CGamePad::OncePush(PAD_5) || CGamePad::OncePush(PAD_7)){	//パーツ選択
 		if (setcell <= EGROUND)
 			setcell = ESIZE - 1;
 		else
 			setcell--;
 	}
-	if (CGamePad::Once(PAD_6)){
+	if (CGamePad::OncePush(PAD_6) || CGamePad::OncePush(PAD_8)){	//パーツ選択
 		if (setcell >= ESIZE - 1)
 			setcell = EGROUND;
 		else
 			setcell++;
 	}
-	if (CGamePad::Once(PAD_2)){
+	if (CGamePad::Push(PAD_2)){	//設置
 		if (setcell >= EPLAYER){
 			if (cursor_posY > 0){
 				int temp_setcell = editmap[cursor_posY][cursor_posX];
@@ -208,7 +208,7 @@ void CEditer::Update(){
 		}
 	}
 
-	if (CGamePad::Once(PAD_1)){
+	if (CGamePad::Push(PAD_3)){	//削除
 		if (editmap[cursor_posY][cursor_posX] >= EPLAYER){
 			int temp_setcell = editmap[cursor_posY][cursor_posX];
 
@@ -244,11 +244,11 @@ void CEditer::Update(){
 	}
 
 	//マップデータを開く
-	if (CKey::Once('O') || CGamePad::Once(PAD_7))
+	if (CKey::Once('O'))
 		mMapIO.LoadDialog(NULL);
 
 	//マップデータを保存
-	if (CKey::Once('P') || CGamePad::Once(PAD_8))
+	if (CKey::Once('P'))
 		mMapIO.SaveDialog(NULL);
 
 	if (CKey::Once('M')){
@@ -288,8 +288,8 @@ void CEditer::Render(){
 	for (int i = 0; i < EDITMAP_SIZEY; i++){
 		for (int j = 0; j < EDITMAP_SIZEX; j++){
 			//ガイド
-			//if (guideIO)
-			//	mTexUI.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 0, 64, 0, 64, 1.0f);
+			if (guideIO)
+				mTexUI.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 0, 64, 0, 64, 1.0f);
 
 			//オブジェクト
 			//床や壁

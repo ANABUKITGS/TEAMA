@@ -50,10 +50,13 @@ void CText::DrawText(char a, float left, float right, float bottom, float top, f
 		CText::uv[3] = CSIZE * 2;
 	}
 	else if (a == '\n'){	//U+000D, U+000A
+		CText::uv[0] = CText::uv[1] = CText::uv[2] = CText::uv[3] = 0.0f;
+#ifdef _DEBUG
 		CText::uv[0] = 43 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
 		CText::uv[2] = CSIZE * 3;
 		CText::uv[3] = CSIZE * 2;
+#endif
 	}
 	else{
 		CText::uv[0] = CSIZE * 0;
@@ -241,10 +244,13 @@ void CText::DrawTextW(wchar_t a, float left, float right, float bottom, float to
 		CText::uv[3] = CSIZE * 2;
 	}
 	else if (a == L'\n'){	//U+000D, U+000A
+		CText::uv[0] = CText::uv[1] = CText::uv[2] = CText::uv[3] = 0.0f;
+#ifdef _DEBUG
 		CText::uv[0] = 43 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
 		CText::uv[2] = CSIZE * 3;
 		CText::uv[3] = CSIZE * 2;
+#endif
 	}
 	else{
 		CText::uv[0] = CSIZE * 0;

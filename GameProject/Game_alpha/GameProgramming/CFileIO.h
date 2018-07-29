@@ -15,6 +15,9 @@ public:
 
 class CMapIO : public CFileIO{
 public:
+	//ƒ}ƒbƒv‚Ì“Ç‚İ‚İ
+	void MapLoad(char);
+
 	//“Ç‚İ‚İ
 	void Load();
 

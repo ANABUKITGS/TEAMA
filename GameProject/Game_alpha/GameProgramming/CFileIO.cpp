@@ -12,6 +12,10 @@ void CFileIO::Update(){
 	
 }
 
+void CMapIO::MapLoad(char map){
+
+}
+
 void CMapIO::Load(){	//読み込み
 	FILE *fp = fopen(filepath, "rb");	//ファイルを開く(読み込み)
 	if (fp == NULL) //NULLが返ってきたらエラー
