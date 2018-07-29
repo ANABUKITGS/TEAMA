@@ -165,15 +165,36 @@ void CText::DrawTextW(wchar_t a, float left, float right, float bottom, float to
 		a = a - L'ƒŸ';
 		CText::uv[0] = a * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 10;
-		CText::uv[3] = CSIZE * 9;
+		CText::uv[2] = CSIZE * 9;
+		CText::uv[3] = CSIZE * 8;
 	}
 	else if (a >= L'ƒ¿' && a <= L'ƒÖ'){	//U+03B1 ~ U+03C9
 		a = a - L'ƒ¿';
 		CText::uv[0] = a * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 9;
-		CText::uv[3] = CSIZE * 8;
+		CText::uv[2] = CSIZE * 8;
+		CText::uv[3] = CSIZE * 7;
+	}
+	else if (a >= L'‚P' && a <= L'‚X'){	//GamePad Key | U+FF11 ~ U+FF19
+		a = a - L'‚P';
+		CText::uv[0] = a * CSIZE;
+		CText::uv[1] = CText::uv[0] + CSIZE;
+		CText::uv[2] = CSIZE * 10;
+		CText::uv[3] = CSIZE * 9;
+	}
+	else if (a == L'‚O'){	//GamePad Key | U+FF10
+		a = a - L'‚O';
+		CText::uv[0] = CSIZE * 9;
+		CText::uv[1] = CText::uv[0] + CSIZE;
+		CText::uv[2] = CSIZE * 10;
+		CText::uv[3] = CSIZE * 9;
+	}
+	else if (a >= L'‚`' && a <= L'‚y'){	//GamePad Key | U+FF21 ~ U+FF3A
+		a = a - L'‚`';
+		CText::uv[0] = CSIZE * 10 + a * CSIZE;
+		CText::uv[1] = CText::uv[0] + CSIZE;
+		CText::uv[2] = CSIZE * 10;
+		CText::uv[3] = CSIZE * 9;
 	}
 	else if (a >= 0xE000 && a <= 0xE099){	//U+E000 ~ U+E099	Nintendo ƒtƒHƒ“ƒg
 		a = a - 0xE000;
