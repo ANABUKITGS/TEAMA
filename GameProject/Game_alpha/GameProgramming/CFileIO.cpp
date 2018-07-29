@@ -1,5 +1,10 @@
 #include "CFileIO.h"
+#define TUTORIAL_MAP	".\\Data\\Map\\MAP0.BIN"	//チュートリアルマップ ファイルパス
+#define GAME_MAP		".\\Data\\Map\\MAP1.BIN"	//ゲームマップ ファイルパス
+#define EDITER_MAP		".\\Data\\Map\\MAP2.BIN"	//エディットマップ ファイルパス
+
 extern CEditer mEditer;
+extern CGame mGame;
 
 char cdir[MAX_PATH];	//ディレクトリ
 char filepath[MAX_PATH];	//開く / 保存する ファイルの フルパス
@@ -12,23 +17,63 @@ void CFileIO::Update(){
 	
 }
 
-void CMapIO::MapLoad(char map){
+void CMapIO::GameMapLoad(int map){
+	if (map == EGAMEMAP)
+		sprintf(filepath, "%s", GAME_MAP);
+	else if (map == ETUTORIAL)
+		sprintf(filepath, "%s", TUTORIAL_MAP);
+	else if (map == EEDITERMAP)
+		sprintf(filepath, "%s", EDITER_MAP);
+	else{
+		MessageBox(NULL, "マップデータの指定がされていません。", "エラー", 0x00040010L);
+		return;
+	}
+	FILE *fp = fopen(filepath, "rb");	//ファイルを開く(読み込み)
+	if (fp == NULL){	//NULLが返ってきたらエラー
+		MessageBox(NULL, "マップデータの読み込みに失敗しました。", "エラー", 0x00040010L);
+		printf("Load : fopen error!\n");
+	}
 
+	else {
+		for (int i = 0; i < MAP_SIZEY; i++){
+			for (int j = 0; j < MAP_SIZEX; j++){
+				fread(&mGame.gamemap[i][j], sizeof(int), 1, fp);
+				if (mGame.gamemap[i][j] >= mEditer.ESIZE){
+					MessageBox(NULL, "マップデータが破損しているか、違うファイルです。", "エラー", 0x00040010L);
+					for (int i = 0; i < MAP_SIZEY; i++){
+						for (int j = 0; j < MAP_SIZEX; j++)
+							mGame.gamemap[i][j] = mEditer.ENONE;
+					}
+					char loadmsg[MAX_PATH + 8];
+					sprintf(loadmsg, "Load to %s\n", filepath);
+					printf(loadmsg);
+					fclose(fp);	//ファイルを閉じる
+					return;
+				}
+			}
+		}
+		char loadmsg[MAX_PATH + 8];
+		sprintf(loadmsg, "Load to %s\n", filepath);
+		printf(loadmsg);
+		fclose(fp);	//ファイルを閉じる
+	}
 }
 
 void CMapIO::Load(){	//読み込み
 	FILE *fp = fopen(filepath, "rb");	//ファイルを開く(読み込み)
-	if (fp == NULL) //NULLが返ってきたらエラー
+	if (fp == NULL){	//NULLが返ってきたらエラー
+		MessageBox(NULL, "マップデータの読み込みに失敗しました。", "エラー", 0x00040010L);
 		printf("Load : fopen error!\n");
+	}
 
 	else {
-		for (int i = 0; i < EDITMAP_SIZEY; i++){
-			for (int j = 0; j < EDITMAP_SIZEX; j++){
+		for (int i = 0; i < MAP_SIZEY; i++){
+			for (int j = 0; j < MAP_SIZEX; j++){
 				fread(&mEditer.editmap[i][j], sizeof(int), 1, fp);
 				if (mEditer.editmap[i][j] >= mEditer.ESIZE){
 					MessageBox(NULL, "マップデータが破損しているか、違うファイルです。", "エラー", 0x00040010L);
-					for (int i = 0; i < EDITMAP_SIZEY; i++){
-						for (int j = 0; j < EDITMAP_SIZEX; j++)
+					for (int i = 0; i < MAP_SIZEY; i++){
+						for (int j = 0; j < MAP_SIZEX; j++)
 							mEditer.editmap[i][j] = mEditer.ENONE;
 					}
 					char loadmsg[MAX_PATH + 8];
@@ -48,12 +93,14 @@ void CMapIO::Load(){	//読み込み
 
 void CMapIO::Save(){	//書き込み
 	FILE *fp = fopen(filepath, "wb");	//ファイルを開く(書き込み)
-	if (fp == NULL) //NULLが返ってきたらエラー発生
+	if (fp == NULL){	//NULLが返ってきたらエラー発生
+		MessageBox(NULL, "マップデータの保存に失敗しました。", "エラー", 0x00040010L);
 		printf("Save : fopen error!\n");
+	}
 
 	else {
-		for (int i = 0; i < EDITMAP_SIZEY; i++){
-			for (int j = 0; j < EDITMAP_SIZEX; j++)
+		for (int i = 0; i < MAP_SIZEY; i++){
+			for (int j = 0; j < MAP_SIZEX; j++)
 				fwrite(&mEditer.editmap[i][j], sizeof(int), 1, fp);
 		}
 		char savemsg[MAX_PATH + 8];

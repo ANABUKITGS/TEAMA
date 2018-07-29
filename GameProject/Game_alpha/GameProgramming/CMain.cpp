@@ -6,10 +6,11 @@
 #include "CText.h"
 #include "CGamePad.h"
 #include "CCharcter.h"
-#include "CEditer.h"
+#include "CMap.h"
 CTexture mtexture;
 CCharcter player;
 CEditer mEditer;
+CGame mGame;
 
 wchar_t gamepad_name[64];
 
@@ -21,6 +22,7 @@ void CMain::Init() {
 	CText::Init();
 	player.Init();
 	mEditer.Init();
+	mGame.Init();
 	swprintf(gamepad_name, L"");
 	move_x = 0.0f;
 	move_x = 0.0f;
@@ -29,8 +31,10 @@ void CMain::Init() {
 //繰り返し実行する処理の定義
 void CMain::Update() {
 	/*１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ*/
-	mEditer.Update();
-	mEditer.Render();
+	//mEditer.Update();
+	//mEditer.Render();
+	mGame.Update();
+	mGame.Render();
 	player.Update();
 	if (CGamePad::Push(PAD_1))
 		swprintf(gamepad_name, L"１");

@@ -5,7 +5,7 @@
 #include <iostream>
 #include <shobjidl.h>
 #include <direct.h>
-#include "CEditer.h"
+#include "CMap.h"
 
 class CFileIO{
 public:
@@ -15,8 +15,14 @@ public:
 
 class CMapIO : public CFileIO{
 public:
+	enum EGAMEMAP_FILENAME{
+		ETUTORIAL = 1,	//チュートリアルマップ
+		EGAMEMAP,		//ゲームマップ
+		EEDITERMAP,		//エディットマップ
+		ESIZE,			//サイズ
+	};
 	//マップの読み込み
-	void MapLoad(char);
+	void GameMapLoad(int);
 
 	//読み込み
 	void Load();
@@ -25,9 +31,9 @@ public:
 	void Save();
 
 	//ファイル 開く ダイアログ
-	void LoadDialog(HWND hWnd);
+	void LoadDialog(HWND);
 
 	//ファイル 名前をつけて保存 ダイアログ
-	void SaveDialog(HWND hWnd);
+	void SaveDialog(HWND);
 };
 #endif
