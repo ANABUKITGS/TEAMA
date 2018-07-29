@@ -7,14 +7,19 @@ CRectangle::CRectangle(const CVector2&position, const CVector2&scale, CTexture*t
 	mPosition.y = position.y;
 };
 
-void CRectangle::SetVertex(float mLeft, float mRight, float mBottom, float mTop){
+void CRectangle::SetVertex(float Left, float Right, float Bottom, float Top){
 	/*四角形を
 	左上、左下、右下、右上の頂点順で作る
 	*/
-	mVector[0].x = mLeft;	mVector[0].y = mTop;
-	mVector[1].x = mLeft;	mVector[1].y = mBottom;
-	mVector[2].x = mRight;	mVector[2].y = mBottom;
-	mVector[3].x = mRight;	mVector[3].y = mTop;
+	mVector[0].x = Left;	mVector[0].y = Top;
+	mVector[1].x = Left;	mVector[1].y = Bottom;
+	mVector[2].x = Right;	mVector[2].y = Bottom;
+	mVector[3].x = Right;	mVector[3].y = Top;
+
+	mLeft = Left;
+	mRight = Right;
+	mBottom = Bottom;
+	mTop = Top;
 }
 void CRectangle::Update(){
 	//移動行列

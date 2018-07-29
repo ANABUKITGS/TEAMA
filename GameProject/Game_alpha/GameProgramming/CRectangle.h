@@ -14,6 +14,7 @@ public:
 	CMatrix33 mMatrix;	//マトリクスをインスタンスにする(これは移動行列用)
 	float mRotation;	//四角形の回転角度
 	float mUv[4];	//テクスチャマッピングデータ
+	float mRight, mLeft, mTop, mBottom;
 	CRectangle(){}
 	/*
 	position:位置

@@ -2,6 +2,8 @@
 #define CTEXTURE_H
 #include "glut.h"
 
+#define TEX_FULLSCREEN -640, 640, -360, 360
+
 /*
 TGAファイルのヘッダフォーマット
 */
