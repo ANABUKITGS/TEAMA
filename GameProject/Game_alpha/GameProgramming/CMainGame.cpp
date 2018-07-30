@@ -1,4 +1,4 @@
-#include "CMap.h"
+#include "CScene.h"
 #include "CGamePad.h"
 
 extern CMapIO mMapIO;
@@ -18,6 +18,7 @@ void CGame::Init(){
 		}
 	}
 	mapsctoll_flag = false;
+	pauseflag = false;
 
 	mTexBack.Load(".\\Data\\Images\\Map\\Background.tga");
 	mTexUI.Load(".\\Data\\Images\\Map\\MapUI.tga");
@@ -27,16 +28,20 @@ void CGame::Init(){
 }
 
 void CGame::Update(){
-	Scroll();
-	if (CGamePad::Once(PAD_10)){
-		mapsctoll_flag = false;
-		for (int i = 0; i < MAP_SIZEY; i++){
-			for (int j = 0; j < MAP_SIZEX; j++){
-				gamemap_rect[i][j].mLeft += mapscrollnum;
-				gamemap_rect[i][j].mRight += mapscrollnum;
-			}
+	if (!pauseflag){
+		player.Update();
+		Scroll();
+		if (CGamePad::Once(PAD_10)){
+			//mapsctoll_flag = false;
+			//for (int i = 0; i < MAP_SIZEY; i++){
+			//	for (int j = 0; j < MAP_SIZEX; j++){
+			//		gamemap_rect[i][j].mLeft += mapscrollnum;
+			//		gamemap_rect[i][j].mRight += mapscrollnum;
+			//	}
+			//}
+			//mapscrollnum = 0;
+			pauseflag = true;
 		}
-		mapscrollnum = 0;
 	}
 }
 
@@ -167,5 +172,35 @@ void CGame::Render(){
 					mTexCharacter.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 192, 256, CELLSIZE * (gamemap[i][j] - EPLAYER + 1), CELLSIZE * (gamemap[i][j] - EPLAYER), 1.0f);
 			}
 		}
+	}
+	CPauseMenu::Update();
+	CPauseMenu::Render();
+}
+
+void CPauseMenu::Update(){
+	if (pauseflag){
+		/*カーソル*/
+		switch (cursor_num){
+		default:
+			break;
+
+		case CSceneChange::EGAME:
+			swprintf(cursor_buf, L"→");
+			break;
+
+		case CSceneChange::ERANKING:
+			swprintf(cursor_buf, L"\n→");
+			break;
+
+		case CSceneChange::EEDITER:
+			swprintf(cursor_buf, L"\n\n→");
+			break;
+		}
+	}
+}
+
+void CPauseMenu::Render(){
+	if (pauseflag){
+		CText::DrawStringW(L" ゲームに もどる\n タイトルにもどる", -200, 100, 32, 1.0f, 0);
 	}
 }

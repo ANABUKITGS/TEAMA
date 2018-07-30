@@ -8,20 +8,32 @@
 #include "CCharcter.h"
 
 #define CELLSIZE		64		//マス サイズ
-#define MAP_SIZEY		11		//マップ 上限 Y
+#define MAP_SIZEY		22		//マップ 上限 Y
 #define MAP_SIZEX		256		//マップ 上限 X
 #define CURSOR_NUM		-1		//カーソル
 #define SCROLL_SPEED	2.0f	//スクロールスピード
 
-class CEditer{
+class CPauseMenu{
+private:
+	int cursor_num;
+	wchar_t cursor_buf[32];
+
+public:
+	bool pauseflag;									//ポーズメニュー
+
+	void Update();
+	void Render();
+};
+
+class CEditer : public CPauseMenu{
 private:
 	int editmap_cursor[MAP_SIZEY][MAP_SIZEX];		//マップ カーソル
-	int cursor_posX;										//カーソル 場所 X
-	int cursor_posY;										//カーソル 場所 Y
-	int setcell;											//マップ 配置内容
-	unsigned int cursor_anime;								//カーソル アニメーション
-	bool guideIO;											//ガイド ON OFF
-	bool prtscrIO;											//スクリーンショット用? カーソル等非表示
+	int cursor_posX;								//カーソル 場所 X
+	int cursor_posY;								//カーソル 場所 Y
+	int setcell;									//マップ 配置内容
+	unsigned int cursor_anime;						//カーソル アニメーション
+	bool guideIO;									//ガイド ON OFF
+	bool prtscrIO;									//スクリーンショット用? カーソル等非表示
 	CRectangle editmap_rect[MAP_SIZEY][MAP_SIZEX];	//マップ 描画
 
 public:
