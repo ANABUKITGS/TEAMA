@@ -86,8 +86,10 @@
     <ClCompile Include="CGamePad.cpp" />
     <ClCompile Include="CKey.cpp" />
     <ClCompile Include="CMain.cpp" />
+    <ClCompile Include="CMainGame.cpp" />
     <ClCompile Include="CMatrix33.cpp" />
     <ClCompile Include="CRectangle.cpp" />
+    <ClCompile Include="CScore.cpp" />
     <ClCompile Include="CTaskManager.cpp" />
     <ClCompile Include="CText.cpp" />
     <ClCompile Include="CTexture.cpp" />
@@ -97,13 +99,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCharcter.h" />
-    <ClInclude Include="CEditer.h" />
     <ClInclude Include="CFileIO.h" />
     <ClInclude Include="CGamePad.h" />
     <ClInclude Include="CKey.h" />
     <ClInclude Include="CMain.h" />
+    <ClInclude Include="CMap.h" />
     <ClInclude Include="CMatrix33.h" />
     <ClInclude Include="CRectangle.h" />
+    <ClInclude Include="CScene.h" />
+    <ClInclude Include="CScore.h" />
     <ClInclude Include="CTask.h" />
     <ClInclude Include="CTaskManager.h" />
     <ClInclude Include="CText.h" />

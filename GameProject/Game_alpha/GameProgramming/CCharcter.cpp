@@ -84,9 +84,9 @@ void CCharcter::Scroll(){
 		mPosition.x -= SCROLL_SPEED;
 	}
 	//‰æ–Ê§ŒÀ
-	if (mPosition.x >= 600.0f)
-		mPosition.x = 600.0f;
+	if (mPosition.x >= 608.0f)
+		mPosition.x = 608.0f;
 
-	if (mPosition.x <= -664.0f)
-		mPosition.x = -664.0f;
+	if (mPosition.x <= -672.0f)
+		mPosition.x = -672.0f;
 }

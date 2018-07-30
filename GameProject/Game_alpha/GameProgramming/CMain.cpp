@@ -11,6 +11,7 @@ CTexture mtexture;
 CCharcter player;
 CEditer mEditer;
 CGame mGame;
+CScene::ESceneTag CMain::mSceneTag = CScene::EROOT;
 
 wchar_t gamepad_name[64];
 

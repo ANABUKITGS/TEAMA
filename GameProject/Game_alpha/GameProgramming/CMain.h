@@ -1,5 +1,6 @@
 #pragma once
 
+#include "CScene.h"
 #include "glut.h"
 
 #define W_H		1280 //Windowïù
@@ -9,7 +10,7 @@ class CMain {
 	int		mState;
 public:
 	CMain() : mState(0) {}
-
+	static CScene::ESceneTag mSceneTag;
 	void MainLoop() {
 		switch (mState)
 		{
