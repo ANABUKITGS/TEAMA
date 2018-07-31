@@ -15,7 +15,12 @@
 
 class CPauseMenu{
 private:
-	int cursor_num;
+	enum EPAUSEMENU_NUM{
+		EBACK = 1,
+		ETITLE,
+		ESIZE,
+	};
+	int cursor_num = EBACK;
 	wchar_t cursor_buf[32];
 
 public:

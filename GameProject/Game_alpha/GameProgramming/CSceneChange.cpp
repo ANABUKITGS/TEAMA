@@ -37,7 +37,7 @@ void CSceneChange::Update(){
 		mEditer.Render();
 		break;
 
-	case EHOGE1:
+	case EEXIT:
 		break;
 	}
 }

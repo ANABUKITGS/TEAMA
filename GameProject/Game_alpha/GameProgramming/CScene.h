@@ -34,7 +34,7 @@ public:
 		EGAME,
 		ERANKING,
 		EEDITER,
-		EHOGE1,
+		EEXIT,
 		ESIZE
 	};
 	static int changenum;

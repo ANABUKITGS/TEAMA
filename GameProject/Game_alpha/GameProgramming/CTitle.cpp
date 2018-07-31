@@ -1,5 +1,9 @@
 #include "CScene.h"
 
+extern CEditer mEditer;
+extern CGame mGame;
+extern CTitle mTitle;
+
 void CTitle::Init(){
 	cursor_num = CSceneChange::EGAME;
 }
@@ -17,6 +21,7 @@ void CTitle::Update(){
 			break;
 
 		case CSceneChange::EGAME:
+			mGame.Init();
 			CSceneChange::changenum = cursor_num;
 			break;
 
@@ -25,7 +30,13 @@ void CTitle::Update(){
 			break;
 
 		case CSceneChange::EEDITER:
+			mEditer.Init();
 			CSceneChange::changenum = cursor_num;
+			break;
+
+		case CSceneChange::EEXIT:
+			_sleep(500);
+			exit(0);
 			break;
 		}
 	}
@@ -46,11 +57,15 @@ void CTitle::Update(){
 	case CSceneChange::EEDITER:
 		swprintf(cursor_buf, L"\n\n→");
 		break;
+
+	case CSceneChange::EEXIT:
+		swprintf(cursor_buf, L"\n\n\n→");
+		break;
 	}
 }
 
 void CTitle::Render(){
 	CText::DrawStringW(L"No Title!",-200, 200, 64, 1.0f, 0);
-	CText::DrawStringW(L" ゲームスタート\n ランキング\n エディター(かり)", -200, 0, 32, 1.0f, 0);
+	CText::DrawStringW(L" ゲームスタート\n ランキング\n エディター(かり)\n ゲームしゅうりょう", -200, 0, 32, 1.0f, 0);
 	CText::DrawStringW(cursor_buf, -200, 0, 32, 1.0f, 0);
 }

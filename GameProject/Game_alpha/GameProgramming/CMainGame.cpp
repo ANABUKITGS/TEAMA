@@ -31,15 +31,17 @@ void CGame::Update(){
 	if (!pauseflag){
 		player.Update();
 		Scroll();
+		if (CGamePad::Once(PAD_1)){
+			mapsctoll_flag = false;
+			for (int i = 0; i < MAP_SIZEY; i++){
+				for (int j = 0; j < MAP_SIZEX; j++){
+					gamemap_rect[i][j].mLeft += mapscrollnum;
+					gamemap_rect[i][j].mRight += mapscrollnum;
+				}
+			}
+			mapscrollnum = 0;
+		}
 		if (CGamePad::Once(PAD_10)){
-			//mapsctoll_flag = false;
-			//for (int i = 0; i < MAP_SIZEY; i++){
-			//	for (int j = 0; j < MAP_SIZEX; j++){
-			//		gamemap_rect[i][j].mLeft += mapscrollnum;
-			//		gamemap_rect[i][j].mRight += mapscrollnum;
-			//	}
-			//}
-			//mapscrollnum = 0;
 			pauseflag = true;
 		}
 	}
@@ -179,21 +181,45 @@ void CGame::Render(){
 
 void CPauseMenu::Update(){
 	if (pauseflag){
+		if ((CGamePad::OncePush(PAD_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f)) && cursor_num < ESIZE - 1)
+			cursor_num++;
+
+		if ((CGamePad::OncePush(PAD_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f)) && cursor_num > EBACK)
+			cursor_num--;
+		if (CGamePad::Once(PAD_10) || CGamePad::Once(PAD_3)){
+			cursor_num = EBACK;
+			pauseflag = false;
+		}
+
+		if (CGamePad::Once(PAD_2)){
+			switch (cursor_num){
+			default:
+				break;
+
+			case EBACK:
+				pauseflag = false;
+				cursor_num = EBACK;
+				break;
+
+			case ETITLE:
+				pauseflag = false;
+				CSceneChange::changenum = CSceneChange::ETITLE;
+				cursor_num = EBACK;
+				break;
+			}
+		}
+
 		/*カーソル*/
 		switch (cursor_num){
 		default:
 			break;
 
-		case CSceneChange::EGAME:
+		case EBACK:
 			swprintf(cursor_buf, L"→");
 			break;
 
-		case CSceneChange::ERANKING:
+		case ETITLE:
 			swprintf(cursor_buf, L"\n→");
-			break;
-
-		case CSceneChange::EEDITER:
-			swprintf(cursor_buf, L"\n\n→");
 			break;
 		}
 	}
@@ -201,6 +227,7 @@ void CPauseMenu::Update(){
 
 void CPauseMenu::Render(){
 	if (pauseflag){
-		CText::DrawStringW(L" ゲームに もどる\n タイトルにもどる", -200, 100, 32, 1.0f, 0);
+		CText::DrawStringW(L" ゲームに もどる\n タイトルに もどる", -200, 100, 32, 1.0f, 0);
+		CText::DrawStringW(cursor_buf, -200, 100, 32, 1.0f, 0);
 	}
 }
