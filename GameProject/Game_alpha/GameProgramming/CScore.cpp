@@ -1,12 +1,15 @@
 #include "CScore.h"
 #include "CKey.h"
+#include "CGamePad.h"
 #include <stdio.h>
 #include <string.h>
 #include <Windows.h>
+
 int CGetScore::mScore;
 char CName::name[3] = { 'aaa' };
-char buf2[11];
-wchar_t buf[11];
+char buf[11];
+wchar_t bufw[11];
+
 void CGetScore::Init(){
 	mScore = 0;
 	mScoreRank = 0;
@@ -14,17 +17,17 @@ void CGetScore::Init(){
 
 }
 void CGetScore::Update(){
-	if (GetKeyState(VK_DOWN) & 0x8000){
+	if (GetKeyState(VK_DOWN) & 0x8000 || CGamePad::OncePush(PAD_LSTICKY, -0.5f)){
 		mScore--;
 	}
-	if (GetKeyState(VK_UP) & 0x8000){
+	if (GetKeyState(VK_UP) & 0x8000 || CGamePad::OncePush (PAD_LSTICKY, 0.5f)){
 		mScore++;
 	}
 	if (CKey::Once(VK_RETURN)){
 		CMain::mSceneTag = CScene::ENAME;
 	}
-	swprintf(buf, L"%3d", mScore);
-	CText::DrawStringW(buf, 0, 100, 20, 1.0f, 0);
+	swprintf(bufw, L"%3d", mScore);
+	CText::DrawStringW(bufw, 0, 100, 20, 1.0f, 0);
 	
 }
 void CName::Init(){
@@ -35,7 +38,7 @@ void CName::Init(){
 	
 }
 void CName::Update(){
-	if (CKey::Once(VK_DOWN)){
+	if (CKey::Once(VK_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f)){
 		if (name[charnum] == 'z')
 			name[charnum] = '1';
 		else if (name[charnum] == '9')
@@ -43,7 +46,7 @@ void CName::Update(){
 		else
 			name[charnum]++;
 	}
-	if (CKey::Once(VK_UP)){
+	if (CKey::Once(VK_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f)){
 		if (name[charnum] == 'a')
 			name[charnum] = '9';
 		else if (name[charnum] == '1')
@@ -94,13 +97,13 @@ void CRanking::Init(){
 }
 void CRanking::Update(){
 	glColor4f(1.0f, 1.0f, 0.0f, 1.0f);  //描画色　黄
-	swprintf(buf, L"ランキング");
-	CText::DrawStringW(buf, 0, 200, 20, 1.0f, 0);
+	swprintf(bufw, L"ランキング");
+	CText::DrawStringW(bufw, 0, 200, 20, 1.0f, 0);
 	for (int i = 0; i < 3; i++){
-		swprintf(buf, L"%4.2d", i + 1);
-		CText::DrawStringW(buf, -200, 100 + i * -100, 20, 1.0f, 0);
-		swprintf(buf, L"%d", mRanking[i].s);
-		CText::DrawStringW(buf, 200, 100 + i * -100, 20, 1.0f, 0);
+		swprintf(bufw, L"%4.2d", i + 1);
+		CText::DrawStringW(bufw, -200, 100 + i * -100, 20, 1.0f, 0);
+		swprintf(bufw, L"%d", mRanking[i].s);
+		CText::DrawStringW(bufw, 200, 100 + i * -100, 20, 1.0f, 0);
 		sprintf(buf2, "%3s", mRanking[i].n);
 		CText::DrawString(buf2, 0, 100 + i * -100, 20, 1.0f, 0);
 	}

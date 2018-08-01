@@ -7,10 +7,13 @@
 #include "CGamePad.h"
 #include "CCharcter.h"
 #include "CMap.h"
+#include "CScore.h"
+
 CTexture mtexture;
 CCharcter player;
 CEditer mEditer;
 CGame mGame;
+CName mScore;
 CScene::ESceneTag CMain::mSceneTag = CScene::EROOT;
 
 wchar_t gamepad_name[64];
@@ -21,9 +24,10 @@ float move_y;
 //初めに1回だけ実行する処理の定義
 void CMain::Init() {
 	CText::Init();
-	player.Init();
+	/*player.Init();
 	mEditer.Init();
-	mGame.Init();
+	mGame.Init();*/
+	mScore.Init();
 	swprintf(gamepad_name, L"");
 	move_x = 0.0f;
 	move_x = 0.0f;
@@ -34,9 +38,10 @@ void CMain::Update() {
 	/*１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ*/
 	//mEditer.Update();
 	//mEditer.Render();
-	mGame.Update();
+	/*mGame.Update();
 	mGame.Render();
-	player.Update();
+	player.Update();*/
+	mScore.Update();
 	if (CGamePad::Push(PAD_1))
 		swprintf(gamepad_name, L"１");
 	else if (CGamePad::Push(PAD_2))

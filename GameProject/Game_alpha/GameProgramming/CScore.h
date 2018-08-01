@@ -40,5 +40,6 @@ public:
 	}
 	void Init();
 	void Update();
+	void Sort();
 };
 #endif

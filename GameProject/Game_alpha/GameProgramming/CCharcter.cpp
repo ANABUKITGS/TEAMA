@@ -10,7 +10,7 @@ extern CGame mGame;
 wchar_t jumptime_buf[256];
 
 void CCharcter::Init(){
-	SetVertex(-32.0f, 32.0f, -64.0f, 64.0f);
+	SetVertex(-16.0f, 16.0f, -32.0f, 32.0f);
 	mVelocityG = 0;
 	mJumpTime = 0;
 	mVelocityX = 0;
@@ -84,9 +84,9 @@ void CCharcter::Scroll(){
 		mPosition.x -= SCROLL_SPEED;
 	}
 	//‰æ–Ê§ŒÀ
-	if (mPosition.x >= 608.0f)
-		mPosition.x = 608.0f;
+	if (mPosition.x >= 624.0f)
+		mPosition.x = 624.0f;
 
-	if (mPosition.x <= -672.0f)
-		mPosition.x = -672.0f;
+	if (mPosition.x <= -656.0f)
+		mPosition.x = -656.0f;
 }
