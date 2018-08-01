@@ -27,7 +27,7 @@ public:
 	static char name[3];
 	int charnum = 0;
 	CName(){
-		mSceneTag = ENAME;
+		CScene::mSceneTag = ENAME;
 	}
 	void Init();
 	void Update();
