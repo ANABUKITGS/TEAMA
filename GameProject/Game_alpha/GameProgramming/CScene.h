@@ -6,6 +6,7 @@
 #include "CCharcter.h"
 #include "CMap.h"
 #include "CTitle.h"
+//#include "CScore.h"
 
 
 extern CTexture Texture;
@@ -33,6 +34,7 @@ public:
 		ETITLE = 1,
 		EGAME,
 		ERANKING,
+		ESCORE,
 		EEDITER,
 		EEXIT,
 		ESIZE

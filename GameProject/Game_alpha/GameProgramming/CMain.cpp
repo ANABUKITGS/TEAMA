@@ -10,7 +10,6 @@
 
 CTexture mtexture;
 CSceneChange mChange;
-CName mScore;
 CScene::ESceneTag CMain::mSceneTag = CScene::EROOT;
 
 wchar_t gamepad_name[64];
@@ -32,11 +31,10 @@ void CMain::Update() {
 	mChange.Update();
 	/*１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ*/
 
-	mScore.Update();
 	if (CGamePad::Push(PAD_1))
 		swprintf(gamepad_name, L"１");
 	else if (CGamePad::Push(PAD_2))
-		swprintf(gamepad_name,L"２");
+		swprintf(gamepad_name, L"２");
 	else if (CGamePad::Push(PAD_3))
 		swprintf(gamepad_name, L"３");
 	else if (CGamePad::Push(PAD_4))
