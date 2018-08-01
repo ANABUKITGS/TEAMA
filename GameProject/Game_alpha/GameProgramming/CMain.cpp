@@ -33,7 +33,6 @@ void CMain::Update() {
 	if (CGamePad::Push(PAD_1))
 		swprintf(gamepad_name, L"１");
 	else if (CGamePad::Push(PAD_2))
-		swprintf(gamepad_name,L"２");
 	else if (CGamePad::Push(PAD_3))
 		swprintf(gamepad_name, L"３");
 	else if (CGamePad::Push(PAD_4))
@@ -91,4 +90,3 @@ void CMain::Update() {
 	//	move_y++;
 	//if (CGamePad::OncePush(PAD_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f))
 	//	move_y--;
-}

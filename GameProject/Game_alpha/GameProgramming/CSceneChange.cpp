@@ -1,6 +1,6 @@
 #include "CScene.h"
 #include "CScore.h"
-//hoge
+
 CCharcter player;
 CEditer mEditer;
 CGame mGame;
