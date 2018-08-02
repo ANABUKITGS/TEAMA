@@ -89,10 +89,12 @@
     <ClCompile Include="CMainGame.cpp" />
     <ClCompile Include="CMatrix33.cpp" />
     <ClCompile Include="CRectangle.cpp" />
+    <ClCompile Include="CSceneChange.cpp" />
     <ClCompile Include="CScore.cpp" />
     <ClCompile Include="CTaskManager.cpp" />
     <ClCompile Include="CText.cpp" />
     <ClCompile Include="CTexture.cpp" />
+    <ClCompile Include="CTitle.cpp" />
     <ClCompile Include="CVector2.cpp" />
     <ClCompile Include="CXInput.cpp" />
     <ClCompile Include="main.cpp" />
@@ -112,6 +114,7 @@
     <ClInclude Include="CTaskManager.h" />
     <ClInclude Include="CText.h" />
     <ClInclude Include="CTexture.h" />
+    <ClInclude Include="CTitle.h" />
     <ClInclude Include="CVector2.h" />
     <ClInclude Include="CXInput.h" />
     <ClInclude Include="resource.h" />
