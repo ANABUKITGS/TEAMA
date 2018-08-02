@@ -3,8 +3,8 @@
 CRectangle::CRectangle(const CVector2&position, const CVector2&scale, CTexture*texture)
 :mPosition(position), mScale(scale)
 {
-	mPosition.x = position.x;
-	mPosition.y = position.y;
+//	mPosition.x = position.x;
+//	mPosition.y = position.y;
 };
 
 void CRectangle::SetVertex(float Left, float Right, float Bottom, float Top){
@@ -20,6 +20,11 @@ void CRectangle::SetVertex(float Left, float Right, float Bottom, float Top){
 	mRight = Right;
 	mBottom = Bottom;
 	mTop = Top;
+	mPosition.x = (Left + Right) / 2;
+	mPosition.y = (Bottom + Top) / 2;
+	mScale.x = abs(Right - Left) / 2;
+	mScale.y = abs(Top - Bottom) / 2;
+
 }
 void CRectangle::Update(){
 	//移動行列
@@ -30,10 +35,30 @@ void CRectangle::Update(){
 	rot.SetRotation(mRotation);
 	//拡大縮小行列
 	sca.SetScale(mScale.x, mScale.y);
+	mMatrix = mMatrix * rot * sca;
+}
+
+void CRectangle::Render() {
+	glPushMatrix();
+	glMultMatrixf(&mMatrix.m[0][0]);
+	if (mpTexture) {
+		mpTexture->DrawImage(-1, 1, -1, 1, mUv[0], mUv[1], mUv[2], mUv[3], 1.0f);
+	}
+	else {
+		glBegin(GL_QUADS);
+		glVertex2d(1, 1);
+		glVertex2d(-1, 1);
+		glVertex2d(-1, -1);
+		glVertex2d(1, -1);
+		glEnd();
+	}
+	glPopMatrix();
 }
 
 void CRectangle::Render(float r, float g, float b, float a){
 	glColor4f(r, g, b, a);
+	Render();
+	return;
 	CVector2 mv[4];	//座標で四角形生成するためのインスタンス
 	//合成行列を代入する
 	mv[0] = mMatrix.MultiVector2(mVector[0]);

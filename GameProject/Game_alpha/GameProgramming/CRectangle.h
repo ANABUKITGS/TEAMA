@@ -28,6 +28,7 @@ public:
 	void SetVertex(float mLeft, float mRight, float mBottom, float mTop);	//四角形生成メソッド
 	void Update();	//更新処理
 	void Render(float, float, float, float);	//描画処理
+	void Render();
 
 };
 #endif
