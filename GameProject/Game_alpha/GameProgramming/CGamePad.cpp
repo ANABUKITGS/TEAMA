@@ -619,3 +619,37 @@ bool CGamePad::OncePush(int button, float amount){
 	}
 	return false;
 }
+
+float CGamePad::GetStick(int button){
+	//引数にスティックの番号があった時
+	if (button < 0){
+		if (button == -1){
+			if (mpPositions[LSTICKX] > 0)
+				return mpPositions[LSTICKX];
+			if (mpPositions[LSTICKX] < 0)
+				return mpPositions[LSTICKX];
+		}
+
+		if (button == -2){
+			if (mpPositions[LSTICKY] > 0)
+				return -mpPositions[LSTICKY];
+			if (mpPositions[LSTICKY] < 0)
+				return -mpPositions[LSTICKY];
+		}
+
+		if (button == -3){
+			if (mpPositions[RSTICKX] > 0)
+				return mpPositions[RSTICKX];
+			if (mpPositions[RSTICKX] < 0)
+				return mpPositions[RSTICKX];
+		}
+
+		if (button == -4){
+			if (mpPositions[RSTICKY] > 0)
+				return -mpPositions[RSTICKY];
+			if (mpPositions[RSTICKY] < 0)
+				return -mpPositions[RSTICKY];
+		}
+	}
+	return 0.0f;
+}

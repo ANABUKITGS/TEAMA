@@ -4,6 +4,6 @@
 
 class CCollision{
 public:
-	bool Collision(CRectangle&, CRectangle&);
+	bool Collision(CRectangle*, CRectangle*);
 };
 #endif

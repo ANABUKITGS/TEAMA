@@ -67,12 +67,18 @@ void CCharcter::Jump(){
 }
 
 void CCharcter::Forward(){
-	if (CGamePad::Push(PAD_LSTICKX, 0.5f) && mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit){
-		mVelocityX += 0.5f;
-		mGame.mapsctoll_flag = true;
+	if (CGamePad::Push(PAD_LSTICKX, 0.1f)){
+		float hoge = mVelocityLimit * CGamePad::GetStick(PAD_LSTICKX);
+		if (mVelocityX < hoge && mVelocityX > -hoge){
+			mVelocityX += 0.5f;
+			mGame.mapsctoll_flag = true;
+		}
 	}
-	else if (CGamePad::Push(PAD_LSTICKX, -0.5f) && mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit)
-		mVelocityX -= 0.5f;
+	else if (CGamePad::Push(PAD_LSTICKX, -0.1f)){
+		float hoge = mVelocityLimit * CGamePad::GetStick(PAD_LSTICKX);
+		if (mVelocityX < hoge && mVelocityX > -hoge)
+			mVelocityX -= 0.5f;
+	}
 	else{
 		if (mVelocityX < 0)
 			mVelocityX += 0.25f;

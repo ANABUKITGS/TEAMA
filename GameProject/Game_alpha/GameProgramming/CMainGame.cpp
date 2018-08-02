@@ -1,8 +1,10 @@
 #include "CScene.h"
 #include "CGamePad.h"
+#include "CCollision.h"
 
 extern CMapIO mMapIO;
 extern CCharcter player;
+CCollision mCollision;
 
 void CGame::Init(){
 	//ƒ}ƒbƒv ‰Šú‰»

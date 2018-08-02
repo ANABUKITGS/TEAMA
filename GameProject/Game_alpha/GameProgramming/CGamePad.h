@@ -78,5 +78,6 @@ public:
 	static bool Push(int, float);
 	static bool Once(int, float);
 	static bool OncePush(int, float);
+	static float GetStick(int);
 };
 #endif
