@@ -16,6 +16,7 @@ public:
 	int mVelocityLimit;
 	void Init();
 	void Update();
+	void Render();
 	void Gravity();
 	void Jump();
 	void Forward();

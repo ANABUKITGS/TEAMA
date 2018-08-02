@@ -32,7 +32,8 @@ void CRectangle::Update(){
 	sca.SetScale(mScale.x, mScale.y);
 }
 
-void CRectangle::Render(){
+void CRectangle::Render(float r, float g, float b, float a){
+	glColor4f(r, g, b, a);
 	CVector2 mv[4];	//座標で四角形生成するためのインスタンス
 	//合成行列を代入する
 	mv[0] = mMatrix.MultiVector2(mVector[0]);

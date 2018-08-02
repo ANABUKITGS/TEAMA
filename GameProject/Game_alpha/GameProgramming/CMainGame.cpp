@@ -1,8 +1,10 @@
 #include "CScene.h"
 #include "CGamePad.h"
+#include "CCollision.h"
 
 extern CMapIO mMapIO;
 extern CCharcter player;
+CCollision mCollision;
 
 void CGame::Init(){
 	//É}ÉbÉv èâä˙âª
@@ -29,7 +31,6 @@ void CGame::Init(){
 
 void CGame::Update(){
 	if (!pauseflag){
-		player.Update();
 		Scroll();
 		if (CGamePad::Once(PAD_1)){
 			mapsctoll_flag = false;
@@ -44,6 +45,7 @@ void CGame::Update(){
 		if (CGamePad::Once(PAD_10)){
 			pauseflag = true;
 		}
+		player.Update();
 	}
 }
 
@@ -175,6 +177,7 @@ void CGame::Render(){
 			}
 		}
 	}
+	player.Render();
 	CPauseMenu::Update();
 	CPauseMenu::Render();
 }

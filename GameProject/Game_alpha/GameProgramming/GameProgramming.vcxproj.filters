@@ -64,10 +64,13 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="CSceneChange.cpp">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="CTitle.cpp">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CCollision.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="CGame2.cpp">
       <Filter>ソース ファイル</Filter>
@@ -128,8 +131,13 @@
     <ClInclude Include="CTitle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="CGame2.h">
       <Filter>ソース ファイル</Filter>
+=======
+    <ClInclude Include="CCollision.h">
+      <Filter>ヘッダー ファイル</Filter>
+>>>>>>> 39474bd173d255b119f31079ff3604d9506045af
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

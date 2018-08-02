@@ -81,6 +81,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CCharcter.cpp" />
+    <ClCompile Include="CCollision.cpp" />
     <ClCompile Include="CEditer.cpp" />
     <ClCompile Include="CFileIO.cpp" />
     <ClCompile Include="CGame2.cpp" />
@@ -102,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCharcter.h" />
+    <ClInclude Include="CCollision.h" />
     <ClInclude Include="CFileIO.h" />
     <ClInclude Include="CGame2.h" />
     <ClInclude Include="CGamePad.h" />
