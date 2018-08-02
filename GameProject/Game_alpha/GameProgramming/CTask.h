@@ -11,7 +11,7 @@ protected:
 
 	//メンバメソッド
 	CTask()	//コンストラクタ
-		:mpPrev(0), mpNext(0), mEnabled(true)
+		:mpPrev(0), mpNext(0), mEnabled(true), mPriority(0)
 	{}
 
 	CTask(bool enabled, int priority)	//引数有コンストラクタ
