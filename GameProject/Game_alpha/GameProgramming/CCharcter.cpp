@@ -1,4 +1,5 @@
 #include "CCharcter.h"
+#include "CGame2.h"
 
 extern CGame mGame;
 

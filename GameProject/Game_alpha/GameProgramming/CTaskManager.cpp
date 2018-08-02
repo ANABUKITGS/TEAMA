@@ -16,21 +16,24 @@ void CTaskManager::Add(CTask*task){
 			task->mpPrev = 0;	//前タスクは見ない
 			task->mpNext = c;	//次タスクはカレント(カレントは現在見ている場所を指す)
 			c->mpPrev = task;	//カレントの前はタスク(前も見る為)
+			mpHead = task;
 			return;
 		}
 
-		c->mpNext = c;
+		c = c->mpNext;
 		
 		while (c){
 			if (task->mPriority >= c->mPriority){
-				c->mpNext->mpPrev = task;	//カレントの次の前をタスクにする
+//				c->mpNext->mpPrev = task;	//カレントの次の前をタスクにする
+				c->mpPrev->mpNext = task;	//カレントの次の前をタスクにする
 				task->mpPrev = c->mpPrev;	//タスクの前をカレントの前にする
 				task->mpNext = c;	//タスクの次をカレントに
 				c->mpPrev = task;	//カレントの前をタスクにする
 				return;
 			}
+			c = c->mpNext;
 		}
-		c->mpNext = c;
+//		c->mpNext = c;
 
 		mpTail->mpNext = task;
 		task->mpPrev = mpTail;
@@ -58,7 +61,7 @@ void CTaskManager::Render(){
 	CRectangle*p = (CRectangle*)mpHead;	//子クラスのカレントにキャスト変換した先頭タスクを代入
 	while (p){	//カレントp
 		p->Render(WHITE, 1.0f);	//現在カレントの描画処理を行う
-		p = (CRectangle*)mpHead->mpNext;	//キャスト変換を行ったタスクの次をカレントに代入
+		p = (CRectangle*)p->mpNext;	//キャスト変換を行ったタスクの次をカレントに代入
 	}
 }
 
