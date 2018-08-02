@@ -13,6 +13,7 @@ void CEditer::Init(){
 	}
 
 	editmap_cursor[0][0] = CURSOR_NUM;
+	cursor_posX = cursor_posY = 0;
 	setcell = EGROUND;
 	cursor_anime = 0;
 	guideIO = true;

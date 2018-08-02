@@ -13,16 +13,11 @@ CScene::ESceneTag CMain::mSceneTag = CScene::EROOT;
 
 wchar_t gamepad_name[64];
 
-float move_x;
-float move_y;
-
 //初めに1回だけ実行する処理の定義
 void CMain::Init() {
 	CText::Init();
 	mChange.Init();
 	swprintf(gamepad_name, L"");
-	move_x = 0.0f;
-	move_x = 0.0f;
 }
 
 //繰り返し実行する処理の定義
@@ -81,7 +76,7 @@ void CMain::Update() {
 
 	else
 		swprintf(gamepad_name, L"おされてないよ\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ");
-	//CText::DrawStringW(gamepad_name, -350 + move_x, 250 + move_y, 32, 1.0f, 3);
+	CText::DrawStringW(gamepad_name, -640, -328, 32, 1.0f, 3);
 
 	//if (CGamePad::OncePush(PAD_RIGHT) || CGamePad::OncePush(PAD_LSTICKX, 0.5f))
 	//	move_x++;

@@ -3,6 +3,7 @@
 //hoge
 extern CEditer mEditer;
 extern CGame mGame;
+extern CCharcter player;
 extern CTitle mTitle;
 extern CGetScore mScore;
 
@@ -24,6 +25,7 @@ void CTitle::Update(){
 
 		case CSceneChange::EGAME:
 			mGame.Init();
+			player.Init();
 			CSceneChange::changenum = cursor_num;
 			break;
 

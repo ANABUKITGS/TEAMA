@@ -5,6 +5,9 @@
 #include "CTexture.h"
 #include "CMatrix33.h"
 
+#define BLACK 0.0f, 0.0f, 0.0f
+#define WHITE 1.0f, 1.0f, 1.0f
+
 class CRectangle : public CTask{
 public:
 	CVector2 mPosition;	//四角形の中心座標	x四角形の中心のX座標	y四角形の中心Y座標
@@ -24,7 +27,7 @@ public:
 	CRectangle(const CVector2&position, const CVector2&scale, CTexture*texture);
 	void SetVertex(float mLeft, float mRight, float mBottom, float mTop);	//四角形生成メソッド
 	void Update();	//更新処理
-	void Render();	//描画処理
+	void Render(float, float, float, float);	//描画処理
 
 };
 #endif
