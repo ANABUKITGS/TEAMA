@@ -55,7 +55,7 @@ void CGame2::Init() {
 							//ç∂è„ â∫ Ç†ÇË
 							if (gamemap[i - 1][j] != EGROUND && gamemap[i + 1][j] == EGROUND)
 								new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 320, 384, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
-							//								mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 320, 384, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
+							//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 320, 384, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 							//ç∂è„ â∫ Ç»Çµ
 							else if (gamemap[i - 1][j] != EGROUND && gamemap[i + 1][j] != EGROUND)
 								new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 64, 128, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));

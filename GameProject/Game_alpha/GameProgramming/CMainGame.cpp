@@ -45,7 +45,6 @@ void CGame::Update(){
 		if (CGamePad::Once(PAD_10)){
 			pauseflag = true;
 		}
-		player.Update();
 	}
 }
 
@@ -177,6 +176,7 @@ void CGame::Render(){
 			}
 		}
 	}
+	player.Update();
 	player.Render();
 	CPauseMenu::Update();
 	CPauseMenu::Render();
