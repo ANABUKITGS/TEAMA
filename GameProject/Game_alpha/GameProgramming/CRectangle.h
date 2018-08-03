@@ -18,7 +18,9 @@ public:
 	float mRotation;	//四角形の回転角度
 	float mUv[4];	//テクスチャマッピングデータ
 	float mRight, mLeft, mTop, mBottom;
-	CRectangle(){}
+	CRectangle()
+		: mRotation(0.0f)
+	{}
 	/*
 	position:位置
 	scale:大きさ
@@ -27,7 +29,7 @@ public:
 	CRectangle(const CVector2&position, const CVector2&scale, CTexture*texture);
 	void SetVertex(float mLeft, float mRight, float mBottom, float mTop);	//四角形生成メソッド
 	void Update();	//更新処理
-	void Render(float, float, float, float);	//描画処理
+	virtual void Render(float, float, float, float);	//描画処理
 	void Render();
 
 };

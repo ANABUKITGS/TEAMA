@@ -57,7 +57,7 @@ void CRectangle::Render() {
 
 void CRectangle::Render(float r, float g, float b, float a){
 	glColor4f(r, g, b, a);
-	Render();
+	CRectangle::Render();
 	return;
 	CVector2 mv[4];	//座標で四角形生成するためのインスタンス
 	//合成行列を代入する

@@ -15,6 +15,7 @@ int CSceneChange::changenum = ETITLE;
 void CSceneChange::Init(){
 	player.Init();
 	mEditer.Init();
+	mGame.Init();
 	mGame2.Init();
 	mTitle.Init();
 	mEditer.Init();
@@ -31,8 +32,8 @@ void CSceneChange::Update(){
 		break;
 
 	case EGAME:
-		mGame2.Update();
-		mGame2.Render();
+		mGame.Update();
+		mGame.Render();
 		break;
 
 	case ERANKING:
