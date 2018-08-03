@@ -621,6 +621,8 @@ bool CGamePad::OncePush(int button, float amount){
 }
 
 float CGamePad::GetStick(int button){
+	if (!mpPositions)
+		return 0.0f;
 	//引数にスティックの番号があった時
 	if (button < 0){
 		if (button == -1){

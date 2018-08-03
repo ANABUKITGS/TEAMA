@@ -1,7 +1,7 @@
 #include "CRectangle.h"
 
 CRectangle::CRectangle(const CVector2&position, const CVector2&scale, CTexture*texture)
-:mPosition(position), mScale(scale)
+:mPosition(position), mScale(scale), mpTexture(texture)
 {
 //	mPosition.x = position.x;
 //	mPosition.y = position.y;

@@ -18,7 +18,7 @@ void CTitle::Update(){
 	if ((CGamePad::OncePush(PAD_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f)) && cursor_num > CSceneChange::EGAME)
 		cursor_num--;
 	
-	if (CGamePad::Once(PAD_2)){
+	if (CGamePad::Once(PAD_2) || CKey::Once(VK_RETURN)){
 		switch (cursor_num){
 		default:
 			break;
