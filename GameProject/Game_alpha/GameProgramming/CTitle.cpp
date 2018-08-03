@@ -12,13 +12,13 @@ void CTitle::Init(){
 }
 
 void CTitle::Update(){
-	if ((CGamePad::OncePush(PAD_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f)) && cursor_num < CSceneChange::ESIZE - 1)
+	if ((CGamePad::OncePush(PAD_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f) || CKey::OncePush(VK_DOWN) || CKey::OncePush('S')) && cursor_num < CSceneChange::ESIZE - 1)
 		cursor_num++;
 
-	if ((CGamePad::OncePush(PAD_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f)) && cursor_num > CSceneChange::EGAME)
+	if ((CGamePad::OncePush(PAD_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f) || CKey::OncePush(VK_UP) || CKey::OncePush('W')) && cursor_num > CSceneChange::EGAME)
 		cursor_num--;
 	
-	if (CGamePad::Once(PAD_2) || CKey::Once(VK_RETURN)){
+	if (CGamePad::Once(PAD_2) || CKey::Once(VK_RETURN) || CKey::Once(VK_SPACE)){
 		switch (cursor_num){
 		default:
 			break;

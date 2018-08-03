@@ -6,11 +6,15 @@
 class CKey {
 	//キーが押されているかのフラグ
 	static bool flg[256];
+
+	static unsigned int oncetimekey[256];
 public:
 	//kキーが押されている間trueを返す
 	static bool Push(char k);
 	//kキーが押された時に一度だけtrueを返す
 	static bool Once(char k);
+
+	static bool OncePush(char k);
 };
 
 #endif

@@ -21,12 +21,12 @@ void CCharcter::Update(){
 	Scroll();
 
 	CRectangle::Update();
-	if (CGamePad::Push(PAD_3))
+	if (CGamePad::Push(PAD_3) || CKey::Push(VK_CONTROL))
 		mVelocityLimit = VELOCITYX_LIMIT * 2;
 	else
 		mVelocityLimit = VELOCITYX_LIMIT;
 
-	if (CGamePad::Push(PAD_2)){
+	if (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE)){
 		if (mJumpTime < JUMP_TIME_LIMIT){
 			mJumpTime++;
 			Jump();
@@ -68,14 +68,14 @@ void CCharcter::Jump(){
 }
 
 void CCharcter::Forward(){
-	if (CGamePad::Push(PAD_LSTICKX, 0.1f)){
+	if (CGamePad::Push(PAD_LSTICKX, 0.1f) || CKey::Push('D')){
 		float hoge = mVelocityLimit * CGamePad::GetStick(PAD_LSTICKX);
 		if (mVelocityX < hoge && mVelocityX > -hoge){
 			mVelocityX += 0.5f;
 			mGame.mapsctoll_flag = true;
 		}
 	}
-	else if (CGamePad::Push(PAD_LSTICKX, -0.1f)){
+	else if (CGamePad::Push(PAD_LSTICKX, -0.1f) || CKey::Push('A')){
 		float hoge = mVelocityLimit * CGamePad::GetStick(PAD_LSTICKX);
 		if (mVelocityX < hoge && mVelocityX > -hoge)
 			mVelocityX -= 0.5f;
