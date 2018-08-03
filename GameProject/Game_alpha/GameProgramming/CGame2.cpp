@@ -203,4 +203,7 @@ void CGame2::Update() {
 
 void CGame2::Render() {
 	CTaskManager::Get()->Render();
+//	CRectangle rect(CVector2(100.0f, 100.0f), CVector2(200, 200), 0);
+//	rect.Update();
+//	rect.Render(WHITE, 1.0f);
 }

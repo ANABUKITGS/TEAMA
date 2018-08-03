@@ -1,10 +1,12 @@
 #include "CRectangle.h"
 
 CRectangle::CRectangle(const CVector2&position, const CVector2&scale, CTexture*texture)
-:mPosition(position), mScale(scale), mpTexture(texture)
+:mRotation(0.0f), mPosition(position), mScale(scale), mpTexture(texture)
+//: mRotation(0.0f), mPosition(position), mScale(scale), mpTexture(NULL)
 {
 //	mPosition.x = position.x;
 //	mPosition.y = position.y;
+	SetVertex(-scale.x, scale.x, -scale.y, scale.y);
 };
 
 void CRectangle::SetVertex(float Left, float Right, float Bottom, float Top){
@@ -20,10 +22,10 @@ void CRectangle::SetVertex(float Left, float Right, float Bottom, float Top){
 	mRight = Right;
 	mBottom = Bottom;
 	mTop = Top;
-	mPosition.x = (Left + Right) / 2;
-	mPosition.y = (Bottom + Top) / 2;
-	mScale.x = abs(Right - Left) / 2;
-	mScale.y = abs(Top - Bottom) / 2;
+//	mPosition.x = (Left + Right) / 2;
+//	mPosition.y = (Bottom + Top) / 2;
+//	mScale.x = abs(Right - Left) / 2;
+//	mScale.y = abs(Top - Bottom) / 2;
 
 }
 void CRectangle::Update(){
@@ -35,17 +37,24 @@ void CRectangle::Update(){
 	rot.SetRotation(mRotation);
 	//拡大縮小行列
 	sca.SetScale(mScale.x, mScale.y);
-	mMatrix = mMatrix * rot * sca;
+//	mMatrix = mMatrix * rot * sca;
 }
 
 void CRectangle::Render() {
 	glPushMatrix();
-	glMultMatrixf(&mMatrix.m[0][0]);
+	CMatrix33 tran = mMatrix.transpose();
+	glMultMatrixf(&tran.m[0][0]);
+//	glLoadIdentity();
+//	glLoadMatrixf(tran.m[0]);
 	if (mpTexture) {
 		mpTexture->DrawImage(-1, 1, -1, 1, mUv[0], mUv[1], mUv[2], mUv[3], 1.0f);
 	}
 	else {
 		glBegin(GL_QUADS);
+		glVertex2d(100, 100);
+		glVertex2d(-100, 100);
+		glVertex2d(-100, -100);
+		glVertex2d(100, -100);
 		glVertex2d(1, 1);
 		glVertex2d(-1, 1);
 		glVertex2d(-1, -1);
@@ -57,8 +66,8 @@ void CRectangle::Render() {
 
 void CRectangle::Render(float r, float g, float b, float a){
 	glColor4f(r, g, b, a);
-	CRectangle::Render();
-	return;
+//	CRectangle::Render();
+//	return;
 	CVector2 mv[4];	//座標で四角形生成するためのインスタンス
 	//合成行列を代入する
 	mv[0] = mMatrix.MultiVector2(mVector[0]);
@@ -68,11 +77,22 @@ void CRectangle::Render(float r, float g, float b, float a){
 	if (!mEnabled)	//有効フラグが無効な時は戻り値を返す
 		return;
 	else{	//フラグが有効な時は四角形を生成する
-		glBegin(GL_QUADS);
-		glVertex2f(mv[0].x, mv[0].y);
-		glVertex2f(mv[1].x, mv[1].y);
-		glVertex2f(mv[2].x, mv[2].y);
-		glVertex2f(mv[3].x, mv[3].y);
-		glEnd();
+		if (mpTexture) {
+			mpTexture->DrawImage(mv[0].x, mv[2].x, mv[2].y, mv[0].y, mUv[0], mUv[1], mUv[2], mUv[3], 1.0f);
+		}
+		else {
+			glBegin(GL_QUADS);
+			glVertex2f(mv[0].x, mv[0].y);
+			glVertex2f(mv[1].x, mv[1].y);
+			glVertex2f(mv[2].x, mv[2].y);
+			glVertex2f(mv[3].x, mv[3].y);
+			glEnd();
+		}
+		//glBegin(GL_QUADS);
+		//glVertex2f(mv[0].x, mv[0].y);
+		//glVertex2f(mv[1].x, mv[1].y);
+		//glVertex2f(mv[2].x, mv[2].y);
+		//glVertex2f(mv[3].x, mv[3].y);
+		//glEnd();
 	}
 }

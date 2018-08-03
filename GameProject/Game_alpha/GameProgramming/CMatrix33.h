@@ -21,5 +21,8 @@ public:
 	const CMatrix33 operator*(const CMatrix33 &v) const;
 	const CMatrix33 operator/(const CMatrix33 &v) const;
 
+
+	const CMatrix33 transpose() const;
+
 };
 #endif
