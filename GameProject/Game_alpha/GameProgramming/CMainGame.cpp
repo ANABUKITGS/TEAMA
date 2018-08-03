@@ -32,7 +32,8 @@ void CGame::Init(){
 void CGame::Update(){
 	if (!pauseflag){
 		Scroll();
-		if (CGamePad::Once(PAD_1)){
+		//スクロール リセット
+		if (CGamePad::Once(PAD_1) || CKey::Once('R')){
 			mapsctoll_flag = false;
 			for (int i = 0; i < MAP_SIZEY; i++){
 				for (int j = 0; j < MAP_SIZEX; j++){
@@ -42,7 +43,7 @@ void CGame::Update(){
 			}
 			mapscrollnum = 0;
 		}
-		if (CGamePad::Once(PAD_10)){
+		if (CGamePad::Once(PAD_10) || CKey::Once(VK_ESCAPE)){
 			pauseflag = true;
 		}
 	}
@@ -184,17 +185,17 @@ void CGame::Render(){
 
 void CPauseMenu::Update(){
 	if (pauseflag){
-		if ((CGamePad::OncePush(PAD_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f)) && cursor_num < ESIZE - 1)
+		if ((CGamePad::OncePush(PAD_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f) || CKey::Once('S')) && cursor_num < ESIZE - 1)
 			cursor_num++;
 
-		if ((CGamePad::OncePush(PAD_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f)) && cursor_num > EBACK)
+		if ((CGamePad::OncePush(PAD_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f) || CKey::Once('W')) && cursor_num > EBACK)
 			cursor_num--;
-		if (CGamePad::Once(PAD_10) || CGamePad::Once(PAD_3)){
+		if (CGamePad::Once(PAD_10) || CGamePad::Once(PAD_3) || CKey::Once(VK_ESCAPE)){
 			cursor_num = EBACK;
 			pauseflag = false;
 		}
 
-		if (CGamePad::Once(PAD_2)){
+		if (CGamePad::Once(PAD_2) || CKey::Once(VK_RETURN)){
 			switch (cursor_num){
 			default:
 				break;
