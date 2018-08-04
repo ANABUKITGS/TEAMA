@@ -15,7 +15,7 @@ public:
 	}
 
 	void Update() {
-		mRotation += 1;
+//		mRotation += 1;
 		CRectangle::Update();
 	}
 };
