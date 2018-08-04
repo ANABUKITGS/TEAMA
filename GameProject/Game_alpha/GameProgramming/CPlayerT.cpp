@@ -69,13 +69,15 @@ void CPlayerT::Forward(){
 
 
 bool CPlayerT::Collision(CRectangle *p) {
-	CVector2 aj;
-	if (CRectangle::Collision(p, &aj)) {
-		if (p->mTag != EJEWELRY) {
-			mPosition = mPosition + aj;
+	if (p->GetEnabled()) {
+		CVector2 aj;
+		if (CRectangle::Collision(p, &aj)) {
+			if (p->mTag != EJEWELRY) {
+				mPosition = mPosition + aj;
+			}
+			mVelocityG = 0.0f;
+			return true;
 		}
-		mVelocityG = 0.0f;
-		return true;
 	}
 	return false;
 }

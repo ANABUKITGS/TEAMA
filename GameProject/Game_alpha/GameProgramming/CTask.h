@@ -52,6 +52,9 @@ protected:
 	virtual bool Collision(CTask*m, CTask*y){ return false; }	//衝突処理を定義する
 
 	friend class CTaskManager;	//タスクマネージャーで使う
+public:
+
+	bool GetEnabled() { return mEnabled; }
 
 };
 
