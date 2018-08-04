@@ -13,6 +13,11 @@ public:
 		mPriority = -1;
 		CTaskManager::Get()->Add(this);
 	}
+
+	void Update() {
+		mRotation += 1;
+		CRectangle::Update();
+	}
 };
 
 #endif

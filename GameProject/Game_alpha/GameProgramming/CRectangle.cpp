@@ -87,7 +87,8 @@ void CRectangle::Render(float r, float g, float b, float a){
 		return;
 	else{	//フラグが有効な時は四角形を生成する
 		if (mpTexture) {
-			mpTexture->DrawImage(mv[0].x, mv[2].x, mv[2].y, mv[0].y, mUv[0], mUv[1], mUv[2], mUv[3], 1.0f);
+//			mpTexture->DrawImage(mv[0].x, mv[2].x, mv[2].y, mv[0].y, mUv[0], mUv[1], mUv[2], mUv[3], 1.0f);
+			mpTexture->DrawImage(mv[0], mv[1], mv[2], mv[3], mUv[0], mUv[1], mUv[2], mUv[3], 1.0f);
 		}
 		else {
 			glBegin(GL_QUADS);
@@ -107,11 +108,11 @@ void CRectangle::Render(float r, float g, float b, float a){
 }
 
 
-void CRectangle::Collision(CRectangle *target) {
-	Collision(target, &mPosition);
+bool CRectangle::Collision(CRectangle *target) {
+	return Collision(target, &mPosition);
 }
 
-void CRectangle::Collision(CRectangle *target, CVector2 *adjust) {
+bool CRectangle::Collision(CRectangle *target, CVector2 *adjust) {
 	CVector2 vec = target->mPosition - mPosition;
 	CVector2 ad;
 	if (abs(vec.x) < target->mScale.x + mScale.x) {
@@ -134,6 +135,8 @@ void CRectangle::Collision(CRectangle *target, CVector2 *adjust) {
 			else {
 				adjust->y += ad.y;
 			}
+			return true;
 		}
 	}
+	return false;
 }

@@ -31,8 +31,8 @@ public:
 	void Update();	//XVˆ—
 	virtual void Render(float, float, float, float);	//•`‰æˆ—
 	void Render();
-	void Collision(CRectangle *target);
-	void Collision(CRectangle *target, CVector2 *adjust);
+	virtual bool Collision(CRectangle *target);
+	bool Collision(CRectangle *target, CVector2 *adjust);
 	void SetRectangle(const CVector2&position, const CVector2&scale, CTexture*texture);
 
 };

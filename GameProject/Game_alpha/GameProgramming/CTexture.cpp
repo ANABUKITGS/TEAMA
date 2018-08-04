@@ -105,3 +105,41 @@ void CTexture::DrawImage(int left, int right, int bottom, int top, float tleft, 
 void CTexture::DrawImageSetColor(int left, int right, int bottom, int top, float tleft, float tright, float tbottom, float ttop, float r, float g, float b, float alpha){
 	SetDrawImage(left, right, bottom, top, tleft, tright, tbottom, ttop, r, g, b, alpha);
 }
+
+
+void CTexture::DrawImage(const CVector2& v0, const CVector2& v1, const CVector2& v2, const CVector2& v3, float tleft, float tright, float tbottom, float ttop, float r, float g, float b, float alpha) {
+	//テクスチャを有効にする
+	glEnable(GL_TEXTURE_2D);
+	//アルファブレンドを有効にする
+	glEnable(GL_BLEND);
+	//ブレンド方法を指定
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);	//通常 アルファブレンド
+	//	glBlendFunc(GL_SRC_ALPHA, GL_ONE);	//加算 アルファブレンド
+
+	//テクスチャを指定
+	glBindTexture(GL_TEXTURE_2D, id);
+
+	glColor4f(r, g, b, alpha);
+
+	glBegin(GL_TRIANGLES);
+	glTexCoord2f(tleft / header.width, (header.height - ttop) / header.height);
+	glVertex2d(v0.x, v0.y);
+	glTexCoord2f(tleft / header.width, (header.height - tbottom) / header.height);
+	glVertex2d(v1.x, v1.y);
+	glTexCoord2f(tright / header.width, (header.height - tbottom) / header.height);
+	glVertex2d(v2.x, v2.y);
+	glTexCoord2f(tleft / header.width, (header.height - ttop) / header.height);
+	glVertex2d(v0.x, v0.y);
+	glTexCoord2f(tright / header.width, (header.height - tbottom) / header.height);
+	glVertex2d(v2.x, v2.y);
+	glTexCoord2f(tright / header.width, (header.height - ttop) / header.height);
+	glVertex2d(v3.x, v3.y);
+	glEnd();
+
+	//テクスチャを解放
+	glBindTexture(GL_TEXTURE_2D, 0);
+	//アルファブレンドを無効
+	glDisable(GL_BLEND);
+	//テクスチャを無効
+	glDisable(GL_TEXTURE_2D);
+}

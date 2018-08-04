@@ -91,6 +91,7 @@
     <ClCompile Include="CMain.cpp" />
     <ClCompile Include="CMainGame.cpp" />
     <ClCompile Include="CMatrix33.cpp" />
+    <ClCompile Include="CPlayerT.cpp" />
     <ClCompile Include="CRectangle.cpp" />
     <ClCompile Include="CSceneChange.cpp" />
     <ClCompile Include="CScore.cpp" />

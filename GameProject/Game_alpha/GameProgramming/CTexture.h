@@ -1,5 +1,6 @@
 #ifndef CTEXTURE_H
 #define CTEXTURE_H
+#include "CVector2.h"
 #include "glut.h"
 
 #define TEX_FULLSCREEN -640, 640, -360, 360
@@ -49,6 +50,8 @@ public:
 	void DrawImage(int left, int right, int bottom, int top, float fLeft, float tRight, float tBottom, float tTop, float alpha);
 
 	void DrawImageSetColor(int left, int right, int bottom, int top, float fLeft, float tRight, float tBottom, float tTop, float r, float g, float b, float alpha);
+
+	void DrawImage(const CVector2& v0, const CVector2& v1, const CVector2& v2, const CVector2& v3, float fLeft, float tRight, float tBottom, float tTop, float r = 1.0f, float g = 1.0f, float b = 1.0f, float alpha = 1.0f);
 };
 
 #endif
