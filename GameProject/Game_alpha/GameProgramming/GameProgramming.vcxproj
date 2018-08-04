@@ -112,6 +112,7 @@
     <ClInclude Include="CKey.h" />
     <ClInclude Include="CMain.h" />
     <ClInclude Include="CMap.h" />
+    <ClInclude Include="CMapChip.h" />
     <ClInclude Include="CMatrix33.h" />
     <ClInclude Include="CRectangle.h" />
     <ClInclude Include="CScene.h" />

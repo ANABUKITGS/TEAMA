@@ -2,6 +2,7 @@
 #include "CFileIO.h"
 #include "CMap.h"
 #include "CCamera2D.h"
+#include "CMapChip.h"
 
 #define WINDOW_SIZE_W 1280
 #define WINDOW_SIZE_H 720

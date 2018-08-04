@@ -45,6 +45,7 @@
     <ClInclude Include="CXInput.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="CCamera2D.h" />
+    <ClInclude Include="CMapChip.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />

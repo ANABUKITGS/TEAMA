@@ -37,7 +37,7 @@ void CRectangle::Update(){
 	rot.SetRotation(mRotation);
 	//ägëÂèkè¨çsóÒ
 	sca.SetScale(mScale.x, mScale.y);
-//	mMatrix = mMatrix * rot * sca;
+	mMatrix = mMatrix * rot;
 }
 
 void CRectangle::Render() {
