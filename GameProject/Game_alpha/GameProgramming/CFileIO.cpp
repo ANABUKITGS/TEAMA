@@ -38,11 +38,11 @@ void CMapIO::GameMapLoad(int map){
 		for (int i = 0; i < MAP_SIZEY; i++){
 			for (int j = 0; j < MAP_SIZEX; j++){
 				fread(&mGame.gamemap[i][j], sizeof(int), 1, fp);
-				if (mGame.gamemap[i][j] >= mEditer.ESIZE){
+				if (mGame.gamemap[i][j] >= ECELLNUM::ESIZE){
 					MessageBox(NULL, "マップデータが破損しているか、違うファイルです。", "エラー", 0x00040010L);
 					for (int i = 0; i < MAP_SIZEY; i++){
 						for (int j = 0; j < MAP_SIZEX; j++)
-							mGame.gamemap[i][j] = mEditer.ENONE;
+							mGame.gamemap[i][j] = ECELLNUM::ENONE;
 					}
 					char loadmsg[MAX_PATH + 8];
 					sprintf(loadmsg, "Load to %s\n", filepath);
@@ -70,11 +70,11 @@ void CMapIO::Load(){	//読み込み
 		for (int i = 0; i < MAP_SIZEY; i++){
 			for (int j = 0; j < MAP_SIZEX; j++){
 				fread(&mEditer.editmap[i][j], sizeof(int), 1, fp);
-				if (mEditer.editmap[i][j] >= mEditer.ESIZE){
+				if (mEditer.editmap[i][j] >= ECELLNUM::ESIZE){
 					MessageBox(NULL, "マップデータが破損しているか、違うファイルです。", "エラー", 0x00040010L);
 					for (int i = 0; i < MAP_SIZEY; i++){
 						for (int j = 0; j < MAP_SIZEX; j++)
-							mEditer.editmap[i][j] = mEditer.ENONE;
+							mEditer.editmap[i][j] = ECELLNUM::ENONE;
 					}
 					char loadmsg[MAX_PATH + 8];
 					sprintf(loadmsg, "Load to %s\n", filepath);

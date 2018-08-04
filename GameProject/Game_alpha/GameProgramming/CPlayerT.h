@@ -12,9 +12,12 @@
 
 class CPlayerT : public CCharcter {
 public:
+	static CPlayerT *mpPlayer;
 
 	CPlayerT() {
+		mpPlayer = this;
 		mPriority = 1;
+		mTag = EPLAYER;
 		CTaskManager::Get()->Add(this);
 	}
 

@@ -7,11 +7,15 @@
 #include "CFileIO.h"
 #include "CCharcter.h"
 
+//class CRectangle;
+
 #define CELLSIZE		64		//マス サイズ
 #define MAP_SIZEY		11		//マップ 上限 Y
 #define MAP_SIZEX		256		//マップ 上限 X
 #define CURSOR_NUM		-1		//カーソル
 #define SCROLL_SPEED	2.0f	//スクロールスピード
+
+
 
 class CPauseMenu{
 private:
@@ -43,29 +47,29 @@ private:
 
 public:
 	//マップ 配列 中身
-	enum ECELLNUM{
-		/*------ マップ 形状 など ------*/
-		ENONE = 1,			//空白 | 0は使用禁止
-		EGROUND,			//床や壁
-		EUNDER,				//下から抜ける足場
-		EBELT,				//ベルトコンベア
-		EJEWELRY,			//宝石
-		ECHIKUWA,			//ちくわブロック
-		ESWITCH_GROUND1,	//スイッチで 切り替わる足場 1
-		ESWITCH_GROUND2,	//スイッチで 切り替わる足場 2
-		ESWITCH,			//スイッチで 切り替わる足場の スイッチ
-		ETORABASAMI,		//トラバサミ
+	//enum ECELLNUM{
+	//	/*------ マップ 形状 など ------*/
+	//	ENONE = 1,			//空白 | 0は使用禁止
+	//	EGROUND,			//床や壁
+	//	EUNDER,				//下から抜ける足場
+	//	EBELT,				//ベルトコンベア
+	//	EJEWELRY,			//宝石
+	//	ECHIKUWA,			//ちくわブロック
+	//	ESWITCH_GROUND1,	//スイッチで 切り替わる足場 1
+	//	ESWITCH_GROUND2,	//スイッチで 切り替わる足場 2
+	//	ESWITCH,			//スイッチで 切り替わる足場の スイッチ
+	//	ETORABASAMI,		//トラバサミ
 
-		/*------ キャラクター など ------*/
-		ECHECKPOINT,		//チェックポイント
-		EPLAYER,			//プレイヤー
-		EENEMY1,			//敵1
-		EENEMY2,			//敵2
-		EENEMY3,			//敵3
-		//EENEMY4,			//敵4
-		EBOSS,				//ボス
-		ESIZE,				//ECELLNUM サイズ
-	};
+	//	/*------ キャラクター など ------*/
+	//	ECHECKPOINT,		//チェックポイント
+	//	EPLAYER,			//プレイヤー
+	//	EENEMY1,			//敵1
+	//	EENEMY2,			//敵2
+	//	EENEMY3,			//敵3
+	//	//EENEMY4,			//敵4
+	//	EBOSS,				//ボス
+	//	ESIZE,				//ECELLNUM サイズ
+	//};
 
 	int editmap[MAP_SIZEY][MAP_SIZEX];				//マップ
 	CTexture mTexBack;								//背景

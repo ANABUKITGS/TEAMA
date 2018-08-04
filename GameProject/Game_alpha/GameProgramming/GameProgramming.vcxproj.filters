@@ -23,6 +23,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CCamera2D.cpp" />
     <ClCompile Include="CPlayerT.cpp" />
+    <ClCompile Include="CMapChip.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCharcter.h" />

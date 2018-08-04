@@ -48,11 +48,11 @@ void CGame2::Init() {
 		for (int i = 0; i < MAP_SIZEY; i++){
 			for (int j = 0; j < MAP_SIZEX; j++){
 				//				fread(&mGame.gamemap[i][j], sizeof(int), 1, fp);
-				if (gamemap[i][j] >= CEditer::ESIZE){
+				if (gamemap[i][j] >= ECELLNUM::ESIZE){
 					MessageBox(NULL, "マップデータが破損しているか、違うファイルです。", "エラー", 0x00040010L);
 					for (int i = 0; i < MAP_SIZEY; i++){
 						for (int j = 0; j < MAP_SIZEX; j++)
-							gamemap[i][j] = CEditer::ENONE;
+							gamemap[i][j] = ECELLNUM::ENONE;
 					}
 					char loadmsg[MAX_PATH + 8];
 					sprintf(loadmsg, "Load to %s\n", filepath);
@@ -141,43 +141,43 @@ void CGame2::Init() {
 					//下から抜ける足場
 					if (gamemap[i][j] == EUNDER){
 						if (gamemap[i][j - 1] != EUNDER && gamemap[i][j + 1] == EUNDER)
-							new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 64, 128, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+							new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 64, 128, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), EUNDER);
 						//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 64, 128, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 
 						else if (gamemap[i][j - 1] == EUNDER && gamemap[i][j + 1] == EUNDER)
-							new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 128, 192, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+							new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 128, 192, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), EUNDER);
 						//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 128, 192, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 
 						else if (gamemap[i][j - 1] == EUNDER && gamemap[i][j + 1] != EUNDER)
-							new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 192, 256, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+							new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 192, 256, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), EUNDER);
 						//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 192, 256, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 
 						else
-							new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 0, 64, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+							new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 0, 64, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), EUNDER);
 						//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 0, 64, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 					}
 					//ベルトコンベア
 					if (gamemap[i][j] == EBELT){
 						if (gamemap[i][j - 1] != EBELT && gamemap[i][j + 1] == EBELT)
-							new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 64, 128, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+							new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 64, 128, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), EBELT);
 						//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 64, 128, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 
 						else if (gamemap[i][j - 1] == EBELT && gamemap[i][j + 1] == EBELT)
-							new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 128, 192, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+							new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 128, 192, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), EBELT);
 						//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 128, 192, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 
 						else if (gamemap[i][j - 1] == EBELT && gamemap[i][j + 1] != EBELT)
-							new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 192, 256, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+							new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 192, 256, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), EBELT);
 						//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 192, 256, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 
 						else
-							new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 0, 64, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+							new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 0, 64, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), EBELT);
 						//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 0, 64, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 					}
 
 					//その他
 					if (gamemap[i][j] >= EJEWELRY && gamemap[i][j] < EPLAYER)
-						new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 0, 64, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+						new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 0, 64, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), EJEWELRY);
 					//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 0, 64, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 
 					//キャラクター
@@ -185,15 +185,15 @@ void CGame2::Init() {
 						int temp_setcell = gamemap[i][j];
 
 						if (gamemap[i - 1][j] == temp_setcell && gamemap[i + 1][j] != temp_setcell)
-							new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexCharacter, 64, 128, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+							new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexCharacter, 64, 128, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), EPLAYER);
 						//	mTexCharacter.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 64, 128, CELLSIZE * (gamemap[i][j] - EPLAYER + 1), CELLSIZE * (gamemap[i][j] - EPLAYER), 1.0f);
 
 						else if (gamemap[i + 1][j] == temp_setcell && gamemap[i - 1][j] != temp_setcell)
-							new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexCharacter, 128, 192, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+							new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexCharacter, 128, 192, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), EPLAYER);
 						//	mTexCharacter.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 128, 192, CELLSIZE * (gamemap[i][j] - EPLAYER + 1), CELLSIZE * (gamemap[i][j] - EPLAYER), 1.0f);
 
 						else
-							new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexCharacter, 192, 256, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+							new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexCharacter, 192, 256, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), EPLAYER);
 						//	mTexCharacter.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 192, 256, CELLSIZE * (gamemap[i][j] - EPLAYER + 1), CELLSIZE * (gamemap[i][j] - EPLAYER), 1.0f);
 					}
 
@@ -221,6 +221,7 @@ void CGame2::Update() {
 
 void CGame2::Render() {
 //	CCamera2D::Begin(0.0, WINDOW_SIZE_W, 0.0, WINDOW_SIZE_H);
+	mCamera.x = CPlayerT::mpPlayer->mPosition.x;
 	mCamera.Begin();
 	CTaskManager::Get()->Render();
 	CCamera2D::End();

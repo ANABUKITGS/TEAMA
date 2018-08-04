@@ -140,22 +140,22 @@ void CEditer::Update(){
 		//}
 		if (CGamePad::OncePush(PAD_5) || CGamePad::OncePush(PAD_7)){	//パーツ選択
 			if (setcell <= EGROUND)
-				setcell = ESIZE - 1;
+				setcell = ECELLNUM::ESIZE - 1;
 			else
 				setcell--;
 		}
 		if (CGamePad::OncePush(PAD_6) || CGamePad::OncePush(PAD_8)){	//パーツ選択
-			if (setcell >= ESIZE - 1)
-				setcell = EGROUND;
+			if (setcell >= ECELLNUM::ESIZE - 1)
+				setcell = ECELLNUM::EGROUND;
 			else
 				setcell++;
 		}
 		if (CGamePad::Push(PAD_2)){	//設置
-			if (setcell >= EPLAYER){
+			if (setcell >= ECELLNUM::EPLAYER){
 				if (cursor_posY > 0){
 					int temp_setcell = editmap[cursor_posY][cursor_posX];
 
-					if (temp_setcell == EPLAYER){
+					if (temp_setcell == ECELLNUM::EPLAYER){
 						for (int i = 0; i < MAP_SIZEY; i++){
 							for (int j = 0; j < MAP_SIZEX; j++){
 								if (editmap[i][j] == EPLAYER)
