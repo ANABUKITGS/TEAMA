@@ -1,56 +1,156 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="CCharcter.cpp" />
-    <ClCompile Include="CCollision.cpp" />
-    <ClCompile Include="CEditer.cpp" />
-    <ClCompile Include="CFileIO.cpp" />
-    <ClCompile Include="CGame2.cpp" />
-    <ClCompile Include="CGamePad.cpp" />
-    <ClCompile Include="CKey.cpp" />
-    <ClCompile Include="CMain.cpp" />
-    <ClCompile Include="CMainGame.cpp" />
-    <ClCompile Include="CMatrix33.cpp" />
-    <ClCompile Include="CRectangle.cpp" />
-    <ClCompile Include="CSceneChange.cpp" />
-    <ClCompile Include="CScore.cpp" />
-    <ClCompile Include="CTaskManager.cpp" />
-    <ClCompile Include="CText.cpp" />
-    <ClCompile Include="CTexture.cpp" />
-    <ClCompile Include="CTitle.cpp" />
-    <ClCompile Include="CVector2.cpp" />
-    <ClCompile Include="CXInput.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="CCamera2D.cpp" />
-    <ClCompile Include="CPlayerT.cpp" />
-    <ClCompile Include="CMapChip.cpp" />
+    <ClCompile Include="CCamera2D.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CCharcter.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CCollision.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CEditer.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CFileIO.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CGame2.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CGamePad.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CKey.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CMain.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CMainGame.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CMapChip.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CMatrix33.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerT.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CRectangle.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneChange.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CScore.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CTaskManager.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CText.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CTexture.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitle.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CVector2.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CXInput.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CCharcter.h" />
-    <ClInclude Include="CCollision.h" />
-    <ClInclude Include="CFileIO.h" />
-    <ClInclude Include="CGame2.h" />
-    <ClInclude Include="CGamePad.h" />
-    <ClInclude Include="CKey.h" />
-    <ClInclude Include="CMain.h" />
-    <ClInclude Include="CMap.h" />
-    <ClInclude Include="CMatrix33.h" />
-    <ClInclude Include="CRectangle.h" />
-    <ClInclude Include="CScene.h" />
-    <ClInclude Include="CScore.h" />
-    <ClInclude Include="CTask.h" />
-    <ClInclude Include="CTaskManager.h" />
-    <ClInclude Include="CText.h" />
-    <ClInclude Include="CTexture.h" />
-    <ClInclude Include="CTitle.h" />
-    <ClInclude Include="CVector2.h" />
-    <ClInclude Include="CXInput.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="CCamera2D.h" />
-    <ClInclude Include="CMapChip.h" />
-    <ClInclude Include="CPlayerT.h" />
+    <ClInclude Include="CCamera2D.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CCharcter.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CCollision.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CFileIO.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CGame2.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CGamePad.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CKey.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CMain.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CMap.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CMapChip.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CMatrix33.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerT.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CRectangle.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CScore.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CTask.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CTaskManager.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CText.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CTexture.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CTitle.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CVector2.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CXInput.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ソースファイル">
+      <UniqueIdentifier>{1c91c252-fb68-4af4-baf9-c0ce80564ecb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル">
+      <UniqueIdentifier>{159bc8ec-cc8e-4ce3-a5ae-80f79d947a7a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

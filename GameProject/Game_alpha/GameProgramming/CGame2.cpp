@@ -4,6 +4,7 @@
 #include "CCamera2D.h"
 #include "CMapChip.h"
 #include "CPlayerT.h"
+#include "CScene.h"
 
 #define WINDOW_SIZE_W 1280
 #define WINDOW_SIZE_H 720
@@ -222,7 +223,7 @@ void CGame2::Init() {
 		fclose(fp);	//ƒtƒ@ƒCƒ‹‚ð•Â‚¶‚é
 
 	}
-	new CPlayerT(CVector2(64, 264), CVector2(32, 64), NULL);
+	new CPlayerT(CVector2(64, 264), CVector2(16, 60), NULL);
 }
 
 void CGame2::Update() {
@@ -232,6 +233,8 @@ void CGame2::Update() {
 	if (CKey::Push('A')) {
 		mCamera.x -= 5;
 	}
+	if (CGamePad::Once(PAD_10))
+		CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ETITLE;
 	CTaskManager::Get()->Update();
 }
 
