@@ -10,6 +10,7 @@ public:
 		mUv[1] = uv1;
 		mUv[2] = uv2;
 		mUv[3] = uv3;
+		mPriority = -1;
 		CTaskManager::Get()->Add(this);
 	}
 };

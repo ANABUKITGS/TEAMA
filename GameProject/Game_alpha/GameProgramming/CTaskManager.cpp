@@ -53,7 +53,18 @@ void CTaskManager::Update(){
 	CRectangle*p = (CRectangle*)mpHead;	//子クラスのカレントにキャスト変換した先頭タスクを代入
 	while (p){	//カレントp
 		p->Update();	//現在カレントの更新処理を行う
-		p=(CRectangle*)p->mpNext;	//キャスト変換を行ったタスクの次をカレントに代入
+		p = (CRectangle*)p->mpNext;	//キャスト変換を行ったタスクの次をカレントに代入
+	}
+	p = (CRectangle*)mpHead;	//子クラスのカレントにキャスト変換した先頭タスクを代入
+	while (p && p->mPriority > 0){	//カレントp
+		CRectangle*q = (CRectangle*)mpHead;	//子クラスのカレントにキャスト変換した先頭タスクを代入
+		while (q) {
+			if (p != q) {
+				p->Collision(q);	//現在カレントの更新処理を行う
+			}
+			q = (CRectangle*)q->mpNext;	//キャスト変換を行ったタスクの次をカレントに代入
+		}
+		p = (CRectangle*)p->mpNext;	//キャスト変換を行ったタスクの次をカレントに代入
 	}
 }
 

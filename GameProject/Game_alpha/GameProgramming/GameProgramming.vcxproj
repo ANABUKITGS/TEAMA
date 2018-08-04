@@ -114,6 +114,7 @@
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CMapChip.h" />
     <ClInclude Include="CMatrix33.h" />
+    <ClInclude Include="CPlayerT.h" />
     <ClInclude Include="CRectangle.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CScore.h" />

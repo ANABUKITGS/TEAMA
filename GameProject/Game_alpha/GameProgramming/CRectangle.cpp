@@ -4,8 +4,17 @@ CRectangle::CRectangle(const CVector2&position, const CVector2&scale, CTexture*t
 :mRotation(0.0f), mPosition(position), mScale(scale), mpTexture(texture)
 //: mRotation(0.0f), mPosition(position), mScale(scale), mpTexture(NULL)
 {
-//	mPosition.x = position.x;
-//	mPosition.y = position.y;
+	//	mPosition.x = position.x;
+	//	mPosition.y = position.y;
+	SetVertex(-scale.x, scale.x, -scale.y, scale.y);
+};
+
+void CRectangle::SetRectangle(const CVector2&position, const CVector2&scale, CTexture*texture)
+{
+	mRotation = 0.0f;
+	mPosition = position;
+	mScale = scale;
+	mpTexture = texture;
 	SetVertex(-scale.x, scale.x, -scale.y, scale.y);
 };
 
@@ -94,5 +103,37 @@ void CRectangle::Render(float r, float g, float b, float a){
 		//glVertex2f(mv[2].x, mv[2].y);
 		//glVertex2f(mv[3].x, mv[3].y);
 		//glEnd();
+	}
+}
+
+
+void CRectangle::Collision(CRectangle *target) {
+	Collision(target, &mPosition);
+}
+
+void CRectangle::Collision(CRectangle *target, CVector2 *adjust) {
+	CVector2 vec = target->mPosition - mPosition;
+	CVector2 ad;
+	if (abs(vec.x) < target->mScale.x + mScale.x) {
+		if (vec.x < 0) {
+			ad.x = target->mScale.x + mScale.x + vec.x;
+		}
+		else {
+			ad.x = vec.x - target->mScale.x - mScale.x;
+		}
+		if (abs(vec.y) < target->mScale.y + mScale.y) {
+			if (vec.y < 0) {
+				ad.y = target->mScale.y + mScale.y + vec.y;
+			}
+			else {
+				ad.y = vec.y - target->mScale.y - mScale.y;
+			}
+			if (abs(ad.x) < abs(ad.y)) {
+				adjust->x += ad.x;
+			}
+			else {
+				adjust->y += ad.y;
+			}
+		}
 	}
 }

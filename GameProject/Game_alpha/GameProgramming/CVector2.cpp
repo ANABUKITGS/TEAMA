@@ -5,7 +5,7 @@ const CVector2 CVector2::operator+(const CVector2 &v)const{
 }
 
 const CVector2 CVector2::operator-(const CVector2 &v)const{
-	return CVector2(x - v.x, y + v.y);
+	return CVector2(x - v.x, y - v.y);
 }
 
 const CVector2 CVector2::operator*(const CVector2 &v)const{

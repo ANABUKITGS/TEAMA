@@ -19,7 +19,7 @@ public:
 	float mUv[4];	//テクスチャマッピングデータ
 	float mRight, mLeft, mTop, mBottom;
 	CRectangle()
-		: mRotation(0.0f)
+		: mRotation(0.0f), mpTexture(0)
 	{}
 	/*
 	position:位置
@@ -31,6 +31,9 @@ public:
 	void Update();	//更新処理
 	virtual void Render(float, float, float, float);	//描画処理
 	void Render();
+	void Collision(CRectangle *target);
+	void Collision(CRectangle *target, CVector2 *adjust);
+	void SetRectangle(const CVector2&position, const CVector2&scale, CTexture*texture);
 
 };
 #endif

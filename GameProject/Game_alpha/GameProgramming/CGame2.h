@@ -5,6 +5,7 @@
 #include "CTaskManager.h"
 #include "CCamera2D.h"
 
+
 #define TUTORIAL_MAP	".\\Data\\Map\\MAP0.BIN"	//チュートリアルマップ ファイルパス
 #define GAME_MAP		".\\Data\\Map\\MAP1.BIN"	//ゲームマップ ファイルパス
 #define EDITER_MAP		".\\Data\\Map\\MAP2.BIN"	//エディットマップ ファイルパス

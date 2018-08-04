@@ -8,7 +8,7 @@
 #include "CCharcter.h"
 
 #define CELLSIZE		64		//マス サイズ
-#define MAP_SIZEY		22		//マップ 上限 Y
+#define MAP_SIZEY		11		//マップ 上限 Y
 #define MAP_SIZEX		256		//マップ 上限 X
 #define CURSOR_NUM		-1		//カーソル
 #define SCROLL_SPEED	2.0f	//スクロールスピード
