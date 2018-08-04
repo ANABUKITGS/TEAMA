@@ -1,6 +1,8 @@
 #include "CPlayerT.h"
 
+#define PLAYER_VELOCITY_X 3.0f
 
+CPlayerT *CPlayerT::mpPlayer = 0;
 
 void CPlayerT::Update(){
 
@@ -48,26 +50,30 @@ void CPlayerT::Forward(){
 	if (CGamePad::Push(PAD_LSTICKX, 0.1f) || CKey::Push('D')){
 		float hoge = mVelocityLimit * CGamePad::GetStick(PAD_LSTICKX);
 		if (mVelocityX < hoge && mVelocityX > -hoge){
-			mVelocityX += 0.5f;
+			mVelocityX += PLAYER_VELOCITY_X;
 		}
 	}
 	else if (CGamePad::Push(PAD_LSTICKX, -0.1f) || CKey::Push('A')){
 		float hoge = mVelocityLimit * CGamePad::GetStick(PAD_LSTICKX);
 		if (mVelocityX < hoge && mVelocityX > -hoge)
-			mVelocityX -= 0.5f;
+			mVelocityX -= PLAYER_VELOCITY_X;
 	}
 	else{
 		if (mVelocityX < 0)
-			mVelocityX += 0.25f;
+			mVelocityX += ( PLAYER_VELOCITY_X / 2);
 		else if (mVelocityX>0)
-			mVelocityX -= 0.25f;
+			mVelocityX -= ( PLAYER_VELOCITY_X / 2);
 	}
 	mPosition.x += mVelocityX;
 }
 
 
 bool CPlayerT::Collision(CRectangle *p) {
-	if (CRectangle::Collision(p, &mPosition)) {
+	CVector2 aj;
+	if (CRectangle::Collision(p, &aj)) {
+		if (p->mTag != EJEWELRY) {
+			mPosition = mPosition + aj;
+		}
 		mVelocityG = 0.0f;
 		return true;
 	}

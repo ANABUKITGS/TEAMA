@@ -61,6 +61,7 @@ void CTaskManager::Update(){
 		while (q) {
 			if (p != q) {
 				p->Collision(q);	//現在カレントの更新処理を行う
+				q->Collision(p);
 			}
 			q = (CRectangle*)q->mpNext;	//キャスト変換を行ったタスクの次をカレントに代入
 		}

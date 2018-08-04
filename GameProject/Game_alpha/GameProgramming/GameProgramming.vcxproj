@@ -90,6 +90,7 @@
     <ClCompile Include="CKey.cpp" />
     <ClCompile Include="CMain.cpp" />
     <ClCompile Include="CMainGame.cpp" />
+    <ClCompile Include="CMapChip.cpp" />
     <ClCompile Include="CMatrix33.cpp" />
     <ClCompile Include="CPlayerT.cpp" />
     <ClCompile Include="CRectangle.cpp" />
