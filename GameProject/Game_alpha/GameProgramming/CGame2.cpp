@@ -1,6 +1,11 @@
 #include "CGame2.h"
 #include "CFileIO.h"
 #include "CMap.h"
+#include "CCamera2D.h"
+
+
+#define WINDOW_SIZE_W 1280
+#define WINDOW_SIZE_H 720
 
 void CGame2::Init() {
 	mTexBack.Load(".\\Data\\Images\\Map\\Background.tga");
@@ -30,6 +35,7 @@ void CGame2::Init() {
 		int gamemap[MAP_SIZEY][MAP_SIZEX];
 		//		char *buf = new char[size];	//ファイルサイズ+1バイト分の領域を確保
 		fseek(fp, 0L, SEEK_SET);
+		size = sizeof(gamemap);
 		fread(gamemap, size, 1, fp);	//確保した領域にファイルサイズ分データを読み込む
 		//		buf[size] = '\0';	//最後に\0を設定する（文字列の終端）
 		fclose(fp);	//ファイルをクローズする
@@ -202,8 +208,7 @@ void CGame2::Update() {
 }
 
 void CGame2::Render() {
+	CCamera2D::Begin(0.0, WINDOW_SIZE_W, 0.0, WINDOW_SIZE_W);
 	CTaskManager::Get()->Render();
-//	CRectangle rect(CVector2(100.0f, 100.0f), CVector2(200, 200), 0);
-//	rect.Update();
-//	rect.Render(WHITE, 1.0f);
+	CCamera2D::End();
 }
