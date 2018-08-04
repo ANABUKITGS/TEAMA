@@ -9,11 +9,11 @@ enum ECELLNUM{
 	EUNDER,				//下から抜ける足場
 	EBELT,				//ベルトコンベア
 	EJEWELRY,			//宝石
+	EJEWELRY2,			//宝石の欠片
 	ECHIKUWA,			//ちくわブロック
 	ESWITCH_GROUND1,	//スイッチで 切り替わる足場 1
 	ESWITCH_GROUND2,	//スイッチで 切り替わる足場 2
 	ESWITCH,			//スイッチで 切り替わる足場の スイッチ
-	ETORABASAMI,		//トラバサミ
 
 	/*------ キャラクター など ------*/
 	ECHECKPOINT,		//チェックポイント
@@ -21,8 +21,11 @@ enum ECELLNUM{
 	EENEMY1,			//敵1
 	EENEMY2,			//敵2
 	EENEMY3,			//敵3
-	//EENEMY4,			//敵4
 	EBOSS,				//ボス
+
+	/*------ 特殊ギミック ------*/
+	EBOX,				//木箱
+	ESTEEL,				//鉄骨
 	ESIZE,				//ECELLNUM サイズ
 };
 
