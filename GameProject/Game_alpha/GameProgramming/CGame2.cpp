@@ -3,11 +3,14 @@
 #include "CMap.h"
 #include "CCamera2D.h"
 
-
 #define WINDOW_SIZE_W 1280
 #define WINDOW_SIZE_H 720
 
+#define POS(Y,X) CVector2(X * CELLSIZE, Y * -CELLSIZE + WINDOW_SIZE_H)
+//CVector2(j * CELLSIZE, i * CELLSIZE)
+
 void CGame2::Init() {
+	mCamera.SetOrtho(WINDOW_SIZE_W / 2, WINDOW_SIZE_H / 2, WINDOW_SIZE_W / 2, WINDOW_SIZE_H / 2);
 	mTexBack.Load(".\\Data\\Images\\Map\\Background.tga");
 	mTexUI.Load(".\\Data\\Images\\Map\\MapUI.tga");
 	mTexObject.Load(".\\Data\\Images\\Map\\MapObject.tga");
@@ -60,75 +63,75 @@ void CGame2::Init() {
 						if (gamemap[i][j - 1] != EGROUND && gamemap[i][j + 1] == EGROUND){
 							//左上 下 あり
 							if (gamemap[i - 1][j] != EGROUND && gamemap[i + 1][j] == EGROUND)
-								new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 320, 384, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+								new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 320, 384, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 							//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 320, 384, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 							//左上 下 なし
 							else if (gamemap[i - 1][j] != EGROUND && gamemap[i + 1][j] != EGROUND)
-								new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 64, 128, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+								new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 64, 128, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 							//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 64, 128, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 							//左中
 							else if (gamemap[i - 1][j] == EGROUND && gamemap[i + 1][j] == EGROUND)
-								new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 512, 576, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+								new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 512, 576, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 							//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 512, 576, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 							//左下
 							else if (gamemap[i - 1][j] == EGROUND && gamemap[i + 1][j] != EGROUND)
-								new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 704, 768, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+								new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 704, 768, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 							//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 704, 768, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 						}
 
 						else if (gamemap[i][j - 1] == EGROUND && gamemap[i][j + 1] == EGROUND){
 							//中上 下 あり
 							if (gamemap[i - 1][j] != EGROUND && gamemap[i + 1][j] == EGROUND)
-								new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 384, 448, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+								new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 384, 448, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 							//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 384, 448, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 							//中上 下 なし
 							else if (gamemap[i - 1][j] != EGROUND && gamemap[i + 1][j] != EGROUND)
-								new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 128, 192, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+								new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 128, 192, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 							//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 128, 192, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 							//中中
 							else if (gamemap[i - 1][j] == EGROUND && gamemap[i + 1][j] == EGROUND)
-								new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 576, 640, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+								new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 576, 640, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 							//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 576, 640, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 							//中下
 							else if (gamemap[i - 1][j] == EGROUND && gamemap[i + 1][j] != EGROUND)
-								new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 768, 832, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+								new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 768, 832, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 							//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 768, 832, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 						}
 
 						else if (gamemap[i][j - 1] == EGROUND && gamemap[i][j + 1] != EGROUND){
 							//右上 下 あり
 							if (gamemap[i - 1][j] != EGROUND && gamemap[i + 1][j] == EGROUND)
-								new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 448, 512, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+								new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 448, 512, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 							//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 448, 512, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 							//右上 下 なし
 							else if (gamemap[i - 1][j] != EGROUND && gamemap[i + 1][j] != EGROUND)
-								new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 192, 256, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+								new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 192, 256, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 							//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 192, 256, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 							//右中
 							else if (gamemap[i - 1][j] == EGROUND && gamemap[i + 1][j] == EGROUND)
-								new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 640, 704, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+								new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 640, 704, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 							//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 640, 704, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 							//右下
 							else if (gamemap[i - 1][j] == EGROUND && gamemap[i + 1][j] != EGROUND)
-								new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 832, 896, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+								new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 832, 896, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 							//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 832, 896, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 						}
 						else if (gamemap[i][j - 1] != EGROUND && gamemap[i][j + 1] != EGROUND){
 							//中上 下 あり
 							if (gamemap[i - 1][j] != EGROUND && gamemap[i + 1][j] == EGROUND)
-								new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 256, 320, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+								new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 256, 320, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 							//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 256, 320, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 							//中上 下 なし
 							else if (gamemap[i - 1][j] != EGROUND && gamemap[i + 1][j] != EGROUND)
-								new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 0, 64, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+								new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 0, 64, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 							//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 0, 64, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 							//中中
 							else if (gamemap[i - 1][j] == EGROUND && gamemap[i + 1][j] == EGROUND)
-								new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 896, 960, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+								new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 896, 960, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 							//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 896, 960, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 							//中下
 							else if (gamemap[i - 1][j] == EGROUND && gamemap[i + 1][j] != EGROUND)
-								new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 960, 1024, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+								new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 960, 1024, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 							// mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 960, 1024, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 						}
 					}
@@ -136,43 +139,43 @@ void CGame2::Init() {
 					//下から抜ける足場
 					if (gamemap[i][j] == EUNDER){
 						if (gamemap[i][j - 1] != EUNDER && gamemap[i][j + 1] == EUNDER)
-							new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 64, 128, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+							new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 64, 128, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 						//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 64, 128, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 
 						else if (gamemap[i][j - 1] == EUNDER && gamemap[i][j + 1] == EUNDER)
-							new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 128, 192, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+							new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 128, 192, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 						//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 128, 192, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 
 						else if (gamemap[i][j - 1] == EUNDER && gamemap[i][j + 1] != EUNDER)
-							new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 192, 256, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+							new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 192, 256, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 						//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 192, 256, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 
 						else
-							new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 0, 64, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+							new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 0, 64, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 						//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 0, 64, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 					}
 					//ベルトコンベア
 					if (gamemap[i][j] == EBELT){
 						if (gamemap[i][j - 1] != EBELT && gamemap[i][j + 1] == EBELT)
-							new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 64, 128, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+							new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 64, 128, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 						//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 64, 128, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 
 						else if (gamemap[i][j - 1] == EBELT && gamemap[i][j + 1] == EBELT)
-							new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 128, 192, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+							new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 128, 192, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 						//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 128, 192, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 
 						else if (gamemap[i][j - 1] == EBELT && gamemap[i][j + 1] != EBELT)
-							new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 192, 256, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+							new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 192, 256, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 						//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 192, 256, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 
 						else
-							new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 0, 64, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+							new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 0, 64, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 						//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 0, 64, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 					}
 
 					//その他
 					if (gamemap[i][j] >= EJEWELRY && gamemap[i][j] < EPLAYER)
-						new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 0, 64, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+						new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, 0, 64, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 					//	mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 0, 64, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 
 					//キャラクター
@@ -180,15 +183,15 @@ void CGame2::Init() {
 						int temp_setcell = gamemap[i][j];
 
 						if (gamemap[i - 1][j] == temp_setcell && gamemap[i + 1][j] != temp_setcell)
-							new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexCharacter, 64, 128, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+							new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexCharacter, 64, 128, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 						//	mTexCharacter.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 64, 128, CELLSIZE * (gamemap[i][j] - EPLAYER + 1), CELLSIZE * (gamemap[i][j] - EPLAYER), 1.0f);
 
 						else if (gamemap[i + 1][j] == temp_setcell && gamemap[i - 1][j] != temp_setcell)
-							new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexCharacter, 128, 192, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+							new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexCharacter, 128, 192, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 						//	mTexCharacter.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 128, 192, CELLSIZE * (gamemap[i][j] - EPLAYER + 1), CELLSIZE * (gamemap[i][j] - EPLAYER), 1.0f);
 
 						else
-							new CMapChip(CVector2(j * CELLSIZE, i * CELLSIZE), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexCharacter, 192, 256, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
+							new CMapChip(POS(i,j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexCharacter, 192, 256, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1));
 						//	mTexCharacter.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 192, 256, CELLSIZE * (gamemap[i][j] - EPLAYER + 1), CELLSIZE * (gamemap[i][j] - EPLAYER), 1.0f);
 					}
 
@@ -204,11 +207,18 @@ void CGame2::Init() {
 }
 
 void CGame2::Update() {
+	if (CKey::Push('D')) {
+		mCamera.x += 5;
+	}
+	if (CKey::Push('A')) {
+		mCamera.x -= 5;
+	}
 	CTaskManager::Get()->Update();
 }
 
 void CGame2::Render() {
-	CCamera2D::Begin(0.0, WINDOW_SIZE_W, 0.0, WINDOW_SIZE_W);
+//	CCamera2D::Begin(0.0, WINDOW_SIZE_W, 0.0, WINDOW_SIZE_H);
+	mCamera.Begin();
 	CTaskManager::Get()->Render();
 	CCamera2D::End();
 }

@@ -3,6 +3,7 @@
 
 #include "CMap.h"
 #include "CTaskManager.h"
+#include "CCamera2D.h"
 
 #define TUTORIAL_MAP	".\\Data\\Map\\MAP0.BIN"	//チュートリアルマップ ファイルパス
 #define GAME_MAP		".\\Data\\Map\\MAP1.BIN"	//ゲームマップ ファイルパス
@@ -25,6 +26,7 @@ public:
 
 class CGame2 : public CEditer {
 public:
+	CCamera2D mCamera;
 
 	CTexture mTexBack;								//背景
 	CTexture mTexUI;								//UI テクスチャー

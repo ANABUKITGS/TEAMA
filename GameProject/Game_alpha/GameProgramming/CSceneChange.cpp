@@ -32,8 +32,8 @@ void CSceneChange::Update(){
 		break;
 
 	case EGAME:
-		mGame.Update();
-		mGame.Render();
+		mGame2.Update();
+		mGame2.Render();
 		break;
 
 	case ERANKING:
