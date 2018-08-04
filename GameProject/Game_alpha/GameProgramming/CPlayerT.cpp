@@ -53,8 +53,14 @@ void CPlayerT::Forward(){
 			mVelocityX += PLAYER_VELOCITY_X;
 		}
 	}
-	else if (CGamePad::Push(PAD_LSTICKX, -0.1f) || CKey::Push('A')){
-		float hoge = mVelocityLimit * CGamePad::GetStick(PAD_LSTICKX);
+	else{
+		if (mVelocityX < 0)
+			mVelocityX += (PLAYER_VELOCITY_X / 2);
+		else if (mVelocityX>0)
+			mVelocityX -= (PLAYER_VELOCITY_X / 2);
+	}
+	if (CGamePad::Push(PAD_LSTICKX, -0.1f) || CKey::Push('A')){
+		float hoge = mVelocityLimit * -CGamePad::GetStick(PAD_LSTICKX);
 		if (mVelocityX < hoge && mVelocityX > -hoge)
 			mVelocityX -= PLAYER_VELOCITY_X;
 	}
