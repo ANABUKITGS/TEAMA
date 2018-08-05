@@ -6,7 +6,7 @@
 #include "CPlayerT.h"
 #include "CScene.h"
 
-#include "CJewelry.h"
+#include "CMapJewelry.h"
 
 #define WINDOW_SIZE_W 1280
 #define WINDOW_SIZE_H 720
@@ -202,7 +202,7 @@ void CGame2::Init() {
 					//宝石 ~ スイッチ
 					else if (gamemap[i][j] == ECELLNUM::EJEWELRY)
 						//						new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), ECELLNUM::EJEWELRY);
-						new CJewelry(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject);
+						new CMapJewelry(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject);
 
 					else if (gamemap[i][j] > ECELLNUM::EJEWELRY && gamemap[i][j] < ECELLNUM::EPLAYER)
 						new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), ECELLNUM::EJEWELRY);

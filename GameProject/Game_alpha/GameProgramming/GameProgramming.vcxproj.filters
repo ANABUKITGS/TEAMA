@@ -70,7 +70,7 @@
     <ClCompile Include="main.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CJewelry.cpp">
+    <ClCompile Include="CMapJewelry.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -144,7 +144,7 @@
     <ClInclude Include="resource.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CJewelry.h">
+    <ClInclude Include="CMapJewelry.h">
       <Filter>ソースファイル</Filter>
     </ClInclude>
   </ItemGroup>

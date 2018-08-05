@@ -1,5 +1,5 @@
-#ifndef CJEWELRY_H
-#define CJEWELRY_H
+#ifndef CMAPJEWELRY_H
+#define CMAPJEWELRY_H
 
 #include "CMapChip.h"
 
@@ -9,9 +9,9 @@
 マップチップを継承して
 宝石クラスを定義
 */
-class CJewelry : public CMapChip {
+class CMapJewelry : public CMapChip {
 public:
-	CJewelry(const CVector2& pos, const CVector2& scale, CTexture *texture) 
+	CMapJewelry(const CVector2& pos, const CVector2& scale, CTexture *texture) 
 		//CMapChipで初期化
 		: CMapChip(pos, scale, texture, JEWELRY_UV, EJEWELRY)
 	{}
