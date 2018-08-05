@@ -90,6 +90,7 @@
     <ClCompile Include="CFileIO.cpp" />
     <ClCompile Include="CGame2.cpp" />
     <ClCompile Include="CGamePad.cpp" />
+    <ClCompile Include="CJewelry.cpp" />
     <ClCompile Include="CKey.cpp" />
     <ClCompile Include="CMain.cpp" />
     <ClCompile Include="CMainGame.cpp" />
@@ -114,6 +115,7 @@
     <ClInclude Include="CFileIO.h" />
     <ClInclude Include="CGame2.h" />
     <ClInclude Include="CGamePad.h" />
+    <ClInclude Include="CJewelry.h" />
     <ClInclude Include="CKey.h" />
     <ClInclude Include="CMain.h" />
     <ClInclude Include="CMap.h" />
