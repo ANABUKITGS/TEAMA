@@ -1,9 +1,9 @@
-#include "CJewelry.h"
+#include "CMapJewelry.h"
 
 /*
 とりあえず回す
 */
-void CJewelry::Update() {
+void CMapJewelry::Update() {
 	mRotation += 1;
 	CMapChip::Update();
 }
@@ -11,7 +11,7 @@ void CJewelry::Update() {
 /*
 プレイヤーに当たったら無効にする
 */
-bool CJewelry::Collision(CRectangle *r) {
+bool CMapJewelry::Collision(CRectangle *r) {
 	// 当たっているか
 	if (CRectangle::Collision(r)) {
 		//プレイヤーに衝突
