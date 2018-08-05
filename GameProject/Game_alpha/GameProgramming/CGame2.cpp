@@ -4,6 +4,7 @@
 #include "CCamera2D.h"
 #include "CMapChip.h"
 #include "CPlayerT.h"
+#include "CScene.h"
 
 #define WINDOW_SIZE_W 1280
 #define WINDOW_SIZE_H 720
