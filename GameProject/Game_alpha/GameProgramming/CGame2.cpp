@@ -12,9 +12,12 @@
 #define POS(Y,X) CVector2(X * CELLSIZE, Y * -CELLSIZE + WINDOW_SIZE_H)
 //CVector2(j * CELLSIZE, i * CELLSIZE)
 
-CRectangle *mapchip;
+//CRectangle *mapchip;	//なるべく外部変数（グローバル変数）は作成しない：バグの原因になりやすい
 
 void CGame2::Init() {
+
+	CRectangle *mapchip;	//Initでしか使用していないので、Initメソッドのローカル変数で宣言
+
 	mCamera.SetOrtho(WINDOW_SIZE_W / 2, WINDOW_SIZE_H / 2, WINDOW_SIZE_W / 2, WINDOW_SIZE_H / 2);
 	mTexBack.Load(".\\Data\\Images\\Map\\Background.tga");
 	mTexUI.Load(".\\Data\\Images\\Map\\MapUI.tga");
@@ -240,7 +243,7 @@ void CGame2::Update() {
 
 void CGame2::Render() {
 //	CCamera2D::Begin(0.0, WINDOW_SIZE_W, 0.0, WINDOW_SIZE_H);
-	mCamera.x = CPlayerT::mpPlayer->mPosition.x;
+//	mCamera.x = CPlayerT::mpPlayer->mPosition.x;
 	mCamera.Begin();
 	CTaskManager::Get()->Render();
 	CCamera2D::End();

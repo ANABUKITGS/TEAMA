@@ -7,7 +7,6 @@ enum ECELLNUM{
 	ENONE = 1,			//空白 | 0は使用禁止
 	EGROUND,			//床や壁
 	EUNDER,				//下から抜ける足場
-	EBELT,
 	EBELTL,				//ベルトコンベア左
 	EBELTR,				//ベルトコンベア右
 	EJEWELRY,			//宝石
@@ -29,6 +28,8 @@ enum ECELLNUM{
 	EBOX,				//木箱
 	ESTEEL,				//鉄骨
 	ESIZE,				//ECELLNUM サイズ
+
+	EBELT,
 };
 
 
