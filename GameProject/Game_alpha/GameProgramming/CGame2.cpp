@@ -6,15 +6,20 @@
 #include "CPlayerT.h"
 #include "CScene.h"
 
+#include "CMapJewelry.h"
+
 #define WINDOW_SIZE_W 1280
 #define WINDOW_SIZE_H 720
 
 #define POS(Y,X) CVector2(X * CELLSIZE, Y * -CELLSIZE + WINDOW_SIZE_H)
 //CVector2(j * CELLSIZE, i * CELLSIZE)
 
-CRectangle *mapchip;
+//CRectangle *mapchip;	//なるべく外部変数（グローバル変数）は作成しない：バグの原因になりやすい
 
 void CGame2::Init() {
+
+	CRectangle *mapchip;	//Initでしか使用していないので、Initメソッドのローカル変数で宣言
+
 	mCamera.SetOrtho(WINDOW_SIZE_W / 2, WINDOW_SIZE_H / 2, WINDOW_SIZE_W / 2, WINDOW_SIZE_H / 2);
 	mTexBack.Load(".\\Data\\Images\\Map\\Background.tga");
 	mTexUI.Load(".\\Data\\Images\\Map\\MapUI.tga");
@@ -195,7 +200,11 @@ void CGame2::Init() {
 							new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), ECELLNUM::EBELTR);
 					}
 					//宝石 ~ スイッチ
-					else if (gamemap[i][j] >= ECELLNUM::EJEWELRY && gamemap[i][j] < ECELLNUM::EPLAYER)
+					else if (gamemap[i][j] == ECELLNUM::EJEWELRY)
+						//						new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), ECELLNUM::EJEWELRY);
+						new CMapJewelry(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject);
+
+					else if (gamemap[i][j] > ECELLNUM::EJEWELRY && gamemap[i][j] < ECELLNUM::EPLAYER)
 						new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), ECELLNUM::EJEWELRY);
 
 					//プレイヤー ~ ボス
@@ -240,7 +249,7 @@ void CGame2::Update() {
 
 void CGame2::Render() {
 //	CCamera2D::Begin(0.0, WINDOW_SIZE_W, 0.0, WINDOW_SIZE_H);
-	mCamera.x = CPlayerT::mpPlayer->mPosition.x;
+//	mCamera.x = CPlayerT::mpPlayer->mPosition.x;
 	mCamera.Begin();
 	CTaskManager::Get()->Render();
 	CCamera2D::End();

@@ -28,6 +28,8 @@ enum ECELLNUM{
 	EBOX,				//ñÿî†
 	ESTEEL,				//ìSçú
 	ESIZE,				//ECELLNUM ÉTÉCÉY
+
+	EBELT,
 };
 
 
