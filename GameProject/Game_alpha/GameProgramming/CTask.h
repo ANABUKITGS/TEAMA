@@ -14,6 +14,7 @@ enum ECELLNUM{
 	ESWITCH_GROUND1,	//スイッチで 切り替わる足場 1
 	ESWITCH_GROUND2,	//スイッチで 切り替わる足場 2
 	ESWITCH,			//スイッチで 切り替わる足場の スイッチ
+	ETORABASAMI,		//トラバサミ
 
 	/*------ キャラクター など ------*/
 	ECHECKPOINT,		//チェックポイント
@@ -21,6 +22,7 @@ enum ECELLNUM{
 	EENEMY1,			//敵1
 	EENEMY2,			//敵2
 	EENEMY3,			//敵3
+	//EENEMY4,			//敵4
 	EBOSS,				//ボス
 
 	/*------ 特殊ギミック ------*/

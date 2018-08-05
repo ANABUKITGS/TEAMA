@@ -78,7 +78,13 @@ void CTaskManager::Render(){
 }
 
 void CTaskManager::Remove(){
-
+	CTask*c = (CTask*)mpHead;
+	while (c){
+		if (c->mEnabled)
+			c = c->mpNext;
+		else
+			c = Remove(c);
+	}
 }
 
 CTask* CTaskManager::Remove(CTask*task){
