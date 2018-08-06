@@ -14,6 +14,9 @@
 class CPlayerT : public CCharcter {
 public:
 	static CPlayerT *mpPlayer;
+	bool mJump;
+	int mJumpCount;
+	bool mJumpAttack;
 
 	CWeapon *mWeapon;
 	CPlayerT() 
@@ -23,6 +26,9 @@ public:
 		mpPlayer = this;
 		mPriority = 1;
 		mTag = EPLAYER;
+		mJump = false;
+		mJumpAttack = true;
+		mJumpCount = 0;
 		CTaskManager::Get()->Add(this);
 	}
 

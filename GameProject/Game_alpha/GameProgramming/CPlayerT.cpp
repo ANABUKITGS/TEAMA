@@ -20,16 +20,18 @@ void CPlayerT::Update(){
 			else
 				mWeapon->mPosition.x -= 10;
 		}
-		if (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE)){
+		if (mJumpCount<2 && CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) ){
 			if (mJumpTime < JUMP_TIME_LIMIT){
+				mJump = true;
 				mJumpTime++;
 				Jump();
 			}
 		}
-		else{
+		else if (mJump){
 			mJumpTime = 0;
 			mVelocityJ = PLAYER_VELOCITY_Y;
-
+			mJumpCount++;
+			mJump = false;
 		}
 		
 	}
@@ -100,6 +102,7 @@ bool CPlayerT::Collision(CRectangle *p) {
 			if (p->mTag != EJEWELRY ) {
 				mPosition = mPosition + aj;
 			}
+			mJumpCount = 0;
 			mVelocityG = 0.0f;
 			return true;
 		}
