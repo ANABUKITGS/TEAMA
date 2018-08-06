@@ -28,6 +28,8 @@ public:
 	void Update();
 	void Scroll();
 	void Render();
+
+	void MakeTaskList(int *gamemap);
 };
 
 #endif
