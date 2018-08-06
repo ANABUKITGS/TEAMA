@@ -23,8 +23,8 @@ void CGetScore::Update(){
 	if (GetKeyState(VK_UP) & 0x8000 || CGamePad::OncePush (PAD_LSTICKY, 0.5f)){
 		mScore++;
 	}
-	if (CKey::Once(VK_RETURN)){
-		CMain::mSceneTag = CScene::ENAME;
+	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2)){
+		CSceneChange::changenum = CSceneChange::ENAME;
 	}
 	swprintf(bufw, L"%3d", mScore);
 	CText::DrawStringW(bufw, 0, 100, 20, 1.0f, 0);
@@ -54,14 +54,14 @@ void CName::Update(){
 		else
 			name[charnum]--;
 	}
-	if (CKey::Once(VK_LEFT))
+	if (CKey::Once(VK_LEFT) || CGamePad::Once(PAD_LSTICKX, -0.5f))
 	if (charnum > 0)
 		charnum--;
-	if (CKey::Once(VK_RIGHT))
+	if (CKey::Once(VK_RIGHT) || CGamePad::Once(PAD_LSTICKX, 0.5f))
 	if (charnum < 2)
 		charnum++;
-	if (CKey::Once(VK_RETURN))
-		CMain::mSceneTag = CScene::ERANKING;
+	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2))
+		CSceneChange::changenum = CSceneChange::ERANKING;
 	glColor4f(1.0f, 1.0f, 0.0f, 1.0f);  //•`‰æF@‰©F
 	sprintf(buf2, "%s", name);
 	CText::DrawString(buf2, -100, 0, 50, 1.0f, 0);
@@ -107,6 +107,6 @@ void CRanking::Update(){
 		sprintf(buf2, "%3s", mRanking[i].n);
 		CText::DrawString(buf2, 0, 100 + i * -100, 20, 1.0f, 0);
 	}
-	if (CKey::Once(VK_RETURN))
-		CMain::mSceneTag = CScene::ESCORE;
+	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2))
+		CSceneChange::changenum = CSceneChange::ESCORE;
 }
