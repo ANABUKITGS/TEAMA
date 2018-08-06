@@ -441,7 +441,7 @@ void CGame2::Update() {
 
 void CGame2::Render() {
 //	CCamera2D::Begin(0.0, WINDOW_SIZE_W, 0.0, WINDOW_SIZE_H);
-//	mCamera.x = CPlayerT::mpPlayer->mPosition.x;
+	mCamera.x = CPlayerT::mpPlayer->mPosition.x;
 	mCamera.Begin();
 	CTaskManager::Get()->Render();
 	CCamera2D::End();

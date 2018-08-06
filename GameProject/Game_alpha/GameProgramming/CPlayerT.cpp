@@ -2,6 +2,8 @@
 
 #define PLAYER_VELOCITY_X 3.0f
 
+#define GRAVITY (16.33 / 60)
+
 CPlayerT *CPlayerT::mpPlayer = 0;
 
 void CPlayerT::Update(){
@@ -56,7 +58,7 @@ void CPlayerT::Forward(){
 	else{
 		if (mVelocityX < 0)
 			mVelocityX += (PLAYER_VELOCITY_X / 2);
-		else if (mVelocityX>0)
+		else if (mVelocityX > 0)
 			mVelocityX -= (PLAYER_VELOCITY_X / 2);
 	}
 	if (CGamePad::Push(PAD_LSTICKX, -0.1f) || CKey::Push('A')){
@@ -67,7 +69,7 @@ void CPlayerT::Forward(){
 	else{
 		if (mVelocityX < 0)
 			mVelocityX += ( PLAYER_VELOCITY_X / 2);
-		else if (mVelocityX>0)
+		else if (mVelocityX > 0)
 			mVelocityX -= ( PLAYER_VELOCITY_X / 2);
 	}
 	mPosition.x += mVelocityX;
@@ -77,12 +79,27 @@ void CPlayerT::Forward(){
 bool CPlayerT::Collision(CRectangle *p) {
 	if (p->GetEnabled()) {
 		CVector2 aj;
-		if (CRectangle::Collision(p, &aj)) {
-			if (p->mTag != EJEWELRY) {
-				mPosition = mPosition + aj;
+		switch (p->mTag) {
+		case EJEWELRY:
+			if (CRectangle::Collision(p)) {
+
+				return true;
 			}
-			mVelocityG = 0.0f;
-			return true;
+			break;
+
+		default:
+			if (CRectangle::Collision(p, &aj)) {
+				if (abs(aj.y) > abs(aj.x)) {
+					mVelocityG = 0.0f;
+					mPosition.y = mPosition.y + aj.y;
+				}
+				else {
+					mPosition.x = mPosition.x + aj.x;
+				}
+				CRectangle::Update();
+				return true;
+			}
+			break;
 		}
 	}
 	return false;

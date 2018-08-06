@@ -109,7 +109,8 @@ void CRectangle::Render(float r, float g, float b, float a){
 
 
 bool CRectangle::Collision(CRectangle *target) {
-	return Collision(target, &mPosition);
+	CVector2 tmp;
+	return Collision(target, &tmp);
 }
 
 bool CRectangle::Collision(CRectangle *target, CVector2 *adjust) {
