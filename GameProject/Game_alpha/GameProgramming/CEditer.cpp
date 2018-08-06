@@ -298,64 +298,85 @@ void CEditer::Render(){
 
 			//オブジェクト
 			//床や壁
-			if (editmap[i][j] == EGROUND){
-				if (editmap[i][j - 1] != EGROUND && editmap[i][j + 1] == EGROUND){
-					//左上 下 あり
-					if (editmap[i - 1][j] != EGROUND && editmap[i + 1][j] == EGROUND)
-						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 320, 384, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
-					//左上 下 なし
-					else if (editmap[i - 1][j] != EGROUND && editmap[i + 1][j] != EGROUND)
-						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 64, 128, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
-					//左中
-					else if (editmap[i - 1][j] == EGROUND && editmap[i + 1][j] == EGROUND)
-						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 512, 576, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
-					//左下
-					else if (editmap[i - 1][j] == EGROUND && editmap[i + 1][j] != EGROUND)
-						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 704, 768, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
+			if (editmap[i][j] == ECELLNUM::EGROUND){
+				//上 なし, 下 なし
+				if (editmap[i - 1][j] != ECELLNUM::EGROUND && editmap[i + 1][j] != ECELLNUM::EGROUND){
+					//左右 なし
+					if (editmap[i][j - 1] != ECELLNUM::EGROUND && editmap[i][j + 1] != ECELLNUM::EGROUND){
+						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
+					}
+					//左 なし, 右 あり
+					else if (editmap[i][j - 1] != ECELLNUM::EGROUND && editmap[i][j + 1] == ECELLNUM::EGROUND){
+						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, CELLSIZE * 1, CELLSIZE * 2, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
+					}
+					//左 あり, 右 あり
+					else if (editmap[i][j - 1] == ECELLNUM::EGROUND && editmap[i][j + 1] == ECELLNUM::EGROUND){
+						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, CELLSIZE * 2, CELLSIZE * 3, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
+					}
+					//左 あり, 右 なし
+					else if (editmap[i][j - 1] == ECELLNUM::EGROUND && editmap[i][j + 1] != ECELLNUM::EGROUND){
+						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, CELLSIZE * 2, CELLSIZE * 1, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
+					}
 				}
-
-				else if (editmap[i][j - 1] == EGROUND && editmap[i][j + 1] == EGROUND){
-					//中上 下 あり
-					if (editmap[i - 1][j] != EGROUND && editmap[i + 1][j] == EGROUND)
-						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 384, 448, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
-					//中上 下 なし
-					else if (editmap[i - 1][j] != EGROUND && editmap[i + 1][j] != EGROUND)
-						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 128, 192, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
-					//中中
-					else if (editmap[i - 1][j] == EGROUND && editmap[i + 1][j] == EGROUND)
-						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 576, 640, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
-					//中下
-					else if (editmap[i - 1][j] == EGROUND && editmap[i + 1][j] != EGROUND)
-						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 768, 832, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
+				//上 なし, 下 あり
+				else if ((editmap[i - 1][j] != ECELLNUM::EGROUND && editmap[i + 1][j] == ECELLNUM::EGROUND) || (i == 0 && editmap[i + 1][j] != ECELLNUM::EGROUND)){
+					//左右 なし
+					if (editmap[i][j - 1] != ECELLNUM::EGROUND && editmap[i][j + 1] != ECELLNUM::EGROUND){
+						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, CELLSIZE * 1, CELLSIZE * 2, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
+					}
+					//左 なし, 右 あり
+					else if (editmap[i][j - 1] != EGROUND && editmap[i][j + 1] == EGROUND){
+						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, CELLSIZE * 3, CELLSIZE * 4, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
+					}
+					//左 あり, 右 あり
+					else if (editmap[i][j - 1] == ECELLNUM::EGROUND && editmap[i][j + 1] == ECELLNUM::EGROUND){
+						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, CELLSIZE * 4, CELLSIZE * 5, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
+					}
+					//左 あり, 右 なし
+					else if (editmap[i][j - 1] == ECELLNUM::EGROUND && editmap[i][j + 1] != ECELLNUM::EGROUND){
+						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, CELLSIZE * 4, CELLSIZE * 3, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
+					}
 				}
-
-				else if (editmap[i][j - 1] == EGROUND && editmap[i][j + 1] != EGROUND){
-					//右上 下 あり
-					if (editmap[i - 1][j] != EGROUND && editmap[i + 1][j] == EGROUND)
-						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 448, 512, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
-					//右上 下 なし
-					else if (editmap[i - 1][j] != EGROUND && editmap[i + 1][j] != EGROUND)
-						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 192, 256, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
-					//右中
-					else if (editmap[i - 1][j] == EGROUND && editmap[i + 1][j] == EGROUND)
-						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 640, 704, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
-					//右下
-					else if (editmap[i - 1][j] == EGROUND && editmap[i + 1][j] != EGROUND)
-						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 832, 896, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
+				//上 あり, 下 なし
+				else if ((editmap[i - 1][j] == ECELLNUM::EGROUND && editmap[i + 1][j] != ECELLNUM::EGROUND) || (editmap[i - 1][j] == ECELLNUM::EGROUND) && i == MAP_SIZEY - 1){
+					//左右 なし
+					if (editmap[i][j - 1] != ECELLNUM::EGROUND && editmap[i][j + 1] != ECELLNUM::EGROUND){
+						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, CELLSIZE * 1, CELLSIZE * 2, CELLSIZE * (editmap[i][j] - 1), CELLSIZE * editmap[i][j], 1.0f);
+					}
+					//左 なし, 右 あり
+					else if (editmap[i][j - 1] != ECELLNUM::EGROUND && editmap[i][j + 1] == ECELLNUM::EGROUND){
+						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, CELLSIZE * 3, CELLSIZE * 4, CELLSIZE * (editmap[i][j] - 1), CELLSIZE * editmap[i][j], 1.0f);
+					}
+					//左 あり, 右 あり
+					else if (editmap[i][j - 1] == ECELLNUM::EGROUND && editmap[i][j + 1] == ECELLNUM::EGROUND){
+						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, CELLSIZE * 4, CELLSIZE * 5, CELLSIZE * (editmap[i][j] - 1), CELLSIZE * editmap[i][j], 1.0f);
+					}
+					//左 あり, 右 なし
+					else if (editmap[i][j - 1] == ECELLNUM::EGROUND && editmap[i][j + 1] != ECELLNUM::EGROUND){
+						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, CELLSIZE * 4, CELLSIZE * 3, CELLSIZE * (editmap[i][j] - 1), CELLSIZE * editmap[i][j], 1.0f);
+					}
 				}
-				else if (editmap[i][j - 1] != EGROUND && editmap[i][j + 1] != EGROUND){
-					//中上 下 あり
-					if (editmap[i - 1][j] != EGROUND && editmap[i + 1][j] == EGROUND)
-						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 256, 320, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
-					//中上 下 なし
-					else if (editmap[i - 1][j] != EGROUND && editmap[i + 1][j] != EGROUND)
-						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 0, 64, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
-					//中中
-					else if (editmap[i - 1][j] == EGROUND && editmap[i + 1][j] == EGROUND)
-						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 896, 960, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
-					//中下
-					else if (editmap[i - 1][j] == EGROUND && editmap[i + 1][j] != EGROUND)
-						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 960, 1024, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
+				//上 あり, 下 あり
+				else if ((editmap[i - 1][j] == ECELLNUM::EGROUND && editmap[i + 1][j] == ECELLNUM::EGROUND)){
+					//左右 なし
+					if (editmap[i][j - 1] != ECELLNUM::EGROUND && editmap[i][j + 1] != ECELLNUM::EGROUND){
+						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, CELLSIZE * 2, CELLSIZE * 3, CELLSIZE * (editmap[i][j] - 1), CELLSIZE * editmap[i][j], 1.0f);
+					}
+					//左 なし, 右 あり
+					else if (editmap[i][j - 1] != ECELLNUM::EGROUND && editmap[i][j + 1] == ECELLNUM::EGROUND){
+						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, CELLSIZE * 4, CELLSIZE * 5, CELLSIZE * (editmap[i][j] - 1), CELLSIZE * editmap[i][j], 1.0f);
+					}
+					//左 あり, 右 あり
+					else if (editmap[i][j - 1] == ECELLNUM::EGROUND && editmap[i][j + 1] == ECELLNUM::EGROUND){
+						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, CELLSIZE * 5, CELLSIZE * 6, CELLSIZE * (editmap[i][j] - 1), CELLSIZE * editmap[i][j], 1.0f);
+					}
+					//左 あり, 右 なし
+					else if (editmap[i][j - 1] == ECELLNUM::EGROUND && editmap[i][j + 1] != ECELLNUM::EGROUND){
+						mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, CELLSIZE * 5, CELLSIZE * 4, CELLSIZE * (editmap[i][j] - 1), CELLSIZE * editmap[i][j], 1.0f);
+					}
+				}
+				else {
+					mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
 				}
 			}
 
@@ -373,15 +394,29 @@ void CEditer::Render(){
 				else
 					mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 0, 64, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
 			}
-			//ベルトコンベア
-			if (editmap[i][j] == EBELT){
-				if (editmap[i][j - 1] != EBELT && editmap[i][j + 1] == EBELT)
+			//ベルトコンベア 左
+			if (editmap[i][j] == EBELTL){
+				if (editmap[i][j - 1] != EBELTL && editmap[i][j + 1] == EBELTL)
 					mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 64, 128, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
 
-				else if (editmap[i][j - 1] == EBELT && editmap[i][j + 1] == EBELT)
+				else if (editmap[i][j - 1] == EBELTL && editmap[i][j + 1] == EBELTL)
 					mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 128, 192, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
 
-				else if (editmap[i][j - 1] == EBELT && editmap[i][j + 1] != EBELT)
+				else if (editmap[i][j - 1] == EBELTL && editmap[i][j + 1] != EBELTL)
+					mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 192, 256, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
+
+				else
+					mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 0, 64, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
+			}
+			//ベルトコンベア 右
+			if (editmap[i][j] == EBELTR){
+				if (editmap[i][j - 1] != EBELTR && editmap[i][j + 1] == EBELTR)
+					mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 64, 128, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
+
+				else if (editmap[i][j - 1] == EBELTR && editmap[i][j + 1] == EBELTR)
+					mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 128, 192, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
+
+				else if (editmap[i][j - 1] == EBELTR && editmap[i][j + 1] != EBELTR)
 					mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 192, 256, CELLSIZE * editmap[i][j], CELLSIZE * (editmap[i][j] - 1), 1.0f);
 
 				else
