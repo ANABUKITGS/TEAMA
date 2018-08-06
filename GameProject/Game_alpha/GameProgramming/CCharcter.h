@@ -14,6 +14,7 @@ public:
 	float mVelocityG;
 	int mJumpTime;
 	int mVelocityLimit;
+	bool mDirection;
 	void Init();
 	void Update();
 	void Render();

@@ -73,6 +73,9 @@
     <ClCompile Include="CMapJewelry.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="CWeapon.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCamera2D.h">
@@ -146,6 +149,9 @@
     </ClInclude>
     <ClInclude Include="CMapJewelry.h">
       <Filter>ソースファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CWeapon.h">
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

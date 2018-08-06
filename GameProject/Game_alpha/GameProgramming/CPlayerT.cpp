@@ -1,33 +1,50 @@
 #include "CPlayerT.h"
 
 #define PLAYER_VELOCITY_X 3.0f
+#define ATTACK_TIME 30
 
 CPlayerT *CPlayerT::mpPlayer = 0;
 
 void CPlayerT::Update(){
-
 	if (CGamePad::Push(PAD_3) || CKey::Push(VK_CONTROL))
 		mVelocityLimit = VELOCITYX_LIMIT * 2;
 	else
 		mVelocityLimit = VELOCITYX_LIMIT;
 
-	if (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE)){
-		if (mJumpTime < JUMP_TIME_LIMIT){
-			mJumpTime++;
-			Jump();
+	
+	if (mWeapon == 0){
+		if (CGamePad::Push(PAD_1)){
+			mWeapon = new CWeapon(mPosition, CVector2(10, 10),mDirection, NULL);
+			if (mDirection)
+				mWeapon->mPosition.x += 10;
+			else
+				mWeapon->mPosition.x -= 10;
 		}
+		if (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE)){
+			if (mJumpTime < JUMP_TIME_LIMIT){
+				mJumpTime++;
+				Jump();
+			}
+		}
+		else{
+			mJumpTime = 0;
+			mVelocityJ = PLAYER_VELOCITY_Y;
+
+		}
+		
+	}
+	else if (mWeapon->mLife < 0){
+		mWeapon = 0;
 	}
 	else{
-		mJumpTime = 0;
-		mVelocityJ = PLAYER_VELOCITY_Y;
-
+		mWeapon->Render();
 	}
-//	if (mPosition.y > 0)
+	if (mWeapon == 0){
 		Gravity();
-//	else
-//		mVelocityG = 0;
-	Forward();
+		Forward();
+	}
 	CRectangle::Update();
+	
 }
 
 //èdóÕèàóù
@@ -49,6 +66,7 @@ void CPlayerT::Jump(){
 void CPlayerT::Forward(){
 	if (CGamePad::Push(PAD_LSTICKX, 0.1f) || CKey::Push('D')){
 		float hoge = mVelocityLimit * CGamePad::GetStick(PAD_LSTICKX);
+		mDirection= true;
 		if (mVelocityX < hoge && mVelocityX > -hoge){
 			mVelocityX += PLAYER_VELOCITY_X;
 		}
@@ -60,6 +78,7 @@ void CPlayerT::Forward(){
 			mVelocityX -= (PLAYER_VELOCITY_X / 2);
 	}
 	if (CGamePad::Push(PAD_LSTICKX, -0.1f) || CKey::Push('A')){
+		mDirection = false;
 		float hoge = mVelocityLimit * -CGamePad::GetStick(PAD_LSTICKX);
 		if (mVelocityX < hoge && mVelocityX > -hoge)
 			mVelocityX -= PLAYER_VELOCITY_X;
@@ -78,7 +97,7 @@ bool CPlayerT::Collision(CRectangle *p) {
 	if (p->GetEnabled()) {
 		CVector2 aj;
 		if (CRectangle::Collision(p, &aj)) {
-			if (p->mTag != EJEWELRY) {
+			if (p->mTag != EJEWELRY ) {
 				mPosition = mPosition + aj;
 			}
 			mVelocityG = 0.0f;
@@ -87,3 +106,4 @@ bool CPlayerT::Collision(CRectangle *p) {
 	}
 	return false;
 }
+
