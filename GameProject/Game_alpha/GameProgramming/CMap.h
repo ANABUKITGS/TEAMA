@@ -15,6 +15,10 @@
 #define CURSOR_NUM		-1		//カーソル
 #define SCROLL_SPEED	2.0f	//スクロールスピード
 
+#define WINDOW_SIZE_W 1280
+#define WINDOW_SIZE_H 720
+
+#define POS(Y,X) CVector2(X * CELLSIZE, Y * -CELLSIZE + WINDOW_SIZE_H)
 
 
 class CPauseMenu{
@@ -80,6 +84,7 @@ public:
 	void Init();
 	void Update();
 	void Render();
+	static void MakeTaskList(int *gamemap);
 };
 
 class CGame : public CEditer{
