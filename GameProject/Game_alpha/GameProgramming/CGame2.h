@@ -27,6 +27,8 @@ public:
 
 //	bool mapsctoll_flag;							//スクロール 開始
 
+	CRectangle *mRectPlayer;
+
 	void Init();
 	void Update();
 	void Scroll();

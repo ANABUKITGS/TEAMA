@@ -144,14 +144,14 @@ void CGame::Render(){
 					mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 0, 64, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 			}
 			//ベルトコンベア
-			if (gamemap[i][j] == EBELT){
-				if (gamemap[i][j - 1] != EBELT && gamemap[i][j + 1] == EBELT)
+			if (gamemap[i][j] == EBELTL){
+				if (gamemap[i][j - 1] != EBELTL && gamemap[i][j + 1] == EBELTL)
 					mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 64, 128, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 
-				else if (gamemap[i][j - 1] == EBELT && gamemap[i][j + 1] == EBELT)
+				else if (gamemap[i][j - 1] == EBELTL && gamemap[i][j + 1] == EBELTL)
 					mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 128, 192, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 
-				else if (gamemap[i][j - 1] == EBELT && gamemap[i][j + 1] != EBELT)
+				else if (gamemap[i][j - 1] == EBELTL && gamemap[i][j + 1] != EBELTL)
 					mTexObject.DrawImage(gamemap_rect[i][j].mLeft, gamemap_rect[i][j].mRight, gamemap_rect[i][j].mBottom, gamemap_rect[i][j].mTop, 192, 256, CELLSIZE * gamemap[i][j], CELLSIZE * (gamemap[i][j] - 1), 1.0f);
 
 				else

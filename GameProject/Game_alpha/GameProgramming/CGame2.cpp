@@ -16,7 +16,7 @@ void CGame2::Init() {
 	//mTexUI.Load(".\\Data\\Images\\Map\\MapUI.tga");
 	//mTexObject.Load(".\\Data\\Images\\Map\\MapObject.tga");
 	//mTexCharacter.Load(".\\Data\\Images\\Map\\MapCharacter.tga");
-	//mTexPlayer.Load(".\\Data\\Images\\Map\\MapPlayer.tga");
+	mTexPlayer.Load(".\\Data\\Images\\Player\\Player.tga");
 	//mTexEnemy.Load(".\\Data\Images\\Map\\MapEnemy.tga");
 
 	char filepath[256];
@@ -225,7 +225,7 @@ void CGame2::Init() {
 		fclose(fp);	//ƒtƒ@ƒCƒ‹‚ð•Â‚¶‚é
 
 	}
-	new CPlayerT(CVector2(64, 264), CVector2(16, 60), NULL);
+	mRectPlayer = new CPlayerT(CVector2(64, 264), CVector2(16, 60), NULL);
 }
 
 /*
@@ -444,5 +444,6 @@ void CGame2::Render() {
 //	mCamera.x = CPlayerT::mpPlayer->mPosition.x;
 	mCamera.Begin();
 	CTaskManager::Get()->Render();
+	mTexPlayer.DrawImage(mRectPlayer->mPosition.x - CELLSIZE, mRectPlayer->mPosition.x + CELLSIZE, mRectPlayer->mPosition.y - CELLSIZE, mRectPlayer->mPosition.y + CELLSIZE, 0, 128, 128, 0, 1.0f);
 	CCamera2D::End();
 }

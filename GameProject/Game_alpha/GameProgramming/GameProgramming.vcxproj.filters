@@ -147,10 +147,10 @@
     <ClInclude Include="resource.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CMapJewelry.h">
-      <Filter>ソースファイル</Filter>
-    </ClInclude>
     <ClInclude Include="CWeapon.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CMapJewelry.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>

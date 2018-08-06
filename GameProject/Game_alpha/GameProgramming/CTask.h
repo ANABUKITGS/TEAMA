@@ -29,8 +29,6 @@ enum ECELLNUM{
 	ESTEEL,				//ìSçú
 	ESIZE,				//ECELLNUM ÉTÉCÉY
 
-	EBELT,
-
 	/*------ ÇªÇÃëº ------*/
 	EWEAPON,
 };

@@ -16,7 +16,6 @@ void CSceneChange::Init(){
 	player.Init();
 	mEditer.Init();
 	mGame.Init();
-	mGame2.Init();
 	mTitle.Init();
 	mEditer.Init();
 }

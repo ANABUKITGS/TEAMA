@@ -1,8 +1,10 @@
 #include "CScene.h"
 #include "CScore.h"
-//hoge
+#include "CGame2.h"
+
 extern CEditer mEditer;
 extern CGame mGame;
+extern CGame2 mGame2;
 extern CCharcter player;
 extern CTitle mTitle;
 extern CGetScore mScore;
@@ -27,7 +29,7 @@ void CTitle::Update(){
 			break;
 
 		case CSceneChange::EGAME:
-			mGame.Init();
+			mGame2.Init();
 			player.Init();
 			CSceneChange::changenum = cursor_num;
 			break;
