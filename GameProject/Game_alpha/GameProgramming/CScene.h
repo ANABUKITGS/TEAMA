@@ -35,6 +35,7 @@ public:
 		EGAME,
 		ERANKING,
 		ESCORE,
+		ENAME,
 		EEDITER,
 		EEXIT,
 		ESIZE
