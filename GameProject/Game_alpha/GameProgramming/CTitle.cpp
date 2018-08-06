@@ -9,9 +9,12 @@ extern CGetScore mScore;
 
 void CTitle::Init(){
 	cursor_num = CSceneChange::EGAME;
+	//テクスチャを読み込む
+	mTexTitle.Load(".//Data//Images//Title//Title.tga");
 }
 
 void CTitle::Update(){
+	mTexTitle.DrawImage(-640, 640, -360, 360, 0, 1280, 720, 0, 1.0f);
 	if ((CGamePad::OncePush(PAD_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f) || CKey::OncePush(VK_DOWN) || CKey::OncePush('S')) && cursor_num < CSceneChange::ESIZE - 1)
 		cursor_num++;
 
@@ -77,7 +80,6 @@ void CTitle::Update(){
 }
 
 void CTitle::Render(){
-	CText::DrawStringW(L"No Title!",-200, 200, 64, 1.0f, 0);
-	CText::DrawStringW(L" ゲームスタート\n ランキング\n スコア\n エディター(かり)\n ゲームしゅうりょう", -200, 0, 32, 1.0f, 0);
-	CText::DrawStringW(cursor_buf, -200, 0, 32, 1.0f, 0);
+	CText::DrawStringWSetColor(L" ゲームスタート\n ランキング\n スコア\n エディター(かり)\n ゲームしゅうりょう", -200, 0, 32, 0.5f,1.0f, 0.5f, 1.0f, 0);
+	CText::DrawStringWSetColor(cursor_buf, -200, 0, 32, 0.5f, 1.0f, 0.5f, 1.0f, 0);
 }
