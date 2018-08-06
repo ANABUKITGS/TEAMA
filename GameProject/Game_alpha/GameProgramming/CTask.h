@@ -30,6 +30,9 @@ enum ECELLNUM{
 	ESIZE,				//ECELLNUM ÉTÉCÉY
 
 	EBELT,
+
+	/*------ ÇªÇÃëº ------*/
+	EWEAPON,
 };
 
 

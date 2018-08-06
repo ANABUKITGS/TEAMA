@@ -6,27 +6,18 @@
 #include "CPlayerT.h"
 #include "CScene.h"
 
-#include "CMapJewelry.h"
-
-#define WINDOW_SIZE_W 1280
-#define WINDOW_SIZE_H 720
-
-#define POS(Y,X) CVector2(X * CELLSIZE, Y * -CELLSIZE + WINDOW_SIZE_H)
-//CVector2(j * CELLSIZE, i * CELLSIZE)
-
-//CRectangle *mapchip;	//なるべく外部変数（グローバル変数）は作成しない：バグの原因になりやすい
 
 void CGame2::Init() {
 
 	CRectangle *mapchip;	//Initでしか使用していないので、Initメソッドのローカル変数で宣言
 
 	mCamera.SetOrtho(WINDOW_SIZE_W / 2, WINDOW_SIZE_H / 2, WINDOW_SIZE_W / 2, WINDOW_SIZE_H / 2);
-	mTexBack.Load(".\\Data\\Images\\Map\\Background.tga");
-	mTexUI.Load(".\\Data\\Images\\Map\\MapUI.tga");
-	mTexObject.Load(".\\Data\\Images\\Map\\MapObject.tga");
-	mTexCharacter.Load(".\\Data\\Images\\Map\\MapCharacter.tga");
-	mTexPlayer.Load(".\\Data\\Images\\Map\\MapPlayer.tga");
-	mTexEnemy.Load(".\\Data\Images\\Map\\MapEnemy.tga");
+	//mTexBack.Load(".\\Data\\Images\\Map\\Background.tga");
+	//mTexUI.Load(".\\Data\\Images\\Map\\MapUI.tga");
+	//mTexObject.Load(".\\Data\\Images\\Map\\MapObject.tga");
+	//mTexCharacter.Load(".\\Data\\Images\\Map\\MapCharacter.tga");
+	//mTexPlayer.Load(".\\Data\\Images\\Map\\MapPlayer.tga");
+	//mTexEnemy.Load(".\\Data\Images\\Map\\MapEnemy.tga");
 
 	char filepath[256];
 //	if (map == CMapIO::EGAMEMAP)
@@ -55,7 +46,7 @@ void CGame2::Init() {
 		//		buf[size] = '\0';	//最後に\0を設定する（文字列の終端）
 		fclose(fp);	//ファイルをクローズする
 
-		MakeTaskList((int*)gamemap);
+		CEditer::MakeTaskList((int*)gamemap);
 
 //		for (int i = 0; i < MAP_SIZEY; i++){
 //			for (int j = 0; j < MAP_SIZEX; j++){
@@ -237,9 +228,27 @@ void CGame2::Init() {
 	new CPlayerT(CVector2(64, 264), CVector2(16, 60), NULL);
 }
 
+/*
 void CGame2::MakeTaskList(int *gamemap) {
 	
-	CTaskManager::Get()->Remove();
+	static CTexture mTexBack;// .Load(".\\Data\\Images\\Map\\Background.tga");
+	static CTexture mTexUI;// .Load(".\\Data\\Images\\Map\\MapUI.tga");
+	static CTexture mTexObject;// .Load(".\\Data\\Images\\Map\\MapObject.tga");
+	static CTexture mTexCharacter;// .Load(".\\Data\\Images\\Map\\MapCharacter.tga");
+	static CTexture mTexPlayer;// .Load(".\\Data\\Images\\Map\\MapPlayer.tga");
+	static CTexture mTexEnemy;// .Load(".\\Data\Images\\Map\\MapEnemy.tga");
+
+	if (mTexBack.id == 0) {
+		mTexBack.Load(".\\Data\\Images\\Map\\Background.tga");
+		mTexUI.Load(".\\Data\\Images\\Map\\MapUI.tga");
+		mTexObject.Load(".\\Data\\Images\\Map\\MapObject.tga");
+		mTexCharacter.Load(".\\Data\\Images\\Map\\MapCharacter.tga");
+		mTexPlayer.Load(".\\Data\\Images\\Map\\MapPlayer.tga");
+		//	mTexEnemy.Load(".\\Data\Images\\Map\\MapEnemy.tga");
+	}
+
+
+	CTaskManager::Get()->Destroy();
 
 	CRectangle *mapchip;	//Initでしか使用していないので、Initメソッドのローカル変数で宣言
 	for (int i = 0; i < MAP_SIZEY; i++){
@@ -416,6 +425,7 @@ void CGame2::MakeTaskList(int *gamemap) {
 
 }
 
+*/
 
 void CGame2::Update() {
 	if (CKey::Push('D')) {
