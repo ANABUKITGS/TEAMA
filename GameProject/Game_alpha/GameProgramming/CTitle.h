@@ -9,6 +9,7 @@ private:
 	wchar_t cursor_buf[32];
 
 public:
+	CTexture mTexTitle;
 	void Init();
 	void Update();
 	void Render();
