@@ -12,21 +12,13 @@ public:
 	float mVelocityX;		//X軸の移動速度
 	float mVelocityY;		//Y軸の移動速度
 	int mVelocityLimit;		//移動限界速度
+	float mSearch;
 	bool mDirection;		//キャラクターの向き true:右 false:左
 	void Update();			//更新処理
 	void Render();			//描画処理
 	void Gravity();			//重力処理
 	void Forward();			//前進処理
 	void Scroll();			//画面のスクロール処理
-<<<<<<< .mine
-
-
-
-=======
-	//void Jump();
-	void Forward();
-	void Scroll();
->>>>>>> .theirs
 	
 };
 #endif

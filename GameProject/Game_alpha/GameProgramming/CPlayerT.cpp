@@ -9,27 +9,15 @@ wchar_t jumptime_buf[256];
 int CPlayerT::player_ani;
 
 void CPlayerT::Update(){
-<<<<<<< .mine
-	if (mpWeapon == 0){
-		if (CGamePad::Push(PAD_1) || CKey::Push(VK_UP)){	//１キーまたは↑キー入力
-			mpWeapon = new CWeapon(EPWEAPON,mPosition, CVector2(10, 10), mDirection, NULL);
-
-
-
-
-
-
-=======
 	if (CGamePad::Push(PAD_3) || CKey::Push(VK_CONTROL) || CKey::Push(VK_SHIFT) || CKey::Push(VK_DOWN))
 		mVelocityLimit = VELOCITYX_LIMIT * 2;
 	else
 		mVelocityLimit = VELOCITYX_LIMIT;
 
 	
-	if (mWeapon == 0){
-		if ((CGamePad::Push(PAD_1) || CKey::Push(VK_UP)) && mAttack){
-			mWeapon = new CWeapon(mPosition, CVector2(10, 10), mDirection, NULL);
->>>>>>> .theirs
+	if (mpWeapon == 0){
+		if ((CGamePad::Push(PAD_1) || CKey::Push(VK_UP))){
+			mpWeapon = new CWeapon(EPWEAPON,mPosition, CVector2(10, 10), mDirection, NULL);
 			if (mDirection)		//weaponの位置をプレイヤーの向いている方向へ10ずらす
 				mpWeapon->mPosition.x += 10;
 			else
