@@ -22,12 +22,11 @@ public:
 	CTexture mTexUI;								//UI テクスチャー
 	CTexture mTexObject;							//UI オブジェクト
 	CTexture mTexCharacter;							//UI キャラクター
-	CTexture mTexPlayer;							//プレイヤー
 	CTexture mTexEnemy;								//敵
 
 //	bool mapsctoll_flag;							//スクロール 開始
 
-	CRectangle *mRectPlayer;
+	static CRectangle *mRectPlayer;
 
 	void Init();
 	void Update();

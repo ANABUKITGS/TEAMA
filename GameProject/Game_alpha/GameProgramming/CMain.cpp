@@ -89,8 +89,8 @@ void CMain::Update() {
 	//if (CGamePad::OncePush(PAD_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f))
 	//	move_y--;
 
-	Stick.Update();
-	Stick.mPosition.y = 128 * CGamePad::GetStick(PAD_RSTICKY);
-	Stick.mPosition.x = 128 * CGamePad::GetStick(PAD_RSTICKX);
-	Stick.Render(WHITE, 1.0f);
+	//Stick.Update();
+	//Stick.mPosition.y = 128 * CGamePad::GetStick(PAD_RSTICKY);
+	//Stick.mPosition.x = 128 * CGamePad::GetStick(PAD_RSTICKX);
+	//Stick.Render(WHITE, 1.0f);
 }

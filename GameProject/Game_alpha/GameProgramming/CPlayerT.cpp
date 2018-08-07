@@ -6,7 +6,15 @@
 CPlayerT *CPlayerT::mpPlayer = 0;
 wchar_t jumptime_buf[256];
 
+int CPlayerT::player_ani;
+
 void CPlayerT::Update(){
+	if (CGamePad::Push(PAD_3) || CKey::Push(VK_CONTROL) || CKey::Push(VK_SHIFT))
+		mVelocityLimit = VELOCITYX_LIMIT * 2;
+	else
+		mVelocityLimit = VELOCITYX_LIMIT;
+
+	
 	if (mWeapon == 0){
 		if (CGamePad::Push(PAD_1) || CKey::Push(VK_UP) && mAttack){
 			mWeapon = new CWeapon(mPosition, CVector2(10, 10), mDirection, NULL);
@@ -48,24 +56,70 @@ void CPlayerT::Update(){
 }
 
 void CPlayerT::Forward(){
-	if (CGamePad::Push(PAD_LSTICKX, 0.1f) || CKey::Push('D')){
-		float hoge = mVelocityLimit * CGamePad::GetStick(PAD_LSTICKX);
-		mDirection= true;
-		if (mVelocityX < hoge && mVelocityX > -hoge){
-			mVelocityX += PLAYER_VELOCITY_X;
+	if (CGamePad::Push(PAD_LSTICKX, 0.1f) || CGamePad::Push(PAD_LSTICKX, -0.1f)){
+		if (CGamePad::Push(PAD_LSTICKX, 0.1f)){
+			float hoge = mVelocityLimit * CGamePad::GetStick(PAD_LSTICKX);
+			mDirection = true;
+			if (mVelocityX < hoge && mVelocityX > -hoge){
+				mVelocityX += PLAYER_VELOCITY_X;
+			}
+			player_ani = ERUN;
+		}
+		else {
+			if (mVelocityX < 0)
+				mVelocityX += (PLAYER_VELOCITY_X / 2);
+			else if (mVelocityX>0)
+				mVelocityX -= (PLAYER_VELOCITY_X / 2);
+		}
+
+		if (CGamePad::Push(PAD_LSTICKX, -0.1f)){
+			float hoge = mVelocityLimit * -CGamePad::GetStick(PAD_LSTICKX);
+			mDirection = false;
+			if (mVelocityX < hoge && mVelocityX > -hoge){
+				mVelocityX -= PLAYER_VELOCITY_X;
+			}
+			player_ani = ERUN;
+		}
+		else {
+			if (mVelocityX < 0)
+				mVelocityX += (PLAYER_VELOCITY_X / 2);
+			else if (mVelocityX>0)
+				mVelocityX -= (PLAYER_VELOCITY_X / 2);
 		}
 	}
-	else if (CGamePad::Push(PAD_LSTICKX, -0.1f) || CKey::Push('A')){
-		mDirection = false;
-		float hoge = mVelocityLimit * -CGamePad::GetStick(PAD_LSTICKX);
-		if (mVelocityX < hoge && mVelocityX > -hoge)
-			mVelocityX -= PLAYER_VELOCITY_X;
+	else if (CKey::Push('D') || CKey::Push('A')){
+		if (CKey::Push('D')){
+			mDirection = true;
+			if (mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit)
+				mVelocityX += PLAYER_VELOCITY_X;
+			//player_ani = ERUN;
+		}
+		else{
+			if (mVelocityX < 0)
+				mVelocityX += (PLAYER_VELOCITY_X / 2);
+			else if (mVelocityX>0)
+				mVelocityX -= (PLAYER_VELOCITY_X / 2);
+		}
+
+		if (CKey::Push('A')){
+			mDirection = false;
+			if (mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit)
+				mVelocityX -= PLAYER_VELOCITY_X;
+			//player_ani = ERUN;
+		}
+		else{
+			if (mVelocityX < 0)
+				mVelocityX += (PLAYER_VELOCITY_X / 2);
+			else if (mVelocityX>0)
+				mVelocityX -= (PLAYER_VELOCITY_X / 2);
+		}
 	}
 	else{
 		if (mVelocityX < 0)
 			mVelocityX += ( PLAYER_VELOCITY_X / 2);
 		else if (mVelocityX>0)
 			mVelocityX -= ( PLAYER_VELOCITY_X / 2);
+			player_ani = EIDOL;
 	}
 	mPosition.x += mVelocityX;
 }
@@ -84,6 +138,66 @@ bool CPlayerT::Collision(CRectangle *p) {
 		}
 	}
 	return false;
+}
+
+void CPlayerT::Render(){
+	switch (player_ani){
+	default:
+		break;
+
+	case EPLAYERANI::EIDOL:
+		if (player_ani_count > 7)
+			player_ani_count = 0;
+
+		PLAYER_ANI_COUNT_FLAME = 8;
+
+		if (!mDirection)	//¶Œü‚«
+			mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 128, 0, 1.0f);
+		else				//‰EŒü‚«
+			mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, (player_ani_count + 1) * 128, player_ani_count * 128, 128, 0, 1.0f);
+		break;
+
+	case EPLAYERANI::ERUN:
+		if (player_ani_count > 2)
+			player_ani_count = 0;
+
+		if (!mDirection){	//¶Œü‚«
+			PLAYER_ANI_COUNT_FLAME = 3 + (5 / -CGamePad::GetStick(PAD_LSTICKX));
+			mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 256, 128, 1.0f);
+		}
+
+		else{				//‰EŒü‚«
+			PLAYER_ANI_COUNT_FLAME = 3 + (5 / CGamePad::GetStick(PAD_LSTICKX));
+			mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, (player_ani_count + 1) * 128, player_ani_count * 128, 256, 128, 1.0f);
+		}
+		break;
+
+	case EPLAYERANI::ETURN:
+
+		break;
+
+	case EPLAYERANI::EJUMP:
+
+		break;
+
+	case EPLAYERANI::EDAMAGE:
+
+		break;
+
+	case EPLAYERANI::EYOHYOH:
+
+		break;
+
+	case EPLAYERANI::EDOWN:
+
+		break;
+	}
+
+	player_ani_count_flame++;
+	if (player_ani_count_flame > PLAYER_ANI_COUNT_FLAME){
+		player_ani_count++;
+		player_ani_count_flame = 0;
+	}
 }
 
 void CPlayerT::Dash(){

@@ -6,6 +6,8 @@
 #include "CPlayerT.h"
 #include "CScene.h"
 
+CRectangle *CGame2::mRectPlayer;
+
 
 void CGame2::Init() {
 
@@ -16,7 +18,6 @@ void CGame2::Init() {
 	//mTexUI.Load(".\\Data\\Images\\Map\\MapUI.tga");
 	//mTexObject.Load(".\\Data\\Images\\Map\\MapObject.tga");
 	//mTexCharacter.Load(".\\Data\\Images\\Map\\MapCharacter.tga");
-	mTexPlayer.Load(".\\Data\\Images\\Player\\Player.tga");
 	//mTexEnemy.Load(".\\Data\Images\\Map\\MapEnemy.tga");
 
 	char filepath[256];
@@ -434,7 +435,7 @@ void CGame2::Update() {
 	if (CKey::Push('A')) {
 		mCamera.x -= 5;
 	}
-	if (CGamePad::Once(PAD_10))
+	if (CGamePad::Once(PAD_10) || CKey::Once(VK_ESCAPE))
 		CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ETITLE;
 	CTaskManager::Get()->Update();
 }
@@ -444,6 +445,5 @@ void CGame2::Render() {
 	mCamera.x = CPlayerT::mpPlayer->mPosition.x;
 	mCamera.Begin();
 	CTaskManager::Get()->Render();
-	mTexPlayer.DrawImage(mRectPlayer->mPosition.x - CELLSIZE, mRectPlayer->mPosition.x + CELLSIZE, mRectPlayer->mPosition.y - CELLSIZE, mRectPlayer->mPosition.y + CELLSIZE, 0, 128, 128, 0, 1.0f);
 	CCamera2D::End();
 }
