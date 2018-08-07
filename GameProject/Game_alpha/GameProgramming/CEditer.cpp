@@ -26,7 +26,7 @@ void CEditer::Init(){
 
 	for (int i = 0; i < MAP_SIZEY; i++){
 		for (int j = 0; j < MAP_SIZEX; j++){
-			editmap_rect[i][j].SetVertex(j * CELLSIZE - 640, j * CELLSIZE + CELLSIZE - 640, i * - CELLSIZE + 280, i * - CELLSIZE + CELLSIZE + 280);
+			editmap_rect[i][j].SetVertex(j * CELLSIZE - 640, j * CELLSIZE + CELLSIZE - 640, i * -CELLSIZE + 280, i * -CELLSIZE + CELLSIZE + 280);
 		}
 	}
 
@@ -292,15 +292,15 @@ void CEditer::Update(){
 
 void CEditer::Render(){
 	CCamera2D mCamera;
-	mCamera.SetOrtho(WINDOW_SIZE_W / 2, WINDOW_SIZE_H / 2, WINDOW_SIZE_W / 2, WINDOW_SIZE_H / 2);
+	mCamera.SetOrtho(-editmap_rect[0][0].mRight + CELLSIZE / 2, editmap_rect[0][0].mTop + CELLSIZE, WINDOW_SIZE_W / 2, WINDOW_SIZE_H / 2);
 
-//	mTexBack.DrawImage(TEX_FULLSCREEN, 0, 1280, 720, 0, 1.0f);
+	mTexBack.DrawImage(TEX_FULLSCREEN, 0, 1280, 720, 0, 1.0f);
 
 	MakeTaskList((int *)editmap);
 	mCamera.Begin();
 	CTaskManager::Get()->Update();
 	CTaskManager::Get()->Render();
-	mCamera.End();
+	CCamera2D::End();
 
 	cursor_anime++;
 	for (int i = 0; i < MAP_SIZEY; i++){
