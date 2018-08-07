@@ -13,7 +13,6 @@ CGetScore mScore;
 int CSceneChange::changenum = ETITLE;
 
 void CSceneChange::Init(){
-	player.Init();
 	mEditer.Init();
 	mGame.Init();
 	mTitle.Init();

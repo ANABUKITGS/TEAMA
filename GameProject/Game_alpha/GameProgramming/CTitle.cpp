@@ -30,7 +30,6 @@ void CTitle::Update(){
 
 		case CSceneChange::EGAME:
 			mGame2.Init();
-			player.Init();
 			CSceneChange::changenum = cursor_num;
 			break;
 
@@ -82,6 +81,6 @@ void CTitle::Update(){
 }
 
 void CTitle::Render(){
-	CText::DrawStringWSetColor(L" ゲームスタート\n ランキング\n スコア\n エディター(かり)\n ゲームしゅうりょう", -200, 0, 32, 0.5f,1.0f, 0.5f, 1.0f, 0);
-	CText::DrawStringWSetColor(cursor_buf, -200, 0, 32, 0.5f, 1.0f, 0.5f, 1.0f, 0);
+	CText::DrawStringWSetColor(L" ゲームスタート\n ランキング\n スコア\n エディター(かり)\n ゲームしゅうりょう", -200, 0, 32, WHITE, 1.0f, 0);
+	CText::DrawStringWSetColor(cursor_buf, -200, 0, 32, WHITE, 1.0f, 0);
 }

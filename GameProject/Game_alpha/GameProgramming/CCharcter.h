@@ -10,17 +10,16 @@
 class CCharcter :public CRectangle{
 public:
 	float mVelocityX;
-	float mVelocityJ;
-	float mVelocityG;
-	int mJumpTime;
+	float mVelocityY;
+	int mJumpTi;
 	int mVelocityLimit;
 	bool mDirection;
-	void Init();
 	void Update();
 	void Render();
 	void Gravity();
-	void Jump();
+	//void Jump();
 	void Forward();
 	void Scroll();
+	
 };
 #endif
