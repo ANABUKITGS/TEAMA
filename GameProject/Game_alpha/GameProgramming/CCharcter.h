@@ -11,6 +11,7 @@ class CCharcter :public CRectangle{
 public:
 	float mVelocityX;
 	float mVelocityY;
+	float mSearch;		//’Tõ”ÍˆÍ
 	int mJumpTi;
 	int mVelocityLimit;
 	bool mDirection;
