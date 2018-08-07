@@ -18,7 +18,6 @@ void CPlayerT::Update(){
 	if (mWeapon == 0){
 		if (CGamePad::Push(PAD_1) || CKey::Push(VK_UP) && mAttack){
 			mWeapon = new CWeapon(mPosition, CVector2(10, 10), mDirection, NULL);
->>>>>>> .theirs
 			if (mDirection)		//weaponの位置をプレイヤーの向いている方向へ10ずらす
 				mpWeapon->mPosition.x += 10;
 			else
