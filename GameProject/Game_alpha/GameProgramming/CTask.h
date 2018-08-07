@@ -30,7 +30,8 @@ enum ECELLNUM{
 	ESIZE,				//ECELLNUM サイズ
 
 	/*------ その他 ------*/
-	EWEAPON,
+	EPWEAPON,			//プレイヤー武器
+	EEWEAPON,			//敵武器
 };
 
 

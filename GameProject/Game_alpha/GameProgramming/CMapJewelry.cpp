@@ -14,8 +14,8 @@ void CMapJewelry::Update() {
 bool CMapJewelry::Collision(CRectangle *r) {
 	// 当たっているか
 	if (CRectangle::Collision(r)) {
-		//プレイヤーに衝突
-		if (r->mTag == EPLAYER) {
+		//プレイヤーまたは武器に衝突
+		if (r->mTag == EPLAYER || r->mTag ==EPWEAPON) {
 			//無効にする
 			mEnabled = false;
 			return true;
