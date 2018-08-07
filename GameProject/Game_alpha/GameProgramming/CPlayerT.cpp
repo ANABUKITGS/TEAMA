@@ -27,7 +27,7 @@ void CPlayerT::Update(){
 			else
 				mpWeapon->mPosition.x -= 10;
 		}
-		if (mJumpCount < 2 && CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) || CKey::Push(VK_RIGHT)){		//ジャンプ回数２未満かつ２キーまたは→キー入力　
+		if (mJumpCount < 2 && (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) || CKey::Push(VK_RIGHT))){		//ジャンプ回数２未満かつ２キーまたは→キー入力　
 			if (!mJump)
 				mVelocityY = PLAYER_VELOCITY_Y;
 			mJump = true;
