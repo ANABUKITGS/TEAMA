@@ -18,6 +18,15 @@ public:
 	void Gravity();			//重力処理
 	void Forward();			//前進処理
 	void Scroll();			//画面のスクロール処理
+<<<<<<< .mine
+
+
+
+=======
+	//void Jump();
+	void Forward();
+	void Scroll();
+>>>>>>> .theirs
 	
 };
 #endif
