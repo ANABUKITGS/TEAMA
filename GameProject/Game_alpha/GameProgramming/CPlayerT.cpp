@@ -9,7 +9,7 @@ wchar_t jumptime_buf[256];
 int CPlayerT::player_ani;
 
 void CPlayerT::Update(){
-	if (CGamePad::Push(PAD_3) || CKey::Push(VK_CONTROL) || CKey::Push(VK_SHIFT)){
+	if (CGamePad::Push(PAD_3) || CKey::Push(VK_CONTROL) || CKey::Push(VK_SHIFT) || CKey::Push(VK_DOWN)){
 		mVelocityLimit = VELOCITYX_LIMIT * 2;
 		mDash = true;
 	}
@@ -27,8 +27,7 @@ void CPlayerT::Update(){
 			else
 				mpWeapon->mPosition.x -= 10;
 		}
-　
-		if (mJumpCount < 2 && CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) ){		//ジャンプ回数２未満かつ２キーまたは→キー入力　
+		if (mJumpCount < 2 && CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) || CKey::Push(VK_RIGHT)){		//ジャンプ回数２未満かつ２キーまたは→キー入力　
 			if (!mJump)
 				mVelocityY = PLAYER_VELOCITY_Y;
 			mJump = true;
