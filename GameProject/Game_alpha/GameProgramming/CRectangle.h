@@ -20,8 +20,9 @@ public:
 	float mRotation;	//四角形の回転角度
 	float mUv[4];	//テクスチャマッピングデータ
 	float mRight, mLeft, mTop, mBottom;
+	float mAlpha;
 	CRectangle()
-		: mRotation(0.0f), mpTexture(0)
+		: mRotation(0.0f), mpTexture(0), mAlpha(1.0f)
 	{}
 	/*
 	position:位置

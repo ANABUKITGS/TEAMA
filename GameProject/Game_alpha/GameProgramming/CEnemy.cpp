@@ -63,7 +63,7 @@ void  CEnemy::Update(){
 		if (mDownTime < 0){
 			mEnabled = false;
 		}
-		/*glColor4f(WHITE, alpha);*/
+		mAlpha -= 0.01f;
 		break;
 	default:
 		break;

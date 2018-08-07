@@ -65,14 +65,26 @@ void CPlayerT::Forward(){
 			}
 			player_ani = ERUN;
 		}
+		else{
+			if (mVelocityX < 0)
+				mVelocityX += 0.25f;
+			else if (mVelocityX>0)
+				mVelocityX -= 0.25f;
+		}
 
-		else if (CGamePad::Push(PAD_LSTICKX, -0.1f)){
+		if (CGamePad::Push(PAD_LSTICKX, -0.1f)){
 			float hoge = mVelocityLimit * -CGamePad::GetStick(PAD_LSTICKX);
 			mDirection = false;
 			if (mVelocityX < hoge && mVelocityX > -hoge){
 				mVelocityX -= PLAYER_VELOCITY_X;
 			}
 			player_ani = ERUN;
+		}
+		else{
+			if (mVelocityX < 0)
+				mVelocityX += 0.25f;
+			else if (mVelocityX>0)
+				mVelocityX -= 0.25f;
 		}
 	}
 	else if (CKey::Push('D') || CKey::Push('A')){
@@ -82,12 +94,24 @@ void CPlayerT::Forward(){
 				mVelocityX += PLAYER_VELOCITY_X;
 			player_ani = ERUN;
 		}
+		else{
+			if (mVelocityX < 0)
+				mVelocityX += 0.25f;
+			else if (mVelocityX>0)
+				mVelocityX -= 0.25f;
+		}
 
 		if (CKey::Push('A')){
 			mDirection = false;
 			if (mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit)
 				mVelocityX -= PLAYER_VELOCITY_X;
 			player_ani = ERUN;
+		}
+		else{
+			if (mVelocityX < 0)
+				mVelocityX += 0.25f;
+			else if (mVelocityX>0)
+				mVelocityX -= 0.25f;
 		}
 	}
 	else{

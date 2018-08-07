@@ -11,7 +11,7 @@
 #define WALK_TIME 180
 #define ENEMY_VELOCITY 1.5f
 #define E_SEARCHRANGE 250	//索敵範囲
-#define DOWN_TIME 60
+#define DOWN_TIME 100
 
 class CEnemy :public CCharcter{
 public:
@@ -21,7 +21,6 @@ public:
 	bool mForward;		//移動方向 true:右 false:左
 	int mMonitorTime;	//立ち止まる時間
 	int mWalkTime;		//歩く時間
-	float alpha;		//アルファ値
 	int mDownTime;		//ダウンしてから消えるまでの時間
 	//アニメーションの切り替えをタグ付けで行う
 	enum AnimationTag{
