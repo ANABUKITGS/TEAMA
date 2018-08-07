@@ -32,12 +32,8 @@ void CCharcter::Gravity(){
 	mPosition.y += mVelocityY;
 }
 
-//ジャンプ処理
-//void CCharcter::Jump(){
-//	mJumpTime++;
-//	
-//}
 
+//前進処理
 void CCharcter::Forward(){
 	if (CGamePad::Push(PAD_LSTICKX, 0.1f) || CKey::Push('D')){
 		float hoge = mVelocityLimit * CGamePad::GetStick(PAD_LSTICKX);

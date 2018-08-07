@@ -1,27 +1,27 @@
 #include "CWeapon.h"
 #include "CPlayerT.h"
 void CWeapon::Update(){
-	mRotation+=5;
+	mRotation+=5;			//毎フレーム5ずつ回転させる
 	mLife--;
 	if (mLife > 0){
-		if (mLife > 15){
-			if (mDirection)
+		if (mLife > 15){	//生存時間が15以上
+			if (mDirection)	//右向き
 				mVelocity = WEAPOM_VELOCITY;
-			else
+			else            //左向き
 				mVelocity = -WEAPOM_VELOCITY;
 		}
-		else{
-			if (mDirection)
+		else{				//生存時間が15以下
+			if (mDirection)	//右向き
 				mVelocity = -WEAPOM_VELOCITY;
-			else
+			else            //左向き
 				mVelocity = WEAPOM_VELOCITY;
 		}
 		mPosition.x += mVelocity;
 		
 
 	}
-	else
-		mEnabled = false;
+	else                    //生存時間が0以下
+		mEnabled = false;	
 	
 	CRectangle::Update();
 
