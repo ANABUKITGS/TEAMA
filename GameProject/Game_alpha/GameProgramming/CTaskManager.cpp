@@ -76,6 +76,7 @@ void CTaskManager::Render(){
 	while (p){	//カレントp
 		if (p->mEnabled) {
 			p->Render(WHITE, 1.0f);	//現在カレントの描画処理を行う
+			p->Render();
 		}
 		p = (CRectangle*)p->mpNext;	//キャスト変換を行ったタスクの次をカレントに代入
 	}
