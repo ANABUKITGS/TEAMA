@@ -9,22 +9,22 @@ wchar_t jumptime_buf[256];
 int CPlayerT::player_ani;
 
 void CPlayerT::Update(){
-	if (CGamePad::Push(PAD_3) || CKey::Push(VK_CONTROL) || CKey::Push(VK_SHIFT))
+	if (CGamePad::Push(PAD_3) || CKey::Push(VK_CONTROL) || CKey::Push(VK_SHIFT) || CKey::Push(VK_DOWN))
 		mVelocityLimit = VELOCITYX_LIMIT * 2;
 	else
 		mVelocityLimit = VELOCITYX_LIMIT;
 
 	
-	if (mWeapon == 0){
-		if (CGamePad::Push(PAD_1) || CKey::Push(VK_UP) && mAttack){
-			mWeapon = new CWeapon(mPosition, CVector2(10, 10), mDirection, NULL);
+	if (mpWeapon == 0){
+		if ((CGamePad::Push(PAD_1) || CKey::Push(VK_UP))){
+			mpWeapon = new CWeapon(EPWEAPON,mPosition, CVector2(10, 10), mDirection, NULL);
 			if (mDirection)		//weaponの位置をプレイヤーの向いている方向へ10ずらす
 				mpWeapon->mPosition.x += 10;
 			else
 				mpWeapon->mPosition.x -= 10;
 		}
 
-		if (mJumpCount < 2 && CGamePad::Push(PAD_2) || CKey::Push(VK_RIGHT) ){
+		if (mJumpCount < 2 && CGamePad::Push(PAD_2) || CKey::Push(VK_RIGHT) ){		//ジャンプ回数２未満かつ２キーまたは→キー入力　
 			if (!mJump)
 				mVelocityY = PLAYER_VELOCITY_Y;
 			mJump = true;
@@ -92,7 +92,7 @@ void CPlayerT::Forward(){
 			mDirection = true;
 			if (mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit)
 				mVelocityX += PLAYER_VELOCITY_X;
-			//player_ani = ERUN;
+			player_ani = ERUN;
 		}
 		else{
 			if (mVelocityX < 0)
@@ -105,7 +105,7 @@ void CPlayerT::Forward(){
 			mDirection = false;
 			if (mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit)
 				mVelocityX -= PLAYER_VELOCITY_X;
-			//player_ani = ERUN;
+			player_ani = ERUN;
 		}
 		else{
 			if (mVelocityX < 0)
@@ -160,14 +160,20 @@ void CPlayerT::Render(){
 	case EPLAYERANI::ERUN:
 		if (player_ani_count > 2)
 			player_ani_count = 0;
+		if (CGamePad::Push(PAD_3) || CKey::Push(VK_DOWN)) {
+			PLAYER_ANI_COUNT_FLAME = 3;
+		}
+		else {
+			PLAYER_ANI_COUNT_FLAME = 6;
+		}
 
 		if (!mDirection){	//左向き
-			PLAYER_ANI_COUNT_FLAME = 3 + (5 / -CGamePad::GetStick(PAD_LSTICKX));
+//			PLAYER_ANI_COUNT_FLAME = 3 + (5 / -CGamePad::GetStick(PAD_LSTICKX));
 			mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 256, 128, 1.0f);
 		}
 
 		else{				//右向き
-			PLAYER_ANI_COUNT_FLAME = 3 + (5 / CGamePad::GetStick(PAD_LSTICKX));
+//			PLAYER_ANI_COUNT_FLAME = 3 + (5 / CGamePad::GetStick(PAD_LSTICKX));
 			mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, (player_ani_count + 1) * 128, player_ani_count * 128, 256, 128, 1.0f);
 		}
 		break;

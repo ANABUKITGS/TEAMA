@@ -73,8 +73,11 @@
     <ClCompile Include="CMapJewelry.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CWeapon.cpp">
+    <ClCompile Include="CEnemy.cpp">
       <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CWeapon.cpp">
+      <Filter>ヘッダーファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +154,9 @@
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="CMapJewelry.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemy.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
