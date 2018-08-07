@@ -33,6 +33,7 @@ void CCharcter::Gravity(){
 }
 
 
+//ëOêièàóù
 void CCharcter::Forward(){
 	if (CGamePad::Push(PAD_LSTICKX, 0.1f) || CKey::Push('D')){
 		float hoge = mVelocityLimit * CGamePad::GetStick(PAD_LSTICKX);

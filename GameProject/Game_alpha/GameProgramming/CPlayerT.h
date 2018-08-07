@@ -30,20 +30,23 @@ public:
 	int PLAYER_ANI_COUNT_FLAME;
 	static CPlayerT *mpPlayer;
 	CTexture mTexPlayer;
-	bool mJump;				// true : ジャンプ中  false : ジャンプしてない
+	bool mJump;				//true:ジャンプ中  false:ジャンプしていない
 	int mJumpCount;			//ジャンプ回数
-	bool mAttack;			//攻撃  true : 可能  false : 不可能
+	//bool mAttack;			//攻撃  true:可能  false:不可能
 
-	CWeapon *mWeapon;
+	CWeapon *mpWeapon;
 	CPlayerT() 
-		:mWeapon(0)
+		:mpWeapon(0)
 	
 	{
 		mpPlayer = this;
 		mPriority = 1;
 		mTag = EPLAYER;
 		mJump = false;
-		mAttack = true;
+		mVelocityY = 0;
+		mVelocityX = 0;
+		mDirection = true;
+		//mAttack = true;
 		mJumpCount = 0;
 		CTaskManager::Get()->Add(this);
 		mTexPlayer.Load(".\\Data\\Images\\Player\\Player.tga");
@@ -57,10 +60,6 @@ public:
 		: CPlayerT()
 	{
 		SetRectangle(position, scale, texture);
-		mVelocityY = 0;
-		mVelocityX = 0;
-		mDirection = true;
-		
 	}
 
 	void Update();

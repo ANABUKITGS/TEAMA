@@ -9,22 +9,16 @@ wchar_t jumptime_buf[256];
 int CPlayerT::player_ani;
 
 void CPlayerT::Update(){
-	if (CGamePad::Push(PAD_3) || CKey::Push(VK_CONTROL) || CKey::Push(VK_SHIFT))
-		mVelocityLimit = VELOCITYX_LIMIT * 2;
-	else
-		mVelocityLimit = VELOCITYX_LIMIT;
-
-	
-	if (mWeapon == 0){
-		if (CGamePad::Push(PAD_1) || CKey::Push(VK_UP) && mAttack){
-			mWeapon = new CWeapon(mPosition, CVector2(10, 10), mDirection, NULL);
+	if (mpWeapon == 0){
+		if (CGamePad::Push(PAD_1) || CKey::Push(VK_UP)){	//１キーまたは↑キー入力
+			mpWeapon = new CWeapon(EPWEAPON,mPosition, CVector2(10, 10), mDirection, NULL);
 			if (mDirection)		//weaponの位置をプレイヤーの向いている方向へ10ずらす
-				mWeapon->mPosition.x += 10;
+				mpWeapon->mPosition.x += 10;
 			else
-				mWeapon->mPosition.x -= 10;
+				mpWeapon->mPosition.x -= 10;
 		}
 
-		if (mJumpCount < 2 && CGamePad::Push(PAD_2) || CKey::Push(VK_RIGHT) ){
+		if (mJumpCount < 2 && CGamePad::Push(PAD_2) || CKey::Push(VK_RIGHT) ){		//ジャンプ回数２未満かつ２キーまたは→キー入力　
 			if (!mJump)
 				mVelocityY = PLAYER_VELOCITY_Y;
 			mJump = true;
@@ -36,23 +30,25 @@ void CPlayerT::Update(){
 		}
 		
 	}
-	else if (mWeapon->mLife < 0){
-		mWeapon = 0;
+	else if (mpWeapon->mLife <= 0){		//武器の生存時間が0以下
+		mpWeapon = 0;
 	}
-	else{
-		mWeapon->Render();
+	else{								//武器の生存時間が0を超過
+		mpWeapon->Render();
 	}
-	if (mWeapon == 0){
+	if (mpWeapon == 0){
 		Dash();
 		Gravity();
 		Forward();
+		CRectangle::Update();
 	}
-	CRectangle::Update();
+	
 	swprintf(jumptime_buf, L"mVelocityX\n%4.2f\nmVelocityY\n%4.2f\nmPosition.x\n%4.2f\nmPosition.y\n%4.2f", mVelocityX, mVelocityY, mPosition.x, mPosition.y);
 	CText::DrawStringW(jumptime_buf, 0, 0, 32, 1.0f, 0);
 	
 }
 
+//前進処理
 void CPlayerT::Forward(){
 	if (CGamePad::Push(PAD_LSTICKX, 0.1f) || CGamePad::Push(PAD_LSTICKX, -0.1f)){
 		if (CGamePad::Push(PAD_LSTICKX, 0.1f)){
@@ -103,7 +99,7 @@ bool CPlayerT::Collision(CRectangle *p) {
 	if (p->GetEnabled()) {
 		CVector2 aj;
 		if (CRectangle::Collision(p, &aj)) {
-			if (p->mTag != EJEWELRY && p->mTag != EWEAPON) {
+			if (p->mTag != EJEWELRY && p->mTag != EPWEAPON) {
 				mPosition = mPosition + aj;
 			}
 			mJumpCount = 0;
@@ -175,7 +171,7 @@ void CPlayerT::Render(){
 }
 
 void CPlayerT::Dash(){
-	if (CGamePad::Push(PAD_3) || CKey::Push(VK_CONTROL))
+	if (CGamePad::Push(PAD_3) || CKey::Push(VK_CONTROL) || CKey::Push(VK_SHIFT))
 		mVelocityLimit = VELOCITYX_LIMIT * 2;
 	else
 		mVelocityLimit = VELOCITYX_LIMIT;
