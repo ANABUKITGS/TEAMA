@@ -9,27 +9,15 @@ wchar_t jumptime_buf[256];
 int CPlayerT::player_ani;
 
 void CPlayerT::Update(){
-<<<<<<< .mine
-	if (mpWeapon == 0){
-		if (CGamePad::Push(PAD_1) || CKey::Push(VK_UP)){	//１キーまたは↑キー入力
-			mpWeapon = new CWeapon(EPWEAPON,mPosition, CVector2(10, 10), mDirection, NULL);
-
-
-
-
-
-
-=======
 	if (CGamePad::Push(PAD_3) || CKey::Push(VK_CONTROL) || CKey::Push(VK_SHIFT) || CKey::Push(VK_DOWN))
 		mVelocityLimit = VELOCITYX_LIMIT * 2;
 	else
 		mVelocityLimit = VELOCITYX_LIMIT;
 
 	
-	if (mWeapon == 0){
-		if ((CGamePad::Push(PAD_1) || CKey::Push(VK_UP)) && mAttack){
-			mWeapon = new CWeapon(mPosition, CVector2(10, 10), mDirection, NULL);
->>>>>>> .theirs
+	if (mpWeapon == 0){
+		if ((CGamePad::Push(PAD_1) || CKey::Push(VK_UP))){
+			mpWeapon = new CWeapon(EPWEAPON,mPosition, CVector2(10, 10), mDirection, NULL);
 			if (mDirection)		//weaponの位置をプレイヤーの向いている方向へ10ずらす
 				mpWeapon->mPosition.x += 10;
 			else
@@ -77,14 +65,26 @@ void CPlayerT::Forward(){
 			}
 			player_ani = ERUN;
 		}
+		else{
+			if (mVelocityX < 0)
+				mVelocityX += 0.25f;
+			else if (mVelocityX>0)
+				mVelocityX -= 0.25f;
+		}
 
-		else if (CGamePad::Push(PAD_LSTICKX, -0.1f)){
+		if (CGamePad::Push(PAD_LSTICKX, -0.1f)){
 			float hoge = mVelocityLimit * -CGamePad::GetStick(PAD_LSTICKX);
 			mDirection = false;
 			if (mVelocityX < hoge && mVelocityX > -hoge){
 				mVelocityX -= PLAYER_VELOCITY_X;
 			}
 			player_ani = ERUN;
+		}
+		else{
+			if (mVelocityX < 0)
+				mVelocityX += 0.25f;
+			else if (mVelocityX>0)
+				mVelocityX -= 0.25f;
 		}
 	}
 	else if (CKey::Push('D') || CKey::Push('A')){
@@ -94,12 +94,24 @@ void CPlayerT::Forward(){
 				mVelocityX += PLAYER_VELOCITY_X;
 			player_ani = ERUN;
 		}
+		else{
+			if (mVelocityX < 0)
+				mVelocityX += 0.25f;
+			else if (mVelocityX>0)
+				mVelocityX -= 0.25f;
+		}
 
 		if (CKey::Push('A')){
 			mDirection = false;
 			if (mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit)
 				mVelocityX -= PLAYER_VELOCITY_X;
 			player_ani = ERUN;
+		}
+		else{
+			if (mVelocityX < 0)
+				mVelocityX += 0.25f;
+			else if (mVelocityX>0)
+				mVelocityX -= 0.25f;
 		}
 	}
 	else{

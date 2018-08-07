@@ -1,7 +1,6 @@
 #include "CScene.h"
 #include "CScore.h"
 #include "CGame2.h"
-#include "CTime.h"
 
 extern CEditer mEditer;
 extern CGame mGame;
@@ -31,7 +30,6 @@ void CTitle::Update(){
 
 		case CSceneChange::EGAME:
 			mGame2.Init();
-			CTime::GetStartTime();
 			CSceneChange::changenum = cursor_num;
 			break;
 
