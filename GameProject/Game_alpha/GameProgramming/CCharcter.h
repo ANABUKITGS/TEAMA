@@ -17,7 +17,6 @@ public:
 	void Update();
 	void Render();
 	void Gravity();
-	//void Jump();
 	void Forward();
 	void Scroll();
 	

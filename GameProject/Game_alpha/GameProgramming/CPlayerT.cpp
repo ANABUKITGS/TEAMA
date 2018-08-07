@@ -1,6 +1,6 @@
 #include "CPlayerT.h"
 
-#define PLAYER_VELOCITY_X 2.5f
+#define PLAYER_VELOCITY_X 1.25f
 #define ATTACK_TIME 30
 
 CPlayerT *CPlayerT::mpPlayer = 0;
@@ -27,9 +27,7 @@ void CPlayerT::Update(){
 		if (mJumpCount < 2 && CGamePad::Push(PAD_2) || CKey::Push(VK_RIGHT) ){
 			if (!mJump)
 				mVelocityY = PLAYER_VELOCITY_Y;
-				mJump = true;
-				
-				/*Jump();*/
+			mJump = true;
 			
 		}
 		else if (mJump){
@@ -65,26 +63,14 @@ void CPlayerT::Forward(){
 			}
 			player_ani = ERUN;
 		}
-		else {
-			if (mVelocityX < 0)
-				mVelocityX += (PLAYER_VELOCITY_X / 2);
-			else if (mVelocityX>0)
-				mVelocityX -= (PLAYER_VELOCITY_X / 2);
-		}
 
-		if (CGamePad::Push(PAD_LSTICKX, -0.1f)){
+		else if (CGamePad::Push(PAD_LSTICKX, -0.1f)){
 			float hoge = mVelocityLimit * -CGamePad::GetStick(PAD_LSTICKX);
 			mDirection = false;
 			if (mVelocityX < hoge && mVelocityX > -hoge){
 				mVelocityX -= PLAYER_VELOCITY_X;
 			}
 			player_ani = ERUN;
-		}
-		else {
-			if (mVelocityX < 0)
-				mVelocityX += (PLAYER_VELOCITY_X / 2);
-			else if (mVelocityX>0)
-				mVelocityX -= (PLAYER_VELOCITY_X / 2);
 		}
 	}
 	else if (CKey::Push('D') || CKey::Push('A')){
@@ -94,12 +80,6 @@ void CPlayerT::Forward(){
 				mVelocityX += PLAYER_VELOCITY_X;
 			//player_ani = ERUN;
 		}
-		else{
-			if (mVelocityX < 0)
-				mVelocityX += (PLAYER_VELOCITY_X / 2);
-			else if (mVelocityX>0)
-				mVelocityX -= (PLAYER_VELOCITY_X / 2);
-		}
 
 		if (CKey::Push('A')){
 			mDirection = false;
@@ -107,18 +87,12 @@ void CPlayerT::Forward(){
 				mVelocityX -= PLAYER_VELOCITY_X;
 			//player_ani = ERUN;
 		}
-		else{
-			if (mVelocityX < 0)
-				mVelocityX += (PLAYER_VELOCITY_X / 2);
-			else if (mVelocityX>0)
-				mVelocityX -= (PLAYER_VELOCITY_X / 2);
-		}
 	}
 	else{
 		if (mVelocityX < 0)
-			mVelocityX += ( PLAYER_VELOCITY_X / 2);
+			mVelocityX += 0.25f;
 		else if (mVelocityX>0)
-			mVelocityX -= ( PLAYER_VELOCITY_X / 2);
+			mVelocityX -= 0.25f;
 			player_ani = EIDOL;
 	}
 	mPosition.x += mVelocityX;

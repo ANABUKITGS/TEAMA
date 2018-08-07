@@ -32,11 +32,6 @@ void CCharcter::Gravity(){
 	mPosition.y += mVelocityY;
 }
 
-//ƒWƒƒƒ“ƒvˆ—
-//void CCharcter::Jump(){
-//	mJumpTime++;
-//	
-//}
 
 void CCharcter::Forward(){
 	if (CGamePad::Push(PAD_LSTICKX, 0.1f) || CKey::Push('D')){
