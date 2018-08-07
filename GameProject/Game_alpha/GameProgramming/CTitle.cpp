@@ -29,26 +29,26 @@ void CTitle::Update(){
 		default:
 			break;
 
-		case CSceneChange::EGAME:
+		case CSceneChange::ECSCENECHANGE_NUM::EGAME:
 			mGame2.Init();
 			CTime::GetStartTime();
 			CSceneChange::changenum = cursor_num;
 			break;
 
-		case CSceneChange::ERANKING:
+		case CSceneChange::ECSCENECHANGE_NUM::ERANKING:
 			CSceneChange::changenum = cursor_num;
 			break;
 
-		case CSceneChange::ESCORE:
+		case CSceneChange::ECSCENECHANGE_NUM::ESCORE:
 			CSceneChange::changenum = cursor_num;
 			break;
 
-		case CSceneChange::EEDITER:
+		case CSceneChange::ECSCENECHANGE_NUM::EEDITER:
 			mEditer.Init();
 			CSceneChange::changenum = cursor_num;
 			break;
 
-		case CSceneChange::EEXIT:
+		case CSceneChange::ECSCENECHANGE_NUM::EEXIT:
 			_sleep(500);
 			exit(0);
 			break;

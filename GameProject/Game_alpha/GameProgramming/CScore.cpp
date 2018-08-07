@@ -23,9 +23,9 @@ void CGetScore::Update(){
 	if (GetKeyState(VK_UP) & 0x8000 || CGamePad::OncePush (PAD_LSTICKY, 0.5f)){
 		mScore++;
 	}
-	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2)){
-		CSceneChange::changenum = CSceneChange::ENAME;
-	}
+	//if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2)){
+	//	CSceneChange::changenum = CSceneChange::ENAME;
+	//}
 	swprintf(bufw, L"%3d", mScore);
 	CText::DrawStringW(bufw, 0, 100, 20, 1.0f, 0);
 	

@@ -161,7 +161,7 @@ void CPlayerT::Render(){
 		break;
 
 	case EPLAYERANI::ERUN:
-		if (player_ani_count > 2)
+		if (player_ani_count > 5)
 			player_ani_count = 0;
 
 		if (!mDirection){	//¶Œü‚«
