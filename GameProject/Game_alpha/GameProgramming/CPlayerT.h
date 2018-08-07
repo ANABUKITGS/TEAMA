@@ -31,6 +31,7 @@ public:
 	static CPlayerT *mpPlayer;
 	CTexture mTexPlayer;
 	bool mJump;				//true:ジャンプ中  false:ジャンプしていない
+	bool mDash;				//true:ダッシュ中  false:ダッシュしていない
 	int mJumpCount;			//ジャンプ回数
 	//bool mAttack;			//攻撃  true:可能  false:不可能
 
@@ -43,6 +44,7 @@ public:
 		mPriority = 1;
 		mTag = EPLAYER;
 		mJump = false;
+		mDash = false;
 		mVelocityY = 0;
 		mVelocityX = 0;
 		mDirection = true;
