@@ -67,9 +67,9 @@ void CPlayerT::Forward(){
 		}
 		else {
 			if (mVelocityX < 0)
-				mVelocityX += (PLAYER_VELOCITY_X / 2);
+				mVelocityX += (PLAYER_VELOCITY_X / 8);
 			else if (mVelocityX>0)
-				mVelocityX -= (PLAYER_VELOCITY_X / 2);
+				mVelocityX -= (PLAYER_VELOCITY_X / 8);
 		}
 
 		if (CGamePad::Push(PAD_LSTICKX, -0.1f)){
@@ -82,9 +82,9 @@ void CPlayerT::Forward(){
 		}
 		else {
 			if (mVelocityX < 0)
-				mVelocityX += (PLAYER_VELOCITY_X / 2);
+				mVelocityX += (PLAYER_VELOCITY_X / 8);
 			else if (mVelocityX>0)
-				mVelocityX -= (PLAYER_VELOCITY_X / 2);
+				mVelocityX -= (PLAYER_VELOCITY_X / 8);
 		}
 	}
 	else if (CKey::Push('D') || CKey::Push('A')){
@@ -96,9 +96,9 @@ void CPlayerT::Forward(){
 		}
 		else{
 			if (mVelocityX < 0)
-				mVelocityX += (PLAYER_VELOCITY_X / 2);
+				mVelocityX += (PLAYER_VELOCITY_X / 8);
 			else if (mVelocityX>0)
-				mVelocityX -= (PLAYER_VELOCITY_X / 2);
+				mVelocityX -= (PLAYER_VELOCITY_X / 8);
 		}
 
 		if (CKey::Push('A')){
@@ -109,17 +109,17 @@ void CPlayerT::Forward(){
 		}
 		else{
 			if (mVelocityX < 0)
-				mVelocityX += (PLAYER_VELOCITY_X / 2);
+				mVelocityX += (PLAYER_VELOCITY_X / 8);
 			else if (mVelocityX>0)
-				mVelocityX -= (PLAYER_VELOCITY_X / 2);
+				mVelocityX -= (PLAYER_VELOCITY_X / 8);
 		}
 	}
 	else{
 		if (mVelocityX < 0)
-			mVelocityX += ( PLAYER_VELOCITY_X / 2);
+			mVelocityX += ( PLAYER_VELOCITY_X / 8);
 		else if (mVelocityX>0)
-			mVelocityX -= ( PLAYER_VELOCITY_X / 2);
-			player_ani = EIDOL;
+			mVelocityX -= ( PLAYER_VELOCITY_X / 8);
+		player_ani = EIDOL;
 	}
 	mPosition.x += mVelocityX;
 }

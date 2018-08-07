@@ -6,6 +6,7 @@
 #include "CText.h"
 #include "CGamePad.h"
 #include "CScene.h"
+#include "CTime.h"
 
 CTexture mtexture;
 CSceneChange mChange;
@@ -93,4 +94,9 @@ void CMain::Update() {
 	//Stick.mPosition.y = 128 * CGamePad::GetStick(PAD_RSTICKY);
 	//Stick.mPosition.x = 128 * CGamePad::GetStick(PAD_RSTICKX);
 	//Stick.Render(WHITE, 1.0f);
+
+	//フレームレート
+	char fps_buf[16];
+	sprintf(fps_buf, "%4.1fFPS", CTime::FrameRate());
+	CText::DrawStringSetColor(fps_buf, -640, 344, 16, 0.0f, 1.0f, 0.0f, 1.0f, 0);
 }

@@ -5,6 +5,7 @@
 #include "CMapChip.h"
 #include "CPlayerT.h"
 #include "CScene.h"
+#include "CTime.h"
 
 CRectangle *CGame2::mRectPlayer;
 
@@ -446,4 +447,9 @@ void CGame2::Render() {
 	mCamera.Begin();
 	CTaskManager::Get()->Render();
 	CCamera2D::End();
+
+	//Œo‰ßŽžŠÔ
+	char time_buf[32];
+	sprintf(time_buf, "%02d:%06.3f", CTime::ElapsedTimeMin(), CTime::ElapsedTimeSec());
+	CText::DrawString(time_buf, 352, 328, 32, 1.0f, 0);
 }
