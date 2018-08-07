@@ -6,7 +6,7 @@
 #include "CWeapon.h"
 
 #define PLAYER_VELOCITY_X 5.0f
-#define PLAYER_VELOCITY_Y 15.0f
+#define PLAYER_VELOCITY_Y 20.0f
 #define JUMP_TIME_LIMIT 15
 #define VELOCITYX_LIMIT 5.0f
 
@@ -14,9 +14,9 @@
 class CPlayerT : public CCharcter {
 public:
 	static CPlayerT *mpPlayer;
-	bool mJump;
-	int mJumpCount;
-	bool mJumpAttack;
+	bool mJump;				// true : ジャンプ中  false : ジャンプしてない
+	int mJumpCount;			//ジャンプ回数
+	bool mAttack;			//攻撃  true : 可能  false : 不可能
 
 	CWeapon *mWeapon;
 	CPlayerT() 
@@ -27,7 +27,7 @@ public:
 		mPriority = 1;
 		mTag = EPLAYER;
 		mJump = false;
-		mJumpAttack = true;
+		mAttack = true;
 		mJumpCount = 0;
 		CTaskManager::Get()->Add(this);
 	}
@@ -36,19 +36,16 @@ public:
 		: CPlayerT()
 	{
 		SetRectangle(position, scale, texture);
-		mVelocityG = 0;
-		mJumpTime = 0;
+		mVelocityY = 0;
 		mVelocityX = 0;
 		mDirection = true;
-		mVelocityJ = PLAYER_VELOCITY_Y;
 		
 	}
 
 	void Update();
-	void Gravity();
-	void Jump();
 	void Forward();
 	void Attack();
+	void Dash();
 
 	bool Collision(CRectangle *p);
 

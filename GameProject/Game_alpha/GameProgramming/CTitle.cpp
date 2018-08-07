@@ -30,7 +30,6 @@ void CTitle::Update(){
 
 		case CSceneChange::EGAME:
 			mGame2.Init();
-			player.Init();
 			CSceneChange::changenum = cursor_num;
 			break;
 
