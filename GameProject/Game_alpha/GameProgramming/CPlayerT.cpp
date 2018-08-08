@@ -29,7 +29,7 @@ void CPlayerT::Update(){
 					mpWeapon->mPosition.x -= 10;
 			}
 		}
-		if (mJumpCount < 2 && (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) || CKey::Push(VK_RIGHT))){		//ジャンプ回数２未満かつ２キーまたは→キー入力　
+		if (mJumpCount < 2 && (CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_RIGHT))){		//ジャンプ回数２未満かつ２キーまたは→キー入力　
 			mAerialAttack = true;
 			mAir = true;
 			if (!mJump)
@@ -37,9 +37,12 @@ void CPlayerT::Update(){
 
 			if (!mAir)
 				player_ani = EIDOL;
+			else{
+				player_ani = EJUMP;
+				player_ani_count = 0;
+				player_ani_count_flame = 0;
+			}
 			mJump = true;
-			player_ani = EJUMP;
-			player_ani_count = player_ani_count_flame = 0;
 		}
 		else if (mJump){
 			mJumpCount++;
@@ -176,7 +179,7 @@ bool CPlayerT::Collision(CRectangle *p) {
 			if (p->mTag != EJEWELRY && p->mTag != EPWEAPON) {
 				mPosition = mPosition + aj;
 				mJumpCount = 0;
-				mAir = false;
+				//mAir = false;
 			}
 			
 			mVelocityY = 0.0f;
@@ -261,7 +264,7 @@ void CPlayerT::Render(){
 			if (player_ani_count > 1)
 				player_ani_count = 0;
 
-			PLAYER_ANI_COUNT_FLAME = 5;
+			PLAYER_ANI_COUNT_FLAME = 10;
 
 			if (!mDirection)	//左向き
 				mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 512, 384, 1.0f);
@@ -269,7 +272,7 @@ void CPlayerT::Render(){
 				mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, (player_ani_count + 1) * 128, player_ani_count * 128, 512, 384, 1.0f);
 		}
 
-		else if (mVelocityY < 0.0f){
+		else if (mVelocityY <= 0.0f){
 			if (player_ani_count > 0)
 				player_ani_count = 0;
 
