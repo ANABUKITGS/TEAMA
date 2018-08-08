@@ -9,40 +9,42 @@ wchar_t jumptime_buf[256];
 int CPlayerT::player_ani;
 
 void CPlayerT::Update(){
-	if (CGamePad::Push(PAD_3) || CKey::Push(VK_CONTROL) || CKey::Push(VK_SHIFT) || CKey::Push(VK_DOWN)){
-		mVelocityLimit = VELOCITYX_LIMIT * 2;
-		mDash = true;
-	}
-	else{
-		mVelocityLimit = VELOCITYX_LIMIT;
-		mDash = false;
-	}
-
-	
 	if (mpWeapon == 0){
 		if ((CGamePad::Push(PAD_1) || CKey::Push(VK_UP))){
-			mpWeapon = new CWeapon(EPWEAPON,mPosition, CVector2(10, 10), mDirection, NULL);
-			if (mDirection)		//weaponの位置をプレイヤーの向いている方向へ10ずらす
-				mpWeapon->mPosition.x += 10;
-			else
-				mpWeapon->mPosition.x -= 10;
+			if (mAir){
+				if (mAerialAttack){
+					mAerialAttack = false;
+					mpWeapon = new CWeapon(EPWEAPON, mPosition, CVector2(10, 10), mDirection, NULL);
+					if (mDirection)		//weaponの位置をプレイヤーの向いている方向へ10ずらす
+						mpWeapon->mPosition.x += 10;
+					else
+						mpWeapon->mPosition.x -= 10;
+				}
+			}
+			else{
+				mpWeapon = new CWeapon(EPWEAPON, mPosition, CVector2(10, 10), mDirection, NULL);
+				if (mDirection)		//weaponの位置をプレイヤーの向いている方向へ10ずらす
+					mpWeapon->mPosition.x += 10;
+				else
+					mpWeapon->mPosition.x -= 10;
+			}
 		}
 		if (mJumpCount < 2 && (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) || CKey::Push(VK_RIGHT))){		//ジャンプ回数２未満かつ２キーまたは→キー入力　
-			if (!mJump){
+			mAerialAttack = true;
+			mAir = true;
+			if (!mJump)
 				mVelocityY = PLAYER_VELOCITY_Y;
-				if (!mAir)
-					player_ani = EIDOL;
-			}
+
+			if (!mAir)
+				player_ani = EIDOL;
 			mJump = true;
 			player_ani = EJUMP;
 			player_ani_count = player_ani_count_flame = 0;
-			
 		}
 		else if (mJump){
 			mJumpCount++;
 			mJump = false;
 		}
-		
 	}
 	else if (mpWeapon->mLife <= 0){		//武器の生存時間が0以下
 		mpWeapon = 0;
@@ -173,8 +175,10 @@ bool CPlayerT::Collision(CRectangle *p) {
 		if (CRectangle::Collision(p, &aj)) {
 			if (p->mTag != EJEWELRY && p->mTag != EPWEAPON) {
 				mPosition = mPosition + aj;
+				mJumpCount = 0;
+				mAir = false;
 			}
-			mJumpCount = 0;
+			
 			mVelocityY = 0.0f;
 			return true;
 		}
@@ -265,7 +269,7 @@ void CPlayerT::Render(){
 				mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, (player_ani_count + 1) * 128, player_ani_count * 128, 512, 384, 1.0f);
 		}
 
-		else if (mVelocityY <= 0.0f){
+		else if (mVelocityY < 0.0f){
 			if (player_ani_count > 0)
 				player_ani_count = 0;
 
@@ -297,8 +301,12 @@ void CPlayerT::Render(){
 }
 
 void CPlayerT::Dash(){
-	if (CGamePad::Push(PAD_3) || CKey::Push(VK_CONTROL) || CKey::Push(VK_SHIFT) || CKey::Push(VK_DOWN))
+	if (CGamePad::Push(PAD_3) || CKey::Push(VK_CONTROL) || CKey::Push(VK_SHIFT) || CKey::Push(VK_DOWN)){
 		mVelocityLimit = VELOCITYX_LIMIT * 2;
-	else
+		mDash = true;
+	}
+	else{
 		mVelocityLimit = VELOCITYX_LIMIT;
+		mDash = false;
+	}
 }
