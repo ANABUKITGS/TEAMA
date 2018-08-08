@@ -9,25 +9,29 @@ wchar_t jumptime_buf[256];
 int CPlayerT::player_ani;
 
 void CPlayerT::Update(){
-	if (CGamePad::Push(PAD_3) || CKey::Push(VK_CONTROL) || CKey::Push(VK_SHIFT) || CKey::Push(VK_DOWN)){
-		mVelocityLimit = VELOCITYX_LIMIT * 2;
-		mDash = true;
-	}
-	else{
-		mVelocityLimit = VELOCITYX_LIMIT;
-		mDash = false;
-	}
-
-	
 	if (mpWeapon == 0){
 		if ((CGamePad::Push(PAD_1) || CKey::Push(VK_UP))){
-			mpWeapon = new CWeapon(EPWEAPON,mPosition, CVector2(10, 10), mDirection, NULL);
-			if (mDirection)		//weaponの位置をプレイヤーの向いている方向へ10ずらす
-				mpWeapon->mPosition.x += 10;
-			else
-				mpWeapon->mPosition.x -= 10;
+			if (mAir){
+				if (mAerialAttack){
+					mAerialAttack = false;
+					mpWeapon = new CWeapon(EPWEAPON, mPosition, CVector2(10, 10), mDirection, NULL);
+					if (mDirection)		//weaponの位置をプレイヤーの向いている方向へ10ずらす
+						mpWeapon->mPosition.x += 10;
+					else
+						mpWeapon->mPosition.x -= 10;
+				}
+			}
+			else{
+				mpWeapon = new CWeapon(EPWEAPON, mPosition, CVector2(10, 10), mDirection, NULL);
+				if (mDirection)		//weaponの位置をプレイヤーの向いている方向へ10ずらす
+					mpWeapon->mPosition.x += 10;
+				else
+					mpWeapon->mPosition.x -= 10;
+			}
 		}
 		if (mJumpCount < 2 && (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) || CKey::Push(VK_RIGHT))){		//ジャンプ回数２未満かつ２キーまたは→キー入力　
+			mAerialAttack = true;
+			mAir = true;
 			if (!mJump)
 				mVelocityY = PLAYER_VELOCITY_Y;
 			mJump = true;
@@ -134,8 +138,10 @@ bool CPlayerT::Collision(CRectangle *p) {
 		if (CRectangle::Collision(p, &aj)) {
 			if (p->mTag != EJEWELRY && p->mTag != EPWEAPON) {
 				mPosition = mPosition + aj;
+				mJumpCount = 0;
+				mAir = false;
 			}
-			mJumpCount = 0;
+			
 			mVelocityY = 0.0f;
 			return true;
 		}
@@ -230,8 +236,12 @@ void CPlayerT::Render(){
 }
 
 void CPlayerT::Dash(){
-	if (CGamePad::Push(PAD_3) || CKey::Push(VK_CONTROL) || CKey::Push(VK_SHIFT) || CKey::Push(VK_DOWN))
+	if (CGamePad::Push(PAD_3) || CKey::Push(VK_CONTROL) || CKey::Push(VK_SHIFT) || CKey::Push(VK_DOWN)){
 		mVelocityLimit = VELOCITYX_LIMIT * 2;
-	else
+		mDash = true;
+	}
+	else{
 		mVelocityLimit = VELOCITYX_LIMIT;
+		mDash = false;
+	}
 }

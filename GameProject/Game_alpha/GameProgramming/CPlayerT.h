@@ -33,7 +33,8 @@ public:
 	bool mJump;				//true:ジャンプ中  false:ジャンプしていない
 	bool mDash;				//true:ダッシュ中  false:ダッシュしていない
 	int mJumpCount;			//ジャンプ回数
-	//bool mAttack;			//攻撃  true:可能  false:不可能
+	bool mAerialAttack;		//空中攻撃  true:可能  false:不可能
+	bool mAir;				//true:空中 false:地上
 
 	CWeapon *mpWeapon;
 	CPlayerT() 
@@ -48,7 +49,8 @@ public:
 		mVelocityY = 0;
 		mVelocityX = 0;
 		mDirection = true;
-		//mAttack = true;
+		mAerialAttack = false;
+		mAir = false;
 		mJumpCount = 0;
 		CTaskManager::Get()->Add(this);
 		mTexPlayer.Load(".\\Data\\Images\\Player\\Player.tga");

@@ -3,8 +3,8 @@
 #include "CRectangle.h"
 #include "CTaskManager.h"
 
-#define WEAPOM_VELOCITY 8.0f
-#define WEAPON_LIFE 30
+#define WEAPOM_VELOCITY 12.0f
+#define WEAPON_LIFE 40
 
 class CWeapon : public CRectangle{
 public:
