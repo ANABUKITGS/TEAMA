@@ -1,11 +1,12 @@
 #include "CTime.h"
 
-int CTime::FrameCount;			//フレーム数 カウント
-int CTime::RenderStartTime;		//フレームレート 描画 更新 時間
-int CTime::StartIntTime;		//1フレームの開始時間
-int CTime::EndIntTime;			//1フレームの終了時間
-int CTime::ElapsedStartTime;	//計測開始時間
-float CTime::FPS;				//フレームレート
+int CTime::FrameCount = 0;			//フレーム数 カウント
+int CTime::RenderStartTime = 0;		//フレームレート 描画 更新 時間
+int CTime::StartIntTime = 0;		//1フレームの開始時間
+int CTime::EndIntTime = 0;			//1フレームの終了時間
+int CTime::ElapsedStartTime = 0;	//計測開始時間
+float CTime::FPS = 0;				//フレームレート
+float CTime::RenderFPS = 0;			//出力 フレームレート
 
 void CTime::GetStartTime(){
 	ElapsedStartTime = clock();
@@ -37,10 +38,11 @@ float CTime::FrameRate(){
 		FPS = 15000 / FPS;
 		FrameCount = -1;
 	}
-	if (clock() >= RenderStartTime + 1000){
+	if (clock() >= RenderStartTime + 500){
 		RenderStartTime = clock();
+		RenderFPS = FPS;
+		return FPS;
 	}
 	FrameCount++;
-
-	return FPS;
+	return RenderFPS;
 }

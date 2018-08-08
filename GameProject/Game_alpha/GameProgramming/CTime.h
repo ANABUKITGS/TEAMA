@@ -10,6 +10,7 @@ private:
 	static int EndIntTime;			//1フレームの終了時間
 	static int ElapsedStartTime;	//計測開始時間
 	static float FPS;				//フレームレート
+	static float RenderFPS;			//出力 フレームレート
 
 public:
 	static void GetStartTime();
