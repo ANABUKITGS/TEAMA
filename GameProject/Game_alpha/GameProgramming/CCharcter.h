@@ -14,6 +14,7 @@ public:
 	int mVelocityLimit;		//移動限界速度
 	float mSearch;
 	bool mDirection;		//キャラクターの向き true:右 false:左
+	bool mAir;
 	void Update();			//更新処理
 	void Render();			//描画処理
 	void Gravity();			//重力処理
