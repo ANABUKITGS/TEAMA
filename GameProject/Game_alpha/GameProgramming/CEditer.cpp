@@ -5,6 +5,8 @@
 #include "CMapChip.h"
 #include "CMapJewelry.h"
 #include "CMapUnder.h"
+#include "CMapSign.h"
+#include "CMapChikuwa.h"
 
 CMapIO mMapIO;
 
@@ -156,7 +158,7 @@ void CEditer::Update(){
 				setcell++;
 		}
 		if (CGamePad::Push(PAD_2)){	//設置
-			if (setcell >= ECELLNUM::EPLAYER){
+			if (setcell >= ECELLNUM::EPLAYER && setcell <= EBOSS){
 				if (cursor_posY > 0){
 					int temp_setcell = editmap[cursor_posY][cursor_posX];
 
@@ -199,7 +201,7 @@ void CEditer::Update(){
 				}
 			}
 			else{
-				if (editmap[cursor_posY][cursor_posX] >= EPLAYER){
+				if (editmap[cursor_posY][cursor_posX] >= EPLAYER && editmap[cursor_posY][cursor_posX] <= EBOSS){
 					int temp_setcell = editmap[cursor_posY][cursor_posX];
 
 					if (editmap[cursor_posY + 1][cursor_posX] == temp_setcell){
@@ -636,12 +638,21 @@ void CEditer::MakeTaskList(int *gamemap) {
 					else
 						new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), ECELLNUM::EBELTR);
 				}
-				//宝石 ~ スイッチ
+				
+				//宝石
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EJEWELRY)
-					//						new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), ECELLNUM::EJEWELRY);
 					new CMapJewelry(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject);
 
-				else if (gamemap[i * MAP_SIZEX + j] > ECELLNUM::EJEWELRY && gamemap[i * MAP_SIZEX + j] < ECELLNUM::EPLAYER)
+				//宝石
+				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EJEWELRY2)
+					new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), ECELLNUM::EJEWELRY2);
+
+				//宝石
+				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::ECHIKUWA)
+					new CMapChikuwa(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2));
+
+				//宝石 ~ スイッチ
+				else if (gamemap[i * MAP_SIZEX + j] > ECELLNUM::ECHIKUWA && gamemap[i * MAP_SIZEX + j] < ECELLNUM::EPLAYER)
 					new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), ECELLNUM::EJEWELRY);
 
 				//プレイヤー ~ ボス
@@ -657,7 +668,13 @@ void CEditer::MakeTaskList(int *gamemap) {
 				}
 
 				//特殊ギミック
-				if (gamemap[i * MAP_SIZEX + j] >= ECELLNUM::EBOX && gamemap[i * MAP_SIZEX + j] < ECELLNUM::ESIZE){
+				if (gamemap[i * MAP_SIZEX + j] >= ECELLNUM::EBOX && gamemap[i * MAP_SIZEX + j] < ECELLNUM::ESIGN){
+
+				}
+
+				//チュートリアル用 看板
+				if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::ESIGN){
+					new CMapSign(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2));
 
 				}
 			}

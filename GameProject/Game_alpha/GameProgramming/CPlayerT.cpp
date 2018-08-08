@@ -206,7 +206,13 @@ bool CPlayerT::Collision(CRectangle *p) {
 					mPosition = mPosition + aj;
 				}
 			}
-			else if (p->mTag != EJEWELRY && p->mTag != EPWEAPON) {
+			else if (p->mTag != ECELLNUM::EJEWELRY &&
+				p->mTag != ECELLNUM::EJEWELRY2 &&
+				p->mTag != ECELLNUM::ECHIKUWA &&
+				p->mTag != ECELLNUM::ESIGN &&
+				p->mTag != ECELLNUM::ECHECKPOINT &&
+				p->mTag != ECELLNUM::EPWEAPON) {
+				
 				mPosition = mPosition + aj;
 				mJumpCount = 0;
 				mVelocityY = 0.0f;

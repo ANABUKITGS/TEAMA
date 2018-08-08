@@ -27,6 +27,7 @@ enum ECELLNUM{
 	/*------ 特殊ギミック ------*/
 	EBOX,				//木箱
 	ESTEEL,				//鉄骨
+	ESIGN,				//チュートリアル用 看板
 	ESIZE,				//ECELLNUM サイズ
 
 	/*------ その他 ------*/
