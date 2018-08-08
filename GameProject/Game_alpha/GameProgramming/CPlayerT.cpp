@@ -199,10 +199,17 @@ bool CPlayerT::Collision(CRectangle *p) {
 	if (p->GetEnabled()) {
 		CVector2 aj;
 		if (CRectangle::Collision(p, &aj)) {
-			if (p->mTag == EJEWELRY)
-				mJewel++;
-			if (p->mTag != EJEWELRY && p->mTag != EPWEAPON) {
-				
+			if (p->mTag == EUNDER){
+				if ((mPosition.y>p->mPosition.y) && mVelocityY<0){
+					mVelocityY = 0.0f;
+					mJumpCount = 0;
+					mPosition = mPosition + aj;
+				}
+			}
+			else if (p->mTag != EJEWELRY && p->mTag != EPWEAPON) {
+				mPosition = mPosition + aj;
+				mJumpCount = 0;
+				mVelocityY = 0.0f;
 				if (!mUnrivaled && (p->mTag == EENEMY1 || p->mTag == EEWEAPON)){
 					mUnrivaled = true;
 					if (mJewel > 0)
@@ -210,11 +217,9 @@ bool CPlayerT::Collision(CRectangle *p) {
 					else
 						mLife--;
 				}
-				mPosition = mPosition + aj;
-				mJumpCount = 0;
 			}
-			
-			mVelocityY = 0.0f;
+			if (p->mTag == EJEWELRY)
+				mJewel++;
 			return true;
 		}
 	}

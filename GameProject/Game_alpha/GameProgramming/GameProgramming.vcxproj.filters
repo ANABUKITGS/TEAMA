@@ -83,6 +83,9 @@
     <ClCompile Include="CMapBox.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="CMapUnder.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCamera2D.h">
@@ -165,6 +168,9 @@
     </ClInclude>
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CMapBox.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CMapUnder.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
