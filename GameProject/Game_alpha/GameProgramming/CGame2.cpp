@@ -6,6 +6,7 @@
 #include "CPlayerT.h"
 #include "CScene.h"
 #include "CEnemy.h"
+#include "CMapBox.h"
 #include "CTime.h"
 
 CRectangle *CGame2::mRectPlayer;
@@ -233,6 +234,8 @@ void CGame2::Init() {
 	new CEnemy(CVector2(1000, 265), CVector2(32, 32), NULL);
 	new CEnemy(CVector2(1600, 265), CVector2(32, 32), NULL);
 	new CEnemy(CVector2(2600, 265), CVector2(32, 32), NULL);
+	//ñÿî†ÇÃê›íu
+	new CMapBox(CVector2(1000, 400), CVector2(50, 50), NULL);
 }
 
 /*

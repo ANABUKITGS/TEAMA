@@ -89,6 +89,7 @@
     <ClCompile Include="CEditer.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CFileIO.cpp" />
+    <ClCompile Include="CMapBox.cpp" />
     <ClCompile Include="CTime.cpp" />
     <ClCompile Include="CGame2.cpp" />
     <ClCompile Include="CGamePad.cpp" />
@@ -117,6 +118,7 @@
     <ClInclude Include="CCollision.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CFileIO.h" />
+    <ClInclude Include="CMapBox.h" />
     <ClInclude Include="CTime.h" />
     <ClInclude Include="CGame2.h" />
     <ClInclude Include="CGamePad.h" />
