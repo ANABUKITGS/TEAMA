@@ -66,13 +66,14 @@ void CPlayerT::Forward(){
 			if (mVelocityX < hoge && mVelocityX > -hoge){
 				mVelocityX += PLAYER_VELOCITY_X;
 			}
-			player_ani = ERUN;
-		}
-		else{
-			if (mVelocityX < 0)
-				mVelocityX += 0.25f;
-			else if (mVelocityX>0)
+			player_ani = ETURN;
+			if (mVelocityX > 0){
 				mVelocityX -= 0.25f;
+				player_ani = ERUN;
+			}
+			else if (mVelocityX < 0){
+				mVelocityX += 0.25f;
+			}
 		}
 
 		if (CGamePad::Push(PAD_LSTICKX, -0.1f)){
@@ -81,13 +82,14 @@ void CPlayerT::Forward(){
 			if (mVelocityX < hoge && mVelocityX > -hoge){
 				mVelocityX -= PLAYER_VELOCITY_X;
 			}
-			player_ani = ERUN;
-		}
-		else{
-			if (mVelocityX < 0)
-				mVelocityX += 0.25f;
-			else if (mVelocityX>0)
+			player_ani = ETURN;
+			if (mVelocityX > 0){
 				mVelocityX -= 0.25f;
+			}
+			else if (mVelocityX < 0){
+				mVelocityX += 0.25f;
+				player_ani = ERUN;
+			}
 		}
 	}
 	else if (CKey::Push('D') || CKey::Push('A')){
@@ -95,34 +97,38 @@ void CPlayerT::Forward(){
 			mDirection = true;
 			if (mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit)
 				mVelocityX += PLAYER_VELOCITY_X;
-			player_ani = ERUN;
-		}
-		else{
-			if (mVelocityX < 0)
-				mVelocityX += 0.25f;
-			else if (mVelocityX>0)
+			player_ani = ETURN;
+			if (mVelocityX > 0){
 				mVelocityX -= 0.25f;
+				player_ani = ERUN;
+			}
+			else if (mVelocityX < 0){
+				mVelocityX += 0.25f;
+			}
 		}
 
 		if (CKey::Push('A')){
 			mDirection = false;
 			if (mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit)
 				mVelocityX -= PLAYER_VELOCITY_X;
-			player_ani = ERUN;
-		}
-		else{
-			if (mVelocityX < 0)
-				mVelocityX += 0.25f;
-			else if (mVelocityX>0)
+			player_ani = ETURN;
+			if (mVelocityX > 0){
 				mVelocityX -= 0.25f;
+			}
+			else if (mVelocityX < 0){
+				mVelocityX += 0.25f;
+				player_ani = ERUN;
+			}
 		}
 	}
 	else{
 		if (mVelocityX < 0)
 			mVelocityX += 0.25f;
-		else if (mVelocityX>0)
+
+		else if (mVelocityX > 0)
 			mVelocityX -= 0.25f;
-			player_ani = EIDOL;
+
+		player_ani = EIDOL;
 	}
 	mPosition.x += mVelocityX;
 }
@@ -202,7 +208,14 @@ void CPlayerT::Render(){
 		break;
 
 	case EPLAYERANI::ETURN:
+		if (player_ani_count > 0)
+			player_ani_count = 0;
 
+		if (mDirection)	//‰EŒü‚«
+			mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, 0, 128, 384, 256, 1.0f);
+
+		else			//¶Œü‚«
+			mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, 128, 0, 384, 256, 1.0f);
 		break;
 
 	case EPLAYERANI::EJUMP:
