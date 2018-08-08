@@ -4,7 +4,7 @@
 #define ATTACK_TIME 30
 
 CPlayerT *CPlayerT::mpPlayer = 0;
-wchar_t jumptime_buf[256];
+char jumptime_buf[96];
 
 int CPlayerT::player_ani;
 
@@ -29,9 +29,14 @@ void CPlayerT::Update(){
 					mpWeapon->mPosition.x -= 10;
 			}
 		}
-		if (mJumpCount < 2 && (CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_RIGHT))){		//ジャンプ回数２未満かつ２キーまたは→キー入力　
+
+		if (mJumpCount < 2 && (CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_RIGHT))){
+			player_ani_count = 0;
+			player_ani_count_flame = 0;
+		}
+		if (mJumpCount < 2 && (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) || CKey::Push(VK_RIGHT))){		//ジャンプ回数２未満かつ２キーまたは→キー入力
 			mAerialAttack = true;
-			mAir = true;
+			//mAir = true;
 			if (!mJump)
 				mVelocityY = PLAYER_VELOCITY_Y;
 
@@ -39,14 +44,13 @@ void CPlayerT::Update(){
 				player_ani = EIDOL;
 			else{
 				player_ani = EJUMP;
-				player_ani_count = 0;
-				player_ani_count_flame = 0;
 			}
 			mJump = true;
 		}
 		else if (mJump){
 			mJumpCount++;
 			mJump = false;
+			mVelocityY = 0;
 		}
 	}
 	else if (mpWeapon->mLife <= 0){		//武器の生存時間が0以下
@@ -69,8 +73,10 @@ void CPlayerT::Update(){
 		player_ani = EJUMP;
 	}
 	
-	swprintf(jumptime_buf, L"mVelocityX\n%4.2f\nmVelocityY\n%4.2f\nmPosition.x\n%4.2f\nmPosition.y\n%4.2f", mVelocityX, mVelocityY, mPosition.x, mPosition.y);
-	CText::DrawStringW(jumptime_buf, 0, 0, 32, 1.0f, 0);
+	for (int i = 0; i < 96; i++)
+		jumptime_buf[i] = '\0';
+	sprintf(jumptime_buf, "mVelocityX\n%4.2f\nmVelocityY\n%4.2f\nmPosition.x\n%4.2f\nmPosition.y\n%4.2f", mVelocityX, mVelocityY, mPosition.x, mPosition.y);
+	CText::DrawString(jumptime_buf, 0, 0, 32, 1.0f, 0);
 	
 }
 

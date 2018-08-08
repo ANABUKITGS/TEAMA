@@ -81,22 +81,10 @@ void CMain::Update() {
 		swprintf(gamepad_name, L"おされてないよ\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ");
 	CText::DrawStringW(gamepad_name, -640, -328, 32, 1.0f, 3);
 
-	//if (CGamePad::OncePush(PAD_RIGHT) || CGamePad::OncePush(PAD_LSTICKX, 0.5f))
-	//	move_x++;
-	//if (CGamePad::OncePush(PAD_LEFT) || CGamePad::OncePush(PAD_LSTICKX, -0.5f))
-	//	move_x--;
-	//if (CGamePad::OncePush(PAD_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f))
-	//	move_y++;
-	//if (CGamePad::OncePush(PAD_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f))
-	//	move_y--;
-
-	//Stick.Update();
-	//Stick.mPosition.y = 128 * CGamePad::GetStick(PAD_RSTICKY);
-	//Stick.mPosition.x = 128 * CGamePad::GetStick(PAD_RSTICKX);
-	//Stick.Render(WHITE, 1.0f);
-
 	//フレームレート
 	char fps_buf[16];
+	for (int i = 0; i < 16; i++)
+		fps_buf[i] = '\0';
 	sprintf(fps_buf, "%4.1fFPS", CTime::FrameRate());
 	CText::DrawStringSetColor(fps_buf, -640, 344, 16, 0.0f, 1.0f, 0.0f, 1.0f, 0);
 }

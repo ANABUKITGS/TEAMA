@@ -457,7 +457,9 @@ void CGame2::Render() {
 	CCamera2D::End();
 
 	//Œo‰ßŽžŠÔ
-	char time_buf[32];
+	char time_buf[16];
+	for (int i = 0; i < 16; i++)
+		time_buf[i] = '\0';
 	sprintf(time_buf, "%02d:%06.3f", CTime::ElapsedTimeMin(), CTime::ElapsedTimeSec());
 	CText::DrawString(time_buf, 352, 328, 32, 1.0f, 0);
 }
