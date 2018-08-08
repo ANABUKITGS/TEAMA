@@ -77,7 +77,11 @@ void CPlayerT::Update(){
 		jumptime_buf[i] = '\0';
 	sprintf(jumptime_buf, "mVelocityX\n%4.2f\nmVelocityY\n%4.2f\nmPosition.x\n%4.2f\nmPosition.y\n%4.2f", mVelocityX, mVelocityY, mPosition.x, mPosition.y);
 	CText::DrawString(jumptime_buf, 0, 0, 32, 1.0f, 0);
-	
+
+	for (int i = 0; i < 96; i++)
+		jumptime_buf[i] = '\0';
+	sprintf(jumptime_buf, "mJewel %2d\nmLife  %2d\n", mJewel, mLife);
+	CText::DrawString(jumptime_buf, 300, 300, 32, 1.0f, 0);
 }
 
 //前進処理
@@ -175,6 +179,19 @@ void CPlayerT::Forward(){
 			player_ani = EIDOL;
 	}
 	mPosition.x += mVelocityX;
+	if (mUnrivaled){
+		mDamageInterval--;
+		if (mDamageInterval % 15 == 0){
+			mAlpha = 0.0f;
+		}
+		else
+			mAlpha = 1.0f;
+		if (mDamageInterval <= 0){
+			mDamageInterval = DAMAGE_INTERVAL;
+			mUnrivaled = false;
+			mAlpha = 1.0f;
+		}
+	}
 }
 
 
@@ -182,10 +199,19 @@ bool CPlayerT::Collision(CRectangle *p) {
 	if (p->GetEnabled()) {
 		CVector2 aj;
 		if (CRectangle::Collision(p, &aj)) {
+			if (p->mTag == EJEWELRY)
+				mJewel++;
 			if (p->mTag != EJEWELRY && p->mTag != EPWEAPON) {
+				
+				if (!mUnrivaled && (p->mTag == EENEMY1 || p->mTag == EEWEAPON)){
+					mUnrivaled = true;
+					if (mJewel > 0)
+						mJewel--;
+					else
+						mLife--;
+				}
 				mPosition = mPosition + aj;
 				mJumpCount = 0;
-				//mAir = false;
 			}
 			
 			mVelocityY = 0.0f;
@@ -207,9 +233,9 @@ void CPlayerT::Render(){
 		PLAYER_ANI_COUNT_FLAME = 8;
 
 		if (!mDirection)	//左向き
-			mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 128, 0, 1.0f);
+			mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 128, 0, mAlpha);
 		else				//右向き
-			mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, (player_ani_count + 1) * 128, player_ani_count * 128, 128, 0, 1.0f);
+			mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, (player_ani_count + 1) * 128, player_ani_count * 128, 128, 0, mAlpha);
 		break;
 
 	case EPLAYERANI::ERUN:
@@ -231,7 +257,7 @@ void CPlayerT::Render(){
 					PLAYER_ANI_COUNT_FLAME = 4;
 			}
 
-			mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 256, 128, 1.0f);
+			mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 256, 128, mAlpha);
 		}
 
 		else{				//右向き
@@ -249,7 +275,7 @@ void CPlayerT::Render(){
 					PLAYER_ANI_COUNT_FLAME = 4;
 			}
 
-			mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, (player_ani_count + 1) * 128, player_ani_count * 128, 256, 128, 1.0f);
+			mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, (player_ani_count + 1) * 128, player_ani_count * 128, 256, 128, mAlpha);
 		}
 		break;
 
@@ -258,7 +284,7 @@ void CPlayerT::Render(){
 			player_ani_count = 0;
 
 		if (mDirection)	//右向き
-			mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, 0, 128, 384, 256, 1.0f);
+			mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, 0, 128, 384, 256, mAlpha);
 
 		else			//左向き
 			mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, 128, 0, 384, 256, 1.0f);
@@ -273,9 +299,9 @@ void CPlayerT::Render(){
 			PLAYER_ANI_COUNT_FLAME = 10;
 
 			if (!mDirection)	//左向き
-				mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 512, 384, 1.0f);
+				mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 512, 384, mAlpha);
 			else				//右向き
-				mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, (player_ani_count + 1) * 128, player_ani_count * 128, 512, 384, 1.0f);
+				mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, (player_ani_count + 1) * 128, player_ani_count * 128, 512, 384, mAlpha);
 		}
 
 		else if (mVelocityY <= 0.0f){
@@ -283,9 +309,9 @@ void CPlayerT::Render(){
 				player_ani_count = 0;
 
 			if (!mDirection)	//左向き
-				mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, 256, 384, 512, 384, 1.0f);
+				mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, 256, 384, 512, 384, mAlpha);
 			else				//右向き
-				mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, 384, 256, 512, 384, 1.0f);
+				mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, 384, 256, 512, 384, mAlpha);
 		}
 		break;
 
