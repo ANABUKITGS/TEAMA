@@ -29,19 +29,25 @@ void CPlayerT::Update(){
 					mpWeapon->mPosition.x -= 10;
 			}
 		}
-		if (mJumpCount < 2 && (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) || CKey::Push(VK_RIGHT))){		//ジャンプ回数２未満かつ２キーまたは→キー入力　
+		if (mJumpCount < 2 && (CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_RIGHT))){		//ジャンプ回数２未満かつ２キーまたは→キー入力　
 			mAerialAttack = true;
 			mAir = true;
 			if (!mJump)
 				mVelocityY = PLAYER_VELOCITY_Y;
+
+			if (!mAir)
+				player_ani = EIDOL;
+			else{
+				player_ani = EJUMP;
+				player_ani_count = 0;
+				player_ani_count_flame = 0;
+			}
 			mJump = true;
-			
 		}
 		else if (mJump){
 			mJumpCount++;
 			mJump = false;
 		}
-		
 	}
 	else if (mpWeapon->mLife <= 0){		//武器の生存時間が0以下
 		mpWeapon = 0;
@@ -54,6 +60,13 @@ void CPlayerT::Update(){
 		Gravity();
 		Forward();
 		CRectangle::Update();
+	}
+
+	if (mVelocityY < -1.0f && mVelocityY > -1.1f)
+		mAir = false;
+	else{
+		mAir = true;
+		player_ani = EJUMP;
 	}
 	
 	swprintf(jumptime_buf, L"mVelocityX\n%4.2f\nmVelocityY\n%4.2f\nmPosition.x\n%4.2f\nmPosition.y\n%4.2f", mVelocityX, mVelocityY, mPosition.x, mPosition.y);
@@ -70,10 +83,15 @@ void CPlayerT::Forward(){
 			if (mVelocityX < hoge && mVelocityX > -hoge){
 				mVelocityX += PLAYER_VELOCITY_X;
 			}
-			player_ani = ETURN;
+
+			if (!mAir)
+				player_ani = ETURN;
+
 			if (mVelocityX > 0){
 				mVelocityX -= 0.25f;
-				player_ani = ERUN;
+
+				if (!mAir)
+					player_ani = ERUN;
 			}
 			else if (mVelocityX < 0){
 				mVelocityX += 0.25f;
@@ -86,13 +104,18 @@ void CPlayerT::Forward(){
 			if (mVelocityX < hoge && mVelocityX > -hoge){
 				mVelocityX -= PLAYER_VELOCITY_X;
 			}
-			player_ani = ETURN;
+
+			if (!mAir)
+				player_ani = ETURN;
+
 			if (mVelocityX > 0){
 				mVelocityX -= 0.25f;
 			}
 			else if (mVelocityX < 0){
 				mVelocityX += 0.25f;
-				player_ani = ERUN;
+
+				if (!mAir)
+					player_ani = ERUN;
 			}
 		}
 	}
@@ -101,10 +124,15 @@ void CPlayerT::Forward(){
 			mDirection = true;
 			if (mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit)
 				mVelocityX += PLAYER_VELOCITY_X;
-			player_ani = ETURN;
+
+			if (!mAir)
+				player_ani = ETURN;
+
 			if (mVelocityX > 0){
 				mVelocityX -= 0.25f;
-				player_ani = ERUN;
+
+				if (!mAir)
+					player_ani = ERUN;
 			}
 			else if (mVelocityX < 0){
 				mVelocityX += 0.25f;
@@ -115,13 +143,18 @@ void CPlayerT::Forward(){
 			mDirection = false;
 			if (mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit)
 				mVelocityX -= PLAYER_VELOCITY_X;
-			player_ani = ETURN;
+
+			if (!mAir)
+				player_ani = ETURN;
+
 			if (mVelocityX > 0){
 				mVelocityX -= 0.25f;
 			}
 			else if (mVelocityX < 0){
 				mVelocityX += 0.25f;
-				player_ani = ERUN;
+
+				if (!mAir)
+					player_ani = ERUN;
 			}
 		}
 	}
@@ -132,7 +165,8 @@ void CPlayerT::Forward(){
 		else if (mVelocityX > 0)
 			mVelocityX -= 0.25f;
 
-		player_ani = EIDOL;
+		if (!mAir)
+			player_ani = EIDOL;
 	}
 	mPosition.x += mVelocityX;
 }
@@ -145,7 +179,7 @@ bool CPlayerT::Collision(CRectangle *p) {
 			if (p->mTag != EJEWELRY && p->mTag != EPWEAPON) {
 				mPosition = mPosition + aj;
 				mJumpCount = 0;
-				mAir = false;
+				//mAir = false;
 			}
 			
 			mVelocityY = 0.0f;
@@ -226,6 +260,27 @@ void CPlayerT::Render(){
 
 	case EPLAYERANI::EJUMP:
 
+		if (mVelocityY > 0.0f){
+			if (player_ani_count > 1)
+				player_ani_count = 0;
+
+			PLAYER_ANI_COUNT_FLAME = 10;
+
+			if (!mDirection)	//左向き
+				mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 512, 384, 1.0f);
+			else				//右向き
+				mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, (player_ani_count + 1) * 128, player_ani_count * 128, 512, 384, 1.0f);
+		}
+
+		else if (mVelocityY <= 0.0f){
+			if (player_ani_count > 0)
+				player_ani_count = 0;
+
+			if (!mDirection)	//左向き
+				mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, 256, 384, 512, 384, 1.0f);
+			else				//右向き
+				mTexPlayer.DrawImage(CGame2::mRectPlayer->mPosition.x - CELLSIZE, CGame2::mRectPlayer->mPosition.x + CELLSIZE, CGame2::mRectPlayer->mPosition.y - CELLSIZE, CGame2::mRectPlayer->mPosition.y + CELLSIZE, 384, 256, 512, 384, 1.0f);
+		}
 		break;
 
 	case EPLAYERANI::EDAMAGE:
