@@ -76,15 +76,14 @@ void CMain::Update() {
 		swprintf(gamepad_name, L"Ｍ%.3f\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ", CGamePad::GetStick(PAD_RSTICKY));
 	else if (CGamePad::Push(PAD_RSTICKX, -0.1f))
 		swprintf(gamepad_name, L"Ｎ%.3f\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ", CGamePad::GetStick(PAD_RSTICKX));
-
 	else
 		swprintf(gamepad_name, L"おされてないよ\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ");
+#ifdef _DEBUG
 	CText::DrawStringW(gamepad_name, -640, -328, 32, 1.0f, 3);
 
 	//フレームレート
 	char fps_buf[16];
-	for (int i = 0; i < 16; i++)
-		fps_buf[i] = '\0';
 	sprintf(fps_buf, "%4.1fFPS", CTime::FrameRate());
 	CText::DrawStringSetColor(fps_buf, -640, 344, 16, 0.0f, 1.0f, 0.0f, 1.0f, 0);
+#endif
 }

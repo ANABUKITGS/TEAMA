@@ -44,7 +44,7 @@ bool CMapChikuwa::Collision(CRectangle *r) {
 			collision_flg = true;
 			CPlayerT::mpPlayer->mPosition.y = CPlayerT::mpPlayer->mPosition.y - aj.y;
 			CPlayerT::mpPlayer->mJumpCount = 0;
-			CPlayerT::mpPlayer->mVelocityY = 0.0f;
+			CPlayerT::mpPlayer->mVelocityY = CPlayerT::mpPlayer->mVelocityY - aj.y;
 		}
 	}
 	return false;
