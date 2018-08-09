@@ -447,6 +447,7 @@ void CGame2::Update() {
 	if (CGamePad::Once(PAD_10) || CKey::Once(VK_ESCAPE))
 		CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ETITLE;
 	CTaskManager::Get()->Update();
+	CTaskManager::Get()->Remove();
 }
 
 void CGame2::Render() {

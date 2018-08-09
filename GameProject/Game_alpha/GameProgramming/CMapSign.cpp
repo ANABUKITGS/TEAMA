@@ -16,6 +16,7 @@ bool CMapSign::Collision(CRectangle *r) {
 }
 
 void CMapSign::Render(){
+	mRender = false;
 	if (!mTextbox)
 		mTexSignhoge.DrawImage(mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE / 2, mPosition.y + CELLSIZE / 2, 64, 0, 64, 0, 1.0f);
 }

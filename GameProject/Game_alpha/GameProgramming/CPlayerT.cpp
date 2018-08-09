@@ -228,9 +228,12 @@ bool CPlayerT::Collision(CRectangle *p) {
 				break;
 
 			case ECHIKUWA:
+			case EBELTL:
+			case EBELTR:
 			case ESIGN:
 			case ECHECKPOINT:
 			case EPWEAPON:
+			case ESEARCH:
 				break;
 
 			default:
@@ -276,6 +279,7 @@ bool CPlayerT::Collision(CRectangle *p) {
 }
 
 void CPlayerT::Render(){
+	mRender = false;
 	switch (player_ani){
 	case EPLAYERANI::EIDOL:
 		if (player_ani_count > 7)
