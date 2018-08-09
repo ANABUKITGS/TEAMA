@@ -230,6 +230,7 @@ bool CPlayerT::Collision(CRectangle *p) {
 			case ESIGN:
 			case ECHECKPOINT:
 			case EPWEAPON:
+			case ESEARCH:
 				break;
 
 			default:
