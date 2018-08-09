@@ -65,6 +65,7 @@ void  CEnemy::Update(){
 		}
 		mAlpha -= 0.01f;
 		break;
+
 	default:
 		break;
 	}

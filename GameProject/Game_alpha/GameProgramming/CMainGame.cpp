@@ -197,9 +197,6 @@ void CPauseMenu::Update(){
 
 		if (CGamePad::Once(PAD_2) || CKey::Once(VK_RETURN)){
 			switch (cursor_num){
-			default:
-				break;
-
 			case EBACK:
 				pauseflag = false;
 				cursor_num = EBACK;
@@ -209,6 +206,9 @@ void CPauseMenu::Update(){
 				pauseflag = false;
 				CSceneChange::changenum = CSceneChange::ETITLE;
 				cursor_num = EBACK;
+				break;
+
+			default:
 				break;
 			}
 		}

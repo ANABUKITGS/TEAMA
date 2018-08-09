@@ -647,7 +647,7 @@ void CEditer::MakeTaskList(int *gamemap) {
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EJEWELRY2)
 					new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), ECELLNUM::EJEWELRY2);
 
-				//ïÛêŒ
+				//óéÇøÇÈè∞
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::ECHIKUWA)
 					new CMapChikuwa(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2));
 
