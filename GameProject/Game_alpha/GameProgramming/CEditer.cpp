@@ -159,6 +159,9 @@ void CEditer::Update(){
 				setcell++;
 		}
 		if (CGamePad::Push(PAD_2)){	//Ý’u
+			if (editmap[cursor_posY][cursor_posX] != ENONE && editmap[cursor_posY][cursor_posX] == setcell)
+				return;
+
 			if (setcell >= ECELLNUM::EPLAYER && setcell <= EBOSS){
 				if (cursor_posY > 0){
 					int temp_setcell = editmap[cursor_posY][cursor_posX];
@@ -221,6 +224,8 @@ void CEditer::Update(){
 		}
 
 		if (CGamePad::Push(PAD_3)){	//íœ
+			if (editmap[cursor_posY][cursor_posX] == ENONE)
+				return;
 			if (editmap[cursor_posY][cursor_posX] >= EPLAYER){
 				int temp_setcell = editmap[cursor_posY][cursor_posX];
 
@@ -235,6 +240,7 @@ void CEditer::Update(){
 			}
 			else
 				editmap[cursor_posY][cursor_posX] = ENONE;
+			MakeTaskList((int *)editmap);
 		}
 
 		if (CGamePad::Once(PAD_10)){
