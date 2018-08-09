@@ -199,33 +199,48 @@ bool CPlayerT::Collision(CRectangle *p) {
 	if (p->GetEnabled()) {
 		CVector2 aj;
 		if (CRectangle::Collision(p, &aj)) {
-			if (p->mTag == EUNDER){
-				if ((mPosition.y>p->mPosition.y) && mVelocityY<0){
+			switch (p->mTag){
+			case EUNDER:
+				if ((mPosition.y > p->mPosition.y) && mVelocityY < 0){
 					mVelocityY = 0.0f;
 					mJumpCount = 0;
 					mPosition = mPosition + aj;
 				}
-			}
-			else if (p->mTag != ECELLNUM::EJEWELRY &&
-				p->mTag != ECELLNUM::EJEWELRY2 &&
-				p->mTag != ECELLNUM::ECHIKUWA &&
-				p->mTag != ECELLNUM::ESIGN &&
-				p->mTag != ECELLNUM::ECHECKPOINT &&
-				p->mTag != ECELLNUM::EPWEAPON) {
-				
-				mPosition = mPosition + aj;
-				mJumpCount = 0;
-				mVelocityY = 0.0f;
-				if (!mUnrivaled && (p->mTag == EENEMY1 || p->mTag == EEWEAPON)){
+				break;
+
+			case EENEMY1: case EEWEAPON:
+				if (!mUnrivaled){
 					mUnrivaled = true;
 					if (mJewel > 0)
 						mJewel--;
 					else
 						mLife--;
 				}
-			}
-			if (p->mTag == EJEWELRY)
+				break;
+
+			case EJEWELRY:
 				mJewel++;
+				break;
+
+			case EJEWELRY2:
+				mMiniJewel++;
+				break;
+
+			case ECHIKUWA:
+			case ESIGN:
+			case ECHECKPOINT:
+			case EPWEAPON:
+			case ESEARCH:
+				break;
+
+			default:
+				mPosition = mPosition + aj;
+				mJumpCount = 0;
+				mVelocityY = 0.0f;
+				break;
+
+
+			}
 			return true;
 		}
 	}

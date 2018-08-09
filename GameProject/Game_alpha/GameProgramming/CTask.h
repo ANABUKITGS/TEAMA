@@ -33,6 +33,7 @@ enum ECELLNUM{
 	/*------ その他 ------*/
 	EPWEAPON,			//プレイヤー武器
 	EEWEAPON,			//敵武器
+	ESEARCH,			//敵の索敵範囲
 };
 
 
@@ -43,11 +44,12 @@ protected:
 	CTask*mpPrev;	//前ポインタ(自分の前のタスクポインタ)
 	CTask*mpNext;	//次ポインタ(自分の後のタスクポインタ)
 	bool mEnabled;	//有効フラグ(true:有効、false:無効)
+	bool mRender;	//描画フラグ(true:描画する、false:描画しない)
 	int mPriority;	//タスクの優先度 大きい値程優先度が高く、リストの先頭に並ぶ
 
 	//メンバメソッド
 	CTask()	//コンストラクタ
-		:mpPrev(0), mpNext(0), mEnabled(true), mPriority(0)
+		:mpPrev(0), mpNext(0), mEnabled(true), mPriority(0), mRender(true)
 	{}
 
 	CTask(bool enabled, int priority)	//引数有コンストラクタ

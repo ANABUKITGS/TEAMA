@@ -38,6 +38,7 @@ public:
 	bool mAir;				//true:空中 false:地上
 	int mLife;				//プレイヤーの残機
 	int mJewel;				//ジュエル所持数
+	int mMiniJewel;			//ミニジュエル所持数
 	int mDamageInterval;	//ダメージインターバル
 	bool mUnrivaled;		//true:無敵状態
 	float mAlpha;			//アルファ値
@@ -65,6 +66,7 @@ public:
 		player_ani_count_flame = 0;
 		PLAYER_ANI_COUNT_FLAME = 1;
 		mJewel = 1;
+		mMiniJewel = 0;
 		mLife = 3;
 		mDamageInterval = DAMAGE_INTERVAL;
 		mUnrivaled = false;
