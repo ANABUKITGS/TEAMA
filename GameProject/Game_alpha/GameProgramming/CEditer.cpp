@@ -7,6 +7,7 @@
 #include "CMapUnder.h"
 #include "CMapSign.h"
 #include "CMapChikuwa.h"
+#include "CMapBelt.h"
 
 CMapIO mMapIO;
 
@@ -613,30 +614,30 @@ void CEditer::MakeTaskList(int *gamemap) {
 				//ベルトコンベア 左
 				else if (gamemap[i * MAP_SIZEX + j] == EBELTL){
 					if (gamemap[i*MAP_SIZEX + j - 1] != ECELLNUM::EBELTL && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EBELTL)
-						new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 1, CELLSIZE * 2, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), ECELLNUM::EBELTL);
+						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTL, 1);
 
 					else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EBELTL && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EBELTL)
-						new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 2, CELLSIZE * 3, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), ECELLNUM::EBELTL);
+						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTL, 2);
 
 					else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EBELTL && gamemap[i * MAP_SIZEX + j + 1] != ECELLNUM::EBELTL)
-						new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 2, CELLSIZE * 1, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), ECELLNUM::EBELTL);
+						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTL, 3);
 
 					else
-						new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), ECELLNUM::EBELTL);
+						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTL, 4);
 				}
 				//ベルトコンベア 右
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EBELTR){
 					if (gamemap[i*MAP_SIZEX + j - 1] != ECELLNUM::EBELTR && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EBELTR)
-						new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 1, CELLSIZE * 2, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), ECELLNUM::EBELTR);
+						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTR, 1);
 
 					else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EBELTR && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EBELTR)
-						new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 2, CELLSIZE * 3, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), ECELLNUM::EBELTR);
+						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTR, 2);
 
 					else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EBELTR && gamemap[i * MAP_SIZEX + j + 1] != ECELLNUM::EBELTR)
-						new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 2, CELLSIZE * 1, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), ECELLNUM::EBELTR);
+						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTR, 3);
 
 					else
-						new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), ECELLNUM::EBELTR);
+						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTR, 4);
 				}
 				
 				//宝石

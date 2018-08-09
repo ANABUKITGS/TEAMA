@@ -3,7 +3,7 @@
 #include "CMapChip.h"
 #include "CMap.h"
 #include "CPlayerT.h"
-#define SIGN_UV					0, 64, 64 * 6, 64 * 5
+#define CHIKUWA_UV				0, CELLSIZE, CELLSIZE , 0
 #define CHIKUWA_FALLING_TIME	60
 #define CHIKUWA_LOST_TIME		CHIKUWA_FALLING_TIME * 10
 #define FALLING_SPEED			0.02f
@@ -14,12 +14,12 @@ private:
 	bool collision_flg;
 	float mFalling;
 	CVector2 setpos;
+	CTexture mTexChikuwa;
 
 public:
-	CTexture mTexChikuwa;
 	CMapChikuwa(const CVector2& pos, const CVector2& scale)
 		//CMapChipÇ≈èâä˙âª
-		: CMapChip(pos, scale, NULL, SIGN_UV, ECELLNUM::ECHIKUWA)
+		: CMapChip(pos, scale, &mTexChikuwa, CHIKUWA_UV, ECELLNUM::ECHIKUWA)
 	{
 		lostcount = 0;
 		mFalling = 0.0f;

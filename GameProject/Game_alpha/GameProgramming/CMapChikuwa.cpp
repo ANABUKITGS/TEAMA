@@ -24,7 +24,7 @@ bool CMapChikuwa::Collision(CRectangle *r) {
 	// “–‚½‚Á‚Ä‚¢‚é‚©
 	CVector2 aj;
 	if (CRectangle::Collision(r) && CRectangle::Collision(CPlayerT::mpPlayer, &aj)) {
-		if (r->mTag == EPLAYER){
+		if (r->mTag == EPLAYER && lostcount <= CHIKUWA_FALLING_TIME){
 			collision_flg = true;
 			CPlayerT::mpPlayer->mPosition = CPlayerT::mpPlayer->mPosition - aj;
 			CPlayerT::mpPlayer->mJumpCount = 0;
@@ -36,5 +36,5 @@ bool CMapChikuwa::Collision(CRectangle *r) {
 }
 
 void CMapChikuwa::Render(){
-	mTexChikuwa.DrawImage(mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE / 2, mPosition.y + CELLSIZE / 2, 64, 0, 64, 0, 1.0f);
+	//mTexChikuwa.DrawImage(mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE / 2, mPosition.y + CELLSIZE / 2, 64, 0, 64, 0, 1.0f);
 }

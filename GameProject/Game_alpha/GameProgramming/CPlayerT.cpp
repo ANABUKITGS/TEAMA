@@ -227,6 +227,8 @@ bool CPlayerT::Collision(CRectangle *p) {
 				break;
 
 			case ECHIKUWA:
+			case EBELTL:
+			case EBELTR:
 			case ESIGN:
 			case ECHECKPOINT:
 			case EPWEAPON:
