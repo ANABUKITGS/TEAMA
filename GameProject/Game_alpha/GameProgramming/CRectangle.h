@@ -11,6 +11,7 @@
 
 class CRectangle : public CTask{
 public:
+	char mColFlg;	//ブロック空き方向フラグ
 	ECELLNUM mTag;
 	CVector2 mPosition;	//四角形の中心座標	x四角形の中心のX座標	y四角形の中心Y座標
 	CVector2 mVector[4];	//四角形生成メソッドに使うインスタンス変数
@@ -22,7 +23,7 @@ public:
 	float mRight, mLeft, mTop, mBottom;
 	float mAlpha;
 	CRectangle()
-		: mRotation(0.0f), mpTexture(0), mAlpha(1.0f)
+		: mRotation(0.0f), mpTexture(0), mAlpha(1.0f), mColFlg(0)
 	{}
 	/*
 	position:位置

@@ -73,11 +73,12 @@ void CPlayerT::Update(){
 		player_ani = EJUMP;
 	}
 	
-	for (int i = 0; i < 96; i++)
-		jumptime_buf[i] = '\0';
+//	for (int i = 0; i < 96; i++)
+//		jumptime_buf[i] = '\0';
+#ifdef _DEBUG
 	sprintf(jumptime_buf, "mVelocityX\n%4.2f\nmVelocityY\n%4.2f\nmPosition.x\n%4.2f\nmPosition.y\n%4.2f", mVelocityX, mVelocityY, mPosition.x, mPosition.y);
 	CText::DrawString(jumptime_buf, 0, 0, 32, 1.0f, 0);
-
+#endif
 	//for (int i = 0; i < 96; i++)
 	//	jumptime_buf[i] = '\0';
 	//sprintf(jumptime_buf, "mJewel %2d\nmLife  %2d\n", mJewel, mLife);
@@ -236,9 +237,37 @@ bool CPlayerT::Collision(CRectangle *p) {
 				break;
 
 			default:
-				mPosition = mPosition + aj;
-				mJumpCount = 0;
-				mVelocityY = 0.0f;
+				//‰E‹ó‚«
+				if (!(p->mColFlg & EDT_RIGHT)) {
+					if (aj.x > 0) {
+						mPosition.x = mPosition.x + aj.x;
+					}
+				}
+				//¶‹ó‚«
+				if (!(p->mColFlg & EDT_LEFT)) {
+					if (aj.x < 0) {
+						mPosition.x = mPosition.x + aj.x;
+					}
+				}
+				//‰º‹ó‚«
+				if (!(p->mColFlg & EDT_BOTTOM)) {
+					if (aj.y < 0) {
+						mPosition.y = mPosition.y + aj.y;
+						mJumpCount = 0;
+						mVelocityY = 0.0f;
+					}
+				}
+				//ã‹ó‚«
+				if (!(p->mColFlg & EDT_TOP)) {
+					if (aj.y > 0) {
+						mPosition.y = mPosition.y + aj.y;
+						mJumpCount = 0;
+						mVelocityY = 0.0f;
+					}
+				}
+//					mPosition = mPosition + aj;
+//					mJumpCount = 0;
+//					mVelocityY = 0.0f;
 				break;
 
 
