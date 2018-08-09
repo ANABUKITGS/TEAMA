@@ -457,9 +457,9 @@ void CGame2::Render() {
 	CCamera2D::End();
 
 	//Œo‰ßŽžŠÔ
-	char time_buf[16];
+	char time_buf[64];
 	for (int i = 0; i < 16; i++)
 		time_buf[i] = '\0';
-	sprintf(time_buf, "%02d:%06.3f", CTime::ElapsedTimeMin(), CTime::ElapsedTimeSec());
+	sprintf(time_buf, "%02d:%06.3f\nmJewel %-2d\nmLife %-2d", CTime::ElapsedTimeMin(), CTime::ElapsedTimeSec(), CPlayerT::mpPlayer->mJewel, CPlayerT::mpPlayer->mLife);
 	CText::DrawString(time_buf, 352, 328, 32, 1.0f, 0);
 }

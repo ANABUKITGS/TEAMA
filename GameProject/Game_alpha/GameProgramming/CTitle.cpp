@@ -26,9 +26,6 @@ void CTitle::Update(){
 	
 	if (CGamePad::Once(PAD_2) || CKey::Once(VK_RETURN) || CKey::Once(VK_SPACE)){
 		switch (cursor_num){
-		default:
-			break;
-
 		case CSceneChange::ECSCENECHANGE_NUM::EGAME:
 			mGame2.Init();
 			CTime::GetStartTime();
@@ -52,14 +49,14 @@ void CTitle::Update(){
 			_sleep(500);
 			exit(0);
 			break;
+
+		default:
+			break;
 		}
 	}
 
 	/*ÉJÅ[É\Éã*/
 	switch (cursor_num){
-	default:
-		break;
-
 	case CSceneChange::EGAME:
 		swprintf(cursor_buf, L"Å®");
 		break;
@@ -78,6 +75,9 @@ void CTitle::Update(){
 
 	case CSceneChange::EEXIT:
 		swprintf(cursor_buf, L"\n\n\n\nÅ®");
+		break;
+
+	default:
 		break;
 	}
 }

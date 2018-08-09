@@ -78,10 +78,10 @@ void CPlayerT::Update(){
 	sprintf(jumptime_buf, "mVelocityX\n%4.2f\nmVelocityY\n%4.2f\nmPosition.x\n%4.2f\nmPosition.y\n%4.2f", mVelocityX, mVelocityY, mPosition.x, mPosition.y);
 	CText::DrawString(jumptime_buf, 0, 0, 32, 1.0f, 0);
 
-	for (int i = 0; i < 96; i++)
-		jumptime_buf[i] = '\0';
-	sprintf(jumptime_buf, "mJewel %2d\nmLife  %2d\n", mJewel, mLife);
-	CText::DrawString(jumptime_buf, 300, 300, 32, 1.0f, 0);
+	//for (int i = 0; i < 96; i++)
+	//	jumptime_buf[i] = '\0';
+	//sprintf(jumptime_buf, "mJewel %2d\nmLife  %2d\n", mJewel, mLife);
+	//CText::DrawString(jumptime_buf, 300, 300, 32, 1.0f, 0);
 }
 
 //‘Oiˆ—
@@ -248,9 +248,6 @@ bool CPlayerT::Collision(CRectangle *p) {
 
 void CPlayerT::Render(){
 	switch (player_ani){
-	default:
-		break;
-
 	case EPLAYERANI::EIDOL:
 		if (player_ani_count > 7)
 			player_ani_count = 0;
@@ -350,6 +347,9 @@ void CPlayerT::Render(){
 
 	case EPLAYERANI::EDOWN:
 
+		break;
+
+	default:
 		break;
 	}
 

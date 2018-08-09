@@ -5,22 +5,28 @@ void CMapChikuwa::Update() {
 }
 
 bool CMapChikuwa::Collision(CRectangle *r) {
-	CVector2 aj;
-
 	if (collision_flg){
 		lostcount++;
-		if (lostcount > CHIKUWA_LOSTTIME){
-			mEnabled = false;
+		if (lostcount > CHIKUWA_FALLING_TIME && lostcount < CHIKUWA_LOST_TIME){
+			mFalling += FALLING_SPEED;
+			mPosition.y -= mFalling;
+		}
+
+		else if (lostcount > CHIKUWA_LOST_TIME){
 			collision_flg = false;
+			mPosition.y = setpos.y;
+			mFalling = 0;
+			lostcount = 0;
 			return false;
 		}
 	}
 
 	// “–‚½‚Á‚Ä‚¢‚é‚©
-	if (CRectangle::Collision(r) && CRectangle::Collision(this, &aj)) {
+	CVector2 aj;
+	if (CRectangle::Collision(r) && CRectangle::Collision(CPlayerT::mpPlayer, &aj)) {
 		if (r->mTag == EPLAYER){
 			collision_flg = true;
-			//CPlayerT::mpPlayer->mPosition = CPlayerT::mpPlayer->mPosition - aj;
+			CPlayerT::mpPlayer->mPosition = CPlayerT::mpPlayer->mPosition - aj;
 			CPlayerT::mpPlayer->mJumpCount = 0;
 			CPlayerT::mpPlayer->mVelocityY = 0.0f;
 			return true;
