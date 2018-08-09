@@ -7,6 +7,7 @@ extern CGame mGame;
 #define PLAYER_VELOCITY_Y 5.0f
 #define JUMP_TIME_LIMIT 15
 #define VELOCITYX_LIMIT 5.0f
+#define VELOCITYY_LIMIT -30.0f
 
 //wchar_t jumptime_buf[256];
 
@@ -28,6 +29,9 @@ void CCharcter::Render(){
 void CCharcter::Gravity(){
 	//‘¬“x‚ð‰Á‘¬
 	mVelocityY -= 16.33/15;
+	if (VELOCITYY_LIMIT > mVelocityY) {
+		mVelocityY = VELOCITYY_LIMIT;
+	}
 	//‘¬“x•ªˆÚ“®
 	mPosition.y += mVelocityY;
 }

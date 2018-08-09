@@ -114,7 +114,10 @@ bool CRectangle::Collision(CRectangle *target) {
 }
 
 bool CRectangle::Collision(CRectangle *target, CVector2 *adjust) {
+//	*adjust = mPosition;
+//	CVector2 dir = mPosition - mPrePosition;
 	CVector2 vec = target->mPosition - mPosition;
+//	CVector2 vec = target->mCollider - mCollider;
 	CVector2 ad;
 	if (abs(vec.x) < target->mScale.x + mScale.x) {
 		if (vec.x < 0) {
@@ -130,10 +133,24 @@ bool CRectangle::Collision(CRectangle *target, CVector2 *adjust) {
 			else {
 				ad.y = vec.y - target->mScale.y - mScale.y;
 			}
+//			if (abs(dir.x) > abs(dir.y)) {
 			if (abs(ad.x) < abs(ad.y)) {
+					//if (ad.x < 0.0f) {
+					//	adjust->x = target->mPosition.x - target->mScale.x - mScale.x;
+					//}
+					//else {
+					//	adjust->x = target->mPosition.x + target->mScale.x + mScale.x;
+					//}
 				adjust->x += ad.x;
+				//			}
 			}
 			else {
+				//if (ad.y < 0.0f) {
+				//	adjust->y = target->mPosition.y - target->mScale.y - mScale.y;
+				//}
+				//else {
+				//	adjust->y = target->mPosition.y + target->mScale.y + mScale.y;
+				//}
 				adjust->y += ad.y;
 			}
 			return true;

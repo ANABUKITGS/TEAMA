@@ -20,6 +20,11 @@
 
 #define POS(Y,X) CVector2(X * CELLSIZE, Y * -CELLSIZE + WINDOW_SIZE_H)
 
+#define EDT_RIGHT 0x01
+#define EDT_LEFT 0x04
+#define EDT_TOP 0x02
+#define EDT_BOTTOM 0x08
+
 
 class CPauseMenu{
 private:
