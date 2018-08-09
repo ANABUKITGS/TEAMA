@@ -77,8 +77,11 @@ void  CEnemy::Update(){
 
 	case EDOWN:
 		mDownTime--;
-		if (mDownTime % 5 == 0)
+		if (mDownTime % 10 == 0)
 			mRender = false;
+		else
+			mRender = true;
+
 		if (mDownTime < 0){
 			mEnabled = false;
 			mpSearch = false;
