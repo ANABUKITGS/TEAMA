@@ -74,8 +74,9 @@ void CTaskManager::Update(){
 void CTaskManager::Render(){
 	CRectangle*p = (CRectangle*)mpHead;	//子クラスのカレントにキャスト変換した先頭タスクを代入
 	while (p){	//カレントp
-		if (p->mEnabled && p->mRender) {
-			p->Render(WHITE, 1.0f);	//現在カレントの描画処理を行う
+		if (p->mEnabled) {
+			if (p->mRender)
+				p->Render(WHITE, 1.0f);	//現在カレントの描画処理を行う
 			p->Render();
 		}
 		p = (CRectangle*)p->mpNext;	//キャスト変換を行ったタスクの次をカレントに代入

@@ -250,6 +250,7 @@ bool CPlayerT::Collision(CRectangle *p) {
 }
 
 void CPlayerT::Render(){
+	mRender = false;
 	switch (player_ani){
 	case EPLAYERANI::EIDOL:
 		if (player_ani_count > 7)

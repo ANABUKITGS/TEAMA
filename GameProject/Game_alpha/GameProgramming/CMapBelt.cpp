@@ -39,6 +39,7 @@ bool CMapBelt::Collision(CRectangle *r) {
 }
 
 void CMapBelt::Render(){
+	mRender = false;
 	switch (texture_pos){
 	case 1:
 		mTexBelt.DrawImage(BELT_UV1L);
