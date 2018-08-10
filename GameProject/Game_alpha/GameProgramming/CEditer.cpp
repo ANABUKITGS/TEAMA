@@ -10,6 +10,7 @@
 #include "CMapBelt.h"
 #include "CMapSwitchGround.h"
 
+CEnemy *CEnemy::mpEnemy = 0;
 CMapIO mMapIO;
 
 void CEditer::Init(){
@@ -20,6 +21,8 @@ void CEditer::Init(){
 			editmap_cursor[i][j] = ENONE;
 		}
 	}
+
+	MakeTaskList((int *)editmap);
 
 	editmap_cursor[0][0] = CURSOR_NUM;
 	cursor_posX = cursor_posY = 0;
@@ -440,19 +443,15 @@ void CEditer::MakeTaskList(int *gamemap) {
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EUNDER){
 					if (gamemap[i*MAP_SIZEX + j - 1] != ECELLNUM::EUNDER && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EUNDER)
 						new CMapUnder(POS(i, j), CVector2(CELLSIZE / 2, 12), NULL);
-						//new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 1, CELLSIZE * 2, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), ECELLNUM::EUNDER);
 
 					else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EUNDER && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EUNDER)
 						new CMapUnder(POS(i, j), CVector2(CELLSIZE / 2, 12), NULL);
-						//new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 2, CELLSIZE * 3, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1));
 
 					else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EUNDER && gamemap[i * MAP_SIZEX + j + 1] != ECELLNUM::EUNDER)
 						new CMapUnder(POS(i, j), CVector2(CELLSIZE / 2, 12), NULL);
-						//new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 2, CELLSIZE * 1, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), ECELLNUM::EUNDER);
 
 					else
 						new CMapUnder(POS(i, j), CVector2(CELLSIZE / 2, 12), NULL);
-						//new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), ECELLNUM::EUNDER);
 				}
 				//ベルトコンベア 左
 				else if (gamemap[i * MAP_SIZEX + j] == EBELTL){

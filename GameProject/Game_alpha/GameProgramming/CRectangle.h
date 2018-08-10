@@ -18,12 +18,21 @@ public:
 	CVector2 mScale;	//四角形の幅と高さ
 	CTexture*mpTexture;	//四角形が使用するテクスチャへのポインタ
 	CMatrix33 mMatrix;	//マトリクスをインスタンスにする(これは移動行列用)
+	float mVelocityX;		//X軸の移動速度
+	float mVelocityY;		//Y軸の移動速度
+	bool mDirection;		//キャラクターの向き true:右 false:左
 	float mRotation;	//四角形の回転角度
 	float mUv[4];	//テクスチャマッピングデータ
 	float mRight, mLeft, mTop, mBottom;
 	float mAlpha;
 	CRectangle()
-		: mRotation(0.0f), mpTexture(0), mAlpha(1.0f), mColFlg(0)
+		: mRotation(0.0f)
+		, mpTexture(0)
+		, mAlpha(1.0f)
+		, mColFlg(0)
+		, mVelocityX(0.0f)
+		, mVelocityY(0.0f)
+		, mDirection(false)
 	{}
 	/*
 	position:位置

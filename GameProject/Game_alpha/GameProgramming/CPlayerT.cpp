@@ -45,7 +45,8 @@ void CPlayerT::Update(){
 			if (!mAir)
 				player_ani = EIDOL;
 			else{
-				player_ani = EJUMP;
+				if (mpWeapon != 0 && mpWeapon->mLife > 0)
+					player_ani = EJUMP;
 			}
 			mJump = true;
 		}
@@ -58,7 +59,8 @@ void CPlayerT::Update(){
 	else if (mpWeapon->mLife <= 0){		//•Ší‚Ì¶‘¶ŽžŠÔ‚ª0ˆÈ‰º
 		mpWeapon = 0;
 	}
-	else{								//•Ší‚Ì¶‘¶ŽžŠÔ‚ª0‚ð’´‰ß
+	else {								//•Ší‚Ì¶‘¶ŽžŠÔ‚ª0‚ð’´‰ß
+		player_ani = EYOHYOH;
 		mpWeapon->Render();
 	}
 	if (mpWeapon == 0){
