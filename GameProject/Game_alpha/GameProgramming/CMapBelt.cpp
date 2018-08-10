@@ -6,34 +6,39 @@ void CMapBelt::Update() {
 
 bool CMapBelt::Collision(CRectangle *r) {
 	// ìñÇΩÇ¡ÇƒÇ¢ÇÈÇ©
-	CVector2 aj;
-	if (CRectangle::Collision(r) && CRectangle::Collision(CPlayerT::mpPlayer, &aj)) {
-		if (r->mTag == EPLAYER){
+	if (r->mTag == ECELLNUM::EPLAYER ||
+		r->mTag == ECELLNUM::EENEMY1 ||
+		r->mTag == ECELLNUM::EENEMY2 ||
+		r->mTag == ECELLNUM::EENEMY3 |
+		r->mTag == ECELLNUM::EBOSS){
+		CVector2 aj;
+		if (CRectangle::Collision(r) && CRectangle::Collision(r, &aj)) {
 			//ç∂
-			if (texture_pos == 1 && mPosition.x - CELLSIZE / 2 > CPlayerT::mpPlayer->mPosition.x) {
-				CPlayerT::mpPlayer->mPosition.x = CPlayerT::mpPlayer->mPosition.x - aj.x;
+			if (texture_pos == 1 && mPosition.x - CELLSIZE / 2 > r->mPosition.x) {
+				r->mPosition.x = r->mPosition.x - aj.x;
 				return true;
 			}
 			//âE
-			if (texture_pos == 3 && mPosition.x + CELLSIZE / 2 < CPlayerT::mpPlayer->mPosition.x) {
-				CPlayerT::mpPlayer->mPosition.x = CPlayerT::mpPlayer->mPosition.x - aj.x;
+			if (texture_pos == 3 && mPosition.x + CELLSIZE / 2 < r->mPosition.x) {
+				r->mPosition.x = r->mPosition.x - aj.x;
 				return true;
 			}
 			//â∫
-			if (mPosition.y > CPlayerT::mpPlayer->mPosition.y) {
-				CPlayerT::mpPlayer->mPosition.y = CPlayerT::mpPlayer->mPosition.y - aj.y;
-				CPlayerT::mpPlayer->mVelocityY = 0.0f;
+			if (mPosition.y > r->mPosition.y) {
+				r->mPosition.y = r->mPosition.y - aj.y;
+				r->mVelocityY = 0.0f;
 			}
 			//è„
-			if (mPosition.y < CPlayerT::mpPlayer->mPosition.y) {
+			if (mPosition.y < r->mPosition.y) {
 				if (mDirection == ECELLNUM::EBELTL)
-					CPlayerT::mpPlayer->mPosition.x -= BELT_SPEED;
+					r->mPosition.x -= BELT_SPEED;
 
 				else if (mDirection == ECELLNUM::EBELTR)
-					CPlayerT::mpPlayer->mPosition.x += BELT_SPEED;
-				CPlayerT::mpPlayer->mPosition.y = CPlayerT::mpPlayer->mPosition.y - aj.y;
-				CPlayerT::mpPlayer->mJumpCount = 0;
-				CPlayerT::mpPlayer->mVelocityY = 0.0f;
+					r->mPosition.x += BELT_SPEED;
+				r->mPosition.y = r->mPosition.y - aj.y;
+				r->mVelocityY = 0.0f;
+				if (r->mTag == ECELLNUM::EPLAYER)
+					CPlayerT::mpPlayer->mJumpCount = 0;
 			}
 			return true;
 		}

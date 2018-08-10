@@ -99,7 +99,12 @@ bool CEnemy::Collision(CRectangle*p){
 	if (p->GetEnabled()) {
 		CVector2 aj;
 		if (CRectangle::Collision(p, &aj)) {
-			if (p->mTag != EEWEAPON&&p->mTag != EPLAYER&&p->mTag != ESEARCH){
+			if (p->mTag != ECELLNUM::EEWEAPON &&
+				p->mTag != ECELLNUM::EPLAYER &&
+				p->mTag != ECELLNUM::ESEARCH &&
+				p->mTag != ECELLNUM::EBELTL &&
+				p->mTag != ECELLNUM::EBELTR &&
+				p->mTag != ECELLNUM::ECHIKUWA){
 				mPosition = mPosition + aj;
 			}
 			if (p->mTag == EPWEAPON)

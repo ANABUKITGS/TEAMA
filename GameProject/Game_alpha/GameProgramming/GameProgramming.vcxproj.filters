@@ -79,7 +79,6 @@
     <ClCompile Include="CTime.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CMapBox.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
@@ -93,6 +92,9 @@
       <Filter>ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="CMapBelt.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemy.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -175,7 +177,6 @@
     <ClInclude Include="CTime.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CMapBox.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
@@ -189,6 +190,9 @@
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="CMapBelt.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemy.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>

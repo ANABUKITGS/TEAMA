@@ -9,6 +9,7 @@
 #include "CMapChikuwa.h"
 #include "CMapBelt.h"
 
+CEnemy *CEnemy::mpEnemy = 0;
 CMapIO mMapIO;
 
 void CEditer::Init(){
