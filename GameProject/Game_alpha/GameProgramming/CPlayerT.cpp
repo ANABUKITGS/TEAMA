@@ -253,7 +253,6 @@ bool CPlayerT::Collision(CRectangle *p) {
 				if (!(p->mColFlg & EDT_BOTTOM)) {
 					if (aj.y < 0) {
 						mPosition.y = mPosition.y + aj.y;
-						mJumpCount = 0;
 						mVelocityY = 0.0f;
 					}
 				}

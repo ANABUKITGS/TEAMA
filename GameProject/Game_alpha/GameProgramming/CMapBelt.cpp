@@ -5,33 +5,36 @@ void CMapBelt::Update() {
 }
 
 bool CMapBelt::Collision(CRectangle *r) {
-	//if (collision_flg){
-	//	lostcount++;
-	//	if (lostcount > CHIKUWA_FALLING_TIME && lostcount < CHIKUWA_LOST_TIME){
-	//		mFalling += FALLING_SPEED;
-	//		mPosition.y -= mFalling;
-	//	}
-
-	//	else if (lostcount > CHIKUWA_LOST_TIME){
-	//		collision_flg = false;
-	//		mPosition.y = setpos.y;
-	//		mFalling = 0;
-	//		lostcount = 0;
-	//		return false;
-	//	}
-	//}
-
 	// ìñÇΩÇ¡ÇƒÇ¢ÇÈÇ©
 	CVector2 aj;
 	if (CRectangle::Collision(r) && CRectangle::Collision(CPlayerT::mpPlayer, &aj)) {
 		if (r->mTag == EPLAYER){
-			if (mDirection == ECELLNUM::EBELTL)
-				CPlayerT::mpPlayer->mPosition.x -= BELT_SPEED;
-			else if (mDirection == ECELLNUM::EBELTR)
-				CPlayerT::mpPlayer->mPosition.x += BELT_SPEED;
-			CPlayerT::mpPlayer->mPosition = CPlayerT::mpPlayer->mPosition - aj;
-			CPlayerT::mpPlayer->mJumpCount = 0;
-			CPlayerT::mpPlayer->mVelocityY = 0.0f;
+			//ç∂
+			if (texture_pos == 1 && mPosition.x - CELLSIZE / 2 > CPlayerT::mpPlayer->mPosition.x) {
+				CPlayerT::mpPlayer->mPosition.x = CPlayerT::mpPlayer->mPosition.x - aj.x;
+				return true;
+			}
+			//âE
+			if (texture_pos == 3 && mPosition.x + CELLSIZE / 2 < CPlayerT::mpPlayer->mPosition.x) {
+				CPlayerT::mpPlayer->mPosition.x = CPlayerT::mpPlayer->mPosition.x - aj.x;
+				return true;
+			}
+			//â∫
+			if (mPosition.y > CPlayerT::mpPlayer->mPosition.y) {
+				CPlayerT::mpPlayer->mPosition.y = CPlayerT::mpPlayer->mPosition.y - aj.y;
+				CPlayerT::mpPlayer->mVelocityY = 0.0f;
+			}
+			//è„
+			if (mPosition.y < CPlayerT::mpPlayer->mPosition.y) {
+				if (mDirection == ECELLNUM::EBELTL)
+					CPlayerT::mpPlayer->mPosition.x -= BELT_SPEED;
+
+				else if (mDirection == ECELLNUM::EBELTR)
+					CPlayerT::mpPlayer->mPosition.x += BELT_SPEED;
+				CPlayerT::mpPlayer->mPosition.y = CPlayerT::mpPlayer->mPosition.y - aj.y;
+				CPlayerT::mpPlayer->mJumpCount = 0;
+				CPlayerT::mpPlayer->mVelocityY = 0.0f;
+			}
 			return true;
 		}
 	}

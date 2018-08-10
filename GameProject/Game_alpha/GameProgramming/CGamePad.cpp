@@ -75,6 +75,7 @@ bool CGamePad::Push(int button, float amount){
 }
 
 bool CGamePad::Once(int button, float amount){
+	mGamePad.Update();
 	if (!mpButtons || !mpPositions) return false;
 	if (button > -1){
 		//デジタル ボタンが押されているか？
@@ -321,6 +322,7 @@ bool CGamePad::Once(int button, float amount){
 }
 
 bool CGamePad::OncePush(int button, float amount){
+	mGamePad.Update();
 	if (!mpButtons || !mpPositions) return false;
 	if (button > -1){
 			//デジタル ボタンが押されているか？

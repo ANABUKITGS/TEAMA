@@ -160,6 +160,9 @@ void CEditer::Update(){
 				setcell++;
 		}
 		if (CGamePad::Push(PAD_2)){	//設置
+			if (editmap[cursor_posY][cursor_posX] != ENONE && editmap[cursor_posY][cursor_posX] == setcell)
+				return;
+
 			if (setcell >= ECELLNUM::EPLAYER && setcell <= EBOSS){
 				if (cursor_posY > 0){
 					int temp_setcell = editmap[cursor_posY][cursor_posX];
@@ -218,9 +221,12 @@ void CEditer::Update(){
 				else
 					editmap[cursor_posY][cursor_posX] = setcell;
 			}
+			MakeTaskList((int *)editmap);
 		}
 
 		if (CGamePad::Push(PAD_3)){	//削除
+			if (editmap[cursor_posY][cursor_posX] == ENONE)
+				return;
 			if (editmap[cursor_posY][cursor_posX] >= EPLAYER){
 				int temp_setcell = editmap[cursor_posY][cursor_posX];
 
@@ -235,6 +241,7 @@ void CEditer::Update(){
 			}
 			else
 				editmap[cursor_posY][cursor_posX] = ENONE;
+			MakeTaskList((int *)editmap);
 		}
 
 		if (CGamePad::Once(PAD_10)){
@@ -257,8 +264,10 @@ void CEditer::Update(){
 		}
 
 		//マップデータを開く
-		if (CKey::Once('O'))
+		if (CKey::Once('O')) {
 			mMapIO.LoadDialog(NULL);
+			MakeTaskList((int *)editmap);
+		}
 
 		//マップデータを保存
 		if (CKey::Once('P'))
@@ -301,7 +310,6 @@ void CEditer::Render(){
 
 	mTexBack.DrawImage(TEX_FULLSCREEN, 0, 1280, 720, 0, 1.0f);
 
-	MakeTaskList((int *)editmap);
 	mCamera.Begin();
 	CTaskManager::Get()->Update();
 	CTaskManager::Get()->Render();
