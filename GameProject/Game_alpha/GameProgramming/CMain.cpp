@@ -27,7 +27,7 @@ void CMain::Init() {
 void CMain::Update() {
 	mChange.Update();
 	/*１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ*/
-
+#ifdef _DEBUG
 	if (CGamePad::Push(PAD_1))
 		swprintf(gamepad_name, L"１\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ");
 	else if (CGamePad::Push(PAD_2))
@@ -78,7 +78,7 @@ void CMain::Update() {
 		swprintf(gamepad_name, L"Ｎ%.3f\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ", CGamePad::GetStick(PAD_RSTICKX));
 	else
 		swprintf(gamepad_name, L"おされてないよ\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ");
-#ifdef _DEBUG
+
 	CText::DrawStringW(gamepad_name, -640, -328, 32, 1.0f, 3);
 
 	//フレームレート

@@ -28,6 +28,7 @@ bool CMapBelt::Collision(CRectangle *r) {
 			if (mPosition.y < CPlayerT::mpPlayer->mPosition.y) {
 				if (mDirection == ECELLNUM::EBELTL)
 					CPlayerT::mpPlayer->mPosition.x -= BELT_SPEED;
+
 				else if (mDirection == ECELLNUM::EBELTR)
 					CPlayerT::mpPlayer->mPosition.x += BELT_SPEED;
 				CPlayerT::mpPlayer->mPosition.y = CPlayerT::mpPlayer->mPosition.y - aj.y;
