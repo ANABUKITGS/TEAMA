@@ -8,6 +8,7 @@
 #include "CMapSign.h"
 #include "CMapChikuwa.h"
 #include "CMapBelt.h"
+#include "CMapSwitchGround.h"
 
 CMapIO mMapIO;
 

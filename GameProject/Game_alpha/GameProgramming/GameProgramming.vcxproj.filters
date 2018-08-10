@@ -95,6 +95,9 @@
     <ClCompile Include="CMapBelt.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="CMapSwitchGround.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCamera2D.h">
@@ -189,6 +192,9 @@
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="CMapBelt.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CMapSwitchGround.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
