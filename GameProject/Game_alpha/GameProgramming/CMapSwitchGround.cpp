@@ -1,6 +1,6 @@
 #include "CMapSwitchGround.h"
 
-int CMapSwitchGround::mNumber;
+ECELLNUM CMapSwitchGround::mNumber;
 
 void CMapSwitchGround::Update() {
 	CMapChip::Update();
@@ -29,13 +29,13 @@ bool CMapSwitch::Collision(CRectangle *r) {
 	// “–‚½‚Á‚Ä‚¢‚é‚©
 	if (CRectangle::Collision(r)) {
 		//•Ší‚ÉÕ“Ë
-		if (r->mTag == EPWEAPON && !mCollision) {
-			if (CMapSwitchGround::mNumber == 0)
-				CMapSwitchGround::mNumber = 1;
+		if (r->mTag == EPLAYER && !mCollision) {
+			if (CMapSwitchGround::mNumber == ESWITCH_GROUND1)
+				CMapSwitchGround::mNumber = ESWITCH_GROUND2;
 			else
-				CMapSwitchGround::mNumber = 0;
-			return true;
+				CMapSwitchGround::mNumber = ESWITCH_GROUND1;
 			mCollision = true;
+			return true;
 		}
 	}
 	mCollision = false;

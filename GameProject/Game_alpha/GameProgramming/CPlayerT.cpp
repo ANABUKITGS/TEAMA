@@ -1,9 +1,11 @@
 #include "CPlayerT.h"
+#include "CMapSwitchGround.h"
 
 #define PLAYER_VELOCITY_X 1.25f
 #define ATTACK_TIME 30
 
 CPlayerT *CPlayerT::mpPlayer = 0;
+CMapSwitchGround*mSwitch;
 char jumptime_buf[96];
 
 int CPlayerT::player_ani;
@@ -227,6 +229,15 @@ bool CPlayerT::Collision(CRectangle *p) {
 				mMiniJewel++;
 				break;
 
+			case ESWITCH_GROUND1: case ESWITCH_GROUND2:
+				if (mSwitch->mNumber == p->mTag){
+					mPosition.y = mPosition.y + aj.y;
+					mJumpCount = 0;
+					mVelocityY = 0.0f;
+
+				}
+				break;
+
 			case ECHIKUWA:
 			case EBELTL:
 			case EBELTR:
@@ -234,6 +245,7 @@ bool CPlayerT::Collision(CRectangle *p) {
 			case ECHECKPOINT:
 			case EPWEAPON:
 			case ESEARCH:
+			case ESWITCH:
 				break;
 
 			default:

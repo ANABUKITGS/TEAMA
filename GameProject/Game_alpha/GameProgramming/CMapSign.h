@@ -16,6 +16,7 @@ public:
 	{
 		mTexSignhoge.Load(".\\Data\\Images\\Map\\MapSign.tga");
 		mTextbox = false;
+		mRender = false;
 		static int sign_num_temp = 0;
 		sign_num_temp++;
 		sign_num = sign_num_temp;
