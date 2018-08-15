@@ -1,6 +1,6 @@
 #include "CScene.h"
 #include "CScore.h"
-
+#include "CBGM.h"
 #include "CGame2.h"
 
 CCharcter player;
@@ -9,6 +9,7 @@ CGame mGame;
 CGame2 mGame2;
 CTitle mTitle;
 CGetScore mScore;
+CBGM mBGM;
 
 int CSceneChange::changenum = ETITLE;
 
@@ -17,9 +18,11 @@ void CSceneChange::Init(){
 	mGame.Init();
 	mTitle.Init();
 	mEditer.Init();
+	mBGM.Init();
 }
 
 void CSceneChange::Update(){
+	mBGM.Update();
 	switch (changenum){
 	default:
 		break;

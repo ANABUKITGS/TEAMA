@@ -83,6 +83,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CBGM.cpp" />
     <ClCompile Include="CCamera2D.cpp" />
     <ClCompile Include="CCharcter.cpp" />
     <ClCompile Include="CCollision.cpp" />
@@ -118,6 +119,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CBGM.h" />
     <ClInclude Include="CCamera2D.h" />
     <ClInclude Include="CCharcter.h" />
     <ClInclude Include="CCollision.h" />

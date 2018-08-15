@@ -4,6 +4,7 @@
 #include "CMap.h"
 #include "CTaskManager.h"
 #include "CCamera2D.h"
+#include "CSound.h"
 
 //#define WINDOW_SIZE_W 1280
 //#define WINDOW_SIZE_H 720

@@ -10,6 +10,8 @@ bool CMapChikuwa::Collision(CRectangle *r) {
 		if (lostcount > CHIKUWA_FALLING_TIME && lostcount < CHIKUWA_LOST_TIME){
 			mFalling += FALLING_SPEED;
 			mPosition.y -= mFalling;
+			if (lostcount == CHIKUWA_FALLING_TIME + 1)
+				mSoundChikuwa.Play();
 		}
 
 		else if (lostcount > CHIKUWA_LOST_TIME){

@@ -3,6 +3,7 @@
 #include "CMapChip.h"
 #include "CMap.h"
 #include "CPlayerT.h"
+#include "CSound.h"
 #define CHIKUWA_UV				0, CELLSIZE, CELLSIZE , 0
 #define CHIKUWA_FALLING_TIME	60
 #define CHIKUWA_LOST_TIME		CHIKUWA_FALLING_TIME * 10
@@ -15,6 +16,7 @@ private:
 	float mFalling;
 	CVector2 setpos;
 	CTexture mTexChikuwa;
+	CSound mSoundChikuwa;
 
 public:
 	CMapChikuwa(const CVector2& pos, const CVector2& scale)
@@ -27,6 +29,7 @@ public:
 		setpos.x = mPosition.x;
 		setpos.y = mPosition.y;
 		mTexChikuwa.Load(".\\Data\\Images\\Map\\MapChikuwa.tga");
+		mSoundChikuwa.Load(".\\Data\\Sound\\hoge03.wav");
 	}
 	void Update();
 	bool Collision(CRectangle *r);	//è’ìÀéûÇÃèàóù

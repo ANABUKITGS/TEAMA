@@ -7,7 +7,7 @@
 #include "CSound.h"
 
 class CText{
-public:
+private:
 	static CTexture mTexture01;	//テキスト テクスチャー M+ 1m bold
 	static CTexture mTexture02;	//テキスト テクスチャー nintendoP Seurat
 	static CSound mSound01;		//文字表示音
@@ -35,5 +35,8 @@ public:
 	static void DrawStringW(wchar_t s[], float left, float bottom, float size, float alpha, int drawspeed);
 	//全角半角文字 | 色の加算 あり
 	static void DrawStringWSetColor(wchar_t s[], float left, float bottom, float size, float r, float g, float b, float alpha, int drawspeed);
+
+	//文字表示 リセット
+	static void DrawSppedReset();
 };
 #endif

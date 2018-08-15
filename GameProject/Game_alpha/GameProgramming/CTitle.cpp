@@ -54,6 +54,8 @@ void CTitle::Update(){
 			break;
 		}
 	}
+	if (CGamePad::Once(PAD_9))
+		CText::DrawSppedReset();
 
 	/*ÉJÅ[É\Éã*/
 	switch (cursor_num){

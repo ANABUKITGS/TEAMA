@@ -34,6 +34,7 @@
     <ClCompile Include="CWeapon.cpp" />
     <ClCompile Include="CXInput.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="CBGM.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCamera2D.h" />
@@ -70,6 +71,7 @@
     <ClInclude Include="CXInput.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="CSound.h" />
+    <ClInclude Include="CBGM.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />

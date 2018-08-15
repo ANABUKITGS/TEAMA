@@ -78,7 +78,7 @@ void CText::SetDrawString(char s[], float left, float bottom, float size, float 
 	int DSMAX = 0;
 	for (int i = 0; true; i++){
 		if (s[i] == '\0'){
-			DSMAX = drawspeed * (i - 1);
+			DSMAX = drawspeed * i;
 			break;
 		}
 	}
@@ -285,9 +285,9 @@ void CText::SetDrawStringW(wchar_t s[], float left, float bottom, float size, fl
 	int k = 0;	//â¸çsà íu
 	//ï∂éöóÒÇÃí∑Ç≥ÇéÊìæ
 	int DSMAX = 0;
-	for (int i = 0; 1; i++){
+	for (int i = 0; true; i++){
 		if (s[i] == '\0'){
-			DSMAX = drawspeed * (i - 1);
+			DSMAX = drawspeed * i;
 			break;
 		}
 	}
@@ -324,5 +324,9 @@ void CText::DrawStringW(wchar_t s[], float left, float bottom, float size, float
 }
 
 void CText::DrawStringWSetColor(wchar_t s[], float left, float bottom, float size, float r, float g, float b, float alpha, int drawspeed){
-	CText::SetDrawStringW(s, left, bottom, size, r, g, b, alpha, drawspeed);;
+	CText::SetDrawStringW(s, left, bottom, size, r, g, b, alpha, drawspeed);
+}
+
+void CText::DrawSppedReset(){
+	ds = 0;
 }
