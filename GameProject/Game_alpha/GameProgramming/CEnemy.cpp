@@ -60,7 +60,7 @@ void  CEnemy::Update(){
 				if (mDirection)		//敵が右を向いている時には右にヨーヨーを進ませる
 					mpEWeapon->mPosition.x += 10;
 
-				else			  //敵が左を向いている時には左にヨーヨーを進ませる
+				else				//敵が左を向いている時には左にヨーヨーを進ませる
 					mpEWeapon->mPosition.x -= 10;
 			}
 		}

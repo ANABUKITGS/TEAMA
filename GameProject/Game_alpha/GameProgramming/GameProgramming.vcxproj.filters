@@ -1,218 +1,77 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="CCamera2D.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CCharcter.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CCollision.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CEditer.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CFileIO.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CGame2.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CGamePad.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CKey.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CMain.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CMainGame.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CMapChip.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CMatrix33.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayerT.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CRectangle.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CSceneChange.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CScore.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CTaskManager.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CText.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CTexture.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CTitle.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CVector2.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CXInput.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CMapJewelry.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CWeapon.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CTime.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CMapBox.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CMapUnder.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CMapChikuwa.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CMapSign.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CMapBelt.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="CMapSwitchGround.cpp">
-=======
-    <ClCompile Include="CEnemy.cpp">
->>>>>>> a156d2d45ac5a1133b5090bb64358dd70f5daaea
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
+    <ClCompile Include="CCamera2D.cpp" />
+    <ClCompile Include="CCharcter.cpp" />
+    <ClCompile Include="CCollision.cpp" />
+    <ClCompile Include="CEditer.cpp" />
+    <ClCompile Include="CEnemy.cpp" />
+    <ClCompile Include="CFileIO.cpp" />
+    <ClCompile Include="CMapBelt.cpp" />
+    <ClCompile Include="CMapBox.cpp" />
+    <ClCompile Include="CMapChikuwa.cpp" />
+    <ClCompile Include="CMapSign.cpp" />
+    <ClCompile Include="CMapSwitchGround.cpp" />
+    <ClCompile Include="CMapUnder.cpp" />
+    <ClCompile Include="CTime.cpp" />
+    <ClCompile Include="CGame2.cpp" />
+    <ClCompile Include="CGamePad.cpp" />
+    <ClCompile Include="CMapJewelry.cpp" />
+    <ClCompile Include="CKey.cpp" />
+    <ClCompile Include="CMain.cpp" />
+    <ClCompile Include="CMainGame.cpp" />
+    <ClCompile Include="CMapChip.cpp" />
+    <ClCompile Include="CMatrix33.cpp" />
+    <ClCompile Include="CPlayerT.cpp" />
+    <ClCompile Include="CRectangle.cpp" />
+    <ClCompile Include="CSceneChange.cpp" />
+    <ClCompile Include="CScore.cpp" />
+    <ClCompile Include="CTaskManager.cpp" />
+    <ClCompile Include="CText.cpp" />
+    <ClCompile Include="CTexture.cpp" />
+    <ClCompile Include="CTitle.cpp" />
+    <ClCompile Include="CVector2.cpp" />
+    <ClCompile Include="CWeapon.cpp" />
+    <ClCompile Include="CXInput.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CCamera2D.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CCharcter.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CCollision.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CFileIO.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CGame2.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CGamePad.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CKey.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CMain.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CMap.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CMapChip.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CMatrix33.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayerT.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CRectangle.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CScene.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CScore.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CTask.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CTaskManager.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CText.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CTexture.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CTitle.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CVector2.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CXInput.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CWeapon.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CMapJewelry.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CTime.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CMapBox.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CMapUnder.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CMapChikuwa.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CMapSign.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CMapBelt.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="CMapSwitchGround.h">
-=======
-    <ClInclude Include="CEnemy.h">
->>>>>>> a156d2d45ac5a1133b5090bb64358dd70f5daaea
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
+    <ClInclude Include="CCamera2D.h" />
+    <ClInclude Include="CCharcter.h" />
+    <ClInclude Include="CCollision.h" />
+    <ClInclude Include="CEnemy.h" />
+    <ClInclude Include="CFileIO.h" />
+    <ClInclude Include="CMapBelt.h" />
+    <ClInclude Include="CMapBox.h" />
+    <ClInclude Include="CMapChikuwa.h" />
+    <ClInclude Include="CMapSign.h" />
+    <ClInclude Include="CMapSwitchGround.h" />
+    <ClInclude Include="CMapUnder.h" />
+    <ClInclude Include="CTime.h" />
+    <ClInclude Include="CGame2.h" />
+    <ClInclude Include="CGamePad.h" />
+    <ClInclude Include="CMapJewelry.h" />
+    <ClInclude Include="CKey.h" />
+    <ClInclude Include="CMain.h" />
+    <ClInclude Include="CMap.h" />
+    <ClInclude Include="CMapChip.h" />
+    <ClInclude Include="CMatrix33.h" />
+    <ClInclude Include="CPlayerT.h" />
+    <ClInclude Include="CRectangle.h" />
+    <ClInclude Include="CScene.h" />
+    <ClInclude Include="CScore.h" />
+    <ClInclude Include="CTask.h" />
+    <ClInclude Include="CTaskManager.h" />
+    <ClInclude Include="CText.h" />
+    <ClInclude Include="CTexture.h" />
+    <ClInclude Include="CTitle.h" />
+    <ClInclude Include="CVector2.h" />
+    <ClInclude Include="CWeapon.h" />
+    <ClInclude Include="CXInput.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="CSound.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="ソースファイル">
-      <UniqueIdentifier>{1c91c252-fb68-4af4-baf9-c0ce80564ecb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダーファイル">
-      <UniqueIdentifier>{159bc8ec-cc8e-4ce3-a5ae-80f79d947a7a}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
 </Project>

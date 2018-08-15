@@ -3,14 +3,18 @@
 #define CSIZE 64
 
 int CText::ds = 0;
-int dsmax;
 float CText::uv[4];
 
 CTexture CText::mTexture01;	//テキスト テクスチャー M+ 1m bold
 CTexture CText::mTexture02;	//テキスト テクスチャー nintendoP Seurat
+CSound CText::mSound01;		//文字表示音
+int CText::soundtime;		//文字表示音 間隔
+bool CText::textlimit;		//変数 加算時間
+
 void CText::Init(){
 	mTexture01.Load(".\\Data\\Images\\Font\\Mplus_1m_bold-Unicode_064.tga");
 	mTexture02.Load(".\\Data\\Images\\Font\\nintendoP_Seurat_064.tga");
+	mSound01.Load(".\\Data\\Sound\\hoge01.wav");
 }
 
 void CText::DrawText(char a, float left, float right, float bottom, float top, float r, float g, float b, float alpha){
@@ -70,7 +74,15 @@ void CText::DrawText(char a, float left, float right, float bottom, float top, f
 void CText::SetDrawString(char s[], float left, float bottom, float size, float r, float g, float b, float alpha, int drawspeed){
 	int j = 0;	//改行回数
 	int k = 0;	//改行位置
-	dsmax = 256 * drawspeed;
+	//文字列の長さを取得
+	int DSMAX = 0;
+	for (int i = 0; true; i++){
+		if (s[i] == '\0'){
+			DSMAX = drawspeed * (i - 1);
+			break;
+		}
+	}
+
 	for (int i = 0; s[i] != '\0'; i++){
 		if (s[i - 1] == '\n'){
 			k = i;
@@ -82,12 +94,19 @@ void CText::SetDrawString(char s[], float left, float bottom, float size, float 
 			if (ds >= drawspeed * (i + 1)){
 				CText::DrawText(s[i], left + (i - k)*size, left + (i - k)*size + size, bottom - (size * j), bottom + size - (size * j), r, g, b, alpha);
 			}
-			else if (ds < drawspeed)
+			else if (ds < drawspeed){
 				CText::DrawText(s[i], left + (i - k)*size, left + (i - k)*size + size, bottom - (size * j), bottom + size - (size * j), r, g, b, 0.0f);
+				if (soundtime > drawspeed){
+					mSound01.Play();
+					soundtime = 0;
+				}
+			}
 		}
 	}
-	if (drawspeed > 0 && ds < dsmax)
+	if (drawspeed > 0 && ds < DSMAX){
 		ds++;
+		soundtime++;
+	}
 }
 
 void CText::DrawString(char s[], float left, float bottom, float size, float alpha, int drawspeed){
@@ -264,7 +283,15 @@ void CText::DrawTextW(wchar_t a, float left, float right, float bottom, float to
 void CText::SetDrawStringW(wchar_t s[], float left, float bottom, float size, float r, float g, float b, float alpha, int drawspeed){
 	int j = 0;	//改行回数
 	int k = 0;	//改行位置
-	dsmax = 256 * drawspeed;
+	//文字列の長さを取得
+	int DSMAX = 0;
+	for (int i = 0; 1; i++){
+		if (s[i] == '\0'){
+			DSMAX = drawspeed * (i - 1);
+			break;
+		}
+	}
+
 	for (int i = 0; s[i] != '\0'; i++){
 		if (s[i - 1] == '\n'){
 			k = i;
@@ -275,13 +302,21 @@ void CText::SetDrawStringW(wchar_t s[], float left, float bottom, float size, fl
 		else if (drawspeed > 0){
 			if (ds >= drawspeed * (i + 1)){
 				CText::DrawTextW(s[i], left + (i - k)*size, left + (i - k)*size + size, bottom - (size * j), bottom + size - (size * j), r, g, b, alpha);
+				if (soundtime > drawspeed){
+					mSound01.Play();
+					soundtime = 0;
+				}
 			}
-			else if (ds < drawspeed)
+			else if (ds < drawspeed){
 				CText::DrawTextW(s[i], left + (i - k)*size, left + (i - k)*size + size, bottom - (size * j), bottom + size - (size * j), r, g, b, 0.0f);
+			}
 		}
+		textlimit = true;
 	}
-	if (drawspeed > 0 && ds < dsmax)
+	if (drawspeed > 0 && ds < DSMAX){
 		ds++;
+		soundtime++;
+	}
 }
 
 void CText::DrawStringW(wchar_t s[], float left, float bottom, float size, float alpha, int drawspeed){

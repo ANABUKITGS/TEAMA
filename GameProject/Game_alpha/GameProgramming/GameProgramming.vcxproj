@@ -129,6 +129,7 @@
     <ClInclude Include="CMapSign.h" />
     <ClInclude Include="CMapSwitchGround.h" />
     <ClInclude Include="CMapUnder.h" />
+    <ClInclude Include="CSound.h" />
     <ClInclude Include="CTime.h" />
     <ClInclude Include="CGame2.h" />
     <ClInclude Include="CGamePad.h" />
