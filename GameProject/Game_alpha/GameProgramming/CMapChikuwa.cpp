@@ -1,4 +1,5 @@
 #include "CMapChikuwa.h"
+#include "CSE.h"
 
 void CMapChikuwa::Update() {
 	CMapChip::Update();
@@ -11,7 +12,7 @@ bool CMapChikuwa::Collision(CRectangle *r) {
 			mFalling += FALLING_SPEED;
 			mPosition.y -= mFalling;
 			if (lostcount == CHIKUWA_FALLING_TIME + 1)
-				mSoundChikuwa.Play();
+				CSE::mSoundChikuwa.Play();
 		}
 
 		else if (lostcount > CHIKUWA_LOST_TIME){

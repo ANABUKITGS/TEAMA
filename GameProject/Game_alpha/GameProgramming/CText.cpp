@@ -7,14 +7,12 @@ float CText::uv[4];
 
 CTexture CText::mTexture01;	//テキスト テクスチャー M+ 1m bold
 CTexture CText::mTexture02;	//テキスト テクスチャー nintendoP Seurat
-CSound CText::mSound01;		//文字表示音
 int CText::soundtime;		//文字表示音 間隔
 bool CText::textlimit;		//変数 加算時間
 
 void CText::Init(){
 	mTexture01.Load(".\\Data\\Images\\Font\\Mplus_1m_bold-Unicode_064.tga");
 	mTexture02.Load(".\\Data\\Images\\Font\\nintendoP_Seurat_064.tga");
-	mSound01.Load(".\\Data\\Sound\\hoge01.wav");
 }
 
 void CText::DrawText(char a, float left, float right, float bottom, float top, float r, float g, float b, float alpha){
@@ -97,7 +95,7 @@ void CText::SetDrawString(char s[], float left, float bottom, float size, float 
 			else if (ds < drawspeed){
 				CText::DrawText(s[i], left + (i - k)*size, left + (i - k)*size + size, bottom - (size * j), bottom + size - (size * j), r, g, b, 0.0f);
 				if (soundtime > drawspeed){
-					mSound01.Play();
+					CSE::mSoundText.Play();
 					soundtime = 0;
 				}
 			}
@@ -303,7 +301,7 @@ void CText::SetDrawStringW(wchar_t s[], float left, float bottom, float size, fl
 			if (ds >= drawspeed * (i + 1)){
 				CText::DrawTextW(s[i], left + (i - k)*size, left + (i - k)*size + size, bottom - (size * j), bottom + size - (size * j), r, g, b, alpha);
 				if (soundtime > drawspeed){
-					mSound01.Play();
+					CSE::mSoundText.Play();
 					soundtime = 0;
 				}
 			}

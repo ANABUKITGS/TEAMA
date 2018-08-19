@@ -96,6 +96,7 @@
     <ClCompile Include="CMapSign.cpp" />
     <ClCompile Include="CMapSwitchGround.cpp" />
     <ClCompile Include="CMapUnder.cpp" />
+    <ClCompile Include="CSE.cpp" />
     <ClCompile Include="CTime.cpp" />
     <ClCompile Include="CGame2.cpp" />
     <ClCompile Include="CGamePad.cpp" />
@@ -132,6 +133,7 @@
     <ClInclude Include="CMapSwitchGround.h" />
     <ClInclude Include="CMapUnder.h" />
     <ClInclude Include="CSound.h" />
+    <ClInclude Include="CSE.h" />
     <ClInclude Include="CTime.h" />
     <ClInclude Include="CGame2.h" />
     <ClInclude Include="CGamePad.h" />

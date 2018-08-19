@@ -1,4 +1,5 @@
 #include "CMapJewelry.h"
+#include "CSE.h"
 
 /*
 ‚Æ‚è‚ ‚¦‚¸‰ñ‚·
@@ -18,6 +19,7 @@ bool CMapJewelry::Collision(CRectangle *r) {
 		if (r->mTag == EPLAYER || r->mTag ==EPWEAPON) {
 			//–³Œø‚É‚·‚é
 			mEnabled = false;
+			CSE::mSoundJewelry.Play();
 			return true;
 		}
 	}

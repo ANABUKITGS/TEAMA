@@ -7,6 +7,7 @@
 #include "CGamePad.h"
 #include "CScene.h"
 #include "CTime.h"
+#include "CSE.h"
 
 CTexture mtexture;
 CSceneChange mChange;
@@ -21,6 +22,7 @@ void CMain::Init() {
 	mChange.Init();
 	swprintf(gamepad_name, L"");
 	Stick.SetVertex(-8, 8, -8, 8);
+	CSE::Init();
 }
 
 //繰り返し実行する処理の定義

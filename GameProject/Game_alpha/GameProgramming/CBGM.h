@@ -2,14 +2,13 @@
 #define CBGM_H
 #include <time.h>
 #include "CSound.h"
-#include "CScene.h"
 
-#define SOUND_TITLE		0		//タイトル BGM ミリ秒
-#define SOUND_TUTORIAL	2682	//チュートリアル BGM ミリ秒
-#define SOUND_MAIN		0		//本編 BGM ミリ秒
-#define SOUND_BOSS		0		//ボス BGM ミリ秒
-#define SOUND_RESULT	0		//リザルト BGM ミリ秒
-#define SOUND_RANKING	0		//ランキング BGM ミリ秒
+#define SOUND_TITLE		1135	//タイトル BGM (ミリ秒)
+#define SOUND_TUTORIAL	2670	//チュートリアル BGM (ミリ秒)
+#define SOUND_MAIN				//本編 BGM (ミリ秒)
+#define SOUND_BOSS		0		//ボス BGM (ミリ秒)
+#define SOUND_RESULT	0		//リザルト BGM (ミリ秒)
+#define SOUND_RANKING	0		//ランキング BGM (ミリ秒)
 
 class CBGM {
 private:
