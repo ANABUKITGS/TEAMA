@@ -24,32 +24,32 @@ void CSceneChange::Init(){
 void CSceneChange::Update(){
 	mBGM.Update();
 	switch (changenum){
-	default:
-		break;
-
-	case ETITLE:
+	case ECSCENECHANGE_NUM::ETITLE:
 		mTitle.Update();
 		mTitle.Render();
 		break;
 
-	case EGAME:
+	case ECSCENECHANGE_NUM::EGAME:
 		mGame2.Update();
 		mGame2.Render();
 		break;
 
-	case ERANKING:
+	case ECSCENECHANGE_NUM::ERANKING:
 		break;
 
-	case ESCORE:
+	case ECSCENECHANGE_NUM::ERESULT:
 		mScore.Update();
 		break;
 
-	case EEDITER:
+	case ECSCENECHANGE_NUM::EEDITER:
 		mEditer.Update();
 		mEditer.Render();
 		break;
 
-	case EEXIT:
+	case ECSCENECHANGE_NUM::EEXIT:
+		break;
+
+	default:
 		break;
 	}
 }

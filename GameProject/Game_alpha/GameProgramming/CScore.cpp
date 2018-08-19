@@ -108,5 +108,5 @@ void CRanking::Update(){
 		CText::DrawString(buf2, 0, 100 + i * -100, 20, 1.0f, 0);
 	}
 	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2))
-		CSceneChange::changenum = CSceneChange::ESCORE;
+		CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ERESULT;
 }

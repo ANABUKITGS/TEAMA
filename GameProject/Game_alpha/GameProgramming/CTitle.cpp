@@ -2,6 +2,7 @@
 #include "CScore.h"
 #include "CGame2.h"
 #include "CTime.h"
+#include "CBGM.h"
 
 extern CEditer mEditer;
 extern CGame mGame;
@@ -30,19 +31,23 @@ void CTitle::Update(){
 			mGame2.Init();
 			CTime::GetStartTime();
 			CSceneChange::changenum = cursor_num;
+			CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETUTORIAL);
 			break;
 
 		case CSceneChange::ECSCENECHANGE_NUM::ERANKING:
 			CSceneChange::changenum = cursor_num;
+			CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ERANKING);
 			break;
 
-		case CSceneChange::ECSCENECHANGE_NUM::ESCORE:
+		case CSceneChange::ECSCENECHANGE_NUM::ERESULT:
 			CSceneChange::changenum = cursor_num;
+			CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ERESULT);
 			break;
 
 		case CSceneChange::ECSCENECHANGE_NUM::EEDITER:
 			mEditer.Init();
 			CSceneChange::changenum = cursor_num;
+			CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETUTORIAL);
 			break;
 
 		case CSceneChange::ECSCENECHANGE_NUM::EEXIT:
@@ -59,23 +64,23 @@ void CTitle::Update(){
 
 	/*ÉJÅ[É\Éã*/
 	switch (cursor_num){
-	case CSceneChange::EGAME:
+	case CSceneChange::ECSCENECHANGE_NUM::EGAME:
 		swprintf(cursor_buf, L"Å®");
 		break;
 
-	case CSceneChange::ERANKING:
+	case CSceneChange::ECSCENECHANGE_NUM::ERANKING:
 		swprintf(cursor_buf, L"\nÅ®");
 		break;
 
-	case CSceneChange::ESCORE:
+	case CSceneChange::ECSCENECHANGE_NUM::ERESULT:
 		swprintf(cursor_buf, L"\n\nÅ®");
 		break;
 
-	case CSceneChange::EEDITER:
+	case CSceneChange::ECSCENECHANGE_NUM::EEDITER:
 		swprintf(cursor_buf, L"\n\n\nÅ®");
 		break;
 
-	case CSceneChange::EEXIT:
+	case CSceneChange::ECSCENECHANGE_NUM::EEXIT:
 		swprintf(cursor_buf, L"\n\n\n\nÅ®");
 		break;
 

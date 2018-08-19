@@ -1,6 +1,7 @@
 #include "CScene.h"
 #include "CGamePad.h"
 #include "CCollision.h"
+#include "CBGM.h"
 
 extern CMapIO mMapIO;
 extern CCharcter player;
@@ -206,6 +207,7 @@ void CPauseMenu::Update(){
 				pauseflag = false;
 				CSceneChange::changenum = CSceneChange::ETITLE;
 				cursor_num = EBACK;
+				CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETITLE);
 				break;
 
 			default:

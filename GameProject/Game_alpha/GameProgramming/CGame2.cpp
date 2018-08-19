@@ -8,6 +8,7 @@
 #include "CEnemy.h"
 #include "CMapBox.h"
 #include "CTime.h"
+#include "CBGM.h"
 
 CRectangle *CGame2::mRectPlayer;
 
@@ -74,8 +75,10 @@ void CGame2::Update() {
 	if (CKey::Push('A')) {
 		mCamera.x -= 5;
 	}
-	if (CGamePad::Once(PAD_10) || CKey::Once(VK_ESCAPE))
+	if (CGamePad::Once(PAD_10) || CKey::Once(VK_ESCAPE)){
 		CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ETITLE;
+		CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETITLE);
+	}
 	CTaskManager::Get()->Update();
 	CTaskManager::Get()->Remove();
 }

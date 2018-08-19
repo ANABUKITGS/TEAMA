@@ -10,6 +10,8 @@
 #include "CMapBelt.h"
 #include "CMapSwitchGround.h"
 
+#include "CBGM.h"
+
 CEnemy *CEnemy::mpEnemy = 0;
 CMapIO mMapIO;
 
@@ -196,14 +198,6 @@ void CEditer::Update(){
 		}
 
 		if (CGamePad::Once(PAD_10)){
-			//int msg_button;
-			//msg_button = MessageBox(NULL, "マップをリセットしますか?\n保存していないマップは失われます", "マップのリセット", 0x00040031L);
-			//if (msg_button == IDYES || msg_button == IDOK){
-			//	for (int i = 0; i < MAP_SIZEY; i++){
-			//		for (int j = 0; j < MAP_SIZEX; j++)
-			//			editmap[i][j] = ENONE;
-			//	}
-			//}
 			pauseflag = true;
 		}
 
@@ -212,6 +206,18 @@ void CEditer::Update(){
 				guideIO = false;
 			else
 				guideIO = true;
+		}
+
+		if (CGamePad::Once(PAD_4)){
+			int msg_button;
+			msg_button = MessageBox(NULL, "マップをリセットしますか?\n保存していないマップは失われます", "マップのリセット", 0x00040031L);
+			if (msg_button == IDYES || msg_button == IDOK){
+				for (int i = 0; i < MAP_SIZEY; i++){
+					for (int j = 0; j < MAP_SIZEX; j++)
+						editmap[i][j] = ENONE;
+				}
+				MakeTaskList((int *)editmap);
+			}
 		}
 
 		//マップデータを開く
