@@ -11,13 +11,12 @@
 #include "CBGM.h"
 #include "CMapBackImage.h"
 
+CMapBackImage *mBackImage[2];
+
+CCamera2D CGame2::mCamera;
+
 void CGame2::Init() {
 	mCamera.SetOrtho(WINDOW_SIZE_W / 2, WINDOW_SIZE_H / 2, WINDOW_SIZE_W / 2, WINDOW_SIZE_H / 2);
-	//mTexBack.Load(".\\Data\\Images\\Map\\Background.tga");
-	//mTexUI.Load(".\\Data\\Images\\Map\\MapUI.tga");
-	//mTexObject.Load(".\\Data\\Images\\Map\\MapObject.tga");
-	//mTexCharacter.Load(".\\Data\\Images\\Map\\MapCharacter.tga");
-	//mTexEnemy.Load(".\\Data\Images\\Map\\MapEnemy.tga");
 
 	char filepath[256];
 //	if (map == CMapIO::EGAMEMAP)
@@ -54,6 +53,7 @@ void CGame2::Init() {
 		fclose(fp);	//ファイルを閉じる
 
 	}
+
 	//敵を呼び出す
 	new CEnemy(CVector2(1000, 265), CVector2(32, 64), NULL);
 	new CEnemy(CVector2(1600, 265), CVector2(32, 64), NULL);
@@ -61,12 +61,24 @@ void CGame2::Init() {
 	//木箱の設置
 	new CMapBox(CVector2(1000, 400), CVector2(50, 50), NULL);
 
-	new CMapBackImage(CVector2(0, 360), CMapBackImage::ETEXTURE_LAYER::LAYER2);
-	new CMapBackImage(CVector2(0, 360), CMapBackImage::ETEXTURE_LAYER::LAYER1);
+	mBackImage[0] = new CMapBackImage(CVector2(mCamera.x, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER1);
+	mBackImage[1] = new CMapBackImage(CVector2(mCamera.x + 1280, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER1);
 	new CPlayerT(CVector2(64, 264), CVector2(16, 60), NULL);
 }
 
 void CGame2::Update() {
+	if (CGame2::mCamera.x < mBackImage[0]->mPosition.x)
+		mBackImage[1]->mPosition.x = mBackImage[0]->mPosition.x - 1280;
+
+	if (CGame2::mCamera.x > mBackImage[0]->mPosition.x)
+		mBackImage[1]->mPosition.x = mBackImage[0]->mPosition.x + 1280;
+
+	if (CGame2::mCamera.x < mBackImage[1]->mPosition.x)
+		mBackImage[0]->mPosition.x = mBackImage[1]->mPosition.x - 1280;
+
+	if (CGame2::mCamera.x > mBackImage[1]->mPosition.x)
+		mBackImage[0]->mPosition.x = mBackImage[1]->mPosition.x + 1280;
+
 	if (CKey::Push('D')) {
 		mCamera.x += 5;
 	}

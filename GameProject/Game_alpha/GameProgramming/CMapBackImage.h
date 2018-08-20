@@ -27,7 +27,7 @@ public:
 
 		texnum = num;
 		mTag = ECELLNUM::ENONE;
-		mPriority = 1;
+		mPriority = 10;
 		CTaskManager::Get()->Add(this);
 	}
 	void Update();

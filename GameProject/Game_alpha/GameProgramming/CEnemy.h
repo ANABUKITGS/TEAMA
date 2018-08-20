@@ -56,7 +56,7 @@ public:
 		mpEWeapon=0;	//“G‚Ìƒˆ[ƒˆ[‚Ì’l‚ğ0‚É‚µ‚Ä‚¨‚­
 		//mpEnemy = this;
 		mTag = EENEMY1;
-		mPriority = mTag;
+		mPriority = 1;
 		mDirection = true;
 		mAnimationTag = EWALK;
 		mVelocity = ENEMY_VELOCITY;

@@ -17,7 +17,8 @@
 
 class CGame2 : public CEditer {
 public:
-	CCamera2D mCamera;
+	static CCamera2D mCamera;
+
 
 	CTexture mTexBack;								//背景
 	CTexture mTexUI;								//UI テクスチャー

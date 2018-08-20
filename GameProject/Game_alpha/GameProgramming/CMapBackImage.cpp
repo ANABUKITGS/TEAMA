@@ -1,4 +1,5 @@
 #include "CMapBackImage.h"
+#include "CGame2.h"
 
 void CMapBackImage::Update(){
 

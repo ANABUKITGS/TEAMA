@@ -113,6 +113,7 @@ CTask* CTaskManager::Remove(CTask*task){
 		task->mpNext->mpPrev = task->mpPrev;
 	}
 	delete task;
+	task = 0;
 
 	return p;
 }

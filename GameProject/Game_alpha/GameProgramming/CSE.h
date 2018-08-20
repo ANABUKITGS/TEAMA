@@ -10,5 +10,6 @@ public:
 	static CSound mSoundChikuwa;
 
 	static void Init();
+	static void AllStop();
 };
 #endif

@@ -9,3 +9,9 @@ void CSE::Init(){
 	mSoundJewelry.Load(".\\Data\\Sound\\SE\\Jewelry.wav");
 	mSoundChikuwa.Load(".\\Data\\Sound\\SE\\Chikuwa.wav");
 }
+
+void CSE::AllStop(){
+	mSoundText.Stop();
+	mSoundJewelry.Stop();
+	mSoundChikuwa.Stop();
+}
