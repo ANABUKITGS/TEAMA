@@ -39,11 +39,8 @@ void CEditer::Init(){
 			editmap_rect[i][j].SetVertex(j * CELLSIZE - 640, j * CELLSIZE + CELLSIZE - 640, i * -CELLSIZE + 280, i * -CELLSIZE + CELLSIZE + 280);
 		}
 	}
-
-	mTexBack.Load(".\\Data\\Images\\Map\\Background.tga");
 	mTexUI.Load(".\\Data\\Images\\Map\\MapUI.tga");
-	mTexObject.Load(".\\Data\\Images\\Map\\MapObject.tga");
-	mTexCharacter.Load(".\\Data\\Images\\Map\\MapCharacter.tga");
+	mTexSetCell.Load(".\\Data\\Images\\Map\\SetCell.tga");
 }
 
 void CEditer::Update(){
@@ -116,7 +113,7 @@ void CEditer::Update(){
 			if (editmap[cursor_posY][cursor_posX] != ENONE && editmap[cursor_posY][cursor_posX] == setcell)
 				return;
 
-			if (setcell >= ECELLNUM::EPLAYER && setcell <= EBOSS){
+			if (setcell >= ECELLNUM::ECHECKPOINT && setcell <= EBOSS){
 				if (cursor_posY > 0){
 					int temp_setcell = editmap[cursor_posY][cursor_posX];
 
@@ -180,7 +177,7 @@ void CEditer::Update(){
 		if (CGamePad::Push(PAD_3)){	//削除
 			if (editmap[cursor_posY][cursor_posX] == ENONE)
 				return;
-			if (editmap[cursor_posY][cursor_posX] >= EPLAYER){
+			if (editmap[cursor_posY][cursor_posX] >= EPLAYER && editmap[cursor_posY][cursor_posX] <= EBOSS){
 				int temp_setcell = editmap[cursor_posY][cursor_posX];
 
 				if (editmap[cursor_posY + 1][cursor_posX] == temp_setcell){
@@ -265,8 +262,6 @@ void CEditer::Render(){
 	CCamera2D mCamera;
 	mCamera.SetOrtho(-editmap_rect[0][0].mRight + CELLSIZE / 2, editmap_rect[0][0].mTop + CELLSIZE, WINDOW_SIZE_W / 2, WINDOW_SIZE_H / 2);
 
-	mTexBack.DrawImage(TEX_FULLSCREEN, 0, 1280, 720, 0, 1.0f);
-
 	mCamera.Begin();
 	CTaskManager::Get()->Update();
 	CTaskManager::Get()->Render();
@@ -282,12 +277,12 @@ void CEditer::Render(){
 			//カーソル
 			if (editmap_cursor[i][j] == CURSOR_NUM && !prtscrIO){
 				//オブジェクト
-				if (setcell > ENONE && setcell < EPLAYER)
-					mTexObject.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 0, 64, CELLSIZE * setcell, CELLSIZE * (setcell - 1), 0.5f);
+				//if (setcell > ENONE && setcell < EPLAYER)
+				mTexSetCell.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 0, 64, CELLSIZE * setcell, CELLSIZE * (setcell - 1), 0.5f);
 
 				//キャラクター
-				if (setcell >= EPLAYER)
-					mTexCharacter.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 0, 64, CELLSIZE * (setcell - EPLAYER + 1), CELLSIZE * (setcell - EPLAYER), 0.5f);
+				//if (setcell >= EPLAYER)
+				//	mTexCharacter.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 0, 64, CELLSIZE * (setcell - EPLAYER + 1), CELLSIZE * (setcell - EPLAYER), 0.5f);
 				if (cursor_anime >= 0 && cursor_anime < 30)
 					mTexUI.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 0, 64, 128, 64, 1.0f);
 				else if (cursor_anime >= 30 && cursor_anime < 60)
@@ -513,14 +508,19 @@ void CEditer::MakeTaskList(int *gamemap) {
 					new CMapSwitch(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1));
 
 				//プレイヤー ~ ボス
-				if (gamemap[i * MAP_SIZEX + j] >= ECELLNUM::EPLAYER && gamemap[i * MAP_SIZEX + j] < ECELLNUM::EBOX){
-					int temp_setcell = gamemap[i * MAP_SIZEX + j];
-					if (gamemap[(i - 1) * MAP_SIZEX + j] == temp_setcell && gamemap[(i + 1) * MAP_SIZEX + j] != temp_setcell){
-						if (temp_setcell == ECELLNUM::EPLAYER)
-							new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE), &mTexPlayer, CELLSIZE * 1, CELLSIZE * 2, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1));
+				if (gamemap[i * MAP_SIZEX + j] >= ECELLNUM::EPLAYER && gamemap[i * MAP_SIZEX + j] <= ECELLNUM::EBOSS){
+					if (gamemap[i * MAP_SIZEX + j] == gamemap[(i - 1) * MAP_SIZEX + j]){
+						if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EPLAYER)
+							new CPlayerT(POS(i, j), CVector2(16, 60), NULL);
 
-						else if (temp_setcell == ECELLNUM::EENEMY1)
-							new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE), &mTexEnemy, CELLSIZE * 1, CELLSIZE * 2, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), ECELLNUM::EENEMY1);
+						else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EENEMY1)
+							new CEnemy(POS(i, j), CVector2(32, 64), NULL);
+
+						else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EENEMY2)
+							new CEnemy(POS(i, j), CVector2(32, 64), NULL);
+
+						else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EENEMY3)
+							new CEnemy(POS(i, j), CVector2(32, 64), NULL);
 					}
 				}
 

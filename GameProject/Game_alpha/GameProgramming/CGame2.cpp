@@ -53,17 +53,11 @@ void CGame2::Init() {
 		fclose(fp);	//ファイルを閉じる
 
 	}
-
-	//敵を呼び出す
-	new CEnemy(CVector2(1000, 265), CVector2(32, 64), NULL);
-	new CEnemy(CVector2(1600, 265), CVector2(32, 64), NULL);
-	new CEnemy(CVector2(2600, 265), CVector2(32, 64), NULL);
 	//木箱の設置
 	new CMapBox(CVector2(1000, 400), CVector2(50, 50), NULL);
 
 	mBackImage[0] = new CMapBackImage(CVector2(mCamera.x, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER1);
 	mBackImage[1] = new CMapBackImage(CVector2(mCamera.x + 1280, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER1);
-	new CPlayerT(CVector2(64, 264), CVector2(16, 60), NULL);
 }
 
 void CGame2::Update() {

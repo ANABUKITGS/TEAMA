@@ -1,5 +1,6 @@
 #include "CPlayerT.h"
 #include "CMapSwitchGround.h"
+#include "CScene.h"
 
 #define PLAYER_VELOCITY_X 1.25f
 #define ATTACK_TIME 30
@@ -11,11 +12,20 @@ char jumptime_buf[96];
 int CPlayerT::player_ani;
 
 void CPlayerT::Update(){
-	if (mpWeapon == 0){
-		if ((CGamePad::Push(PAD_1) || CKey::Push(VK_UP))){
-			if (mAir){
-				if (mAerialAttack){
-					mAerialAttack = false;
+	if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
+		if (mpWeapon == 0){
+			if ((CGamePad::Push(PAD_1) || CKey::Push(VK_UP))){
+				if (mAir){
+					if (mAerialAttack){
+						mAerialAttack = false;
+						mpWeapon = new CWeapon(EPWEAPON, mPosition, CVector2(10, 10), mDirection, NULL);
+						if (mDirection)		//weaponの位置をプレイヤーの向いている方向へ10ずらす
+							mpWeapon->mPosition.x += 10;
+						else
+							mpWeapon->mPosition.x -= 10;
+					}
+				}
+				else{
 					mpWeapon = new CWeapon(EPWEAPON, mPosition, CVector2(10, 10), mDirection, NULL);
 					if (mDirection)		//weaponの位置をプレイヤーの向いている方向へ10ずらす
 						mpWeapon->mPosition.x += 10;
@@ -23,58 +33,51 @@ void CPlayerT::Update(){
 						mpWeapon->mPosition.x -= 10;
 				}
 			}
-			else{
-				mpWeapon = new CWeapon(EPWEAPON, mPosition, CVector2(10, 10), mDirection, NULL);
-				if (mDirection)		//weaponの位置をプレイヤーの向いている方向へ10ずらす
-					mpWeapon->mPosition.x += 10;
-				else
-					mpWeapon->mPosition.x -= 10;
+
+			if (mJumpCount < 2 && (CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_RIGHT))){
+				player_ani_count = 0;
+				player_ani_count_flame = 0;
+			}
+			if (mJumpCount < 2 && (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) || CKey::Push(VK_RIGHT))){		//ジャンプ回数２未満かつ２キーまたは→キー入力
+				mAerialAttack = true;
+				//mAir = true;
+				if (!mJump)
+					mVelocityY = PLAYER_VELOCITY_Y;
+
+				if (!mAir)
+					player_ani = EIDOL;
+				else{
+					if (mpWeapon != 0 && mpWeapon->mLife > 0)
+						player_ani = EJUMP;
+				}
+				mJump = true;
+			}
+			else if (mJump){
+				mJumpCount++;
+				mJump = false;
+				mVelocityY = 0;
 			}
 		}
-
-		if (mJumpCount < 2 && (CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_RIGHT))){
-			player_ani_count = 0;
-			player_ani_count_flame = 0;
+		else if (mpWeapon->mLife <= 0){		//武器の生存時間が0以下
+			mpWeapon = 0;
 		}
-		if (mJumpCount < 2 && (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) || CKey::Push(VK_RIGHT))){		//ジャンプ回数２未満かつ２キーまたは→キー入力
-			mAerialAttack = true;
-			//mAir = true;
-			if (!mJump)
-				mVelocityY = PLAYER_VELOCITY_Y;
-
-			if (!mAir)
-				player_ani = EIDOL;
-			else{
-				if (mpWeapon != 0 && mpWeapon->mLife > 0)
-					player_ani = EJUMP;
-			}
-			mJump = true;
+		else {								//武器の生存時間が0を超過
+			player_ani = EYOHYOH;
+			mpWeapon->Render();
 		}
-		else if (mJump){
-			mJumpCount++;
-			mJump = false;
-			mVelocityY = 0;
+		if (mpWeapon == 0){
+			Dash();
+			Gravity();
+			Forward();
+			CRectangle::Update();
 		}
-	}
-	else if (mpWeapon->mLife <= 0){		//武器の生存時間が0以下
-		mpWeapon = 0;
-	}
-	else {								//武器の生存時間が0を超過
-		player_ani = EYOHYOH;
-		mpWeapon->Render();
-	}
-	if (mpWeapon == 0){
-		Dash();
-		Gravity();
-		Forward();
-		CRectangle::Update();
-	}
 
-	if (mVelocityY < -1.0f && mVelocityY > -1.1f)
-		mAir = false;
-	else{
-		mAir = true;
-		player_ani = EJUMP;
+		if (mVelocityY < -1.0f && mVelocityY > -1.1f)
+			mAir = false;
+		else{
+			mAir = true;
+			player_ani = EJUMP;
+		}
 	}
 	
 //	for (int i = 0; i < 96; i++)

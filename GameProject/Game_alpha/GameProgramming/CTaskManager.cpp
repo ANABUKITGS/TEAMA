@@ -1,5 +1,6 @@
 #include "CTaskManager.h"
 #include "CRectangle.h"
+#include "CMap.h"
 
 CTaskManager *CTaskManager::mpInstance = 0;
 

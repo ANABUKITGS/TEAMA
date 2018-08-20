@@ -15,6 +15,7 @@ enum ECELLNUM{
 	ESWITCH_GROUND1,	//スイッチで 切り替わる足場 1
 	ESWITCH_GROUND2,	//スイッチで 切り替わる足場 2
 	ESWITCH,			//スイッチで 切り替わる足場の スイッチ
+	EICE,				//氷の足場
 
 	/*------ キャラクター など ------*/
 	ECHECKPOINT,		//チェックポイント
