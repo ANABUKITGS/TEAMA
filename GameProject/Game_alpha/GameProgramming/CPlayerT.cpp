@@ -7,7 +7,6 @@
 
 CPlayerT *CPlayerT::mpPlayer = 0;
 CMapSwitchGround*mSwitch;
-char jumptime_buf[96];
 
 int CPlayerT::player_ani;
 
@@ -15,10 +14,13 @@ void CPlayerT::Update(){
 	if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
 		if (mpWeapon == 0){
 			if ((CGamePad::Push(PAD_1) || CKey::Push(VK_UP))){
+				player_ani_count = 0;
+				player_ani_count_flame = 0;
+				player_ani = EPLAYERANI::EYOYO;
 				if (mAir){
 					if (mAerialAttack){
 						mAerialAttack = false;
-						mpWeapon = new CWeapon(EPWEAPON, mPosition, CVector2(10, 10), mDirection, NULL);
+						mpWeapon = new CWeapon(EPWEAPON, mPosition, mDirection);
 						if (mDirection)		//weaponの位置をプレイヤーの向いている方向へ10ずらす
 							mpWeapon->mPosition.x += 10;
 						else
@@ -26,7 +28,7 @@ void CPlayerT::Update(){
 					}
 				}
 				else{
-					mpWeapon = new CWeapon(EPWEAPON, mPosition, CVector2(10, 10), mDirection, NULL);
+					mpWeapon = new CWeapon(EPWEAPON, mPosition, mDirection);
 					if (mDirection)		//weaponの位置をプレイヤーの向いている方向へ10ずらす
 						mpWeapon->mPosition.x += 10;
 					else
@@ -62,7 +64,7 @@ void CPlayerT::Update(){
 			mpWeapon = 0;
 		}
 		else {								//武器の生存時間が0を超過
-			player_ani = EYOHYOH;
+			player_ani = EYOYO;
 			mpWeapon->Render();
 		}
 		if (mpWeapon == 0){
@@ -76,20 +78,10 @@ void CPlayerT::Update(){
 			mAir = false;
 		else{
 			mAir = true;
+			if (player_ani != EYOYO)
 			player_ani = EJUMP;
 		}
 	}
-	
-//	for (int i = 0; i < 96; i++)
-//		jumptime_buf[i] = '\0';
-#ifdef _DEBUG
-	sprintf(jumptime_buf, "mVelocityX\n%4.2f\nmVelocityY\n%4.2f\nmPosition.x\n%4.2f\nmPosition.y\n%4.2f", mVelocityX, mVelocityY, mPosition.x, mPosition.y);
-	CText::DrawString(jumptime_buf, 0, 0, 32, 1.0f, 0);
-#endif
-	//for (int i = 0; i < 96; i++)
-	//	jumptime_buf[i] = '\0';
-	//sprintf(jumptime_buf, "mJewel %2d\nmLife  %2d\n", mJewel, mLife);
-	//CText::DrawString(jumptime_buf, 300, 300, 32, 1.0f, 0);
 }
 
 //前進処理
@@ -226,15 +218,8 @@ bool CPlayerT::Collision(CRectangle *p) {
 				mMiniJewel++;
 				break;
 
-			case ESWITCH_GROUND1: case ESWITCH_GROUND2:
-				//if (mSwitch->mNumber == p->mTag){
-				//	mPosition = mPosition + aj;
-				//	mJumpCount = 0;
-				//	mVelocityY = 0.0f;
-
-				//}
-				//break;
-
+			case ESWITCH_GROUND1:
+			case ESWITCH_GROUND2:
 			case ENONE:
 			case ECHIKUWA:
 			case EBELTL:
@@ -384,8 +369,16 @@ void CPlayerT::Render(){
 
 		break;
 
-	case EPLAYERANI::EYOHYOH:
+	case EPLAYERANI::EYOYO:
+		if (player_ani_count > 1)
+			player_ani_count = 1;
 
+		PLAYER_ANI_COUNT_FLAME = 6;
+
+		if (!mDirection)	//左向き
+			mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 768, 640, mAlpha);
+		else				//右向き
+			mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (player_ani_count + 1) * 128, player_ani_count * 128, 768, 640, mAlpha);
 		break;
 
 	case EPLAYERANI::EDOWN:

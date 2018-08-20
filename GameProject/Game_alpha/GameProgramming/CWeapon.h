@@ -6,8 +6,11 @@
 #define WEAPOM_VELOCITY 12.0f
 #define WEAPON_LIFE 40
 
+#define YOYO_UV 
+
 class CWeapon : public CRectangle{
 public:
+	CTexture *mTexYoyo;
 	float mVelocity;	//武器の動くスピード
 	int mLife;			//武器の生存時間
 	bool mDirection;	//武器を飛ばす方向
@@ -17,13 +20,15 @@ public:
 		mVelocity = WEAPOM_VELOCITY;
 		CTaskManager::Get()->Add(this);
 	}
-	CWeapon::CWeapon(ECELLNUM tag ,const CVector2&position, const CVector2&scale,const bool direction, CTexture*texture)
+	CWeapon::CWeapon(ECELLNUM tag, const CVector2&position, const bool direction)
 		: CWeapon()
 	{
-		SetRectangle(position, scale, texture);
+		SetRectangle(position, CVector2(10, 10), NULL);
 		mDirection = direction;
 		mTag = tag;
-		
+		//mRender = false;
+		//mTexYoyo->Load(".\\Data\\Images\\Player\\YoyoBody.tga");
+		mUv[0] = 0; mUv[1] = 64; mUv[2] = 64; mUv[3] = 0;
 	}
 	void Update();
 	void Render();

@@ -21,7 +21,7 @@ public:
 		ETURN,		//方向転換
 		EJUMP,		//ジャンプ
 		EDAMAGE,	//ダメージ
-		EYOHYOH,	//ヨーヨー攻撃
+		EYOYO,	//ヨーヨー攻撃
 		EDOWN,		//やられ
 		ESIZE,		//EPLAYERANI サイズ
 	};
@@ -73,10 +73,10 @@ public:
 		mAlpha = 1.0f;
 	}
 
-	CPlayerT::CPlayerT(const CVector2&position, const CVector2&scale, CTexture*texture)
+	CPlayerT::CPlayerT(const CVector2&position)
 		: CPlayerT()
 	{
-		SetRectangle(position, scale, texture);
+		SetRectangle(position, CVector2(16, 60), NULL);
 	}
 
 	void Update();

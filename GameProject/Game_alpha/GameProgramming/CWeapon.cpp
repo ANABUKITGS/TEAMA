@@ -7,22 +7,28 @@ void CWeapon::Update(){
 		if (mLife > 20){	//¶‘¶ŽžŠÔ‚ª20‚ð’´‰ß
 			if (mDirection)	//‰EŒü‚«
 				mVelocity = WEAPOM_VELOCITY;
-			else            //¶Œü‚«
+			else			//¶Œü‚«
 				mVelocity = -WEAPOM_VELOCITY;
 		}
 		else{				//¶‘¶ŽžŠÔ‚ª15ˆÈ‰º
 			if (mDirection)	//‰EŒü‚«
 				mVelocity = -WEAPOM_VELOCITY;
-			else            //¶Œü‚«
+			else			//¶Œü‚«
 				mVelocity = WEAPOM_VELOCITY;
 		}
 		mPosition.x += mVelocity;
-		
+
 
 	}
-	else                    //¶‘¶ŽžŠÔ‚ª0ˆÈ‰º
-		mEnabled = false;	
-	
+	else{					//¶‘¶ŽžŠÔ‚ª0ˆÈ‰º
+		mEnabled = false;
+		if (CPlayerT::mpPlayer->mAir)
+			CPlayerT::mpPlayer->player_ani = CPlayerT::EPLAYERANI::EJUMP;
+		else
+			CPlayerT::mpPlayer->player_ani = CPlayerT::EPLAYERANI::EIDOL;
+		CPlayerT::mpPlayer->player_ani_count = 0;
+		CPlayerT::mpPlayer->player_ani_count_flame = 0;
+	}
 	CRectangle::Update();
 
 }

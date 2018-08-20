@@ -95,6 +95,7 @@
     <ClCompile Include="CMapBox.cpp" />
     <ClCompile Include="CMapChikuwa.cpp" />
     <ClCompile Include="CMapSign.cpp" />
+    <ClCompile Include="CMapSteel.cpp" />
     <ClCompile Include="CMapSwitchGround.cpp" />
     <ClCompile Include="CMapUnder.cpp" />
     <ClCompile Include="CSE.cpp" />
@@ -132,6 +133,7 @@
     <ClInclude Include="CMapBox.h" />
     <ClInclude Include="CMapChikuwa.h" />
     <ClInclude Include="CMapSign.h" />
+    <ClInclude Include="CMapSteel.h" />
     <ClInclude Include="CMapSwitchGround.h" />
     <ClInclude Include="CMapUnder.h" />
     <ClInclude Include="CSound.h" />

@@ -9,7 +9,7 @@
 
 #define MONITOR_TIME	180
 #define WALK_TIME		180
-#define ENEMY_VELOCITY	1.5f
+#define ENEMY_VELOCITY	4.0f
 #define E_SEARCHRANGE	250	//õ“G”ÍˆÍ
 #define DOWN_TIME		100
 #define ATTACK_INTERVAL	120
@@ -23,10 +23,10 @@ public:
 		mRender = false;
 		CTaskManager::Get()->Add(this);
 	}
-	CSearch::CSearch(const CVector2&position, const CVector2&scale, CTexture*texture)
+	CSearch::CSearch(const CVector2&position)
 		:CSearch()
 	{
-		SetRectangle(position, scale, texture);
+		SetRectangle(position, CVector2(128, 32), NULL);
 	}
 	void Update();
 	bool Collision(CRectangle *p);
@@ -67,11 +67,11 @@ public:
 		CTaskManager::Get()->Add(this);
 	}
 
-	CEnemy::CEnemy(const CVector2&position, const CVector2&scale, CTexture*texture)
+	CEnemy::CEnemy(const CVector2&position)
 		: CEnemy()
 	{
-		SetRectangle(position, scale, texture);
-		mpSearch = new CSearch(CVector2(position.x+100, position.y), CVector2(100, 30), NULL);
+		SetRectangle(position, CVector2(32, 60), NULL);
+		mpSearch = new CSearch(CVector2(position.x + 128, position.y));
 	}
 
 	void Update();

@@ -5,11 +5,10 @@
 #include "CMapChip.h"
 #include "CPlayerT.h"
 #include "CScene.h"
-#include "CEnemy.h"
-#include "CMapBox.h"
 #include "CTime.h"
 #include "CBGM.h"
 #include "CMapBackImage.h"
+#include "CMapSwitchGround.h"
 
 CMapBackImage *mBackImage[2];
 
@@ -53,11 +52,10 @@ void CGame2::Init() {
 		fclose(fp);	//ファイルを閉じる
 
 	}
-	//木箱の設置
-	new CMapBox(CVector2(1000, 400), CVector2(50, 50), NULL);
-
+	//背景
 	mBackImage[0] = new CMapBackImage(CVector2(mCamera.x, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER1);
 	mBackImage[1] = new CMapBackImage(CVector2(mCamera.x + 1280, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER1);
+	CMapSwitchGround::mNumber = ESWITCH_GROUND1;
 }
 
 void CGame2::Update() {
@@ -93,6 +91,12 @@ void CGame2::Render() {
 	mCamera.Begin();
 	CTaskManager::Get()->Render();
 	CCamera2D::End();
+
+#ifdef _DEBUG
+	wchar_t jumptime_buf[256];
+	swprintf(jumptime_buf, L"プレイヤー\nmVelocityX\n%6.2f\nmVelocityY\n%6.2f\nmPosition.x\n%.2f\nmPosition.y\n%.2f", CPlayerT::mpPlayer->mVelocityX, CPlayerT::mpPlayer->mVelocityY, CPlayerT::mpPlayer->mPosition.x, CPlayerT::mpPlayer->mPosition.y);
+	CText::DrawStringW(jumptime_buf, 0, 0, 16, 1.0f, 0);
+#endif
 
 	//経過時間
 	char time_buf[64];

@@ -57,7 +57,7 @@ void  CEnemy::Update(){
 				if (mAttackInterval < 0){
 					mAttackInterval = ATTACK_INTERVAL;
 					//敵のヨーヨーを敵の位置よりも少し前に呼び出す
-					mpEWeapon = new CWeapon(EEWEAPON, mPosition, CVector2(10, 10), mDirection, NULL);
+					mpEWeapon = new CWeapon(EEWEAPON, mPosition, mDirection);
 
 					if (mDirection)		//敵が右を向いている時には右にヨーヨーを進ませる
 						mpEWeapon->mPosition.x += 10;
@@ -102,17 +102,66 @@ bool CEnemy::Collision(CRectangle*p){
 	if (p->GetEnabled()) {
 		CVector2 aj;
 		if (CRectangle::Collision(p, &aj)) {
-			if (p->mTag != ECELLNUM::EEWEAPON &&
-				p->mTag != ECELLNUM::EPLAYER &&
-				p->mTag != ECELLNUM::ESEARCH &&
-				p->mTag != ECELLNUM::EBELTL &&
-				p->mTag != ECELLNUM::EBELTR &&
-				p->mTag != ECELLNUM::ECHIKUWA){
-				mPosition = mPosition + aj;
-			}
-			if (p->mTag == EPWEAPON)
+			switch (p->mTag){
+			case EPWEAPON:
 				mAnimationTag = EDOWN;
-			mVelocityY = 0.0f;
+				mVelocityY = 0.0f;
+				break;
+
+			case EENEMY1:
+			case EENEMY2:
+			case EENEMY3:
+				mVelocityY = 0.0f;
+				mPosition.x = mPosition.x + aj.x;
+				break;
+
+			case ESWITCH_GROUND1:
+			case ESWITCH_GROUND2:
+			case ENONE:
+			case ECHIKUWA:
+			case EJEWELRY:
+			case EJEWELRY2:
+			case EBELTL:
+			case EBELTR:
+			case ESIGN:
+			case ECHECKPOINT:
+			case ESEARCH:
+			case ESWITCH:
+			case EUNDER:
+			case EPLAYER:
+			case EBOSS:
+			case EEWEAPON:
+				break;
+
+			default:
+				//右空き
+				if (!(p->mColFlg & EDT_RIGHT)) {
+					if (aj.x > 0) {
+						mPosition.x = mPosition.x + aj.x;
+					}
+				}
+				//左空き
+				if (!(p->mColFlg & EDT_LEFT)) {
+					if (aj.x < 0) {
+						mPosition.x = mPosition.x + aj.x;
+					}
+				}
+				//下空き
+				if (!(p->mColFlg & EDT_BOTTOM)) {
+					if (aj.y < 0) {
+						mPosition.y = mPosition.y + aj.y;
+						mVelocityY = 0.0f;
+					}
+				}
+				//上空き
+				if (!(p->mColFlg & EDT_TOP)) {
+					if (aj.y > 0) {
+						mPosition.y = mPosition.y + aj.y;
+						mVelocityY = 0.0f;
+					}
+				}
+				break;
+			}
 			return true;
 		}
 	}

@@ -1,4 +1,6 @@
 #include "CMapBelt.h"
+#include "CMapBox.h"
+#include "CMapSteel.h"
 
 void CMapBelt::Update() {
 	CMapChip::Update();
@@ -10,7 +12,20 @@ bool CMapBelt::Collision(CRectangle *r) {
 		r->mTag == ECELLNUM::EENEMY1 ||
 		r->mTag == ECELLNUM::EENEMY2 ||
 		r->mTag == ECELLNUM::EENEMY3 |
-		r->mTag == ECELLNUM::EBOSS){
+		r->mTag == ECELLNUM::EBOSS ||
+		r->mTag == ECELLNUM::EBOX ||
+		r->mTag == ECELLNUM::ESTEEL){
+
+		//î†ÇÃóéâ∫íÜÇÕñ≥éã
+		if (CMapBox::mBreak &&
+			r->mTag == ECELLNUM::EBOX)
+			return false;
+
+		//ìSçúÇÃóéâ∫íÜÇÕñ≥éã
+		if (CMapSteel::mBreak &&
+			r->mTag == ECELLNUM::ESTEEL)
+			return false;
+
 		CVector2 aj;
 		if (CRectangle::Collision(r) && CRectangle::Collision(r, &aj)) {
 			//ç∂
@@ -19,7 +34,7 @@ bool CMapBelt::Collision(CRectangle *r) {
 				return true;
 			}
 			//âE
-			if (texture_pos == 3 && mPosition.x + CELLSIZE / 2 < r->mPosition.x) {
+			if (texture_pos == 3 && mPosition.x + CELLSIZE /2 < r->mPosition.x) {
 				r->mPosition.x = r->mPosition.x - aj.x;
 				return true;
 			}

@@ -9,6 +9,8 @@
 #include "CMapChikuwa.h"
 #include "CMapBelt.h"
 #include "CMapSwitchGround.h"
+#include "CMapBox.h"
+#include "CMapSteel.h"
 
 #include "CBGM.h"
 
@@ -44,6 +46,7 @@ void CEditer::Init(){
 }
 
 void CEditer::Update(){
+	CMapSwitchGround::mNumber = ESWITCH_GROUND1;
 	if (!pauseflag){
 		if ((CGamePad::OncePush(PAD_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f)) && cursor_posY - 1 >= 0){
 			if (editmap_rect[cursor_posY][cursor_posX].mTop + CELLSIZE >= 360){
@@ -511,22 +514,26 @@ void CEditer::MakeTaskList(int *gamemap) {
 				if (gamemap[i * MAP_SIZEX + j] >= ECELLNUM::EPLAYER && gamemap[i * MAP_SIZEX + j] <= ECELLNUM::EBOSS){
 					if (gamemap[i * MAP_SIZEX + j] == gamemap[(i - 1) * MAP_SIZEX + j]){
 						if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EPLAYER)
-							new CPlayerT(POS(i, j), CVector2(16, 60), NULL);
+							new CPlayerT(POS(i, j));
 
 						else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EENEMY1)
-							new CEnemy(POS(i, j), CVector2(32, 64), NULL);
+							new CEnemy(POS(i, j));
 
 						else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EENEMY2)
-							new CEnemy(POS(i, j), CVector2(32, 64), NULL);
+							new CEnemy(POS(i, j));
 
 						else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EENEMY3)
-							new CEnemy(POS(i, j), CVector2(32, 64), NULL);
+							new CEnemy(POS(i, j));
 					}
 				}
 
 				//特殊ギミック
 				if (gamemap[i * MAP_SIZEX + j] >= ECELLNUM::EBOX && gamemap[i * MAP_SIZEX + j] < ECELLNUM::ESIGN){
+					if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EBOX)
+						new CMapBox(POS(i, j));
 
+					else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::ESTEEL)
+						new CMapSteel(POS(i, j));
 				}
 
 				//チュートリアル用 看板

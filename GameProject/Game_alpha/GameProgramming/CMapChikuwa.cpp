@@ -1,4 +1,6 @@
 #include "CMapChikuwa.h"
+#include "CMapBox.h"
+#include "CMapSteel.h"
 #include "CSE.h"
 
 void CMapChikuwa::Update() {
@@ -27,12 +29,18 @@ bool CMapChikuwa::Collision(CRectangle *r) {
 		r->mTag == ECELLNUM::EENEMY1 ||
 		r->mTag == ECELLNUM::EENEMY2 ||
 		r->mTag == ECELLNUM::EENEMY3 ||
-		r->mTag == ECELLNUM::EBOSS){
-		if (collision_flg &&
-			(r->mTag == ECELLNUM::EENEMY1 ||
-			r->mTag == ECELLNUM::EENEMY2 ||
-			r->mTag == ECELLNUM::EENEMY3 ||
-			r->mTag == ECELLNUM::EBOSS))
+		r->mTag == ECELLNUM::EBOSS ||
+		r->mTag == ECELLNUM::EBOX ||
+		r->mTag == ECELLNUM::ESTEEL){
+
+		//” ‚Ì—Ž‰º’†‚Í–³Ž‹
+		if (CMapBox::mBreak &&
+			r->mTag == ECELLNUM::EBOX)
+			return false;
+
+		//“Sœ‚Ì—Ž‰º’†‚Í–³Ž‹
+		if (CMapSteel::mBreak &&
+			r->mTag == ECELLNUM::ESTEEL)
 			return false;
 
 		CVector2 aj;
@@ -49,6 +57,14 @@ bool CMapChikuwa::Collision(CRectangle *r) {
 			}
 			//‰º
 			if (mPosition.y > r->mPosition.y) {
+				//—Ž‰º’†‚Í–³Ž‹
+				if (collision_flg &&
+					(r->mTag == ECELLNUM::EENEMY1 ||
+					r->mTag == ECELLNUM::EENEMY2 ||
+					r->mTag == ECELLNUM::EENEMY3 ||
+					r->mTag == ECELLNUM::EBOSS))
+					return false;
+
 				r->mPosition.y =r->mPosition.y - aj.y;
 				r->mVelocityY = 0.0f;
 			}
