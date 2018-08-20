@@ -6,14 +6,29 @@ void CMapUnder::Update(){
 	CMapChip::Update();
 }
 
+void CMapUnder::Render(){
+	mTexUnder.DrawImage(mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE / 2, mPosition.y + CELLSIZE / 2, 0, 64, 64, 0, 1.0f);
+}
+
 bool CMapUnder::Collision(CRectangle*r){
+	CVector2 aj;
 	// 当たっているか
-	if (CRectangle::Collision(r)) {
-		//プレイヤーに衝突
-		if (r->mTag == EPLAYER) {
-			//プレイヤーがジャンプ中の時は判定しない
-			if ((-r->mScale.y/2)>mScale.y){
-				return true;
+	if (r->mTag == ECELLNUM::EPLAYER ||
+		r->mTag == ECELLNUM::EENEMY1 ||
+		r->mTag == ECELLNUM::EENEMY2 ||
+		r->mTag == ECELLNUM::EENEMY3 |
+		r->mTag == ECELLNUM::EBOSS){
+		if (CRectangle::Collision(r) && CRectangle::Collision(r, &aj)) {
+			if (mPosition.y < r->mPosition.y - r->mScale.y) {
+				//プレイヤーがジャンプ中の時は判定しない
+				if (r->mTag == ECELLNUM::EPLAYER){
+					if (CPlayerT::mpPlayer->mJump)
+						return false;
+					CPlayerT::mpPlayer->mJumpCount = 0;
+				}
+				r->mPosition.y = r->mPosition.y - aj.y;
+				r->mVelocityY = 0.0f;
+				return false;
 			}
 			return true;
 		}

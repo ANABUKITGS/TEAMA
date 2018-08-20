@@ -8,6 +8,9 @@
 下から抜ける床
 */
 class CMapUnder : public CMapChip{
+private:
+	CTexture mTexUnder;
+
 public:
 	/*
 	コンストラクタで初期化処理
@@ -16,10 +19,16 @@ public:
 	*/
 	CMapUnder(CVector2 pos, CVector2 scale, CTexture*Texture)
 		:CMapChip(pos, scale, Texture, TEXUV, ECELLNUM::EUNDER)
-	{}
+	{
+		mTexUnder.Load(".\\Data\\Images\\Map\\Under.tga");
+		mPriority = 9;
+		mRender = false;
+	}
 
 	//更新処理
 	void Update();
+	//描画処理
+	void Render();
 	//衝突処理
 	bool Collision(CRectangle*);
 };

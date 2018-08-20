@@ -4,9 +4,9 @@
 #include "CMap.h"
 #include "CPlayerT.h"
 #define CHIKUWA_UV				0, CELLSIZE, CELLSIZE , 0
-#define CHIKUWA_FALLING_TIME	60
+#define CHIKUWA_FALLING_TIME	15
 #define CHIKUWA_LOST_TIME		CHIKUWA_FALLING_TIME * 10
-#define FALLING_SPEED			0.02f
+#define FALLING_SPEED			0.25f
 
 class CMapChikuwa : public CMapChip {
 private:
@@ -26,6 +26,7 @@ public:
 		collision_flg = false;
 		setpos.x = mPosition.x;
 		setpos.y = mPosition.y;
+		mPriority = -10;
 		mTexChikuwa.Load(".\\Data\\Images\\Map\\MapChikuwa.tga");
 	}
 	void Update();

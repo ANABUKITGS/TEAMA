@@ -205,13 +205,13 @@ bool CPlayerT::Collision(CRectangle *p) {
 		CVector2 aj;
 		if (CRectangle::Collision(p, &aj)) {
 			switch (p->mTag){
-			case EUNDER:
-				if ((mPosition.y > p->mPosition.y) && mVelocityY < 0){
-					mVelocityY = 0.0f;
-					mJumpCount = 0;
-					mPosition = mPosition + aj;
-				}
-				break;
+			//case EUNDER:
+			//	if ((mPosition.y > p->mPosition.y) && mVelocityY < 0){
+			//		mVelocityY = 0.0f;
+			//		mJumpCount = 0;
+			//		mPosition = mPosition + aj;
+			//	}
+			//	break;
 
 			case EENEMY1: case EEWEAPON:
 				if (!mUnrivaled){
@@ -249,6 +249,7 @@ bool CPlayerT::Collision(CRectangle *p) {
 			case EPWEAPON:
 			case ESEARCH:
 			case ESWITCH:
+			case EUNDER:
 				break;
 
 			default:

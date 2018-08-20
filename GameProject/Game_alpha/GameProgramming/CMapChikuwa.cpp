@@ -3,9 +3,6 @@
 
 void CMapChikuwa::Update() {
 	CMapChip::Update();
-}
-
-bool CMapChikuwa::Collision(CRectangle *r) {
 	if (collision_flg){
 		lostcount++;
 		if (lostcount > CHIKUWA_FALLING_TIME && lostcount < CHIKUWA_LOST_TIME){
@@ -20,10 +17,11 @@ bool CMapChikuwa::Collision(CRectangle *r) {
 			mPosition.y = setpos.y;
 			mFalling = 0;
 			lostcount = 0;
-			return false;
 		}
 	}
+}
 
+bool CMapChikuwa::Collision(CRectangle *r) {
 	// “–‚½‚Á‚Ä‚¢‚é‚©
 	if (r->mTag == ECELLNUM::EPLAYER ||
 		r->mTag == ECELLNUM::EENEMY1 ||

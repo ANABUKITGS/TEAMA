@@ -448,16 +448,16 @@ void CEditer::MakeTaskList(int *gamemap) {
 				//下から抜ける足場
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EUNDER){
 					if (gamemap[i*MAP_SIZEX + j - 1] != ECELLNUM::EUNDER && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EUNDER)
-						new CMapUnder(POS(i, j), CVector2(CELLSIZE / 2, 12), NULL);
+						new CMapUnder(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL);
 
 					else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EUNDER && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EUNDER)
-						new CMapUnder(POS(i, j), CVector2(CELLSIZE / 2, 12), NULL);
+						new CMapUnder(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL);
 
 					else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EUNDER && gamemap[i * MAP_SIZEX + j + 1] != ECELLNUM::EUNDER)
-						new CMapUnder(POS(i, j), CVector2(CELLSIZE / 2, 12), NULL);
+						new CMapUnder(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL);
 
 					else
-						new CMapUnder(POS(i, j), CVector2(CELLSIZE / 2, 12), NULL);
+						new CMapUnder(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL);
 				}
 				//ベルトコンベア 左
 				else if (gamemap[i * MAP_SIZEX + j] == EBELTL){
