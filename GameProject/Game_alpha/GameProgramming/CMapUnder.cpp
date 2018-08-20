@@ -7,7 +7,7 @@ void CMapUnder::Update(){
 }
 
 void CMapUnder::Render(){
-	mTexUnder.DrawImage(mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE / 2, mPosition.y + CELLSIZE / 2, 0, 64, 64, 0, 1.0f);
+	mTexUnder.DrawImage(UNDER_UV, 1.0f);
 }
 
 bool CMapUnder::Collision(CRectangle*r){

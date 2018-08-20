@@ -448,16 +448,16 @@ void CEditer::MakeTaskList(int *gamemap) {
 				//下から抜ける足場
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EUNDER){
 					if (gamemap[i*MAP_SIZEX + j - 1] != ECELLNUM::EUNDER && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EUNDER)
-						new CMapUnder(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL);
+						new CMapUnder(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2));
 
 					else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EUNDER && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EUNDER)
-						new CMapUnder(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL);
+						new CMapUnder(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2));
 
 					else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EUNDER && gamemap[i * MAP_SIZEX + j + 1] != ECELLNUM::EUNDER)
-						new CMapUnder(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL);
+						new CMapUnder(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2));
 
 					else
-						new CMapUnder(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL);
+						new CMapUnder(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2));
 				}
 				//ベルトコンベア 左
 				else if (gamemap[i * MAP_SIZEX + j] == EBELTL){
@@ -502,11 +502,11 @@ void CEditer::MakeTaskList(int *gamemap) {
 
 				//スイッチ床1
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::ESWITCH_GROUND1)
-					new CMapSwitchGround(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), ECELLNUM::ESWITCH_GROUND1);
+					new CMapSwitchGround(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::ESWITCH_GROUND1);
 
 				//スイッチ床2
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::ESWITCH_GROUND2)
-					new CMapSwitchGround(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), ECELLNUM::ESWITCH_GROUND2);
+					new CMapSwitchGround(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::ESWITCH_GROUND2);
 
 				//スイッチ
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::ESWITCH)

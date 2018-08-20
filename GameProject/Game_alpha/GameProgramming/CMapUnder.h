@@ -3,7 +3,7 @@
 
 #include "CMapChip.h"
 
-#define TEXUV 0, 64, 64 * 6, 64 * 5	//テクスチャのマッピングデータ
+#define UNDER_UV mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE / 2, mPosition.y + CELLSIZE / 2, 0, 64, 64, 0	//テクスチャのマッピングデータ
 /*
 下から抜ける床
 */
@@ -17,10 +17,10 @@ public:
 	pos:位置座標
 	scale:コリジョンの大きさ(四角形の大きさがそのままコリジョンになる)
 	*/
-	CMapUnder(CVector2 pos, CVector2 scale, CTexture*Texture)
-		:CMapChip(pos, scale, Texture, TEXUV, ECELLNUM::EUNDER)
+	CMapUnder(CVector2 pos, CVector2 scale)
+		:CMapChip(pos, scale, NULL, NULL, NULL, NULL, NULL, ECELLNUM::EUNDER)
 	{
-		mTexUnder.Load(".\\Data\\Images\\Map\\Under.tga");
+		mTexUnder.Load(".\\Data\\Images\\Map\\MapUnder.tga");
 		mPriority = 9;
 		mRender = false;
 	}
