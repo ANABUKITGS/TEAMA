@@ -9,14 +9,9 @@
 #include "CMapBox.h"
 #include "CTime.h"
 #include "CBGM.h"
-
-CRectangle *CGame2::mRectPlayer;
-
+#include "CMapBackImage.h"
 
 void CGame2::Init() {
-
-	CRectangle *mapchip;	//Initでしか使用していないので、Initメソッドのローカル変数で宣言
-
 	mCamera.SetOrtho(WINDOW_SIZE_W / 2, WINDOW_SIZE_H / 2, WINDOW_SIZE_W / 2, WINDOW_SIZE_H / 2);
 	//mTexBack.Load(".\\Data\\Images\\Map\\Background.tga");
 	//mTexUI.Load(".\\Data\\Images\\Map\\MapUI.tga");
@@ -59,13 +54,16 @@ void CGame2::Init() {
 		fclose(fp);	//ファイルを閉じる
 
 	}
-	mRectPlayer = new CPlayerT(CVector2(64, 264), CVector2(16, 60), NULL);
 	//敵を呼び出す
-	new CEnemy(CVector2(1000, 265), CVector2(32, 32), NULL);
-	new CEnemy(CVector2(1600, 265), CVector2(32, 32), NULL);
-	new CEnemy(CVector2(2600, 265), CVector2(32, 32), NULL);
+	new CEnemy(CVector2(1000, 265), CVector2(32, 64), NULL);
+	new CEnemy(CVector2(1600, 265), CVector2(32, 64), NULL);
+	new CEnemy(CVector2(2600, 265), CVector2(32, 64), NULL);
 	//木箱の設置
 	new CMapBox(CVector2(1000, 400), CVector2(50, 50), NULL);
+
+	new CMapBackImage(CVector2(0, 360), CMapBackImage::ETEXTURE_LAYER::LAYER2);
+	new CMapBackImage(CVector2(0, 360), CMapBackImage::ETEXTURE_LAYER::LAYER1);
+	new CPlayerT(CVector2(64, 264), CVector2(16, 60), NULL);
 }
 
 void CGame2::Update() {

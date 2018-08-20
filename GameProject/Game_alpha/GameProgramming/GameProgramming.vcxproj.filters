@@ -36,6 +36,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CBGM.cpp" />
     <ClCompile Include="CSE.cpp" />
+    <ClCompile Include="CMapBackImage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCamera2D.h" />
@@ -74,6 +75,7 @@
     <ClInclude Include="CSound.h" />
     <ClInclude Include="CBGM.h" />
     <ClInclude Include="CSE.h" />
+    <ClInclude Include="CMapBackImage.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />

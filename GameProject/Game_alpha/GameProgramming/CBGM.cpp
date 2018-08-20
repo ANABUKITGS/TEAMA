@@ -13,7 +13,7 @@ CSound CBGM::mSoundRanking;		//ƒ‰ƒ“ƒLƒ“ƒO—p
 void CBGM::Init(){
 	starttime = clock();
 	mSoundTitle.Load("");
-	mSoundTutorial.Load(".\\Data\\Sound\\BGM0.wav");
+	mSoundTutorial.Load(".\\Data\\Sound\\BGM\\BGM0.wav");
 	mSoundMain.Load("");
 	mSoundBoss.Load("");
 	mSoundResult.Load("");

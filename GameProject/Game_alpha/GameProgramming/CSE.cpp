@@ -5,7 +5,7 @@ CSound CSE::mSoundJewelry;
 CSound CSE::mSoundChikuwa;
 
 void CSE::Init(){
-	mSoundText.Load(".\\Data\\Sound\\Text.wav");
-	mSoundJewelry.Load(".\\Data\\Sound\\Jewelry.wav");
-	mSoundChikuwa.Load(".\\Data\\Sound\\Chikuwa.wav");
+	mSoundText.Load(".\\Data\\Sound\\SE\\Text.wav");
+	mSoundJewelry.Load(".\\Data\\Sound\\SE\\Jewelry.wav");
+	mSoundChikuwa.Load(".\\Data\\Sound\\SE\\Chikuwa.wav");
 }

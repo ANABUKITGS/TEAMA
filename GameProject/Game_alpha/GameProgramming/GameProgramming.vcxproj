@@ -90,6 +90,7 @@
     <ClCompile Include="CEditer.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CFileIO.cpp" />
+    <ClCompile Include="CMapBackImage.cpp" />
     <ClCompile Include="CMapBelt.cpp" />
     <ClCompile Include="CMapBox.cpp" />
     <ClCompile Include="CMapChikuwa.cpp" />
@@ -126,6 +127,7 @@
     <ClInclude Include="CCollision.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CFileIO.h" />
+    <ClInclude Include="CMapBackImage.h" />
     <ClInclude Include="CMapBelt.h" />
     <ClInclude Include="CMapBox.h" />
     <ClInclude Include="CMapChikuwa.h" />
