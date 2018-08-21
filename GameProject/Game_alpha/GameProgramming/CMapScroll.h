@@ -12,6 +12,7 @@ public:
 		: CRectangle(CVector2(0, 0), CVector2(0, 0), NULL)
 	{
 		mRender = false;
+		mTag = ECELLNUM::ENONE;
 		CTaskManager::Get()->Add(this);
 	}
 
