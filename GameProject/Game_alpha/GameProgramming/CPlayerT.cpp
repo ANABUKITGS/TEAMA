@@ -82,6 +82,21 @@ void CPlayerT::Update(){
 			player_ani = EJUMP;
 		}
 	}
+
+	//落下死
+	if (mPosition.y + CELLSIZE < 0.0f){
+		mPosition = mReSpornPos;
+		mVelocityX = mVelocityY = 0.0f;
+		player_ani = EIDOL;
+		mJumpCount = 0;
+		mLife--;
+	}
+
+	//エリア外(上)
+	if (mPosition.y - CELLSIZE > 720.0f){
+		mVelocityY = 0.0f;
+		mPosition.y = 720.0f + CELLSIZE;
+	}
 }
 
 //前進処理

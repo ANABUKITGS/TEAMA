@@ -6,28 +6,38 @@ void CMapCheckPoint::Update() {
 }
 
 void CMapCheckPoint::Render(){
-	if (!mCheck)
-		mTexCheckPoint.DrawImage(CHECKPOINT_POS, CHECKPOINT_UV1, 1.0f);
-	else {
-		if (check_ani_count > 6)
-			check_ani_count = 6;
+	if (mCheck == ECHECKPOINT_NUM::EENEMY){
+		if (check_ani_count > 1)
+			check_ani_count = 0;
+	}
 
-		mTexCheckPoint.DrawImage(CHECKPOINT_POS, CHECKPOINT_UV2, 1.0f);
-
-		check_ani_count_flame++;
-		if (check_ani_count_flame > CHECK_ANI_COUNT_FLAME){
-			check_ani_count++;
-			check_ani_count_flame = 0;
+	else if (mCheck == ECHECKPOINT_NUM::ECHANGE){
+		if (check_ani_count > 7){
+			check_ani_count = 5;
+			mCheck = ECHECKPOINT_NUM::EPLAYER;
 		}
+	}
+
+	else if (mCheck == ECHECKPOINT_NUM::EPLAYER){
+		if (check_ani_count > 7)
+			check_ani_count = 5;
+	}
+
+	mTexCheckPoint.DrawImage(CHECKPOINT_POS, CHECKPOINT_UV, 1.0f);
+	check_ani_count_flame++;
+	if (check_ani_count_flame > CHECK_ANI_COUNT_FLAME){
+		check_ani_count++;
+		check_ani_count_flame = 0;
 	}
 }
 
 bool CMapCheckPoint::Collision(CRectangle *r) {
-	if (CRectangle::Collision(r) && !mCheck){
+	if (CRectangle::Collision(r) && mCheck == ECHECKPOINT_NUM::EENEMY){
 		if (r->mTag == ECELLNUM::EPLAYER){
-			mCheck = true;			
-		}
+			mCheck = ECHECKPOINT_NUM::ECHANGE;
+			check_ani_count = 0;
 		return true;
+		}
 	}
 	return false;
 }
