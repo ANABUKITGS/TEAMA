@@ -47,6 +47,6 @@ public:
 	virtual bool Collision(CRectangle *target);
 	bool Collision(CRectangle *target, CVector2 *adjust);
 	void SetRectangle(const CVector2&position, const CVector2&scale, CTexture*texture);
-
+	bool Collision(CRectangle *target, CVector2 *adjust, CVector2 *ad);
 };
 #endif
