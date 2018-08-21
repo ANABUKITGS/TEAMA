@@ -10,7 +10,7 @@
 
 class CWeapon : public CRectangle{
 public:
-	CTexture *mTexYoyo;
+	CTexture mTexYoyo;
 	float mVelocity;	//武器の動くスピード
 	int mLife;			//武器の生存時間
 	bool mDirection;	//武器を飛ばす方向
@@ -23,11 +23,11 @@ public:
 	CWeapon::CWeapon(ECELLNUM tag, const CVector2&position, const bool direction)
 		: CWeapon()
 	{
-		SetRectangle(position, CVector2(10, 10), NULL);
+		mTexYoyo.Load(".\\Data\\Images\\Player\\YoyoBody.tga");
+		SetRectangle(position, CVector2(10, 10), &mTexYoyo);
 		mDirection = direction;
 		mTag = tag;
 		//mRender = false;
-		//mTexYoyo->Load(".\\Data\\Images\\Player\\YoyoBody.tga");
 		mUv[0] = 0; mUv[1] = 64; mUv[2] = 64; mUv[3] = 0;
 	}
 	void Update();
