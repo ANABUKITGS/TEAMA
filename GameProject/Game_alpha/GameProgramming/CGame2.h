@@ -18,14 +18,14 @@
 class CGame2 : public CEditer {
 public:
 	enum CHEAT_NUM{
-		EFLAG,
-		EMUTEKI,
-		ENUKE,
-		ESIZE,
+		EFLAG,		//チート使用フラグ
+		EMUTEKI,	//無敵
+		EAREA,		//上下のエリア制限 解除
+		ESCROLL,	//強制スクロール 解除
+		ESIZE,		//サイズ
 	};
 	static bool mCheat[CHEAT_NUM::ESIZE];
 	static CCamera2D mCamera;
-
 
 	CTexture mTexBack;								//背景
 	CTexture mTexUI;								//UI テクスチャー

@@ -10,9 +10,11 @@
 #include "CMapBackImage.h"
 #include "CMapSwitchGround.h"
 #include "CMapSign.h"
+#include "CMapScroll.h"
 
 bool CGame2::mCheat[CHEAT_NUM::ESIZE];
 CMapBackImage *mBackImage[2];
+
 CCamera2D CGame2::mCamera;
 
 void CGame2::Init() {
@@ -56,7 +58,14 @@ void CGame2::Init() {
 	//背景
 	mBackImage[0] = new CMapBackImage(CVector2(mCamera.x, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER1);
 	mBackImage[1] = new CMapBackImage(CVector2(mCamera.x + 1280, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER1);
+
+	//カメラ基点
+	CMapScroll::mScroll = new CMapScroll();
+
+	//スイッチ足場 青 有効化
 	CMapSwitchGround::mNumber = ESWITCH_GROUND1;
+
+	//チュートリアル メッセージ
 	new CMapTextView();
 }
 
@@ -86,11 +95,23 @@ void CGame2::Update() {
 
 #ifdef _DEBUG
 	if (CGamePad::Push(PAD_11) || CKey::Push(LVKF_CONTROL)){
-		if (CGamePad::Once(PAD_1) || CKey::Once('1')){
+		if (CGamePad::Once(PAD_1) || CKey::Once('1')){	//無敵
 			if (!mCheat[CHEAT_NUM::EMUTEKI])
 				mCheat[CHEAT_NUM::EMUTEKI] = true;
 			else
 				mCheat[CHEAT_NUM::EMUTEKI] = false;
+		}
+		if (CGamePad::Once(PAD_2) || CKey::Once('2')){	//上下のエリア制限 解除
+			if (!mCheat[CHEAT_NUM::EAREA])
+				mCheat[CHEAT_NUM::EAREA] = true;
+			else
+				mCheat[CHEAT_NUM::EAREA] = false;
+		}
+		if (CGamePad::Once(PAD_3) || CKey::Once('3')){	//強制スクロール 解除
+			if (!mCheat[CHEAT_NUM::ESCROLL])
+				mCheat[CHEAT_NUM::ESCROLL] = true;
+			else
+				mCheat[CHEAT_NUM::ESCROLL] = false;
 		}
 	}
 #endif
@@ -100,7 +121,8 @@ void CGame2::Update() {
 
 void CGame2::Render() {
 //	CCamera2D::Begin(0.0, WINDOW_SIZE_W, 0.0, WINDOW_SIZE_H);
-	mCamera.x = CPlayerT::mpPlayer->mPosition.x;
+	mCamera.x = CMapScroll::mScroll->mPosition.x;
+	mCamera.y = CMapScroll::mScroll->mPosition.y;
 	mCamera.Begin();
 	CTaskManager::Get()->Render();
 	CCamera2D::End();
@@ -128,14 +150,24 @@ void CGame2::CheatText(){
 	}
 
 	if (mCheat[CHEAT_NUM::EFLAG]){
-		wchar_t cheat_buf[16];
-		swprintf(cheat_buf, L"\nチートしよう セッション");
+		wchar_t cheat_buf[13];
+		swprintf(cheat_buf, L"チートしよう セッション");
 		CText::DrawStringW(cheat_buf, -640, 328, 16, 1.0f, 0);
 
 		if (mCheat[CHEAT_NUM::EMUTEKI]){
-			wchar_t cheatname_buf[16];
+			wchar_t cheatname_buf[5];
 			swprintf(cheatname_buf, L"・むてき");
-			CText::DrawStringW(cheatname_buf, -640, 296, 16, 1.0f, 0);
+			CText::DrawStringW(cheatname_buf, -640, 312, 16, 1.0f, 0);
+		}
+		if (mCheat[CHEAT_NUM::EAREA]){
+			wchar_t cheatname_buf[13];
+			swprintf(cheatname_buf, L"\n・エリアせいげん なし");
+			CText::DrawStringW(cheatname_buf, -640, 312, 16, 1.0f, 0);
+		}
+		if (mCheat[CHEAT_NUM::ESCROLL]){
+			wchar_t cheatname_buf[17];
+			swprintf(cheatname_buf, L"\n\n・きょうせいスクロール なし");
+			CText::DrawStringW(cheatname_buf, -640, 312, 16, 1.0f, 0);
 		}
 	}
 #endif

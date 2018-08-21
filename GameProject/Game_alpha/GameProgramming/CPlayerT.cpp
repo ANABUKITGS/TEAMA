@@ -1,12 +1,13 @@
 #include "CPlayerT.h"
 #include "CMapSwitchGround.h"
 #include "CScene.h"
+#include "CMapScroll.h"
 
 #define PLAYER_VELOCITY_X 1.25f
 #define ATTACK_TIME 30
 
 CPlayerT *CPlayerT::mpPlayer = 0;
-CMapSwitchGround*mSwitch;
+CMapSwitchGround *mSwitch;
 
 int CPlayerT::player_ani;
 
@@ -83,20 +84,28 @@ void CPlayerT::Update(){
 		}
 	}
 
-	//落下死
-	if (mPosition.y + CELLSIZE < 0.0f){
-		mPosition = mReSpornPos;
-		mVelocityX = mVelocityY = 0.0f;
-		player_ani = EIDOL;
-		mJumpCount = 0;
-		if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI])
-			mLife--;
-	}
+	if (!CGame2::mCheat[CGame2::CHEAT_NUM::EAREA]){
+		//エリア外
+		if (mPosition.x + CELLSIZE < CMapScroll::mScroll->mPosition.x - 640.0f ||	//エリア外(左)
+			mPosition.y + CELLSIZE < 0.0f){	//エリア外(下)
+			mPosition = mReSpornPos;
+			mVelocityX = mVelocityY = 0.0f;
+			player_ani = EIDOL;
+			mJumpCount = 0;
+			if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI])
+				mLife--;
+			CMapScroll::mScroll->Reset();
+		}
 
-	//エリア外(上)
-	if (mPosition.y - CELLSIZE > 720.0f){
-		mVelocityY = 0.0f;
-		mPosition.y = 720.0f + CELLSIZE;
+		//エリア外(右)
+		if (mPosition.x > CMapScroll::mScroll->mPosition.x + 640.0f)
+			mPosition.x = CMapScroll::mScroll->mPosition.x + 640.0f;
+
+		//エリア外(上)
+		if (mPosition.y - CELLSIZE > 720.0f){
+			mVelocityY = 0.0f;
+			mPosition.y = 720.0f + CELLSIZE;
+		}
 	}
 }
 
@@ -226,6 +235,7 @@ bool CPlayerT::Collision(CRectangle *p) {
 					else{
 						mLife--;
 						mPosition = mReSpornPos;
+						CMapScroll::mScroll->Reset();
 					}
 				}
 				break;
