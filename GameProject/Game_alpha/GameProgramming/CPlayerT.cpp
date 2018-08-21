@@ -229,6 +229,16 @@ bool CPlayerT::Collision(CRectangle *p) {
 				mReSpornPos = p->mPosition;
 				break;
 
+			case EPWEAPON:
+				if (mpWeapon->mJewel_flg){
+					mJewel++;
+					mpWeapon->mJewel_flg = false;
+				}
+				if (mpWeapon->mMiniJewel_flg){
+					mMiniJewel++;
+					mpWeapon->mMiniJewel_flg = false;
+				}
+
 			case ESWITCH_GROUND1:
 			case ESWITCH_GROUND2:
 			case ENONE:
@@ -236,7 +246,6 @@ bool CPlayerT::Collision(CRectangle *p) {
 			case EBELTL:
 			case EBELTR:
 			case ESIGN:
-			case EPWEAPON:
 			case ESEARCH:
 			case ESWITCH:
 			case EUNDER:

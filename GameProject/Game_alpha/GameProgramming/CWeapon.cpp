@@ -20,9 +20,6 @@ void CWeapon::Update(){
 				mVelocity = WEAPOM_VELOCITY;
 		}
 		mPosition.x += mVelocity;
-		if (mJewelry){
-			mJewelry->mPosition = mPosition;
-		}
 
 	}
 	else{					//¶‘¶ŽžŠÔ‚ª0ˆÈ‰º
@@ -43,9 +40,12 @@ void CWeapon::Render(){
 
 bool CWeapon::Collision(CRectangle *p){
 	if (CRectangle::Collision(p)){
-		if (mTag == EPWEAPON && p->mTag == EENEMY1 && !mJewel_flg){
-			/*mJewelry = new CMapJewelry(mPosition);*/
+		if (mTag == EPWEAPON &&  !mJewel_flg && !mMiniJewel_flg && 
+			(p->mTag == EENEMY1 || p->mTag == EENEMY2 || p->mTag == EENEMY3 || p->mTag == EJEWELRY)){
 			mJewel_flg = true;
+		}
+		if (mTag == EPWEAPON && !mJewel_flg && !mMiniJewel_flg && p->mTag == EJEWELRY2){
+			mMiniJewel_flg = true;
 		}
 		return true;
 	}

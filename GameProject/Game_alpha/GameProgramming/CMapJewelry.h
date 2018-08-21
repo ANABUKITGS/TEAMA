@@ -30,6 +30,11 @@ public:
 	bool Collision(CRectangle *r);	//衝突時の処理
 };
 
+
+/*
+マップチップを継承して
+ミニ宝石クラスを定義
+*/
 class CMapMiniJewelry : public CMapChip {
 private:
 	CTexture mTexJewel;

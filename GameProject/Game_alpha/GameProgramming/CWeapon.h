@@ -15,12 +15,12 @@ public:
 	float mVelocity;	//武器の動くスピード
 	int mLife;			//武器の生存時間
 	bool mDirection;	//武器を飛ばす方向
-	CMapJewelry *mJewelry;
-	bool mJewel_flg;	
+	bool mJewel_flg;	//ジュエル　true:持ってる false:持ってない
+	bool mMiniJewel_flg;//ミニジュエル　true:持ってない false:持ってない
 	CWeapon() {
 		mPriority = 1;
-		mJewelry = 0;
 		mJewel_flg = false;
+		mMiniJewel_flg = false;
 		mLife = WEAPON_LIFE;
 		mVelocity = WEAPOM_VELOCITY;
 		CTaskManager::Get()->Add(this);
