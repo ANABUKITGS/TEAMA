@@ -15,6 +15,9 @@ private:
 	CTexture mTexJewel;
 
 public:
+	CMapJewelry()
+		: CMapChip(CVector2(0,0), CVector2(CELLSIZE / 3, CELLSIZE / 2), NULL, NULL, NULL, NULL, NULL, EJEWELRY)
+	{}
 	CMapJewelry(const CVector2& pos) 
 		//CMapChipÇ≈èâä˙âª
 		: CMapChip(pos, CVector2(CELLSIZE / 3, CELLSIZE / 2), NULL, NULL, NULL, NULL, NULL, EJEWELRY)

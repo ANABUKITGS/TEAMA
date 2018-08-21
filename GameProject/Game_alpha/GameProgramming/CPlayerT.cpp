@@ -216,7 +216,8 @@ bool CPlayerT::Collision(CRectangle *p) {
 		CVector2 aj;
 		if (CRectangle::Collision(p, &aj)) {
 			switch (p->mTag){
-			case EENEMY1: case EEWEAPON:
+			case EENEMY1: 
+			case EEWEAPON:
 				if (!mUnrivaled){
 					mUnrivaled = true;
 					if (mJewel > 0){
