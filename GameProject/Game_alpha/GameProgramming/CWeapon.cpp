@@ -1,8 +1,6 @@
 #include "CWeapon.h"
 #include "CPlayerT.h"
-
-
-
+#include "CEnemy.h"
 void CWeapon::Update(){
 	mRotation+=10;			//毎フレーム10ずつ回転させる
 	mLife--;
@@ -21,6 +19,7 @@ void CWeapon::Update(){
 		}
 		mPosition.x += mVelocity;
 
+
 	}
 	else{					//生存時間が0以下
 		mEnabled = false;
@@ -35,6 +34,16 @@ void CWeapon::Update(){
 
 }
 void CWeapon::Render(){
+	if (mTag == ECELLNUM::EPWEAPON){
+		if (mDirection)
+			mTexYoyo.DrawImage(PSTRING_UV_R, 1.0f);
+
+		else
+			mTexYoyo.DrawImage(PSTRING_UV_L, 1.0f);
+	}
+
+	/*------ 敵のヨーヨーの紐は CEnemy::Render()にある ------*/
+
 	CRectangle::Render();
 }
 
