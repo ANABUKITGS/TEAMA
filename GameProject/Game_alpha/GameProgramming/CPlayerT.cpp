@@ -89,7 +89,8 @@ void CPlayerT::Update(){
 		mVelocityX = mVelocityY = 0.0f;
 		player_ani = EIDOL;
 		mJumpCount = 0;
-		mLife--;
+		if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI])
+			mLife--;
 	}
 
 	//ƒGƒŠƒAŠO(ã)
@@ -218,8 +219,10 @@ bool CPlayerT::Collision(CRectangle *p) {
 			case EENEMY1: case EEWEAPON:
 				if (!mUnrivaled){
 					mUnrivaled = true;
-					if (mJewel > 0)
-						mJewel--;
+					if (mJewel > 0){
+						if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI])
+							mJewel--;
+					}
 					else{
 						mLife--;
 						mPosition = mReSpornPos;
