@@ -117,7 +117,7 @@ void CEditer::Update(){
 			if (editmap[cursor_posY][cursor_posX] != ENONE && editmap[cursor_posY][cursor_posX] == setcell)
 				return;
 
-			if (setcell >= ECELLNUM::ECHECKPOINT && setcell <= EBOSS){
+			if (setcell >= ECELLNUM::EPLAYER && setcell <= EBOSS){
 				if (cursor_posY > 0){
 					int temp_setcell = editmap[cursor_posY][cursor_posX];
 
@@ -509,7 +509,7 @@ void CEditer::MakeTaskList(int *gamemap) {
 
 				//チェックポイント
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::ECHECKPOINT)
-					new CMapCheckPoint(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2));
+					new CMapCheckPoint(POS(i, j));
 
 				//スイッチ
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::ESWITCH)
