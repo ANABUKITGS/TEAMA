@@ -1,5 +1,8 @@
 #include "CWeapon.h"
 #include "CPlayerT.h"
+
+
+
 void CWeapon::Update(){
 	mRotation+=10;			//–ˆƒtƒŒ[ƒ€10‚¸‚Â‰ñ“]‚³‚¹‚é
 	mLife--;
@@ -17,7 +20,9 @@ void CWeapon::Update(){
 				mVelocity = WEAPOM_VELOCITY;
 		}
 		mPosition.x += mVelocity;
-
+		if (mJewelry){
+			mJewelry->mPosition = mPosition;
+		}
 
 	}
 	else{					//¶‘¶ŽžŠÔ‚ª0ˆÈ‰º
@@ -34,4 +39,15 @@ void CWeapon::Update(){
 }
 void CWeapon::Render(){
 	CRectangle::Render();
+}
+
+bool CWeapon::Collision(CRectangle *p){
+	if (CRectangle::Collision(p)){
+		if (mTag == EPWEAPON && p->mTag == EENEMY1 && !mJewel_flg){
+			/*mJewelry = new CMapJewelry(mPosition);*/
+			mJewel_flg = true;
+		}
+		return true;
+	}
+	return false;
 }

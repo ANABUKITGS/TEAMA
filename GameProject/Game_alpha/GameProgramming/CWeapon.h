@@ -2,6 +2,7 @@
 #define CWEAPON_H
 #include "CRectangle.h"
 #include "CTaskManager.h"
+#include "CMapJewelry.h"
 
 #define WEAPOM_VELOCITY 12.0f
 #define WEAPON_LIFE 40
@@ -14,8 +15,12 @@ public:
 	float mVelocity;	//武器の動くスピード
 	int mLife;			//武器の生存時間
 	bool mDirection;	//武器を飛ばす方向
+	CMapJewelry *mJewelry;
+	bool mJewel_flg;	
 	CWeapon() {
 		mPriority = 1;
+		mJewelry = 0;
+		mJewel_flg = false;
 		mLife = WEAPON_LIFE;
 		mVelocity = WEAPOM_VELOCITY;
 		CTaskManager::Get()->Add(this);
@@ -32,6 +37,6 @@ public:
 	}
 	void Update();
 	void Render();
-	//bool Collision(CRectangle *p);
+	bool Collision(CRectangle *p);
 };
 #endif
