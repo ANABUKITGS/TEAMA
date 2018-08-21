@@ -17,6 +17,13 @@
 
 class CGame2 : public CEditer {
 public:
+	enum CHEAT_NUM{
+		EFLAG,
+		EMUTEKI,
+		ENUKE,
+		ESIZE,
+	};
+	static bool mCheat[CHEAT_NUM::ESIZE];
 	static CCamera2D mCamera;
 
 
@@ -32,6 +39,8 @@ public:
 	void Update();
 	void Scroll();
 	void Render();
+
+	void CheatText();
 
 	static void MakeTaskList(int *gamemap);
 };

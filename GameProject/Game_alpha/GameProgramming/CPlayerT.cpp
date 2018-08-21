@@ -82,6 +82,22 @@ void CPlayerT::Update(){
 			player_ani = EJUMP;
 		}
 	}
+
+	//落下死
+	if (mPosition.y + CELLSIZE < 0.0f){
+		mPosition = mReSpornPos;
+		mVelocityX = mVelocityY = 0.0f;
+		player_ani = EIDOL;
+		mJumpCount = 0;
+		if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI])
+			mLife--;
+	}
+
+	//エリア外(上)
+	if (mPosition.y - CELLSIZE > 720.0f){
+		mVelocityY = 0.0f;
+		mPosition.y = 720.0f + CELLSIZE;
+	}
 }
 
 //前進処理
@@ -200,12 +216,13 @@ bool CPlayerT::Collision(CRectangle *p) {
 		CVector2 aj;
 		if (CRectangle::Collision(p, &aj)) {
 			switch (p->mTag){
-			case EENEMY1: 
-			case EEWEAPON:
+			case EENEMY1: case EEWEAPON:
 				if (!mUnrivaled){
 					mUnrivaled = true;
-					if (mJewel > 0)
-						mJewel--;
+					if (mJewel > 0){
+						if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI])
+							mJewel--;
+					}
 					else{
 						mLife--;
 						mPosition = mReSpornPos;
@@ -229,16 +246,6 @@ bool CPlayerT::Collision(CRectangle *p) {
 				mReSpornPos = p->mPosition;
 				break;
 
-			case EPWEAPON:
-				if (mpWeapon->mJewel_flg){
-					mJewel++;
-					mpWeapon->mJewel_flg = false;
-				}
-				if (mpWeapon->mMiniJewel_flg){
-					mMiniJewel++;
-					mpWeapon->mMiniJewel_flg = false;
-				}
-
 			case ESWITCH_GROUND1:
 			case ESWITCH_GROUND2:
 			case ENONE:
@@ -246,6 +253,7 @@ bool CPlayerT::Collision(CRectangle *p) {
 			case EBELTL:
 			case EBELTR:
 			case ESIGN:
+			case EPWEAPON:
 			case ESEARCH:
 			case ESWITCH:
 			case EUNDER:

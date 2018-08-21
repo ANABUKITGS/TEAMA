@@ -9,9 +9,10 @@
 #include "CBGM.h"
 #include "CMapBackImage.h"
 #include "CMapSwitchGround.h"
+#include "CMapSign.h"
 
+bool CGame2::mCheat[CHEAT_NUM::ESIZE];
 CMapBackImage *mBackImage[2];
-
 CCamera2D CGame2::mCamera;
 
 void CGame2::Init() {
@@ -56,6 +57,7 @@ void CGame2::Init() {
 	mBackImage[0] = new CMapBackImage(CVector2(mCamera.x, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER1);
 	mBackImage[1] = new CMapBackImage(CVector2(mCamera.x + 1280, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER1);
 	CMapSwitchGround::mNumber = ESWITCH_GROUND1;
+	new CMapTextView();
 }
 
 void CGame2::Update() {
@@ -81,6 +83,17 @@ void CGame2::Update() {
 		CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ETITLE;
 		CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETITLE);
 	}
+
+#ifdef _DEBUG
+	if (CGamePad::Push(PAD_11) || CKey::Push(LVKF_CONTROL)){
+		if (CGamePad::Once(PAD_1) || CKey::Once('1')){
+			if (!mCheat[CHEAT_NUM::EMUTEKI])
+				mCheat[CHEAT_NUM::EMUTEKI] = true;
+			else
+				mCheat[CHEAT_NUM::EMUTEKI] = false;
+		}
+	}
+#endif
 	CTaskManager::Get()->Update();
 	CTaskManager::Get()->Remove();
 }
@@ -96,6 +109,7 @@ void CGame2::Render() {
 	wchar_t jumptime_buf[256];
 	swprintf(jumptime_buf, L"プレイヤー\nmVelocityX\n%6.2f\nmVelocityY\n%6.2f\nmPosition.x\n%.2f\nmPosition.y\n%.2f", CPlayerT::mpPlayer->mVelocityX, CPlayerT::mpPlayer->mVelocityY, CPlayerT::mpPlayer->mPosition.x, CPlayerT::mpPlayer->mPosition.y);
 	CText::DrawStringW(jumptime_buf, 0, 0, 16, 1.0f, 0);
+	CheatText();
 #endif
 
 	//経過時間
@@ -104,4 +118,25 @@ void CGame2::Render() {
 		time_buf[i] = '\0';
 	sprintf(time_buf, "%02d:%06.3f\nmJewel     %-2d\nmMiniJewel %-2d\nmLife      %-2d", CTime::ElapsedTimeMin(), CTime::ElapsedTimeSec(), CPlayerT::mpPlayer->mJewel, CPlayerT::mpPlayer->mMiniJewel, CPlayerT::mpPlayer->mLife);
 	CText::DrawString(time_buf, 352, 328, 16, 1.0f, 0);
+}
+
+void CGame2::CheatText(){
+#ifdef _DEBUG
+	for (int i = CHEAT_NUM::EMUTEKI; i < CHEAT_NUM::ESIZE; i++){
+		if (mCheat[i])
+			mCheat[CHEAT_NUM::EFLAG] = true;	//このセッションでチートを使ったか
+	}
+
+	if (mCheat[CHEAT_NUM::EFLAG]){
+		wchar_t cheat_buf[16];
+		swprintf(cheat_buf, L"\nチートしよう セッション");
+		CText::DrawStringW(cheat_buf, -640, 328, 16, 1.0f, 0);
+
+		if (mCheat[CHEAT_NUM::EMUTEKI]){
+			wchar_t cheatname_buf[16];
+			swprintf(cheatname_buf, L"・むてき");
+			CText::DrawStringW(cheatname_buf, -640, 296, 16, 1.0f, 0);
+		}
+	}
+#endif
 }

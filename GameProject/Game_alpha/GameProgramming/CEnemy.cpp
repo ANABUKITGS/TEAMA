@@ -169,6 +169,22 @@ bool CEnemy::Collision(CRectangle*p){
 }
 
 void CEnemy::Render(){
+	switch (mAnimationTag){
+	case EATTACK:
+		if (mpEWeapon != NULL){
+			if (mDirection)
+				//ƒˆ[ƒˆ[‚Ì•R
+				mpEWeapon->mTexYoyo.DrawImage(ESTRING_UV_R, 1.0f);
+
+			else
+				//ƒˆ[ƒˆ[‚Ì•R
+				mpEWeapon->mTexYoyo.DrawImage(ESTRING_UV_L, 1.0f);
+		}
+		break;
+
+	default:
+		break;
+	}
 	CRectangle::Render();
 }
 

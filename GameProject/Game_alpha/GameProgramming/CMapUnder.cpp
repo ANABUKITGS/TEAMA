@@ -20,9 +20,9 @@ bool CMapUnder::Collision(CRectangle*r){
 		r->mTag == ECELLNUM::EBOSS){
 		if (CRectangle::Collision(r) && CRectangle::Collision(r, &aj)) {
 			if (mPosition.y < r->mPosition.y - r->mScale.y) {
-				//プレイヤーがジャンプ中の時は判定しない
 				if (r->mTag == ECELLNUM::EPLAYER){
-					if (CPlayerT::mpPlayer->mJump)
+					//プレイヤーが上昇中の時は判定しない
+					if (CPlayerT::mpPlayer->mVelocityY > 0.0f)
 						return false;
 					CPlayerT::mpPlayer->mJumpCount = 0;
 				}
