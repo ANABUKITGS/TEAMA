@@ -488,11 +488,11 @@ void CEditer::MakeTaskList(int *gamemap) {
 				
 				//ïÛêŒ
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EJEWELRY)
-					new CMapJewelry(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject);
+					new CMapJewelry(POS(i, j));
 
-				//ïÛêŒ
+				//ïÛêŒÇÃåáï–
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EJEWELRY2)
-					new CMapMiniJewelry(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject);
+					new CMapMiniJewelry(POS(i, j));
 
 				//óéÇøÇÈè∞
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::ECHIKUWA)

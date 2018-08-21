@@ -1,8 +1,6 @@
 #include "CMapBox.h"
 #include "CScene.h"
 
-bool CMapBox::mBreak;
-
 void CMapBox::Update() {
 	if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
 		if (mBreak)
