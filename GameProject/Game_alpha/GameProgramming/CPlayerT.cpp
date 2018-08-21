@@ -205,8 +205,10 @@ bool CPlayerT::Collision(CRectangle *p) {
 					mUnrivaled = true;
 					if (mJewel > 0)
 						mJewel--;
-					else
+					else{
 						mLife--;
+						mPosition = mReSpornPos;
+					}
 				}
 				break;
 
@@ -222,6 +224,10 @@ bool CPlayerT::Collision(CRectangle *p) {
 				}
 				break;
 
+			case ECHECKPOINT:
+				mReSpornPos = p->mPosition;
+				break;
+
 			case ESWITCH_GROUND1:
 			case ESWITCH_GROUND2:
 			case ENONE:
@@ -229,7 +235,6 @@ bool CPlayerT::Collision(CRectangle *p) {
 			case EBELTL:
 			case EBELTR:
 			case ESIGN:
-			case ECHECKPOINT:
 			case EPWEAPON:
 			case ESEARCH:
 			case ESWITCH:

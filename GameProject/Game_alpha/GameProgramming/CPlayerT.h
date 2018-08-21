@@ -42,6 +42,7 @@ public:
 	int mDamageInterval;	//ダメージインターバル
 	bool mUnrivaled;		//true:無敵状態
 	float mAlpha;			//アルファ値
+	CVector2 mReSpornPos;	//リスポーン地点
 
 	CWeapon *mpWeapon;
 	CPlayerT() 
@@ -77,6 +78,7 @@ public:
 		: CPlayerT()
 	{
 		SetRectangle(position, CVector2(16, 60), NULL);
+		mReSpornPos = position;
 	}
 
 	void Update();
