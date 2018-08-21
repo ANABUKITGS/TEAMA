@@ -216,6 +216,10 @@ bool CPlayerT::Collision(CRectangle *p) {
 
 			case EJEWELRY2:
 				mMiniJewel++;
+				if (mMiniJewel == 10){
+					mJewel++;
+					mMiniJewel = 0;
+				}
 				break;
 
 			case ESWITCH_GROUND1:
