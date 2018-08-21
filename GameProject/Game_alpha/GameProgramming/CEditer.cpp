@@ -9,6 +9,7 @@
 #include "CMapChikuwa.h"
 #include "CMapBelt.h"
 #include "CMapSwitchGround.h"
+#include "CMapCheckPoint.h"
 #include "CMapBox.h"
 #include "CMapSteel.h"
 
@@ -505,6 +506,10 @@ void CEditer::MakeTaskList(int *gamemap) {
 				//スイッチ床2
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::ESWITCH_GROUND2)
 					new CMapSwitchGround(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::ESWITCH_GROUND2);
+
+				//チェックポイント
+				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::ECHECKPOINT)
+					new CMapCheckPoint(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2));
 
 				//スイッチ
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::ESWITCH)

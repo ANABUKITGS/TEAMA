@@ -93,6 +93,7 @@
     <ClCompile Include="CMapBackImage.cpp" />
     <ClCompile Include="CMapBelt.cpp" />
     <ClCompile Include="CMapBox.cpp" />
+    <ClCompile Include="CMapCheckPoint.cpp" />
     <ClCompile Include="CMapChikuwa.cpp" />
     <ClCompile Include="CMapSign.cpp" />
     <ClCompile Include="CMapSteel.cpp" />
@@ -131,6 +132,7 @@
     <ClInclude Include="CMapBackImage.h" />
     <ClInclude Include="CMapBelt.h" />
     <ClInclude Include="CMapBox.h" />
+    <ClInclude Include="CMapCheckPoint.h" />
     <ClInclude Include="CMapChikuwa.h" />
     <ClInclude Include="CMapSign.h" />
     <ClInclude Include="CMapSteel.h" />
