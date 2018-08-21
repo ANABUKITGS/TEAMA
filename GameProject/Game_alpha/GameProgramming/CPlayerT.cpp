@@ -242,36 +242,38 @@ bool CPlayerT::Collision(CRectangle *p) {
 				break;
 
 			default:
-				//‰E‹ó‚«
-				if (!(p->mColFlg & EDT_RIGHT)) {
-					if (aj.x > 0) {
-						mPosition.x = mPosition.x + aj.x;
-					}
-				}
-				//¶‹ó‚«
-				if (!(p->mColFlg & EDT_LEFT)) {
-					if (aj.x < 0) {
-						mPosition.x = mPosition.x + aj.x;
-					}
-				}
-				//‰º‹ó‚«
-				if (!(p->mColFlg & EDT_BOTTOM)) {
-					if (aj.y < 0) {
-						mPosition.y = mPosition.y + aj.y;
-						mVelocityY = 0.0f;
-					}
-				}
-				//ã‹ó‚«
-				if (!(p->mColFlg & EDT_TOP)) {
-					if (aj.y > 0) {
-						mPosition.y = mPosition.y + aj.y;
-						mJumpCount = 0;
-						mVelocityY = 0.0f;
-					}
-				}
-//					mPosition = mPosition + aj;
-//					mJumpCount = 0;
-//					mVelocityY = 0.0f;
+			{
+					   CVector2 ad;
+					   if (aj.x > 0) {
+						   //‰E‹ó‚«
+						   if (!(p->mColFlg & EDT_RIGHT)) {
+							   mPosition.x = mPosition.x + aj.x;
+						   }
+					   }
+					   else if (aj.x < 0) {
+						   //¶‹ó‚«
+						   if (!(p->mColFlg & EDT_LEFT)) {
+							   mPosition.x = mPosition.x + aj.x;
+						   }
+					   }
+					   if (CRectangle::Collision(p, &aj, &ad)) {
+						   if (ad.y < 0) {
+							   //‰º‹ó‚«
+							   if (!(p->mColFlg & EDT_BOTTOM)) {
+								   mPosition.y = mPosition.y + ad.y;
+								   mVelocityY = 0.0f;
+							   }
+						   }
+						   else if (ad.y > 0) {
+							   //ã‹ó‚«
+							   if (!(p->mColFlg & EDT_TOP)) {
+								   mPosition.y = mPosition.y + ad.y;
+								   mJumpCount = 0;
+								   mVelocityY = 0.0f;
+							   }
+						   }
+					   }
+			}
 				break;
 
 
