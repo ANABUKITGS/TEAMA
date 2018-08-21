@@ -10,7 +10,7 @@ private:
 
 public:
 	float mVelocityY;
-	static bool mBreak;
+	bool mBreak;
 	CMapSteel(const CVector2& pos)
 		//CMapChipÇ≈èâä˙âª
 		: CMapChip(pos, CVector2(CELLSIZE * 2, CELLSIZE / 2), NULL, NULL, NULL, NULL, NULL, ECELLNUM::ESTEEL)

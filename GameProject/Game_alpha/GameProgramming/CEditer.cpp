@@ -489,11 +489,11 @@ void CEditer::MakeTaskList(int *gamemap) {
 				
 				//宝石
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EJEWELRY)
-					new CMapJewelry(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject);
+					new CMapJewelry(POS(i, j));
 
-				//宝石
+				//宝石の欠片
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EJEWELRY2)
-					new CMapMiniJewelry(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject);
+					new CMapMiniJewelry(POS(i, j));
 
 				//落ちる床
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::ECHIKUWA)
@@ -518,33 +518,42 @@ void CEditer::MakeTaskList(int *gamemap) {
 				//プレイヤー ~ ボス
 				if (gamemap[i * MAP_SIZEX + j] >= ECELLNUM::EPLAYER && gamemap[i * MAP_SIZEX + j] <= ECELLNUM::EBOSS){
 					if (gamemap[i * MAP_SIZEX + j] == gamemap[(i - 1) * MAP_SIZEX + j]){
+						//プレイヤー
 						if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EPLAYER)
 							new CPlayerT(POS(i, j));
 
+						//敵1
 						else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EENEMY1)
 							new CEnemy(POS(i, j));
 
+						//敵2
 						else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EENEMY2)
 							new CEnemy(POS(i, j));
 
+						//敵3
 						else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EENEMY3)
 							new CEnemy(POS(i, j));
+
+						//ボス
+						//else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EBOSS)
+						//	new CBoss(POS(i, j));
 					}
 				}
 
 				//特殊ギミック
 				if (gamemap[i * MAP_SIZEX + j] >= ECELLNUM::EBOX && gamemap[i * MAP_SIZEX + j] < ECELLNUM::ESIGN){
+					//箱
 					if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EBOX)
 						new CMapBox(POS(i, j));
 
+					//鉄骨
 					else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::ESTEEL)
 						new CMapSteel(POS(i, j));
 				}
 
 				//チュートリアル用 看板
 				if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::ESIGN){
-					new CMapSign(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2));
-
+					new CMapSign(POS(i, j));
 				}
 			}
 		}

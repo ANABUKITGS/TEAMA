@@ -1,8 +1,6 @@
 #include "CMapSteel.h"
 #include "CScene.h"
 
-bool CMapSteel::mBreak;
-
 void CMapSteel::Update() {
 	if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
 		if (mBreak)

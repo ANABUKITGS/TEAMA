@@ -4,32 +4,44 @@
 #include "CMapChip.h"
 
 //宝石のマッピングデータ
-#define JEWELRY_UV 0, 64, 64 * 6, 64 * 5
-#define JEWELRY2_UV 0, 64, 64 * 7, 64 * 6
+#define JEWELRY_UV mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE / 2, mPosition.y + CELLSIZE / 2, 0, 64, 64, 0
+#define JEWELRY2_UV mPosition.x - CELLSIZE / 4, mPosition.x + CELLSIZE / 4, mPosition.y - CELLSIZE / 4, mPosition.y + CELLSIZE / 4, 0, 64, 128, 64
 /*
 マップチップを継承して
 宝石クラスを定義
 */
 class CMapJewelry : public CMapChip {
+private:
+	CTexture mTexJewel;
+
 public:
-	CMapJewelry(const CVector2& pos, const CVector2& scale, CTexture *texture) 
+	CMapJewelry(const CVector2& pos) 
 		//CMapChipで初期化
-		: CMapChip(pos, scale, texture, JEWELRY_UV, EJEWELRY)
-	{}
+		: CMapChip(pos, CVector2(CELLSIZE / 3, CELLSIZE / 2), NULL, NULL, NULL, NULL, NULL, EJEWELRY)
+	{
+		mRender = false;
+		mTexJewel.Load(".\\Data\\Images\\Map\\MapJewel.tga");
+	}
 	void Update();	//動きを処理する
+	void Render();	//描画を処理する
 	bool Collision(CRectangle *r);	//衝突時の処理
-	//RenderはCMapChipのRenderを使う
 };
 
 class CMapMiniJewelry : public CMapChip {
+private:
+	CTexture mTexJewel;
+
 public:
-	CMapMiniJewelry(const CVector2& pos, const CVector2& scale, CTexture *texture)
+	CMapMiniJewelry(const CVector2& pos)
 		//CMapChipで初期化
-		: CMapChip(pos, scale, texture, JEWELRY2_UV, EJEWELRY2)
-	{}
+		: CMapChip(pos, CVector2(CELLSIZE / 4, CELLSIZE / 2), NULL, NULL, NULL, NULL, NULL, EJEWELRY2)
+	{
+		mRender = false;
+		mTexJewel.Load(".\\Data\\Images\\Map\\MapJewel.tga");
+	}
 	void Update();	//動きを処理する
+	void Render();	//描画を処理する
 	bool Collision(CRectangle *r);	//衝突時の処理
-	//RenderはCMapChipのRenderを使う
 };
 
 #endif

@@ -33,16 +33,6 @@ bool CMapChikuwa::Collision(CRectangle *r) {
 		r->mTag == ECELLNUM::EBOX ||
 		r->mTag == ECELLNUM::ESTEEL){
 
-		//î†ÇÃóéâ∫íÜÇÕñ≥éã
-		if (CMapBox::mBreak &&
-			r->mTag == ECELLNUM::EBOX)
-			return false;
-
-		//ìSçúÇÃóéâ∫íÜÇÕñ≥éã
-		if (CMapSteel::mBreak &&
-			r->mTag == ECELLNUM::ESTEEL)
-			return false;
-
 		CVector2 aj;
 		if (CRectangle::Collision(r) && CRectangle::Collision(r, &aj)) {
 			//ç∂

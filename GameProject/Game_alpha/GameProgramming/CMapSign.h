@@ -10,9 +10,9 @@ public:
 	bool mTextbox;
 	int sign_num;
 	CTexture mTexSignhoge;
-	CMapSign(const CVector2& pos, const CVector2& scale)
+	CMapSign(const CVector2& pos)
 		//CMapChipÇ≈èâä˙âª
-		: CMapChip(pos, scale, NULL, SIGN_UV, ECELLNUM::ESIGN)
+		: CMapChip(pos, CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL, SIGN_UV, ECELLNUM::ESIGN)
 	{
 		mTexSignhoge.Load(".\\Data\\Images\\Map\\MapSign.tga");
 		mTextbox = false;

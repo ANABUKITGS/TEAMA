@@ -5,8 +5,12 @@
 ‚Æ‚è‚ ‚¦‚¸‰ñ‚·
 */
 void CMapJewelry::Update() {
-	mRotation += 1;
-	CMapChip::Update();
+	//mRotation += 1;
+	//CMapChip::Update();
+}
+
+void CMapJewelry::Render(){
+	mTexJewel.DrawImage(JEWELRY_UV, 1.0f);
 }
 
 /*
@@ -30,8 +34,12 @@ bool CMapJewelry::Collision(CRectangle *r) {
 ‚Æ‚è‚ ‚¦‚¸‰ñ‚·
 */
 void CMapMiniJewelry::Update() {
-	mRotation += 1;
-	CMapChip::Update();
+	//mRotation += 1;
+	//CMapChip::Update();
+}
+
+void CMapMiniJewelry::Render(){
+	mTexJewel.DrawImage(JEWELRY2_UV, 1.0f);
 }
 
 /*
