@@ -9,6 +9,7 @@
 #include "CBGM.h"
 #include "CMapBackImage.h"
 #include "CMapSwitchGround.h"
+#include "CMapSign.h"
 
 CMapBackImage *mBackImage[2];
 
@@ -56,6 +57,7 @@ void CGame2::Init() {
 	mBackImage[0] = new CMapBackImage(CVector2(mCamera.x, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER1);
 	mBackImage[1] = new CMapBackImage(CVector2(mCamera.x + 1280, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER1);
 	CMapSwitchGround::mNumber = ESWITCH_GROUND1;
+	new CMapTextView();
 }
 
 void CGame2::Update() {

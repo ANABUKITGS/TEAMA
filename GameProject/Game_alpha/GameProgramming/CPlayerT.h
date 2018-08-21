@@ -49,7 +49,7 @@ public:
 	
 	{
 		mpPlayer = this;
-		mPriority = 1;
+		mPriority = 10;
 		mTag = EPLAYER;
 		mJump = false;
 		mDash = false;
