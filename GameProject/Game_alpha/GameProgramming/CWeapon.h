@@ -5,7 +5,7 @@
 #include "CMapJewelry.h"
 
 #define WEAPOM_VELOCITY	12.0f
-#define WEAPON_LIFE		40
+#define WEAPON_LIFE		20
 
 #define PSTRING_UV_L		mPosition.x, CPlayerT::mpPlayer->mPosition.x, mPosition.y - 10, mPosition.y + 10, 0, 64, 128, 64
 #define PSTRING_UV_R		CPlayerT::mpPlayer->mPosition.x, mPosition.x, mPosition.y - 10, mPosition.y + 10, 0, 64, 128, 64
@@ -18,7 +18,9 @@ public:
 	CTexture mTexYoyo;
 	float mVelocity;	//武器の動くスピード
 	int mLife;			//武器の生存時間
+	bool mReturn;
 	bool mDirection;	//武器を飛ばす方向
+	CVector2 mPosInit;	//投げたときの初期位置
 	bool mJewel_flg;	//ジュエル　true:持ってる false:持ってない
 	bool mMiniJewel_flg;//ミニジュエル　true:持ってない false:持ってない
 	CWeapon() {
@@ -26,6 +28,7 @@ public:
 		mJewel_flg = false;
 		mMiniJewel_flg = false;
 		mLife = WEAPON_LIFE;
+		mReturn = false;
 		mVelocity = WEAPOM_VELOCITY;
 		CTaskManager::Get()->Add(this);
 	}
@@ -34,6 +37,7 @@ public:
 	{
 		mTexYoyo.Load(".\\Data\\Images\\Player\\Yoyo.tga");
 		SetRectangle(position, CVector2(10, 10), &mTexYoyo);
+		mPosInit = position;
 		mDirection = direction;
 		mTag = tag;
 		//mRender = false;
