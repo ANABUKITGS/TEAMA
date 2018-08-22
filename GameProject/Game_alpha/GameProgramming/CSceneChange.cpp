@@ -9,6 +9,8 @@ CGame mGame;
 CGame2 mGame2;
 CTitle mTitle;
 CGetScore mScore;
+CRanking mRanking;
+CName mName;
 CBGM mBGM;
 
 int CSceneChange::changenum = ETITLE;
@@ -18,6 +20,8 @@ void CSceneChange::Init(){
 	mGame.Init();
 	mTitle.Init();
 	mEditer.Init();
+	mRanking.Init();
+	mName.Init();
 	mBGM.Init();
 }
 
@@ -35,7 +39,11 @@ void CSceneChange::Update(){
 		break;
 
 	case ECSCENECHANGE_NUM::ERANKING:
+		mRanking.Update();
 		break;
+
+	case ECSCENECHANGE_NUM::ENAME:
+		mName.Update();
 
 	case ECSCENECHANGE_NUM::ERESULT:
 		mScore.Update();
