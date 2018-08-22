@@ -420,7 +420,7 @@ void CPlayerT::Render(){
 		if (player_ani_count > 1)
 			player_ani_count = 1;
 
-		PLAYER_ANI_COUNT_FLAME = 8;
+		PLAYER_ANI_COUNT_FLAME = 4;
 
 		if (!mDirection)	//ç∂å¸Ç´
 			mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 640, 512, mAlpha);
