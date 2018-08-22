@@ -11,21 +11,20 @@
 #define DRAWSTRING_UV	text_buf, -256, 192, 32, 3, 1.0f
 #define TEXT1			L"hogehogehoge\nあいうえおかきくけこ\n0123456789"
 
+//チュートリアル 看板
 class CMapSign : public CMapChip {
+private:
+	CTexture mTexSign;
+
 public:
 	int sign_num;
 	bool mView;
-	CTexture mTexSignhoge;
 	CMapSign(const CVector2& pos)
 		//CMapChipで初期化
 		: CMapChip(pos, CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL, SIGN_UV, ECELLNUM::ESIGN)
 	{
-		mTexSignhoge.Load(".\\Data\\Images\\Map\\MapSign.tga");
-		mPriority = 0;
+		mTexSign.Load(".\\Data\\Images\\Map\\MapSign.tga");
 		mRender = false;
-		static int sign_num_temp = 0;
-		sign_num_temp++;
-		sign_num = sign_num_temp;
 		mTag = ECELLNUM::ESIGN;
 	}
 	void Update();
@@ -48,6 +47,53 @@ public:
 		swprintf(text_buf, TEXT1);
 	}
 	void Update();
+	void Render();
+};
+
+//チュートリアル終了 看板
+class CMapEndSign : public CMapChip {
+private:
+	CTexture mTexEndSign;
+
+public:
+	enum ETUTORIAL_END_NUM{
+		EFALSE = 1,	//無効
+		EFADEOUT,	//フェードアウト
+		ETRUE,		//有効, フェードイン
+		ESIZE,		//TUTORIAL_END_NUM サイズ
+	};
+	static ETUTORIAL_END_NUM tutorial_end;	//チュートリアル 終了フラグ
+	CMapEndSign(const CVector2& pos)
+		//CMapChipで初期化
+		: CMapChip(pos, CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL, SIGN_UV, ECELLNUM::EENDSIGN)
+	{
+		if (tutorial_end != ETUTORIAL_END_NUM::ETRUE)
+			tutorial_end = ETUTORIAL_END_NUM::EFALSE;
+		mTexEndSign.Load(".\\Data\\Images\\Map\\MapEndSign.tga");
+		mRender = false;
+		mTag = ECELLNUM::EENDSIGN;
+	}
+	void Update();
+	bool Collision(CRectangle *r);	//衝突時の処理
+	void Render();
+};
+
+//ボスの部屋 看板
+class CMapBossRoomSign : public CMapChip {
+private:
+	CTexture mTexBossRoomSign;
+
+public:
+	CMapBossRoomSign(const CVector2& pos)
+		//CMapChipで初期化
+		: CMapChip(pos, CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL, SIGN_UV, ECELLNUM::EBOSSROOM)
+	{
+		mTexBossRoomSign.Load(".\\Data\\Images\\Map\\MapEndSign.tga");
+		mRender = false;
+		mTag = ECELLNUM::EBOSSROOM;
+	}
+	void Update();
+	bool Collision(CRectangle *r);	//衝突時の処理
 	void Render();
 };
 #endif

@@ -29,6 +29,8 @@ enum ECELLNUM{
 	EBOX,				//木箱
 	ESTEEL,				//鉄骨
 	ESIGN,				//チュートリアル用 看板
+	EENDSIGN,			//チュートリアル 終了フラグ
+	EBOSSROOM,			//ボスの部屋フラグ
 	ESIZE,				//ECELLNUM サイズ
 
 	/*------ その他 ------*/

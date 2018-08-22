@@ -6,11 +6,16 @@
 
 #define BACK_UV mPosition.x - 640, mPosition.x + 640, mPosition.y - 360, mPosition.y + 360, 0, 1280, 720 , 0, 1.0f
 
+#define FADE_UV -640, 640, -360, 360, 0, 1280, 720 , 0
+
 class CMapBackImage : public CRectangle{
 private:
 	int texnum;
 	CTexture mTexLayer1;
 	CTexture mTexLayer2;
+
+	static CTexture mTexFade;
+	static float mAlpha;
 
 public:
 	enum ETEXTURE_LAYER{
@@ -24,6 +29,7 @@ public:
 	{
 		mTexLayer1.Load(".\\Data\\Images\\Map\\Background1_1.tga");
 		mTexLayer2.Load(".\\Data\\Images\\Map\\Background1_2.tga");
+		mTexFade.Load(".\\Data\\Images\\Fade\\Black.tga");
 
 		texnum = tag;
 		mTag = ECELLNUM::ENONE;
@@ -39,5 +45,7 @@ public:
 	}
 	void Update();
 	void Render();
+
+	static void RenderFade();
 };
 #endif

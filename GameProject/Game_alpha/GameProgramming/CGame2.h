@@ -35,7 +35,8 @@ public:
 
 //	bool mapsctoll_flag;							//スクロール 開始
 
-	void Init();
+	void Init(const char*);
+	void MapLoad(const char*);
 	void Update();
 	void Scroll();
 	void Render();

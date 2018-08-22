@@ -28,7 +28,7 @@ void CTitle::Update(){
 	if (CGamePad::Once(PAD_2) || CKey::Once(VK_RETURN) || CKey::Once(VK_SPACE)){
 		switch (cursor_num){
 		case CSceneChange::ECSCENECHANGE_NUM::EGAME:
-			mGame2.Init();
+			mGame2.Init(TUTORIAL_MAP);
 			CTime::GetStartTime();
 			CSceneChange::changenum = cursor_num;
 			CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETUTORIAL);

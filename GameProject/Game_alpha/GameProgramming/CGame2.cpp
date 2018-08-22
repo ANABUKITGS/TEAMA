@@ -17,14 +17,36 @@ CMapBackImage *mBackImage[4];
 
 CCamera2D CGame2::mCamera;
 
-void CGame2::Init() {
+void CGame2::Init(const char *map) {
 	mCamera.SetOrtho(WINDOW_SIZE_W / 2, WINDOW_SIZE_H / 2, WINDOW_SIZE_W / 2, WINDOW_SIZE_H / 2);
+	MapLoad(map);
+	//背景
+	mBackImage[0] = new CMapBackImage(CVector2(mCamera.x, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER1);
+	mBackImage[1] = new CMapBackImage(CVector2(mCamera.x + 1280, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER1);
+	mBackImage[2] = new CMapBackImage(CVector2(mCamera.x, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER2);
+	mBackImage[3] = new CMapBackImage(CVector2(mCamera.x + 1280, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER2);
 
+
+	//カメラ基点
+	CMapScroll::mScroll = new CMapScroll();
+
+	//スイッチ足場 青 有効化
+	CMapSwitchGround::mNumber = ESWITCH_GROUND1;
+
+	//チュートリアル メッセージ
+	new CMapTextView();
+
+	//チート初期化
+	for (int i = CHEAT_NUM::EFLAG; i < CHEAT_NUM::ESIZE; i++)
+		mCheat[i] = false;
+}
+
+void CGame2::MapLoad(const char *map){
 	char filepath[256];
-//	if (map == CMapIO::EGAMEMAP)
+	//	if (map == CMapIO::EGAMEMAP)
 	//	sprintf(filepath, "%s", GAME_MAP);
 	//else if (map == CMapIO::ETUTORIAL)
-		sprintf(filepath, "%s", TUTORIAL_MAP);
+	sprintf(filepath, "%s", map);
 	//else if (map == CMapIO::EEDITERMAP)
 	//	sprintf(filepath, "%s", EDITER_MAP);
 	//else{
@@ -53,27 +75,7 @@ void CGame2::Init() {
 		sprintf(loadmsg, "Load to %s\n", filepath);
 		printf(loadmsg);
 		fclose(fp);	//ファイルを閉じる
-
 	}
-	//背景
-	mBackImage[0] = new CMapBackImage(CVector2(mCamera.x, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER1);
-	mBackImage[1] = new CMapBackImage(CVector2(mCamera.x + 1280, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER1);
-	mBackImage[2] = new CMapBackImage(CVector2(mCamera.x, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER2);
-	mBackImage[3] = new CMapBackImage(CVector2(mCamera.x + 1280, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER2);
-
-
-	//カメラ基点
-	CMapScroll::mScroll = new CMapScroll();
-
-	//スイッチ足場 青 有効化
-	CMapSwitchGround::mNumber = ESWITCH_GROUND1;
-
-	//チュートリアル メッセージ
-	new CMapTextView();
-
-	//チート初期化
-	for (int i = CHEAT_NUM::EFLAG; i < CHEAT_NUM::ESIZE; i++)
-		mCheat[i] = false;
 }
 
 void CGame2::Update() {
@@ -113,6 +115,8 @@ void CGame2::Update() {
 		CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ETITLE;
 		CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETITLE);
 	}
+	if (CGamePad::Once(PAD_9) || CKey::Once(VK_RETURN))
+		CMapEndSign::tutorial_end = CMapEndSign::ETUTORIAL_END_NUM::EFADEOUT;
 
 #ifdef _DEBUG
 	if (CGamePad::Push(PAD_11) || CKey::Push(LVKF_CONTROL)){
@@ -148,6 +152,7 @@ void CGame2::Render() {
 	CTaskManager::Get()->Render();
 	CCamera2D::End();
 
+	CMapBackImage::RenderFade();
 #ifdef _DEBUG
 	wchar_t jumptime_buf[256];
 	swprintf(jumptime_buf, L"プレイヤー\nmVelocityX\n%6.2f\nmVelocityY\n%6.2f\nmPosition.x\n%.2f\nmPosition.y\n%.2f", CPlayerT::mpPlayer->mVelocityX, CPlayerT::mpPlayer->mVelocityY, CPlayerT::mpPlayer->mPosition.x, CPlayerT::mpPlayer->mPosition.y);

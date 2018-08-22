@@ -22,8 +22,6 @@ private:
 	static CSound mSoundResult;		//リザルト用
 	static CSound mSoundRanking;	//ランキング用
 
-	static void AllStop();
-
 public:
 	enum EMUSIC_NUM{
 		ETITLE = 1,
@@ -37,6 +35,7 @@ public:
 
 	void Init();
 	void Update();
+	static void AllStop();
 
 	static void ChangeMusic(EMUSIC_NUM);
 };

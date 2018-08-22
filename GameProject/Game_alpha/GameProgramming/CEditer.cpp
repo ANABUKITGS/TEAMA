@@ -550,9 +550,16 @@ void CEditer::MakeTaskList(int *gamemap) {
 				}
 
 				//チュートリアル用 看板
-				if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::ESIGN){
+				if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::ESIGN)
 					new CMapSign(POS(i, j));
-				}
+
+				//チュートリアル 終了 看板
+				if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EENDSIGN)
+					new CMapEndSign(POS(i, j));
+
+				//ボスの部屋 看板
+				if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EBOSSROOM)
+					new CMapBossRoomSign(POS(i, j));
 			}
 		}
 	}
