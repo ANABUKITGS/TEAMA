@@ -12,6 +12,7 @@
 #include "CMapCheckPoint.h"
 #include "CMapBox.h"
 #include "CMapSteel.h"
+#include "CBoss.h"
 
 #include "CBGM.h"
 
@@ -532,8 +533,8 @@ void CEditer::MakeTaskList(int *gamemap) {
 							new CEnemy(POS(i, j), ECELLNUM::EENEMY3);
 
 						//É{ÉX
-						//else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EBOSS)
-						//	new CBoss(POS(i, j));
+						else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EBOSS)
+							new CBoss(POS(i, j));
 					}
 				}
 

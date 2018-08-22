@@ -84,6 +84,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CBGM.cpp" />
+    <ClCompile Include="CBoss.cpp" />
     <ClCompile Include="CCamera2D.cpp" />
     <ClCompile Include="CCharcter.cpp" />
     <ClCompile Include="CCollision.cpp" />
@@ -125,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CBGM.h" />
+    <ClInclude Include="CBoss.h" />
     <ClInclude Include="CCamera2D.h" />
     <ClInclude Include="CCharcter.h" />
     <ClInclude Include="CCollision.h" />

@@ -40,6 +40,7 @@
     <ClCompile Include="CMapSteel.cpp" />
     <ClCompile Include="CMapCheckPoint.cpp" />
     <ClCompile Include="CMapScroll.cpp" />
+    <ClCompile Include="CBoss.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCamera2D.h" />
@@ -82,6 +83,7 @@
     <ClInclude Include="CMapSteel.h" />
     <ClInclude Include="CMapCheckPoint.h" />
     <ClInclude Include="CMapScroll.h" />
+    <ClInclude Include="CBoss.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />
