@@ -63,9 +63,24 @@ bool CWeapon::Collision(CRectangle *p){
 	if (CRectangle::Collision(p)){
 		switch (mTag){
 		case EPWEAPON:
-			if (p->mTag == EENEMY1 || p->mTag == EENEMY2 || p->mTag == EENEMY3 || p->mTag == EBOSS ||
-				p->mTag == EJEWELRY || p->mTag == EJEWELRY2 || p->mTag == EBOX || p->mTag == ESTEEL)
+			switch (p->mTag){
+			case EENEMY1:
+			case EENEMY2:
+			case EENEMY3:
+				if (p->mAlpha < 1)
+					break;
+			case EBOSS:
+			case EJEWELRY:
+			case EJEWELRY2:
+			case EBOX:
+			case ESTEEL:
+			case ESWITCH:
 				mLife = 0;
+				break;
+
+			default:
+				break;
+			}
 			break;
 		case EEWEAPON:
 			if (p->mTag == EBOX || p->mTag == ESTEEL)
