@@ -85,7 +85,7 @@ void CPlayerT::Update(){
 			}
 		}
 	}
-	if (!CGame2::mCheat[CGame2::CHEAT_NUM::EAREA]){
+	if (!CGame2::mCheat[CGame2::CHEAT_NUM::EAREA] && CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
 		//エリア外
 		if (mPosition.x + CELLSIZE < CMapScroll::mScroll->mPosition.x - 640.0f ||	//エリア外(左)
 			mPosition.y + CELLSIZE < 0.0f){	//エリア外(下)
