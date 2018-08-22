@@ -119,10 +119,14 @@ bool CEnemy::Collision(CRectangle*p){
 			switch (p->mTag){
 			case EPWEAPON:
 				if (enemy_ani != EENEMYANI::EDAMAGE){
+					if (enemy_ani != EENEMYANI::EDOWN){
+						new CMapJewelry(p->mPosition);
+					}
 					enemy_ani = EENEMYANI::EDAMAGE;
 					mVelocityX = 0.0f;
 					enemy_ani_count = 0;
 				}
+
 				break;
 
 			case EENEMY1:

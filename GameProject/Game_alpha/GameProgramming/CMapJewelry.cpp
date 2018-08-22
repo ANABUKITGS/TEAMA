@@ -1,12 +1,13 @@
 #include "CMapJewelry.h"
 #include "CSE.h"
+#include "CWeapon.h"
 
-/*
-とりあえず回す
-*/
+
+
 void CMapJewelry::Update() {
-	//mRotation += 1;
-	//CMapChip::Update();
+	if (mpWeapon != 0){
+		mPosition = mpWeapon->mPosition;
+	}
 }
 
 void CMapJewelry::Render(){
@@ -20,22 +21,23 @@ bool CMapJewelry::Collision(CRectangle *r) {
 	// 当たっているか
 	if (CRectangle::Collision(r)) {
 		//プレイヤーまたは武器に衝突
-		if (r->mTag == EPLAYER || r->mTag ==EPWEAPON) {
+		if (r->mTag == EPLAYER) {
 			//無効にする
 			mEnabled = false;
 			CSE::mSoundJewelry.Play();
 			return true;
 		}
+		if (r->mTag == EPWEAPON){
+			mpWeapon = r;
+		}
 	}
 	return false;
 }
 
-/*
-とりあえず回す
-*/
 void CMapMiniJewelry::Update() {
-	//mRotation += 1;
-	//CMapChip::Update();
+	if (mpWeapon != 0){
+		mPosition = mpWeapon->mPosition;
+	}
 }
 
 void CMapMiniJewelry::Render(){
@@ -49,11 +51,14 @@ bool CMapMiniJewelry::Collision(CRectangle *r) {
 	// 当たっているか
 	if (CRectangle::Collision(r)) {
 		//プレイヤーまたは武器に衝突
-		if (r->mTag == EPLAYER || r->mTag == EPWEAPON) {
+		if (r->mTag == EPLAYER) {
 			//無効にする
 			mEnabled = false;
 			CSE::mSoundJewelry.Play();
 			return true;
+		}
+		if (r->mTag == EPWEAPON){
+			mpWeapon = r;
 		}
 	}
 	return false;

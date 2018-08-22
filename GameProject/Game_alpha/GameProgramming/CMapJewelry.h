@@ -3,9 +3,12 @@
 
 #include "CMapChip.h"
 
+
 //宝石のマッピングデータ
 #define JEWELRY_UV mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE / 2, mPosition.y + CELLSIZE / 2, 0, 64, 64, 0
 #define JEWELRY2_UV mPosition.x - CELLSIZE / 4, mPosition.x + CELLSIZE / 4, mPosition.y - CELLSIZE / 4, mPosition.y + CELLSIZE / 4, 0, 64, 128, 64
+
+class CWeapon;
 /*
 マップチップを継承して
 宝石クラスを定義
@@ -13,6 +16,7 @@
 class CMapJewelry : public CMapChip {
 private:
 	CTexture mTexJewel;
+	CRectangle *mpWeapon;
 
 public:
 	CMapJewelry()
@@ -24,6 +28,7 @@ public:
 	{
 		mRender = false;
 		mTexJewel.Load(".\\Data\\Images\\Map\\MapJewel.tga");
+		mpWeapon = 0;
 	}
 	void Update();	//動きを処理する
 	void Render();	//描画を処理する
@@ -38,6 +43,7 @@ public:
 class CMapMiniJewelry : public CMapChip {
 private:
 	CTexture mTexJewel;
+	CRectangle *mpWeapon;
 
 public:
 	CMapMiniJewelry(const CVector2& pos)
@@ -46,6 +52,7 @@ public:
 	{
 		mRender = false;
 		mTexJewel.Load(".\\Data\\Images\\Map\\MapJewel.tga");
+		mpWeapon = 0;
 	}
 	void Update();	//動きを処理する
 	void Render();	//描画を処理する

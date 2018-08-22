@@ -49,13 +49,13 @@ void CWeapon::Render(){
 
 bool CWeapon::Collision(CRectangle *p){
 	if (CRectangle::Collision(p)){
-		if (mTag == EPWEAPON &&  !mJewel_flg && !mMiniJewel_flg && 
+		/*if (mTag == EPWEAPON &&  !mJewel_flg && !mMiniJewel_flg && 
 			(p->mTag == EENEMY1 || p->mTag == EENEMY2 || p->mTag == EENEMY3 || p->mTag == EJEWELRY)){
 			mJewel_flg = true;
 		}
 		if (mTag == EPWEAPON && !mJewel_flg && !mMiniJewel_flg && p->mTag == EJEWELRY2){
 			mMiniJewel_flg = true;
-		}
+		}*/
 		return true;
 	}
 	return false;
