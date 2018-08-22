@@ -14,6 +14,9 @@
 
 
 class CPlayerT : public CCharcter {
+private:
+	CTexture mTexPlayer;
+
 public:
 	enum EPLAYERANI{
 		EIDOL = 1,	//アイドル状態
@@ -30,7 +33,7 @@ public:
 	int player_ani_count_flame;
 	int PLAYER_ANI_COUNT_FLAME;
 	static CPlayerT *mpPlayer;
-	CTexture mTexPlayer;
+
 	bool mJump;				//true:ジャンプボタン入力中  false:ジャンプ入力していない
 	bool mDash;				//true:ダッシュ中  false:ダッシュしていない
 	int mJumpCount;			//ジャンプ回数

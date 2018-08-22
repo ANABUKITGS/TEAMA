@@ -70,6 +70,10 @@ void CGame2::Init() {
 
 	//チュートリアル メッセージ
 	new CMapTextView();
+
+	//チート初期化
+	for (int i = CHEAT_NUM::EFLAG; i < CHEAT_NUM::ESIZE; i++)
+		mCheat[i] = false;
 }
 
 void CGame2::Update() {

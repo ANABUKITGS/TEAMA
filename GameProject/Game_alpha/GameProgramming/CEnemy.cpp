@@ -17,11 +17,13 @@ void  CEnemy::Update(){
 	if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
 		mAttackInterval--;
 		//敵の歩く、待機アニメーションを行う処理
-		switch (mAnimationTag){
-		case EWALK:
+		switch (enemy_ani){
+		case EENEMYANI::EWALK:
 			mWalkTime--;
-			if (mpSearch->mDiscovery)
-				mAnimationTag = EATTACK;
+			if (mpSearch->mDiscovery){
+				enemy_ani = EYOYO;
+				enemy_ani_count = 0;
+			}
 
 			if (mDirection){
 				mPosition.x += mVelocity;
@@ -31,18 +33,23 @@ void  CEnemy::Update(){
 				mPosition.x -= mVelocity;
 				mpSearch->mPosition = CVector2(mPosition.x - 100, mPosition.y);
 			}
-			if (mWalkTime < 0)
-				mAnimationTag = EIDOL;
+			if (mWalkTime < 0){
+				enemy_ani = EENEMYANI::EIDOL;
+				enemy_ani_count = 0;
+			}
 			break;
 
-		case EIDOL:
+		case EENEMYANI::EIDOL:
 			mMonitorTime--;
-			if (mpSearch->mDiscovery)
-				mAnimationTag = EATTACK;
+			if (mpSearch->mDiscovery){
+				enemy_ani = EENEMYANI::EYOYO;
+				enemy_ani_count = 0;
+			}
 
 			if (mMonitorTime < 0){
 				mMonitorTime = MONITOR_TIME;
-				mAnimationTag = EWALK;
+				enemy_ani = EENEMYANI::EWALK;
+				enemy_ani_count = 0;
 				mWalkTime = WALK_TIME;
 				if (mDirection)
 					mDirection = false;
@@ -51,7 +58,7 @@ void  CEnemy::Update(){
 			}
 			break;
 
-		case EATTACK:
+		case EENEMYANI::EYOYO:
 			//敵がヨーヨーを発射していなければ、ヨーヨーを発射して処理を行う
 			if (!mpEWeapon){
 				if (mAttackInterval < 0){
@@ -70,19 +77,26 @@ void  CEnemy::Update(){
 			else {
 				if (mpEWeapon->mLife < 0){
 					mpEWeapon = 0;
-					mAnimationTag = EWALK;
+					if (mAttackInterval < 0){
+						enemy_ani_count = 0;
+						enemy_ani = EENEMYANI::EWALK;
+					}
+					else{
+						enemy_ani_count = 0;
+						enemy_ani = EENEMYANI::EWALK;
+					}
 				}
-
 			}
 			//ヨーヨーの処理終了
 			break;
 
-		case EDOWN:
+		case EENEMYANI::EDOWN:
+		case EENEMYANI::EDAMAGE:
 			mDownTime--;
-			if (mDownTime % 10 == 0)
-				mRender = false;
-			else
-				mRender = true;
+			//if (mDownTime % 10 == 0)
+			//	mAlpha = 0.0f;
+			//else
+			//	mAlpha = 1.0f;
 
 			if (mDownTime < 0){
 				mEnabled = false;
@@ -104,16 +118,19 @@ bool CEnemy::Collision(CRectangle*p){
 		if (CRectangle::Collision(p, &aj)) {
 			switch (p->mTag){
 			case EPWEAPON:
-				mAnimationTag = EDOWN;
-				mVelocityY = 0.0f;
+				if (enemy_ani != EENEMYANI::EDAMAGE){
+					enemy_ani = EENEMYANI::EDAMAGE;
+					mVelocityX = 0.0f;
+					enemy_ani_count = 0;
+				}
 				break;
 
 			case EENEMY1:
 			case EENEMY2:
 			case EENEMY3:
-				mVelocityY = 0.0f;
-				mPosition.x = mPosition.x + aj.x;
-				break;
+				//mVelocityY = 0.0f;
+				//mPosition.x = mPosition.x + aj.x;
+				//break;
 
 			case ESWITCH_GROUND1:
 			case ESWITCH_GROUND2:
@@ -138,12 +155,14 @@ bool CEnemy::Collision(CRectangle*p){
 				if (!(p->mColFlg & EDT_RIGHT)) {
 					if (aj.x > 0) {
 						mPosition.x = mPosition.x + aj.x;
+						enemy_ani = EENEMYANI::EIDOL;
 					}
 				}
 				//左空き
 				if (!(p->mColFlg & EDT_LEFT)) {
 					if (aj.x < 0) {
 						mPosition.x = mPosition.x + aj.x;
+						enemy_ani = EENEMYANI::EIDOL;
 					}
 				}
 				//下空き
@@ -169,8 +188,65 @@ bool CEnemy::Collision(CRectangle*p){
 }
 
 void CEnemy::Render(){
-	switch (mAnimationTag){
-	case EATTACK:
+	switch (enemy_ani){
+	case EENEMYANI::EIDOL:
+		if (enemy_ani_count > 0)
+			enemy_ani_count = 0;
+
+		ENEMY_ANI_COUNT_FLAME = 0;
+
+		if (mTag == ECELLNUM::EENEMY1){
+			if (!mDirection)	//左向き
+				mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 2 * 128, (2 + 1) * 128, 128, 0, mAlpha);
+			else				//右向き
+				mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (2 + 1) * 128, 2 * 128, 128, 0, mAlpha);
+		}
+
+		if (mTag == ECELLNUM::EENEMY2){
+			if (!mDirection)	//左向き
+				mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 2 * 128, (2 + 1) * 128, 128, 0, mAlpha);
+			else				//右向き
+				mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (2 + 1) * 128, 2 * 128, 128, 0, mAlpha);
+		}
+
+		if (mTag == ECELLNUM::EENEMY3){
+			if (!mDirection)	//左向き
+				mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 2 * 128, (2 + 1) * 128, 128, 0, mAlpha);
+			else				//右向き
+				mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (2 + 1) * 128, 2 * 128, 128, 0, mAlpha);
+		}
+		break;
+	case EENEMYANI::ETURN:
+	case EENEMYANI::EJUMP:
+	case EENEMYANI::EWALK:
+		if (enemy_ani_count > 7)
+			enemy_ani_count = 0;
+
+		ENEMY_ANI_COUNT_FLAME = 4;
+
+		if (mTag == ECELLNUM::EENEMY1){
+			if (!mDirection)	//左向き
+				mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 128, 0, mAlpha);
+			else				//右向き
+				mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 128, 0, mAlpha);
+		}
+
+		if (mTag == ECELLNUM::EENEMY2){
+			if (!mDirection)	//左向き
+				mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 128, 0, mAlpha);
+			else				//右向き
+				mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 128, 0, mAlpha);
+		}
+
+		if (mTag == ECELLNUM::EENEMY3){
+			if (!mDirection)	//左向き
+				mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 128, 0, mAlpha);
+			else				//右向き
+				mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 128, 0, mAlpha);
+		}
+		break;
+
+	case EENEMYANI::EYOYO:
 		if (mpEWeapon != NULL){
 			if (mDirection)
 				//ヨーヨーの紐
@@ -180,10 +256,128 @@ void CEnemy::Render(){
 				//ヨーヨーの紐
 				mpEWeapon->mTexYoyo.DrawImage(ESTRING_UV_L, 1.0f);
 		}
+		if (mpEWeapon){
+			if (enemy_ani_count > 1)
+				enemy_ani_count = 1;
+
+			ENEMY_ANI_COUNT_FLAME = 12;
+
+			if (mTag == ECELLNUM::EENEMY1){
+				if (!mDirection)	//左向き
+					mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 256, 128, mAlpha);
+				else				//右向き
+					mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 256, 128, mAlpha);
+			}
+
+			if (mTag == ECELLNUM::EENEMY2){
+				if (!mDirection)	//左向き
+					mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 256, 128, mAlpha);
+				else				//右向き
+					mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 256, 128, mAlpha);
+			}
+
+			if (mTag == ECELLNUM::EENEMY3){
+				if (!mDirection)	//左向き
+					mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 256, 128, mAlpha);
+				else				//右向き
+					mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 256, 128, mAlpha);
+			}
+		}
+		else{
+			if (enemy_ani_count > 0)
+				enemy_ani_count = 0;
+
+			ENEMY_ANI_COUNT_FLAME = 0;
+
+			if (mTag == ECELLNUM::EENEMY1){
+				if (!mDirection)	//左向き
+					mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 2 * 128, (2 + 1) * 128, 128, 0, mAlpha);
+				else				//右向き
+					mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (2 + 1) * 128, 2 * 128, 128, 0, mAlpha);
+			}
+
+			if (mTag == ECELLNUM::EENEMY2){
+				if (!mDirection)	//左向き
+					mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 2 * 128, (2 + 1) * 128, 128, 0, mAlpha);
+				else				//右向き
+					mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (2 + 1) * 128, 2 * 128, 128, 0, mAlpha);
+			}
+
+			if (mTag == ECELLNUM::EENEMY3){
+				if (!mDirection)	//左向き
+					mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 2 * 128, (2 + 1) * 128, 128, 0, mAlpha);
+				else				//右向き
+					mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (2 + 1) * 128, 2 * 128, 128, 0, mAlpha);
+			}
+		}
+		break;
+
+	case EENEMYANI::EDAMAGE:
+
+		ENEMY_ANI_COUNT_FLAME = 6;
+
+		if (mTag == ECELLNUM::EENEMY1){
+			if (!mDirection)	//左向き
+				mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 384, 256, mAlpha);
+			else				//右向き
+				mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 384, 256, mAlpha);
+		}
+
+		if (mTag == ECELLNUM::EENEMY2){
+			if (!mDirection)	//左向き
+				mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 384, 256, mAlpha);
+			else				//右向き
+				mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 384, 256, mAlpha);
+		}
+
+		if (mTag == ECELLNUM::EENEMY3){
+			if (!mDirection)	//左向き
+				mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 384, 256, mAlpha);
+			else				//右向き
+				mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 384, 256, mAlpha);
+		}
+
+		if (enemy_ani_count > 1)
+			enemy_ani = EENEMYANI::EDOWN;
+
+		break;
+
+	case EENEMYANI::EDOWN:
+		if (enemy_ani_count > 0)
+			enemy_ani_count = 0;
+
+		ENEMY_ANI_COUNT_FLAME = 0;
+
+		if (mTag == ECELLNUM::EENEMY1){
+			if (!mDirection)	//左向き
+				mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 0, 128, 512, 384, mAlpha);
+			else				//右向き
+				mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (0 + 1) * 128, enemy_ani_count * 128, 512, 384, mAlpha);
+		}
+
+		if (mTag == ECELLNUM::EENEMY2){
+			if (!mDirection)	//左向き
+				mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 512, 384, mAlpha);
+			else				//右向き
+				mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 512, 384, mAlpha);
+		}
+
+		if (mTag == ECELLNUM::EENEMY3){
+			if (!mDirection)	//左向き
+				mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 512, 384, mAlpha);
+			else				//右向き
+				mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 512, 384, mAlpha);
+		}
 		break;
 
 	default:
 		break;
+	}
+
+	enemy_ani_count_flame++;
+	if (enemy_ani_count_flame > ENEMY_ANI_COUNT_FLAME){
+		enemy_ani_count++;
+		enemy_ani_count_flame = 0;
 	}
 	CRectangle::Render();
 }

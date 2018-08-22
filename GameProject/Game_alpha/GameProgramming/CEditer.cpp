@@ -524,15 +524,15 @@ void CEditer::MakeTaskList(int *gamemap) {
 
 						//“G1
 						else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EENEMY1)
-							new CEnemy(POS(i, j));
+							new CEnemy(POS(i, j), ECELLNUM::EENEMY1);
 
 						//“G2
 						else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EENEMY2)
-							new CEnemy(POS(i, j));
+							new CEnemy(POS(i, j), ECELLNUM::EENEMY2);
 
 						//“G3
 						else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EENEMY3)
-							new CEnemy(POS(i, j));
+							new CEnemy(POS(i, j), ECELLNUM::EENEMY3);
 
 						//ƒ{ƒX
 						//else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EBOSS)

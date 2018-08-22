@@ -12,15 +12,24 @@ CMapSwitchGround *mSwitch;
 int CPlayerT::player_ani;
 
 void CPlayerT::Update(){
-	if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
-		if (mpWeapon == 0){
-			if ((CGamePad::Push(PAD_1) || CKey::Push(VK_UP))){
-				player_ani_count = 0;
-				player_ani_count_flame = 0;
-				player_ani = EPLAYERANI::EYOYO;
-				if (mAir){
-					if (mAerialAttack){
-						mAerialAttack = false;
+	if (player_ani != EPLAYERANI::EDAMAGE || mVelocityX > 0.0f && mVelocityX < 0.0f){
+		if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
+			if (mpWeapon == 0){
+				if ((CGamePad::Push(PAD_1) || CKey::Push(VK_UP))){
+					player_ani_count = 0;
+					player_ani_count_flame = 0;
+					player_ani = EPLAYERANI::EYOYO;
+					if (mAir){
+						if (mAerialAttack){
+							mAerialAttack = false;
+							mpWeapon = new CWeapon(EPWEAPON, mPosition, mDirection);
+							if (mDirection)		//weaponの位置をプレイヤーの向いている方向へ10ずらす
+								mpWeapon->mPosition.x += 10;
+							else
+								mpWeapon->mPosition.x -= 10;
+						}
+					}
+					else{
 						mpWeapon = new CWeapon(EPWEAPON, mPosition, mDirection);
 						if (mDirection)		//weaponの位置をプレイヤーの向いている方向へ10ずらす
 							mpWeapon->mPosition.x += 10;
@@ -28,62 +37,54 @@ void CPlayerT::Update(){
 							mpWeapon->mPosition.x -= 10;
 					}
 				}
-				else{
-					mpWeapon = new CWeapon(EPWEAPON, mPosition, mDirection);
-					if (mDirection)		//weaponの位置をプレイヤーの向いている方向へ10ずらす
-						mpWeapon->mPosition.x += 10;
-					else
-						mpWeapon->mPosition.x -= 10;
+
+				if (mJumpCount < 2 && (CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_RIGHT))){
+					player_ani_count = 0;
+					player_ani_count_flame = 0;
+				}
+				if (mJumpCount < 2 && (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) || CKey::Push(VK_RIGHT))){		//ジャンプ回数２未満かつ２キーまたは→キー入力
+					mAerialAttack = true;
+					//mAir = true;
+					if (!mJump)
+						mVelocityY = PLAYER_VELOCITY_Y;
+
+					if (!mAir)
+						player_ani = EIDOL;
+					else{
+						if (mpWeapon != 0 && mpWeapon->mLife > 0)
+							player_ani = EJUMP;
+					}
+					mJump = true;
+				}
+				else if (mJump){
+					mJumpCount++;
+					mJump = false;
+					mVelocityY = 0;
 				}
 			}
-
-			if (mJumpCount < 2 && (CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_RIGHT))){
-				player_ani_count = 0;
-				player_ani_count_flame = 0;
+			else if (mpWeapon->mLife <= 0){		//武器の生存時間が0以下
+				mpWeapon = 0;
 			}
-			if (mJumpCount < 2 && (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) || CKey::Push(VK_RIGHT))){		//ジャンプ回数２未満かつ２キーまたは→キー入力
-				mAerialAttack = true;
-				//mAir = true;
-				if (!mJump)
-					mVelocityY = PLAYER_VELOCITY_Y;
-
-				if (!mAir)
-					player_ani = EIDOL;
-				else{
-					if (mpWeapon != 0 && mpWeapon->mLife > 0)
-						player_ani = EJUMP;
-				}
-				mJump = true;
+			else {								//武器の生存時間が0を超過
+				player_ani = EYOYO;
+				mpWeapon->Render();
 			}
-			else if (mJump){
-				mJumpCount++;
-				mJump = false;
-				mVelocityY = 0;
+			if (mpWeapon == 0){
+				Dash();
+				Gravity();
+				Forward();
+				CRectangle::Update();
 			}
-		}
-		else if (mpWeapon->mLife <= 0){		//武器の生存時間が0以下
-			mpWeapon = 0;
-		}
-		else {								//武器の生存時間が0を超過
-			player_ani = EYOYO;
-			mpWeapon->Render();
-		}
-		if (mpWeapon == 0){
-			Dash();
-			Gravity();
-			Forward();
-			CRectangle::Update();
-		}
 
-		if (mVelocityY < -1.0f && mVelocityY > -1.1f)
-			mAir = false;
-		else{
-			mAir = true;
-			if (player_ani != EYOYO)
-			player_ani = EJUMP;
+			if (mVelocityY < -1.0f && mVelocityY > -1.1f)
+				mAir = false;
+			else{
+				mAir = true;
+				if (player_ani != EYOYO)
+					player_ani = EJUMP;
+			}
 		}
 	}
-
 	if (!CGame2::mCheat[CGame2::CHEAT_NUM::EAREA]){
 		//エリア外
 		if (mPosition.x + CELLSIZE < CMapScroll::mScroll->mPosition.x - 640.0f ||	//エリア外(左)
@@ -111,110 +112,112 @@ void CPlayerT::Update(){
 
 //前進処理
 void CPlayerT::Forward(){
-	if (CGamePad::Push(PAD_LSTICKX, 0.1f) || CGamePad::Push(PAD_LSTICKX, -0.1f)){
-		if (CGamePad::Push(PAD_LSTICKX, 0.1f)){
-			float hoge = mVelocityLimit * CGamePad::GetStick(PAD_LSTICKX);
-			mDirection = true;
-			if (mVelocityX < hoge && mVelocityX > -hoge){
-				mVelocityX += PLAYER_VELOCITY_X;
-			}
-
-			if (!mAir)
-				player_ani = ETURN;
-
-			if (mVelocityX > 0){
-				mVelocityX -= 0.25f;
+	if (player_ani != EPLAYERANI::EDAMAGE || mVelocityX > 0.0f && mVelocityX < 0.0f){
+		if (CGamePad::Push(PAD_LSTICKX, 0.1f) || CGamePad::Push(PAD_LSTICKX, -0.1f)){
+			if (CGamePad::Push(PAD_LSTICKX, 0.1f)){
+				float hoge = mVelocityLimit * CGamePad::GetStick(PAD_LSTICKX);
+				mDirection = true;
+				if (mVelocityX < hoge && mVelocityX > -hoge){
+					mVelocityX += PLAYER_VELOCITY_X;
+				}
 
 				if (!mAir)
-					player_ani = ERUN;
-			}
-			else if (mVelocityX < 0){
-				mVelocityX += 0.25f;
-			}
-		}
+					player_ani = ETURN;
 
-		if (CGamePad::Push(PAD_LSTICKX, -0.1f)){
-			float hoge = mVelocityLimit * -CGamePad::GetStick(PAD_LSTICKX);
-			mDirection = false;
-			if (mVelocityX < hoge && mVelocityX > -hoge){
-				mVelocityX -= PLAYER_VELOCITY_X;
+				if (mVelocityX > 0){
+					mVelocityX -= 0.25f;
+
+					if (!mAir)
+						player_ani = ERUN;
+				}
+				else if (mVelocityX < 0){
+					mVelocityX += 0.25f;
+				}
 			}
 
-			if (!mAir)
-				player_ani = ETURN;
-
-			if (mVelocityX > 0){
-				mVelocityX -= 0.25f;
-			}
-			else if (mVelocityX < 0){
-				mVelocityX += 0.25f;
+			if (CGamePad::Push(PAD_LSTICKX, -0.1f)){
+				float hoge = mVelocityLimit * -CGamePad::GetStick(PAD_LSTICKX);
+				mDirection = false;
+				if (mVelocityX < hoge && mVelocityX > -hoge){
+					mVelocityX -= PLAYER_VELOCITY_X;
+				}
 
 				if (!mAir)
-					player_ani = ERUN;
+					player_ani = ETURN;
+
+				if (mVelocityX > 0){
+					mVelocityX -= 0.25f;
+				}
+				else if (mVelocityX < 0){
+					mVelocityX += 0.25f;
+
+					if (!mAir)
+						player_ani = ERUN;
+				}
 			}
 		}
-	}
-	else if (CKey::Push('D') || CKey::Push('A')){
-		if (CKey::Push('D')){
-			mDirection = true;
-			if (mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit)
-				mVelocityX += PLAYER_VELOCITY_X;
-
-			if (!mAir)
-				player_ani = ETURN;
-
-			if (mVelocityX > 0){
-				mVelocityX -= 0.25f;
+		else if (CKey::Push('D') || CKey::Push('A')){
+			if (CKey::Push('D')){
+				mDirection = true;
+				if (mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit)
+					mVelocityX += PLAYER_VELOCITY_X;
 
 				if (!mAir)
-					player_ani = ERUN;
-			}
-			else if (mVelocityX < 0){
-				mVelocityX += 0.25f;
-			}
-		}
+					player_ani = ETURN;
 
-		if (CKey::Push('A')){
-			mDirection = false;
-			if (mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit)
-				mVelocityX -= PLAYER_VELOCITY_X;
+				if (mVelocityX > 0){
+					mVelocityX -= 0.25f;
 
-			if (!mAir)
-				player_ani = ETURN;
-
-			if (mVelocityX > 0){
-				mVelocityX -= 0.25f;
+					if (!mAir)
+						player_ani = ERUN;
+				}
+				else if (mVelocityX < 0){
+					mVelocityX += 0.25f;
+				}
 			}
-			else if (mVelocityX < 0){
-				mVelocityX += 0.25f;
+
+			if (CKey::Push('A')){
+				mDirection = false;
+				if (mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit)
+					mVelocityX -= PLAYER_VELOCITY_X;
 
 				if (!mAir)
-					player_ani = ERUN;
+					player_ani = ETURN;
+
+				if (mVelocityX > 0){
+					mVelocityX -= 0.25f;
+				}
+				else if (mVelocityX < 0){
+					mVelocityX += 0.25f;
+
+					if (!mAir)
+						player_ani = ERUN;
+				}
 			}
 		}
-	}
-	else{
-		if (mVelocityX < 0)
-			mVelocityX += 0.25f;
+		else{
+			if (mVelocityX < 0)
+				mVelocityX += 0.25f;
 
-		else if (mVelocityX > 0)
-			mVelocityX -= 0.25f;
+			else if (mVelocityX > 0)
+				mVelocityX -= 0.25f;
 
-		if (!mAir)
-			player_ani = EIDOL;
-	}
-	mPosition.x += mVelocityX;
-	if (mUnrivaled){
-		mDamageInterval--;
-		if (mDamageInterval % 15 == 0){
-			mAlpha = 0.0f;
+			if (!mAir)
+				player_ani = EIDOL;
 		}
-		else
-			mAlpha = 1.0f;
-		if (mDamageInterval <= 0){
-			mDamageInterval = DAMAGE_INTERVAL;
-			mUnrivaled = false;
-			mAlpha = 1.0f;
+		mPosition.x += mVelocityX;
+		if (mUnrivaled){
+			mDamageInterval--;
+			if (mDamageInterval % 15 == 0){
+				mAlpha = 0.0f;
+			}
+			else
+				mAlpha = 1.0f;
+			if (mDamageInterval <= 0){
+				mDamageInterval = DAMAGE_INTERVAL;
+				mUnrivaled = false;
+				mAlpha = 1.0f;
+			}
 		}
 	}
 }
@@ -225,17 +228,22 @@ bool CPlayerT::Collision(CRectangle *p) {
 		CVector2 aj;
 		if (CRectangle::Collision(p, &aj)) {
 			switch (p->mTag){
-			case EENEMY1: case EEWEAPON:
+			case EEWEAPON:
 				if (!mUnrivaled){
 					mUnrivaled = true;
+					player_ani = EPLAYERANI::EDAMAGE;
+					player_ani_count = 0;
+					player_ani_count_flame = 0;
 					if (mJewel > 0){
 						if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI])
 							mJewel--;
 					}
 					else{
-						mLife--;
-						mPosition = mReSpornPos;
-						CMapScroll::mScroll->Reset();
+						if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI]){
+							mLife--;
+							mPosition = mReSpornPos;
+							CMapScroll::mScroll->Reset();
+						}
 					}
 				}
 				break;
@@ -256,6 +264,10 @@ bool CPlayerT::Collision(CRectangle *p) {
 				mReSpornPos = p->mPosition;
 				break;
 
+			case EENEMY1:
+			case EENEMY2:
+			case EENEMY3:
+			case EBOSS:
 			case ESWITCH_GROUND1:
 			case ESWITCH_GROUND2:
 			case ENONE:
@@ -405,7 +417,15 @@ void CPlayerT::Render(){
 		break;
 
 	case EPLAYERANI::EDAMAGE:
+		if (player_ani_count > 1)
+			player_ani_count = 1;
 
+		PLAYER_ANI_COUNT_FLAME = 8;
+
+		if (!mDirection)	//左向き
+			mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 640, 512, mAlpha);
+		else				//右向き
+			mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (player_ani_count + 1) * 128, player_ani_count * 128, 640, 512, mAlpha);
 		break;
 
 	case EPLAYERANI::EYOYO:
