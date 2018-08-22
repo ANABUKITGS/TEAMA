@@ -10,6 +10,7 @@ class CText{
 private:
 	static CTexture mTexture01;	//テキスト テクスチャー M+ 1m bold
 	static CTexture mTexture02;	//テキスト テクスチャー nintendoP Seurat
+	static CTexture mTexture03;	//テキスト テクスチャー アイテム
 	static int soundtime;		//文字表示音 間隔
 	static bool textlimit;		//変数 加算時間
 

@@ -7,12 +7,14 @@ float CText::uv[4];
 
 CTexture CText::mTexture01;	//テキスト テクスチャー M+ 1m bold
 CTexture CText::mTexture02;	//テキスト テクスチャー nintendoP Seurat
+CTexture CText::mTexture03;	//テキスト テクスチャー アイテム
 int CText::soundtime;		//文字表示音 間隔
 bool CText::textlimit;		//変数 加算時間
 
 void CText::Init(){
 	mTexture01.Load(".\\Data\\Images\\Font\\Mplus_1m_bold-Unicode_064.tga");
 	mTexture02.Load(".\\Data\\Images\\Font\\nintendoP_Seurat_064.tga");
+	mTexture03.Load(".\\Data\\Images\\Font\\Item.tga");
 }
 
 void CText::DrawText(char a, float left, float right, float bottom, float top, float r, float g, float b, float alpha){
@@ -54,10 +56,10 @@ void CText::DrawText(char a, float left, float right, float bottom, float top, f
 	else if (a == '\n'){	//U+000D, U+000A
 		CText::uv[0] = CText::uv[1] = CText::uv[2] = CText::uv[3] = 0.0f;
 #ifdef _DEBUG
-		//CText::uv[0] = 43 * CSIZE;
-		//CText::uv[1] = CText::uv[0] + CSIZE;
-		//CText::uv[2] = CSIZE * 3;
-		//CText::uv[3] = CSIZE * 2;
+		CText::uv[0] = 43 * CSIZE;
+		CText::uv[1] = CText::uv[0] + CSIZE;
+		CText::uv[2] = CSIZE * 3;
+		CText::uv[3] = CSIZE * 2;
 #endif
 	}
 	else{
@@ -116,29 +118,6 @@ void CText::DrawStringSetColor(char s[], float left, float bottom, float size, f
 }
 
 void CText::DrawTextW(wchar_t a, float left, float right, float bottom, float top,float r, float g, float b, float alpha){
-	/*JIS コード用
-	if (a >= L'ぁ' && a <= L'ん'){
-		a = a - L'ぁ';
-		CText::uv[0] = a * CSIZE;
-		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 4;
-		CText::uv[3] = CSIZE * 3;
-	}
-	else if (a >= L'ァ' && a <= L'ヶ'){
-		a = a - L'ァ';
-		CText::uv[0] = a * CSIZE;
-		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 5;
-		CText::uv[3] = CSIZE * 4;
-	}
-	else if (a >= L'　'){
-		a = a - L'　';
-		CText::uv[0] = a * CSIZE;
-		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 6;
-		CText::uv[3] = CSIZE * 5;
-	}
-	*/
 	/*Unicode*/
 	if (a >= L'ぁ' && a <= 0x30A0){	//U+3041 ~ U+30A0
 		a = a - L'ぁ';
@@ -177,6 +156,12 @@ void CText::DrawTextW(wchar_t a, float left, float right, float bottom, float to
 	else if (a >= L'★' && a <= L'☆'){	//U+2605 ~ U+2606
 		a = a - L'★';
 		CText::uv[0] = 4 * CSIZE + a * CSIZE;
+		CText::uv[1] = CText::uv[0] + CSIZE;
+		CText::uv[2] = CSIZE * 7;
+		CText::uv[3] = CSIZE * 6;
+	}
+	else if (a == L'×'){				//U+00D7
+		CText::uv[0] = 6 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
 		CText::uv[2] = CSIZE * 7;
 		CText::uv[3] = CSIZE * 6;
@@ -225,6 +210,30 @@ void CText::DrawTextW(wchar_t a, float left, float right, float bottom, float to
 		mTexture02.DrawImageSetColor(left, right, bottom, top, CText::uv[0], CText::uv[1], CText::uv[2], CText::uv[3], r, g, b, alpha);
 		return;
 	}
+	else if (a == L'宝'){	//U+5B9D	アイテム フォント
+		CText::uv[0] = 0 * CSIZE;
+		CText::uv[1] = CText::uv[0] + CSIZE;
+		CText::uv[2] = CSIZE * 1;
+		CText::uv[3] = CSIZE * 0;
+		mTexture03.DrawImageSetColor(left, right, bottom, top, CText::uv[0], CText::uv[1], CText::uv[2], CText::uv[3], 1.0f, 1.0f, 1.0f, alpha);
+		return;
+	}
+	else if (a == L'石'){	//U+77F3	アイテム フォント
+		CText::uv[0] = 1 * CSIZE;
+		CText::uv[1] = CText::uv[0] + CSIZE;
+		CText::uv[2] = CSIZE * 1;
+		CText::uv[3] = CSIZE * 0;
+		mTexture03.DrawImageSetColor(left, right, bottom, top, CText::uv[0], CText::uv[1], CText::uv[2], CText::uv[3], 1.0f, 1.0f, 1.0f, alpha);
+		return;
+	}
+	else if (a == L'命'){	//U+547D	アイテム フォント
+		CText::uv[0] = 2 * CSIZE;
+		CText::uv[1] = CText::uv[0] + CSIZE;
+		CText::uv[2] = CSIZE * 1;
+		CText::uv[3] = CSIZE * 0;
+		mTexture03.DrawImageSetColor(left, right, bottom, top, CText::uv[0], CText::uv[1], CText::uv[2], CText::uv[3], 1.0f, 1.0f, 1.0f, alpha);
+		return;
+	}
 	else if (isupper(a)){	//U+0041 ~ U+005A
 		a = a - L'A';
 		CText::uv[0] = a * CSIZE;
@@ -263,10 +272,10 @@ void CText::DrawTextW(wchar_t a, float left, float right, float bottom, float to
 	else if (a == L'\n'){	//U+000D, U+000A
 		CText::uv[0] = CText::uv[1] = CText::uv[2] = CText::uv[3] = 0.0f;
 #ifdef _DEBUG
-		//CText::uv[0] = 43 * CSIZE;
-		//CText::uv[1] = CText::uv[0] + CSIZE;
-		//CText::uv[2] = CSIZE * 3;
-		//CText::uv[3] = CSIZE * 2;
+		CText::uv[0] = 43 * CSIZE;
+		CText::uv[1] = CText::uv[0] + CSIZE;
+		CText::uv[2] = CSIZE * 3;
+		CText::uv[3] = CSIZE * 2;
 #endif
 	}
 	else{
