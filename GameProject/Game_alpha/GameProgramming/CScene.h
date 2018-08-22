@@ -35,11 +35,11 @@ public:
 		EGAME,
 		ERANKING,
 		ERESULT,
-		ESCORE,
-		ENAME,
 		EEDITER,
 		EEXIT,
-		ESIZE
+		ESIZE,
+		ESCORE,
+		ENAME,
 	};
 	static int changenum;
 	void Init();

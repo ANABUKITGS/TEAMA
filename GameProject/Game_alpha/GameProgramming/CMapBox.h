@@ -14,7 +14,9 @@ public:
 	CMapBox(const CVector2& pos)
 		//CMapChipÇ≈èâä˙âª
 		: CMapChip(pos, CVector2(CELLSIZE, CELLSIZE), NULL, NULL, NULL, NULL, NULL, ECELLNUM::EBOX)
+		, mVelocityY(0.0f)
 	{
+		mVelocityX = 0.0f;
 		mRender = false;
 		mBreak = false;
 		mTexBox.Load(".\\Data\\Images\\Map\\MapBox.tga");

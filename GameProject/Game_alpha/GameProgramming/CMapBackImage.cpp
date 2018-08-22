@@ -4,17 +4,19 @@
 #include "CPlayerT.h"
 
 void CMapBackImage::Update(){
-	switch (texnum){
-	case ETEXTURE_LAYER::LAYER1:
-		mPosition.x += CMapScroll::add_scroll * 0.8;
-		break;
+	if (CGame2::mCheat[CGame2::CHEAT_NUM::ESCROLL] || CMapScroll::scroll_flg){
+		switch (texnum){
+		case ETEXTURE_LAYER::LAYER1:
+			mPosition.x += CMapScroll::add_scroll * 0.8;
+			break;
 
-	case ETEXTURE_LAYER::LAYER2:
-		mPosition.x += CMapScroll::add_scroll * 0.5;
-		break;
+		case ETEXTURE_LAYER::LAYER2:
+			mPosition.x += CMapScroll::add_scroll * 0.5;
+			break;
 
-	default:
-		break;
+		default:
+			break;
+		}
 	}
 	mPosition.y = CMapScroll::mScroll->mPosition.y;
 }

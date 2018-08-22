@@ -49,10 +49,10 @@ void CPlayerT::Update(){
 						mVelocityY = PLAYER_VELOCITY_Y;
 
 					if (!mAir)
-						player_ani = EIDOL;
+						player_ani = EPLAYERANI::EIDOL;
 					else{
 						if (mpWeapon != 0 && mpWeapon->mLife > 0 && !mpWeapon->mReturn)
-							player_ani = EJUMP;
+							player_ani = EPLAYERANI::EJUMP;
 					}
 					mJump = true;
 				}
@@ -66,7 +66,7 @@ void CPlayerT::Update(){
 				mpWeapon = 0;
 			}
 			else {								//•Ší‚Ì¶‘¶ŽžŠÔ‚ª0‚ð’´‰ß
-				player_ani = EYOYO;
+				player_ani = EPLAYERANI::EYOYO;
 				mpWeapon->Render();
 			}
 			if (mpWeapon == 0){
@@ -80,8 +80,8 @@ void CPlayerT::Update(){
 				mAir = false;
 			else{
 				mAir = true;
-				if (player_ani != EYOYO)
-					player_ani = EJUMP;
+				if (player_ani != EPLAYERANI::EYOYO)
+					player_ani = EPLAYERANI::EJUMP;
 			}
 		}
 	}
@@ -114,6 +114,9 @@ void CPlayerT::Update(){
 void CPlayerT::Forward(){
 	if (player_ani != EPLAYERANI::EDAMAGE){
 		if (CGamePad::Push(PAD_LSTICKX, 0.1f) || CGamePad::Push(PAD_LSTICKX, -0.1f)){
+			if (!CMapScroll::scroll_flg)
+				CMapScroll::scroll_flg = true;
+
 			if (CGamePad::Push(PAD_LSTICKX, 0.1f)){
 				float hoge = mVelocityLimit * CGamePad::GetStick(PAD_LSTICKX);
 				mDirection = true;
@@ -157,6 +160,9 @@ void CPlayerT::Forward(){
 			}
 		}
 		else if (CKey::Push('D') || CKey::Push('A')){
+			if (!CMapScroll::scroll_flg)
+				CMapScroll::scroll_flg = true;
+
 			if (CKey::Push('D')){
 				mDirection = true;
 				if (mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit)

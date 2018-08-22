@@ -14,7 +14,9 @@ public:
 	CMapSteel(const CVector2& pos)
 		//CMapChipÇ≈èâä˙âª
 		: CMapChip(pos, CVector2(CELLSIZE * 2, CELLSIZE / 2), NULL, NULL, NULL, NULL, NULL, ECELLNUM::ESTEEL)
+		, mVelocityY(0.0f)
 	{
+		mVelocityX = 0.0f;
 		mRender = false;
 		mBreak = false;
 		mTexSteel.Load(".\\Data\\Images\\Map\\MapSteel.tga");
