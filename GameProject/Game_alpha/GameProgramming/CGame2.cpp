@@ -156,11 +156,11 @@ void CGame2::Render() {
 #endif
 
 	//Œo‰ßŽžŠÔ
-	char time_buf[64];
+	wchar_t time_buf[64];
 	for (int i = 0; i < 16; i++)
 		time_buf[i] = '\0';
-	sprintf(time_buf, "%02d:%06.3f\nmJewel     %-2d\nmMiniJewel %-2d\nmLife      %-2d", CTime::ElapsedTimeMin(), CTime::ElapsedTimeSec(), CPlayerT::mpPlayer->mJewel, CPlayerT::mpPlayer->mMiniJewel, CPlayerT::mpPlayer->mLife);
-	CText::DrawString(time_buf, 352, 328, 16, 1.0f, 0);
+	swprintf(time_buf, L"%02d:%06.3f\n  •ó~%2d\n  Î~%2d\n  –½~%2d", CTime::ElapsedTimeMin(), CTime::ElapsedTimeSec(), CPlayerT::mpPlayer->mJewel, CPlayerT::mpPlayer->mMiniJewel, CPlayerT::mpPlayer->mLife);
+	CText::DrawStringW(time_buf, 352, 328, 32, 1.0f, 0);
 }
 
 void CGame2::CheatText(){

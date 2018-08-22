@@ -12,7 +12,7 @@ CMapSwitchGround *mSwitch;
 int CPlayerT::player_ani;
 
 void CPlayerT::Update(){
-	if (player_ani != EPLAYERANI::EDAMAGE || mVelocityX > 0.0f && mVelocityX < 0.0f){
+	if (player_ani != EPLAYERANI::EDAMAGE){
 		if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
 			if (mpWeapon == 0){
 				if ((CGamePad::Push(PAD_1) || CKey::Push(VK_UP))){
@@ -112,7 +112,7 @@ void CPlayerT::Update(){
 
 //‘Oiˆ—
 void CPlayerT::Forward(){
-	if (player_ani != EPLAYERANI::EDAMAGE || mVelocityX > 0.0f && mVelocityX < 0.0f){
+	if (player_ani != EPLAYERANI::EDAMAGE){
 		if (CGamePad::Push(PAD_LSTICKX, 0.1f) || CGamePad::Push(PAD_LSTICKX, -0.1f)){
 			if (CGamePad::Push(PAD_LSTICKX, 0.1f)){
 				float hoge = mVelocityLimit * CGamePad::GetStick(PAD_LSTICKX);

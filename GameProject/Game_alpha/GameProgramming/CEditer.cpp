@@ -50,27 +50,27 @@ void CEditer::Update(){
 	CMapSwitchGround::mNumber = ESWITCH_GROUND1;
 	if (!pauseflag){
 		if ((CGamePad::OncePush(PAD_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f)) && cursor_posY - 1 >= 0){
-			if (editmap_rect[cursor_posY][cursor_posX].mTop + CELLSIZE >= 360){
-				for (int i = 0; i < MAP_SIZEY; i++){
-					for (int j = 0; j < MAP_SIZEX; j++){
-						editmap_rect[i][j].mBottom -= 32;
-						editmap_rect[i][j].mTop -= 32;
-					}
-				}
-			}
+			//if (editmap_rect[cursor_posY][cursor_posX].mTop + CELLSIZE >= 360){
+			//	for (int i = 0; i < MAP_SIZEY; i++){
+			//		for (int j = 0; j < MAP_SIZEX; j++){
+			//			editmap_rect[i][j].mBottom -= 32;
+			//			editmap_rect[i][j].mTop -= 32;
+			//		}
+			//	}
+			//}
 			editmap_cursor[cursor_posY - 1][cursor_posX] = CURSOR_NUM;
 			editmap_cursor[cursor_posY][cursor_posX] = ENONE;
 			cursor_posY = cursor_posY - 1;
 		}
 		if ((CGamePad::OncePush(PAD_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f)) && cursor_posY + 1 < MAP_SIZEY){
-			if (editmap_rect[cursor_posY][cursor_posX].mBottom - CELLSIZE <= -360){
-				for (int i = 0; i < MAP_SIZEY; i++){
-					for (int j = 0; j < MAP_SIZEX; j++){
-						editmap_rect[i][j].mBottom += 32;
-						editmap_rect[i][j].mTop += 32;
-					}
-				}
-			}
+			//if (editmap_rect[cursor_posY][cursor_posX].mBottom - CELLSIZE <= -360){
+			//	for (int i = 0; i < MAP_SIZEY; i++){
+			//		for (int j = 0; j < MAP_SIZEX; j++){
+			//			editmap_rect[i][j].mBottom += 32;
+			//			editmap_rect[i][j].mTop += 32;
+			//		}
+			//	}
+			//}
 			editmap_cursor[cursor_posY + 1][cursor_posX] = CURSOR_NUM;
 			editmap_cursor[cursor_posY][cursor_posX] = ENONE;
 			cursor_posY = cursor_posY + 1;
@@ -304,16 +304,13 @@ void CEditer::Render(){
 }
 
 void CEditer::MakeTaskList(int *gamemap) {
-
-	static CTexture mTexBack;// .Load(".\\Data\\Images\\Map\\Background.tga");
 	static CTexture mTexUI;// .Load(".\\Data\\Images\\Map\\MapUI.tga");
 	static CTexture mTexObject;// .Load(".\\Data\\Images\\Map\\MapObject.tga");
 	static CTexture mTexCharacter;// .Load(".\\Data\\Images\\Map\\MapCharacter.tga");
 	static CTexture mTexPlayer;// .Load(".\\Data\\Images\\Map\\MapPlayer.tga");
 	static CTexture mTexEnemy;// .Load(".\\Data\Images\\Map\\MapEnemy.tga");
 
-	if (mTexBack.id == 0) {
-		mTexBack.Load(".\\Data\\Images\\Map\\Background.tga");
+	if (mTexUI.id == 0) {
 		mTexUI.Load(".\\Data\\Images\\Map\\MapUI.tga");
 		mTexObject.Load(".\\Data\\Images\\Map\\MapObject.tga");
 		mTexCharacter.Load(".\\Data\\Images\\Map\\MapCharacter.tga");
