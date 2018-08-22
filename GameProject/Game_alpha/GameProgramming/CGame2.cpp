@@ -13,7 +13,7 @@
 #include "CMapScroll.h"
 
 bool CGame2::mCheat[CHEAT_NUM::ESIZE];
-CMapBackImage *mBackImage[2];
+CMapBackImage *mBackImage[4];
 
 CCamera2D CGame2::mCamera;
 
@@ -58,6 +58,9 @@ void CGame2::Init() {
 	//背景
 	mBackImage[0] = new CMapBackImage(CVector2(mCamera.x, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER1);
 	mBackImage[1] = new CMapBackImage(CVector2(mCamera.x + 1280, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER1);
+	mBackImage[2] = new CMapBackImage(CVector2(mCamera.x, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER2);
+	mBackImage[3] = new CMapBackImage(CVector2(mCamera.x + 1280, mCamera.y), CMapBackImage::ETEXTURE_LAYER::LAYER2);
+
 
 	//カメラ基点
 	CMapScroll::mScroll = new CMapScroll();
@@ -70,6 +73,7 @@ void CGame2::Init() {
 }
 
 void CGame2::Update() {
+	//レイヤー1
 	if (CGame2::mCamera.x < mBackImage[0]->mPosition.x)
 		mBackImage[1]->mPosition.x = mBackImage[0]->mPosition.x - 1280;
 
@@ -81,6 +85,19 @@ void CGame2::Update() {
 
 	if (CGame2::mCamera.x > mBackImage[1]->mPosition.x)
 		mBackImage[0]->mPosition.x = mBackImage[1]->mPosition.x + 1280;
+
+	//レイヤー2
+	if (CGame2::mCamera.x < mBackImage[2]->mPosition.x)
+		mBackImage[3]->mPosition.x = mBackImage[2]->mPosition.x - 1280;
+
+	if (CGame2::mCamera.x > mBackImage[2]->mPosition.x)
+		mBackImage[3]->mPosition.x = mBackImage[2]->mPosition.x + 1280;
+
+	if (CGame2::mCamera.x < mBackImage[3]->mPosition.x)
+		mBackImage[2]->mPosition.x = mBackImage[3]->mPosition.x - 1280;
+
+	if (CGame2::mCamera.x > mBackImage[3]->mPosition.x)
+		mBackImage[2]->mPosition.x = mBackImage[3]->mPosition.x + 1280;
 
 	if (CKey::Push('D')) {
 		mCamera.x += 5;

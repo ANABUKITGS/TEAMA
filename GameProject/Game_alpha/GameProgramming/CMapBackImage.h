@@ -19,15 +19,22 @@ public:
 		ESIZE,
 	};
 
-	CMapBackImage(const CVector2 &pos, ETEXTURE_LAYER num)
+	CMapBackImage(const CVector2 &pos, ETEXTURE_LAYER tag)
 		: CRectangle(pos, CVector2(0, 0), NULL)
 	{
 		mTexLayer1.Load(".\\Data\\Images\\Map\\Background1_1.tga");
 		mTexLayer2.Load(".\\Data\\Images\\Map\\Background1_2.tga");
 
-		texnum = num;
+		texnum = tag;
 		mTag = ECELLNUM::ENONE;
-		mPriority = 10;
+		mRender = false;
+
+		if (tag == ETEXTURE_LAYER::LAYER1)
+			mPriority = 11;
+
+		else if (tag == ETEXTURE_LAYER::LAYER2)
+			mPriority = 10;
+
 		CTaskManager::Get()->Add(this);
 	}
 	void Update();
