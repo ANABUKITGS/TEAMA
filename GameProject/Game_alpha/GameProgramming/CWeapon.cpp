@@ -1,6 +1,7 @@
 #include "CWeapon.h"
 #include "CPlayerT.h"
 #include "CEnemy.h"
+#include "CBoss.h"
 void CWeapon::Update(){
 	mRotation += 10;			//–ˆƒtƒŒ[ƒ€10‚¸‚Â‰ñ“]‚³‚¹‚é
 	mLife--;

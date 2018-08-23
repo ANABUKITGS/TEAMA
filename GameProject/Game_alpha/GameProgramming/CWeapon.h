@@ -13,6 +13,9 @@
 #define ESTRING_UV_L		mpEWeapon->mPosition.x, mPosition.x, mpEWeapon->mPosition.y - 10, mpEWeapon->mPosition.y + 10, 0, 64, 128, 64
 #define ESTRING_UV_R		mPosition.x, mpEWeapon->mPosition.x, mpEWeapon->mPosition.y - 10, mpEWeapon->mPosition.y + 10, 0, 64, 128, 64
 
+#define BSTRING_UV_L		mpBWeapon->mPosition.x, mPosition.x, mpBWeapon->mPosition.y - 10, mpBWeapon->mPosition.y + 10, 0, 64, 128, 64
+#define BSTRING_UV_R		mPosition.x, mpBWeapon->mPosition.x, mpBWeapon->mPosition.y - 10, mpBWeapon->mPosition.y + 10, 0, 64, 128, 64
+
 class CWeapon : public CRectangle{
 public:
 	CTexture mTexYoyo;
