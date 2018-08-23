@@ -8,7 +8,7 @@ CEditer mEditer;
 CGame mGame;
 CGame2 mGame2;
 CTitle mTitle;
-CGetScore mScore;
+CScore mScore;
 CRanking mRanking;
 CName mName;
 CBGM mBGM;

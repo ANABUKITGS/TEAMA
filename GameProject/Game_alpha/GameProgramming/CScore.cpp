@@ -8,46 +8,38 @@
 #include <string.h>
 #include <Windows.h>
 
-int CGetScore::mScore;
+int CScore::mScore[5] = { 0, 0, 0, 0, 0 };;
 char CName::name[3] = { 'aaa' };
 int CName::charnum = 0;
-bool CGetScore::mSort = false;
+bool CScore::mSort = false;
+int CScore::mJewelScore;
+int CScore::mMiniJewelScore;
+int CScore::mLifeScore;
+int CScore::mTimerScore;
 char buf[11];
 wchar_t bufw[64];
+int mCount[5] = {0,0,0,0,0};
 
-void CGetScore::Init(){
-	mScore = 0;
-	mdummy = 0;
+void CScore::Init(){
 	mJewelScore = 150;
 	mMiniJewelScore = 10;
 	mLifeScore = 100;
-	mTimerScore = -1;
+	mTimerScore = 1;
+	mScoreNum = 0;
 }
-void CGetScore::Update(){
-	if (GetKeyState(VK_DOWN) & 0x8000 || CGamePad::OncePush(PAD_LSTICKY, -0.5f)){
-		mScore--;
-	}
-	if (GetKeyState(VK_UP) & 0x8000 || CGamePad::OncePush (PAD_LSTICKY, 0.5f)){
-		mScore++;
-	}
-	
-	mdummy = CPlayerT::mpPlayer->mJewel * mJewelScore;
-	mScore += mdummy;
-	swprintf(bufw, L"宝            %3d ×%4d  = %4d", CPlayerT::mpPlayer->mJewel,mJewelScore,mdummy);
+void CScore::Update(){	
+	if (mScore[mScoreNum] <= mCount[mScoreNum])
+		mScoreNum++;
+	mCount[mScoreNum]=CountUp(mScore[mScoreNum], mCount[mScoreNum]);
+	swprintf(bufw, L"宝            %3d ×%4d  = %4d", CPlayerT::mpPlayer->mJewel,mJewelScore,mCount[0]);
 	CText::DrawStringW(bufw, -300, 200, 20, 1.0f, 0);
-	mdummy = CPlayerT::mpPlayer->mMiniJewel* mMiniJewelScore;
-	mScore += mdummy;
-	swprintf(bufw, L"石            %3d ×%4d  = %4d", CPlayerT::mpPlayer->mMiniJewel,mMiniJewelScore,mdummy);
+	swprintf(bufw, L"石            %3d ×%4d  = %4d", CPlayerT::mpPlayer->mMiniJewel,mMiniJewelScore,mCount[1]);
 	CText::DrawStringW(bufw, -300, 100, 20, 1.0f, 0);
-	mdummy = CPlayerT::mpPlayer->mLife * mLifeScore;
-	mScore += mdummy;
-	swprintf(bufw, L"命            %3d ×%4d  = %4d", CPlayerT::mpPlayer->mLife,mLifeScore,mdummy);
+	swprintf(bufw, L"命            %3d ×%4d  = %4d", CPlayerT::mpPlayer->mLife,mLifeScore,mCount[2]);
 	CText::DrawStringW(bufw, -300, 0, 20, 1.0f, 0);
-	mdummy = (CGame2::mTimeMin * 60 + CGame2::mTimeSec) * mTimerScore;
-	mScore += mdummy;
-	swprintf(bufw, L"タイマー       %02d:%02.0f × %3d  = %4d", CGame2::mTimeMin,CGame2::mTimeSec,mTimerScore,mdummy);
+	swprintf(bufw, L"タイマー       %02d:%02.0f × %3d  = %4d", CGame2::mTimeMin,CGame2::mTimeSec,-mTimerScore,-mCount[3]);
 	CText::DrawStringW(bufw, -300, -100, 20, 1.0f, 0);
-	swprintf(bufw, L"スコア                       %4d", mScore);
+	swprintf(bufw, L"スコア                       %4d", mCount[4]);
 	CText::DrawStringW(bufw, -300, -200, 20, 1.0f, 0);
 	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2)){
 		CSceneChange::changenum = CSceneChange::ENAME;
@@ -57,10 +49,32 @@ void CGetScore::Update(){
 		}
 		CName::charnum = 0;
 	}
-	else
-		mScore = 0;
 	
 }
+
+int CScore::CountUp(int max,int count){
+	if (max>0){
+		if (max > count){
+			count++;
+			return count;
+		}
+	}
+	return count;
+	
+}
+
+void CScore::GetScore(){
+	for (int i = 0; i < 5; i++){
+		mCount[i] = 0;
+		mScore[i] = 0;
+	}
+	mScore[0] = CPlayerT::mpPlayer->mJewel * mJewelScore;
+	mScore[1] = CPlayerT::mpPlayer->mMiniJewel* mMiniJewelScore;
+	mScore[2] = CPlayerT::mpPlayer->mLife * mLifeScore;
+	mScore[3] = ((CGame2::mTimeMin * 60 + CGame2::mTimeSec)/6) * mTimerScore;
+	mScore[4] += mScore[0] + mScore[1] + mScore[2] + mScore[3];
+}
+
 void CName::Init(){
 	CText::Init();
 	
@@ -104,9 +118,9 @@ void CRanking::Init(){
 	}
 }
 void CRanking::Update(){
-	if (CGetScore::mSort){
-		Sort(CGetScore::mScore, CName::name);
-		CGetScore::mSort = false;
+	if (CScore::mSort){
+		Sort(CScore::mScore[4], CName::name);
+		CScore::mSort = false;
 	}
 	glColor4f(1.0f, 1.0f, 0.0f, 1.0f);  //描画色　黄
 	swprintf(bufw, L"ランキング");

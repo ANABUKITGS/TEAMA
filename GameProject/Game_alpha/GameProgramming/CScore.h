@@ -10,20 +10,22 @@ struct  SRanking{
 	int s;
 };
 
-class CGetScore:public CScene{
+class CScore:public CScene{
 public:
-	int mJewelScore;
-	int mMiniJewelScore;
-	int mTimerScore;
-	int mLifeScore;
-	static int mScore;
+	static int mJewelScore;
+	static int mMiniJewelScore;
+	static int mTimerScore;
+	static int mLifeScore;
+	static int mScore[5];
 	static bool mSort;
-	int mdummy;
-	CGetScore(){
+	int mScoreNum;
+	CScore(){
 		mSceneTag = ESCORE;
 	}
 	void Init();
 	void Update();
+	static void GetScore();
+	int CountUp(int max,int count);
 };
 
 class CName:public CScene{

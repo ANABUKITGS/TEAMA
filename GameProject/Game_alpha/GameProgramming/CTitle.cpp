@@ -10,7 +10,7 @@ extern CGame mGame;
 extern CGame2 mGame2;
 extern CCharcter player;
 extern CTitle mTitle;
-extern CGetScore mScore;
+extern CScore mScore;
 
 void CTitle::Init(){
 	cursor_num = CSceneChange::EGAME;
