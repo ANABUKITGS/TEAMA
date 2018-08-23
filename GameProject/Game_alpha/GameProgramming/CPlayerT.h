@@ -30,8 +30,8 @@ public:
 	};
 	static int player_ani;
 	int player_ani_count;
-	int player_ani_count_flame;
-	int PLAYER_ANI_COUNT_FLAME;
+	int player_ani_count_frame;
+	int PLAYER_ANI_COUNT_FRAME;
 	static CPlayerT *mpPlayer;
 
 	bool mJump;				//true:ジャンプボタン入力中  false:ジャンプ入力していない
@@ -67,8 +67,8 @@ public:
 		mTexPlayer.Load(".\\Data\\Images\\Player\\Player.tga");
 		player_ani = EIDOL;
 		player_ani_count = 0;
-		player_ani_count_flame = 0;
-		PLAYER_ANI_COUNT_FLAME = 1;
+		player_ani_count_frame = 0;
+		PLAYER_ANI_COUNT_FRAME = 1;
 		mJewel = 1;
 		mMiniJewel = 0;
 		mLife = 3;

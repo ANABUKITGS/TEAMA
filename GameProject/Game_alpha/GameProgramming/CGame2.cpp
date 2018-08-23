@@ -123,8 +123,7 @@ void CGame2::Update() {
 		mTimeSec = CTime::ElapsedTimeSec();
 	}
 	if (CGamePad::Once(PAD_10) || CKey::Once(VK_ESCAPE)){
-		CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ETITLE;
-		CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETITLE);
+		CMapBackImage::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
 	}
 	if (CGamePad::Once(PAD_9) || CKey::Once(VK_RETURN)){
 		if (CMapBackImage::mMapfile != CMapBackImage::EGAMEMAP_NUM::EMAIN){
@@ -176,8 +175,6 @@ void CGame2::Render() {
 	mCamera.Begin();
 	CTaskManager::Get()->Render();
 	CCamera2D::End();
-
-	CMapBackImage::RenderFade();
 #ifdef _DEBUG
 	wchar_t jumptime_buf[256];
 	swprintf(jumptime_buf, L"ƒvƒŒƒCƒ„[\nmVelocityX\n%6.2f\nmVelocityY\n%6.2f\nmPosition.x\n%.2f\nmPosition.y\n%.2f", CPlayerT::mpPlayer->mVelocityX, CPlayerT::mpPlayer->mVelocityY, CPlayerT::mpPlayer->mPosition.x, CPlayerT::mpPlayer->mPosition.y);

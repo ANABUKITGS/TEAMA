@@ -20,7 +20,7 @@ void CPlayerT::Update(){
 			if (mpWeapon == 0){
 				if ((CGamePad::Push(PAD_1) || CKey::Push(VK_UP))){
 					player_ani_count = 0;
-					player_ani_count_flame = 0;
+					player_ani_count_frame = 0;
 					player_ani = EPLAYERANI::EYOYO;
 					if (mAir){
 						if (mAerialAttack){
@@ -43,7 +43,7 @@ void CPlayerT::Update(){
 
 				if (mJumpCount < 2 && (CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_RIGHT))){
 					player_ani_count = 0;
-					player_ani_count_flame = 0;
+					player_ani_count_frame = 0;
 				}
 				if (mJumpCount < 2 && (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) || CKey::Push(VK_RIGHT))){		//ジャンプ回数２未満かつ２キーまたは→キー入力
 					mAerialAttack = true;
@@ -286,7 +286,7 @@ bool CPlayerT::Collision(CRectangle *p) {
 					mUnrivaled = true;
 					player_ani = EPLAYERANI::EDAMAGE;
 					player_ani_count = 0;
-					player_ani_count_flame = 0;
+					player_ani_count_frame = 0;
 					if (mJewel > 0){
 						if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI])
 							mJewel--;
@@ -394,7 +394,7 @@ void CPlayerT::Render(){
 		if (player_ani_count > 7)
 			player_ani_count = 0;
 
-		PLAYER_ANI_COUNT_FLAME = 8;
+		PLAYER_ANI_COUNT_FRAME = 8;
 
 		if (!mDirection)	//左向き
 			mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 128, 0, mAlpha);
@@ -409,16 +409,16 @@ void CPlayerT::Render(){
 		if (!mDirection){	//左向き
 			if (CGamePad::Push(PAD_LSTICKX, 0.1f) || CGamePad::Push(PAD_LSTICKX, -0.1f)){
 				if (!mDash)
-					PLAYER_ANI_COUNT_FLAME = 3 + (5 / -CGamePad::GetStick(PAD_LSTICKX));
+					PLAYER_ANI_COUNT_FRAME = 3 + (5 / -CGamePad::GetStick(PAD_LSTICKX));
 
 				else
-					PLAYER_ANI_COUNT_FLAME = (3 + (5 / -CGamePad::GetStick(PAD_LSTICKX))) / 2;
+					PLAYER_ANI_COUNT_FRAME = (3 + (5 / -CGamePad::GetStick(PAD_LSTICKX))) / 2;
 			}
 			else{
 				if (!mDash)
-					PLAYER_ANI_COUNT_FLAME = 8;
+					PLAYER_ANI_COUNT_FRAME = 8;
 				else
-					PLAYER_ANI_COUNT_FLAME = 4;
+					PLAYER_ANI_COUNT_FRAME = 4;
 			}
 
 			mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 256, 128, mAlpha);
@@ -427,16 +427,16 @@ void CPlayerT::Render(){
 		else{				//右向き
 			if (CGamePad::Push(PAD_LSTICKX, 0.1f) || CGamePad::Push(PAD_LSTICKX, -0.1f)){
 				if (!mDash)
-					PLAYER_ANI_COUNT_FLAME = 3 + (5 / CGamePad::GetStick(PAD_LSTICKX));
+					PLAYER_ANI_COUNT_FRAME = 3 + (5 / CGamePad::GetStick(PAD_LSTICKX));
 
 				else
-					PLAYER_ANI_COUNT_FLAME = (3 + (5 / CGamePad::GetStick(PAD_LSTICKX))) / 2;
+					PLAYER_ANI_COUNT_FRAME = (3 + (5 / CGamePad::GetStick(PAD_LSTICKX))) / 2;
 			}
 			else{
 				if (!mDash)
-					PLAYER_ANI_COUNT_FLAME = 8;
+					PLAYER_ANI_COUNT_FRAME = 8;
 				else
-					PLAYER_ANI_COUNT_FLAME = 4;
+					PLAYER_ANI_COUNT_FRAME = 4;
 			}
 
 			mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (player_ani_count + 1) * 128, player_ani_count * 128, 256, 128, mAlpha);
@@ -460,7 +460,7 @@ void CPlayerT::Render(){
 			if (player_ani_count > 1)
 				player_ani_count = 0;
 
-			PLAYER_ANI_COUNT_FLAME = 10;
+			PLAYER_ANI_COUNT_FRAME = 10;
 
 			if (!mDirection)	//左向き
 				mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 512, 384, mAlpha);
@@ -483,7 +483,7 @@ void CPlayerT::Render(){
 		if (player_ani_count > 1)
 			player_ani_count = 1;
 
-		PLAYER_ANI_COUNT_FLAME = 4;
+		PLAYER_ANI_COUNT_FRAME = 4;
 
 		if (!mDirection)	//左向き
 			mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 640, 512, mAlpha);
@@ -495,7 +495,7 @@ void CPlayerT::Render(){
 		if (player_ani_count > 1)
 			player_ani_count = 1;
 
-		PLAYER_ANI_COUNT_FLAME = 6;
+		PLAYER_ANI_COUNT_FRAME = 6;
 
 		if (!mDirection)	//左向き
 			mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 768, 640, mAlpha);
@@ -511,10 +511,10 @@ void CPlayerT::Render(){
 		break;
 	}
 
-	player_ani_count_flame++;
-	if (player_ani_count_flame > PLAYER_ANI_COUNT_FLAME){
+	player_ani_count_frame++;
+	if (player_ani_count_frame > PLAYER_ANI_COUNT_FRAME){
 		player_ani_count++;
-		player_ani_count_flame = 0;
+		player_ani_count_frame = 0;
 	}
 }
 

@@ -16,6 +16,7 @@ private:
 
 	static CTexture mTexFade;	//ÉçÅ[ÉhÇµÇ»Ç¢
 	static float mAlpha;
+	static int change_scene;
 
 public:
 	enum ETEXTURE_LAYER{
@@ -60,6 +61,7 @@ public:
 	void Update();
 	void Render();
 
+	static void ChangeFade(int);
 	static void RenderFade();
 };
 #endif

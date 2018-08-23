@@ -1,6 +1,9 @@
 #include "CBoss.h"
 #include "CGame2.h"
 #include "CScene.h"
+#include "CMapBackImage.h"
+
+bool CBoss::mBossLose = false;
 
 void CBoss::Update(){
 	if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
@@ -177,6 +180,10 @@ void CBoss::Update(){
 						mAlpha = 0.0f;
 					else
 						mAlpha = 1.0f;
+				}
+				else if (!mBossDeleteTime){
+					mBossLose = true;
+					CMapBackImage::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ERESULT);
 				}
 			}
 			break;

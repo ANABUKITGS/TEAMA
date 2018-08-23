@@ -81,12 +81,14 @@ private:
 
 //共通使用可能
 public:
+	static bool mBossLose;	//ボスのやられフラグ
 	//引数有のコンストラクタで出現位置を設定
 	CBoss(CVector2 Pos)
 		:CBoss()
 	{
 		//サイズを指定（テクスチャは別で用意するので引数には入れない）
 		SetRectangle(Pos, CVector2(32,90),NULL);
+		mBossLose = false;
 	}
 	static CBoss*mpBoss;
 	//更新処理

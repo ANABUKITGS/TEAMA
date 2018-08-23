@@ -14,6 +14,7 @@ extern CTitle mTitle;
 
 CTexture CMapBackImage::mTexFade;
 float CMapBackImage::mAlpha;
+int CMapBackImage::change_scene = CSceneChange::ECSCENECHANGE_NUM::ETITLE;
 
 void CMapBackImage::Update(){
 	if ((CGame2::mCheat[CGame2::CHEAT_NUM::ESCROLL] || CMapScroll::scroll_flg) && !CMapScroll::scroll_stop){
@@ -48,6 +49,11 @@ void CMapBackImage::Render(){
 	}
 }
 
+void CMapBackImage::ChangeFade(int scene){
+	change_scene = scene;
+	mFade = EFADE_NUM::EFADEOUT;
+}
+
 void CMapBackImage::RenderFade(){
 	extern CGame2 mGame2;
 
@@ -65,22 +71,58 @@ void CMapBackImage::RenderFade(){
 			mAlpha = 1.0f;
 			CSE::AllStop();
 			CBGM::AllStop();
-			if (mMapfile == CMapBackImage::EGAMEMAP_NUM::ETUTORIAL){
-				mGame2.Init(TUTORIAL_MAP);	//チュートリアル用 マップを 読み込む
+			switch (change_scene){
+			case CSceneChange::ECSCENECHANGE_NUM::ETITLE:
+				CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETITLE);
+				CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ETITLE;
+				break;
+
+			case CSceneChange::ECSCENECHANGE_NUM::EGAME:
+				if (mMapfile == CMapBackImage::EGAMEMAP_NUM::ETUTORIAL){
+					mGame2.Init(TUTORIAL_MAP);	//チュートリアル用 マップを 読み込む
+					CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETUTORIAL);
+				}
+				else if (mMapfile == CMapBackImage::EGAMEMAP_NUM::EMAIN){
+					mGame2.Init(GAME_MAP);		//本編用 マップを 読み込む
+					CBGM::ChangeMusic(CBGM::EMUSIC_NUM::EMAIN);
+				}
+				else if (mMapfile == CMapBackImage::EGAMEMAP_NUM::EEDITER){
+					mGame2.Init(EDITER_MAP);	//エディター用 マップを読み込む(仮)
+					CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETUTORIAL);
+				}
+				CTime::GetStartTime();
+				CSceneChange::changenum = mTitle.cursor_num;
+				CMapScroll::mScroll->mPosition.x = 0.0f;
+				CMapScroll::mScroll->mPosition.y = 0.0f;
+				break;
+
+			case CSceneChange::ECSCENECHANGE_NUM::ERANKING:
+				CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ERANKING);
+				CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ERANKING;
+				break;
+
+			case CSceneChange::ECSCENECHANGE_NUM::EEDITER:
 				CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETUTORIAL);
+				CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::EEDITER;
+				break;
+
+			case CSceneChange::ECSCENECHANGE_NUM::EEXIT:
+				CBGM::AllStop();
+				CSE::AllStop();
+				CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::EEXIT;
+				_sleep(500);
+				exit(0);
+				return;
+				break;
+
+			case CSceneChange::ECSCENECHANGE_NUM::ERESULT:
+				CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ERESULT);
+				CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ERESULT;
+				break;
+
+			default:
+				break;
 			}
-			else if (mMapfile == CMapBackImage::EGAMEMAP_NUM::EMAIN){
-				mGame2.Init(GAME_MAP);		//本編用 マップを 読み込む
-				CBGM::ChangeMusic(CBGM::EMUSIC_NUM::EMAIN);
-			}
-			else if (mMapfile == CMapBackImage::EGAMEMAP_NUM::EEDITER){
-				mGame2.Init(EDITER_MAP);	//エディター用 マップを読み込む(仮)
-				CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETUTORIAL);
-			}
-			CTime::GetStartTime();
-			CSceneChange::changenum = mTitle.cursor_num;
-			CMapScroll::mScroll->mPosition.x = 0.0f;
-			CMapScroll::mScroll->mPosition.y = 0.0f;
 		}
 
 		if (CPlayerT::mpPlayer != NULL)
@@ -96,5 +138,6 @@ void CMapBackImage::RenderFade(){
 		}
 	}
 	mTexFade.DrawImageSetColor(FADE_UV, 0.0f, 0.0f, 0.0f, mAlpha);
-	CText::DrawStringW(L"ロードちゅう", 0, 0, 32, mAlpha, 0);
+	if (mFade != EFADE_NUM::ETRUE && change_scene != CSceneChange::ECSCENECHANGE_NUM::EEXIT)
+		CText::DrawStringW(L"ロードちゅう", 0, 0, 32, mAlpha, 0);
 }

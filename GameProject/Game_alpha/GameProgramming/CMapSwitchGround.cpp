@@ -48,7 +48,7 @@ bool CMapSwitchGround::Collision(CRectangle *r) {
 }
 
 void CMapSwitchGround::Render(){
-	if (mTag == ESWITCH_GROUND1){
+	if (mTag == ECELLNUM::ESWITCH_GROUND1){
 		if (mNumber == mTag)
 			mTexSwitchGround.DrawImage(SWITCH_GROUND_POS, SWITCH_GROUND_UV1, 1.0f);
 
@@ -56,7 +56,7 @@ void CMapSwitchGround::Render(){
 			mTexSwitchGround.DrawImage(SWITCH_GROUND_POS, SWITCH_GROUND_UV1, 0.5f);
 	}
 
-	if (mTag == ESWITCH_GROUND2){
+	if (mTag == ECELLNUM::ESWITCH_GROUND2){
 		if (mNumber == mTag)
 			mTexSwitchGround.DrawImage(SWITCH_GROUND_POS, SWITCH_GROUND_UV2, 1.0f);
 
@@ -74,14 +74,47 @@ bool CMapSwitch::Collision(CRectangle *r) {
 	// “–‚½‚Á‚Ä‚¢‚é‚©
 	if (CRectangle::Collision(r)) {
 		//•Ší‚ÉÕ“Ë
-		if (r->mTag == EPWEAPON && mCollisionInterval < 0) {
-				if (CMapSwitchGround::mNumber == ESWITCH_GROUND1)
-					CMapSwitchGround::mNumber = ESWITCH_GROUND2;
+		if (r->mTag == ECELLNUM::EPWEAPON && mCollisionInterval < 0) {
+			if (CMapSwitchGround::mNumber == ECELLNUM::ESWITCH_GROUND1)
+				CMapSwitchGround::mNumber = ECELLNUM::ESWITCH_GROUND2;
 				else
-					CMapSwitchGround::mNumber = ESWITCH_GROUND1;
+					CMapSwitchGround::mNumber = ECELLNUM::ESWITCH_GROUND1;
 				mCollisionInterval = SWITCH_INTERVAL;
+				switch_ani_count_frame = 0;
 		}
 		return true;
 	}
 	return false;
+}
+
+void CMapSwitch::Render(){
+	switch (CMapSwitchGround::mNumber){
+	case ECELLNUM::ESWITCH_GROUND1:
+		if (switch_ani_count > 2)
+			switch_ani_count = 2;
+
+		mTexSwitch.DrawImage(SWITCH_POS, SWITCH_UV, 1.0f);
+		break;
+
+	case ECELLNUM::ESWITCH_GROUND2:
+		if (switch_ani_count <= 0)
+			switch_ani_count = 0;
+
+		mTexSwitch.DrawImage(SWITCH_POS, SWITCH_UV, 1.0f);
+		break;
+
+	default:
+		break;
+	}
+
+	switch_ani_count_frame++;
+	if (switch_ani_count_frame > SWITCH_ANI_COUNT_FRAME){
+		if (CMapSwitchGround::mNumber == ECELLNUM::ESWITCH_GROUND1)
+			switch_ani_count++;
+
+		else
+			switch_ani_count--;
+
+		switch_ani_count_frame = 0;
+	}
 }
