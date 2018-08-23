@@ -1,6 +1,5 @@
 #include "CMapSign.h"
-
-CMapEndSign::ETUTORIAL_END_NUM CMapEndSign::tutorial_end = ETUTORIAL_END_NUM::EFALSE;
+#include "CMapBackImage.h"
 
 //チュートリアル 看板
 void CMapSign::Update() {
@@ -44,11 +43,12 @@ void CMapEndSign::Update() {
 }
 
 bool CMapEndSign::Collision(CRectangle *r) {
-	if (tutorial_end == ETUTORIAL_END_NUM::EFALSE){
+	if (CMapBackImage::mFade == CMapBackImage::EFADE_NUM::EFALSE && CMapBackImage::mMapfile == CMapBackImage::EGAMEMAP_NUM::ETUTORIAL){
 		// 当たっているか
 		if (r->mTag == EPLAYER){
 			if (CRectangle::Collision(r)){
-				tutorial_end = ETUTORIAL_END_NUM::EFADEOUT;
+				CMapBackImage::mMapfile = CMapBackImage::EGAMEMAP_NUM::EMAIN;
+				CMapBackImage::mFade = CMapBackImage::EFADE_NUM::EFADEOUT;
 				return true;
 			}
 		}

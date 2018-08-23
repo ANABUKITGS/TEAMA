@@ -21,15 +21,27 @@ public:
 	enum ETEXTURE_LAYER{
 		LAYER1 = 1,
 		LAYER2,
-		ESIZE,
 	};
+
+	enum EGAMEMAP_NUM{
+		ETUTORIAL = 1,
+		EMAIN,
+		EEDITER,
+	};
+	static EGAMEMAP_NUM mMapfile;
+
+	enum EFADE_NUM{
+		EFALSE = 1,	//無効
+		EFADEOUT,	//フェードアウト
+		ETRUE,		//有効, フェードイン
+	};
+	static EFADE_NUM mFade;	//フェード効果
 
 	CMapBackImage(const CVector2 &pos, ETEXTURE_LAYER tag)
 		: CRectangle(pos, CVector2(0, 0), NULL)
 	{
 		mTexLayer1.Load(".\\Data\\Images\\Map\\Background1_1.tga");
 		mTexLayer2.Load(".\\Data\\Images\\Map\\Background1_2.tga");
-		mTexFade.Load(".\\Data\\Images\\Fade\\Black.tga");
 
 		texnum = tag;
 		mTag = ECELLNUM::ENONE;

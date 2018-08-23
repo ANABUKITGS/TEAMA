@@ -3,6 +3,7 @@
 #include "CGame2.h"
 #include "CTime.h"
 #include "CBGM.h"
+#include "CMapBackImage.h"
 
 extern CEditer mEditer;
 extern CGame mGame;
@@ -28,10 +29,8 @@ void CTitle::Update(){
 	if (CGamePad::Once(PAD_2) || CKey::Once(VK_RETURN) || CKey::Once(VK_SPACE)){
 		switch (cursor_num){
 		case CSceneChange::ECSCENECHANGE_NUM::EGAME:
-			mGame2.Init(TUTORIAL_MAP);
-			CTime::GetStartTime();
-			CSceneChange::changenum = cursor_num;
-			CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETUTORIAL);
+			CMapBackImage::mMapfile = CMapBackImage::EGAMEMAP_NUM::ETUTORIAL;
+			CMapBackImage::mFade = CMapBackImage::EFADE_NUM::EFADEOUT;
 			break;
 
 		case CSceneChange::ECSCENECHANGE_NUM::ERANKING:
@@ -92,4 +91,6 @@ void CTitle::Update(){
 void CTitle::Render(){
 	CText::DrawStringWSetColor(L" ゲームスタート\n ランキング\n スコア\n エディター(かり)\n ゲームしゅうりょう", -200, 0, 32, WHITE, 1.0f, 0);
 	CText::DrawStringWSetColor(cursor_buf, -200, 0, 32, WHITE, 1.0f, 0);
+
+	CMapBackImage::RenderFade();
 }

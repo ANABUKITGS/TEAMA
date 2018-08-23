@@ -56,19 +56,10 @@ private:
 	CTexture mTexEndSign;
 
 public:
-	enum ETUTORIAL_END_NUM{
-		EFALSE = 1,	//無効
-		EFADEOUT,	//フェードアウト
-		ETRUE,		//有効, フェードイン
-		ESIZE,		//TUTORIAL_END_NUM サイズ
-	};
-	static ETUTORIAL_END_NUM tutorial_end;	//チュートリアル 終了フラグ
 	CMapEndSign(const CVector2& pos)
 		//CMapChipで初期化
 		: CMapChip(pos, CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL, SIGN_UV, ECELLNUM::EENDSIGN)
 	{
-		if (tutorial_end != ETUTORIAL_END_NUM::ETRUE)
-			tutorial_end = ETUTORIAL_END_NUM::EFALSE;
 		mTexEndSign.Load(".\\Data\\Images\\Map\\MapEndSign.tga");
 		mRender = false;
 		mTag = ECELLNUM::EENDSIGN;

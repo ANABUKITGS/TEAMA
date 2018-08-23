@@ -5,10 +5,10 @@
 //hoge
 class CTitle{
 private:
-	int cursor_num;
 	wchar_t cursor_buf[32];
 
 public:
+	int cursor_num;
 	CTexture mTexTitle;
 	void Init();
 	void Update();
