@@ -3,7 +3,10 @@
 #include "CScene.h"
 #include "CMapScroll.h"
 
-#define PLAYER_VELOCITY_X 1.25f
+#define PLAYER_VELOCITY_X		1.25f	//入力
+#define PLAYER_VELOCITY_X_ICE	0.15f	//入力 氷足場
+#define PLAYER_VELOCITY_X2		0.25f	//非入力
+#define PLAYER_VELOCITY_X2_ICE	0.05f	//非入力 氷足場
 #define ATTACK_TIME 30
 
 CPlayerT *CPlayerT::mpPlayer = 0;
@@ -67,7 +70,7 @@ void CPlayerT::Update(){
 			}
 			else {								//武器の生存時間が0を超過
 				player_ani = EPLAYERANI::EYOYO;
-				mpWeapon->Render();
+				//mpWeapon->Render();	//要らないのでは?
 			}
 			if (mpWeapon == 0){
 				Dash();
@@ -91,7 +94,7 @@ void CPlayerT::Update(){
 			mPosition.y + CELLSIZE < 0.0f){	//エリア外(下)
 			mPosition = mReSpornPos;
 			mVelocityX = mVelocityY = 0.0f;
-			player_ani = EIDOL;
+			player_ani = EPLAYERANI::EIDOL;
 			mJumpCount = 0;
 			if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI])
 				mLife--;
@@ -121,20 +124,29 @@ void CPlayerT::Forward(){
 				float hoge = mVelocityLimit * CGamePad::GetStick(PAD_LSTICKX);
 				mDirection = true;
 				if (mVelocityX < hoge && mVelocityX > -hoge){
-					mVelocityX += PLAYER_VELOCITY_X;
+					if (!mIce)
+						mVelocityX += PLAYER_VELOCITY_X;
+					else
+						mVelocityX += PLAYER_VELOCITY_X_ICE;
 				}
 
 				if (!mAir)
-					player_ani = ETURN;
+					player_ani = EPLAYERANI::ETURN;
 
 				if (mVelocityX > 0){
-					mVelocityX -= 0.25f;
+					if (!mIce)
+						mVelocityX -= PLAYER_VELOCITY_X2;
+					else
+						mVelocityX -= PLAYER_VELOCITY_X2_ICE;
 
 					if (!mAir)
 						player_ani = ERUN;
 				}
 				else if (mVelocityX < 0){
-					mVelocityX += 0.25f;
+					if (!mIce)
+						mVelocityX += PLAYER_VELOCITY_X2;
+					else
+						mVelocityX += PLAYER_VELOCITY_X2_ICE;
 				}
 			}
 
@@ -142,17 +154,26 @@ void CPlayerT::Forward(){
 				float hoge = mVelocityLimit * -CGamePad::GetStick(PAD_LSTICKX);
 				mDirection = false;
 				if (mVelocityX < hoge && mVelocityX > -hoge){
-					mVelocityX -= PLAYER_VELOCITY_X;
+					if (!mIce)
+						mVelocityX -= PLAYER_VELOCITY_X;
+					else
+						mVelocityX -= PLAYER_VELOCITY_X_ICE;
 				}
 
 				if (!mAir)
-					player_ani = ETURN;
+					player_ani = EPLAYERANI::ETURN;
 
 				if (mVelocityX > 0){
-					mVelocityX -= 0.25f;
+					if (!mIce)
+						mVelocityX -= PLAYER_VELOCITY_X2;
+					else
+						mVelocityX -= PLAYER_VELOCITY_X2_ICE;
 				}
 				else if (mVelocityX < 0){
-					mVelocityX += 0.25f;
+					if (!mIce)
+						mVelocityX += PLAYER_VELOCITY_X2;
+					else
+						mVelocityX += PLAYER_VELOCITY_X2_ICE;
 
 					if (!mAir)
 						player_ani = ERUN;
@@ -167,34 +188,51 @@ void CPlayerT::Forward(){
 				mDirection = true;
 				if (mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit)
 					mVelocityX += PLAYER_VELOCITY_X;
+				else
+					mVelocityX += PLAYER_VELOCITY_X_ICE;
 
 				if (!mAir)
-					player_ani = ETURN;
+					player_ani = EPLAYERANI::ETURN;
 
 				if (mVelocityX > 0){
-					mVelocityX -= 0.25f;
+					if (!mIce)
+						mVelocityX -= PLAYER_VELOCITY_X2;
+					else
+						mVelocityX -= PLAYER_VELOCITY_X2_ICE;
 
 					if (!mAir)
 						player_ani = ERUN;
 				}
 				else if (mVelocityX < 0){
-					mVelocityX += 0.25f;
+					if (!mIce)
+						mVelocityX += PLAYER_VELOCITY_X2;
+					else
+						mVelocityX += PLAYER_VELOCITY_X2_ICE;
 				}
 			}
 
 			if (CKey::Push('A')){
 				mDirection = false;
 				if (mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit)
+				if (!mIce)
 					mVelocityX -= PLAYER_VELOCITY_X;
+				else
+					mVelocityX -= PLAYER_VELOCITY_X_ICE;
 
 				if (!mAir)
-					player_ani = ETURN;
+					player_ani = EPLAYERANI::ETURN;
 
 				if (mVelocityX > 0){
-					mVelocityX -= 0.25f;
+					if (!mIce)
+						mVelocityX -= PLAYER_VELOCITY_X2;
+					else
+						mVelocityX -= PLAYER_VELOCITY_X2_ICE;
 				}
 				else if (mVelocityX < 0){
-					mVelocityX += 0.25f;
+					if (!mIce)
+						mVelocityX += PLAYER_VELOCITY_X2;
+					else
+						mVelocityX += PLAYER_VELOCITY_X2_ICE;
 
 					if (!mAir)
 						player_ani = ERUN;
@@ -202,11 +240,18 @@ void CPlayerT::Forward(){
 			}
 		}
 		else{
-			if (mVelocityX < 0)
-				mVelocityX += 0.25f;
-
-			else if (mVelocityX > 0)
-				mVelocityX -= 0.25f;
+			if (mVelocityX < 0){
+				if (!mIce)
+					mVelocityX += PLAYER_VELOCITY_X2;
+				else
+					mVelocityX += PLAYER_VELOCITY_X2_ICE;
+			}
+			else if (mVelocityX > 0){
+				if (!mIce)
+					mVelocityX -= PLAYER_VELOCITY_X2;
+				else
+					mVelocityX -= PLAYER_VELOCITY_X2_ICE;
+			}
 
 			if (!mAir)
 				player_ani = EIDOL;
@@ -226,6 +271,8 @@ void CPlayerT::Forward(){
 			}
 		}
 	}
+	if (mVelocityX < PLAYER_VELOCITY_X2_ICE && mVelocityX > -PLAYER_VELOCITY_X2_ICE)
+		mVelocityX = 0.0f;
 }
 
 
@@ -270,6 +317,10 @@ bool CPlayerT::Collision(CRectangle *p) {
 				mReSpornPos = p->mPosition;
 				break;
 
+			case EICE:
+				mIce = true;
+				break;
+
 			case EENEMY1:
 			case EENEMY2:
 			case EENEMY3:
@@ -287,41 +338,45 @@ bool CPlayerT::Collision(CRectangle *p) {
 			case ESIGN:
 			case EENDSIGN:
 			case EBOSSROOM:
+				mIce = false;
 				break;
 
 			default:
 			{
-					   CVector2 ad;
-					   if (aj.x > 0) {
-						   //右空き
-						   if (!(p->mColFlg & EDT_RIGHT)) {
-							   mPosition.x = mPosition.x + aj.x;
-						   }
-					   }
-					   else if (aj.x < 0) {
-						   //左空き
-						   if (!(p->mColFlg & EDT_LEFT)) {
-							   mPosition.x = mPosition.x + aj.x;
-						   }
-					   }
-					   if (CRectangle::Collision(p, &aj, &ad)) {
-						   if (ad.y < 0) {
-							   //下空き
-							   if (!(p->mColFlg & EDT_BOTTOM)) {
-								   mPosition.y = mPosition.y + ad.y;
-								   mVelocityY = 0.0f;
-							   }
-						   }
-						   else if (ad.y > 0) {
-							   //上空き
-							   if (!(p->mColFlg & EDT_TOP)) {
-								   mPosition.y = mPosition.y + ad.y;
-								   mJumpCount = 0;
-								   mVelocityY = 0.0f;
-							   }
-						   }
-					   }
+						CVector2 ad;
+						if (aj.x > 0) {
+							//右空き
+							if (!(p->mColFlg & EDT_RIGHT)) {
+								mPosition.x = mPosition.x + aj.x;
+								mVelocityX = 0.0f;
+							}
+						}
+						else if (aj.x < 0) {
+							//左空き
+							if (!(p->mColFlg & EDT_LEFT)) {
+								mPosition.x = mPosition.x + aj.x;
+								mVelocityX = 0.0f;
+							}
+						}
+						if (CRectangle::Collision(p, &aj, &ad)) {
+							if (ad.y < 0) {
+								//下空き
+								if (!(p->mColFlg & EDT_BOTTOM)) {
+									mPosition.y = mPosition.y + ad.y;
+									mVelocityY = 0.0f;
+								}
+							}
+							else if (ad.y > 0) {
+								//上空き
+								if (!(p->mColFlg & EDT_TOP)) {
+									mPosition.y = mPosition.y + ad.y;
+									mJumpCount = 0;
+									mVelocityY = 0.0f;
+								}
+							}
+						}
 			}
+				mIce = false;
 				break;
 
 

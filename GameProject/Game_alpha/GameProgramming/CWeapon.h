@@ -35,7 +35,11 @@ public:
 	CWeapon::CWeapon(ECELLNUM tag, const CVector2&position, const bool direction)
 		: CWeapon()
 	{
-		mTexYoyo.Load(".\\Data\\Images\\Player\\Yoyo.tga");
+		if (tag == ECELLNUM::EPWEAPON)
+			mTexYoyo.Load(".\\Data\\Images\\Player\\Yoyo.tga");
+
+		else if (tag == ECELLNUM::EEWEAPON)
+			mTexYoyo.Load(".\\Data\\Images\\Enemy\\Yoyo.tga");
 		SetRectangle(position, CVector2(10, 10), &mTexYoyo);
 		mPosInit = position;
 		mDirection = direction;
