@@ -2,9 +2,15 @@
 #include "CGame2.h"
 #include "CMapScroll.h"
 #include "CPlayerT.h"
-#include "CMapSign.h"
 #include "CSE.h"
 #include "CBGM.h"
+#include "CTime.h"
+#include "CScene.h"
+#include "CTitle.h"
+
+CMapBackImage::EFADE_NUM CMapBackImage::mFade = CMapBackImage::EFADE_NUM::EFALSE;
+CMapBackImage::EGAMEMAP_NUM CMapBackImage::mMapfile = CMapBackImage::EGAMEMAP_NUM::ETUTORIAL;
+extern CTitle mTitle;
 
 CTexture CMapBackImage::mTexFade;
 float CMapBackImage::mAlpha;
@@ -45,30 +51,49 @@ void CMapBackImage::Render(){
 void CMapBackImage::RenderFade(){
 	extern CGame2 mGame2;
 
-	if (CMapEndSign::tutorial_end == CMapEndSign::ETUTORIAL_END_NUM::EFALSE){
+	if (mFade == EFADE_NUM::EFALSE){
 		mAlpha = 0.0f;
 		return;
 	}
 
-	else if (CMapEndSign::tutorial_end == CMapEndSign::ETUTORIAL_END_NUM::EFADEOUT){
+	else if (mFade == EFADE_NUM::EFADEOUT){
 		if (mAlpha < 1.0f)
 			mAlpha += 0.025f;
 
-		if (mAlpha > 1.0f){
-			CMapEndSign::tutorial_end == CMapEndSign::ETUTORIAL_END_NUM::ETRUE;
+		if (mAlpha >= 1.0f){
+			mFade = EFADE_NUM::ETRUE;
 			mAlpha = 1.0f;
 			CSE::AllStop();
 			CBGM::AllStop();
-			mGame2.Init(GAME_MAP);
+			if (mMapfile == CMapBackImage::EGAMEMAP_NUM::ETUTORIAL){
+				mGame2.Init(TUTORIAL_MAP);	//チュートリアル用 マップを 読み込む
+				CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETUTORIAL);
+			}
+			else if (mMapfile == CMapBackImage::EGAMEMAP_NUM::EMAIN){
+				mGame2.Init(GAME_MAP);		//本編用 マップを 読み込む
+				CBGM::ChangeMusic(CBGM::EMUSIC_NUM::EMAIN);
+			}
+			else if (mMapfile == CMapBackImage::EGAMEMAP_NUM::EEDITER){
+				mGame2.Init(EDITER_MAP);	//エディター用 マップを読み込む(仮)
+				CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETUTORIAL);
+			}
+			CTime::GetStartTime();
+			CSceneChange::changenum = mTitle.cursor_num;
 			CMapScroll::mScroll->mPosition.x = 0.0f;
 			CMapScroll::mScroll->mPosition.y = 0.0f;
 		}
 
-		CPlayerT::mpPlayer->mVelocityX = 0.0f;
+		if (CPlayerT::mpPlayer != NULL)
+			CPlayerT::mpPlayer->mVelocityX = 0.0f;
 	}
-	else if (CMapEndSign::tutorial_end == CMapEndSign::ETUTORIAL_END_NUM::ETRUE){
+	else if (mFade == EFADE_NUM::ETRUE){
 		if (mAlpha > 0.0f)
 			mAlpha -= 0.025f;
+
+		if (mAlpha <= 1.0f){
+			mAlpha = 0.0f;
+			mFade = EFADE_NUM::EFALSE;
+		}
 	}
-	mTexFade.DrawImage(FADE_UV, mAlpha);
+	mTexFade.DrawImageSetColor(FADE_UV, 0.0f, 0.0f, 0.0f, mAlpha);
 }

@@ -115,8 +115,11 @@ void CGame2::Update() {
 		CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ETITLE;
 		CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETITLE);
 	}
-	if (CGamePad::Once(PAD_9) || CKey::Once(VK_RETURN))
-		CMapEndSign::tutorial_end = CMapEndSign::ETUTORIAL_END_NUM::EFADEOUT;
+	if (CGamePad::Once(PAD_9) || CKey::Once(VK_RETURN)){
+		if (CMapBackImage::mMapfile == CMapBackImage::EGAMEMAP_NUM::ETUTORIAL)
+			CMapBackImage::mMapfile = CMapBackImage::EGAMEMAP_NUM::EMAIN;
+		CMapBackImage::mFade = CMapBackImage::EFADE_NUM::EFADEOUT;
+	}
 
 #ifdef _DEBUG
 	if (CGamePad::Push(PAD_11) || CKey::Push(LVKF_CONTROL)){
