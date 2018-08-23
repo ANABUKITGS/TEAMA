@@ -24,10 +24,10 @@ bool CMapSign::Collision(CRectangle *r) {
 
 void CMapSign::Render(){
 	if (mView)
-		mTexSign.DrawImage(mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE / 2, mPosition.y + CELLSIZE / 2, 64, 0, 64, 0, 1.0f);
+		mTexSign.DrawImage(SIGN_UV, 1.0f);
 
 	else
-		mTexSign.DrawImage(mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE / 2, mPosition.y + CELLSIZE / 2, 64, 0, 64, 0, 0.5f);
+		mTexSign.DrawImage(SIGN_UV, 0.5f);
 }
 
 //
@@ -60,7 +60,7 @@ bool CMapEndSign::Collision(CRectangle *r) {
 }
 
 void CMapEndSign::Render(){
-	mTexEndSign.DrawImage(mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE / 2, mPosition.y + CELLSIZE / 2, 0, 64, 64, 0, 1.0f);
+	mTexEndSign.DrawImage(SIGN_UV, 1.0f);
 }
 
 //ƒ{ƒX‚Ì•”‰® ŠÅ”Â
@@ -71,13 +71,31 @@ void CMapBossRoomSign::Update() {
 bool CMapBossRoomSign::Collision(CRectangle *r) {
 	// “–‚½‚Á‚Ä‚¢‚é‚©
 	if (r->mTag == EPLAYER){
-		if (CRectangle::Collision(r)){
-			return true;
+		if (mColFlg){
+			CVector2 aj;
+			if (CRectangle::Collision(r) && CRectangle::Collision(r, &aj)) {
+				//¶
+				if (mPosition.x - CELLSIZE / 2 > r->mPosition.x) {
+					r->mPosition.x = r->mPosition.x - aj.x;
+					return true;
+				}
+				//‰E
+				if (mPosition.x + CELLSIZE / 2 < r->mPosition.x) {
+					r->mPosition.x = r->mPosition.x - aj.x;
+					return true;
+				}
+			}
+		}
+		else{
+			if (CRectangle::Collision(r) && r->mPosition.x > mPosition.x){
+				mColFlg = true;
+				return true;
+			}
 		}
 	}
 	return false;
 }
 
 void CMapBossRoomSign::Render(){
-	mTexBossRoomSign.DrawImage(mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE / 2, mPosition.y + CELLSIZE / 2, 0, 64, 64, 0, 1.0f);
+	mTexBossRoomSign.DrawImage(SIGN_UV, 1.0f);
 }

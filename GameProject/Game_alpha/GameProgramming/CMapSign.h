@@ -5,7 +5,7 @@
 #include "CCamera2D.h"
 #include "CGame2.h"
 
-#define SIGN_UV			0, 64, 64 * 6, 64 * 5
+#define SIGN_UV			mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE / 2, mPosition.y + CELLSIZE / 2, 0, 64, 64 * 6, 64 * 5
 #define TEXTVIEW_UV		CGame2::mCamera.x - 256, CGame2::mCamera.x + 255, CGame2::mCamera.y - 256, CGame2::mCamera.y + 256, 0, 512, 512, 0
 
 #define DRAWSTRING_UV	text_buf, -256, 192, 32, 3, 1.0f
@@ -21,9 +21,10 @@ public:
 	bool mView;
 	CMapSign(const CVector2& pos)
 		//CMapChipÇ≈èâä˙âª
-		: CMapChip(pos, CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL, SIGN_UV, ECELLNUM::ESIGN)
+		: CMapChip(pos, CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL, NULL, NULL, NULL, NULL, ECELLNUM::ESIGN)
 	{
-		mTexSign.Load(".\\Data\\Images\\Map\\MapSign.tga");
+		if (mTexSign.id == NULL)
+			mTexSign.Load(".\\Data\\Images\\Map\\MapSign.tga");
 		mRender = false;
 		mTag = ECELLNUM::ESIGN;
 	}
@@ -42,7 +43,8 @@ public:
 		: CRectangle(CVector2(CGame2::mCamera.x, CGame2::mCamera.y), CVector2(0, 0), NULL)
 	{
 		mPriority = -10;
-		mTexTextView.Load(".\\Data\\Images\\Map\\TextView.tga");
+		if (mTexTextView.id == NULL)
+			mTexTextView.Load(".\\Data\\Images\\Map\\TextView.tga");
 		mRender = false;
 		swprintf(text_buf, TEXT1);
 	}
@@ -59,9 +61,10 @@ public:
 	static CMapEndSign *mpEndSign;
 	CMapEndSign(const CVector2& pos)
 		//CMapChipÇ≈èâä˙âª
-		: CMapChip(pos, CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL, SIGN_UV, ECELLNUM::EENDSIGN)
+		: CMapChip(pos, CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL, NULL, NULL, NULL, NULL, ECELLNUM::EENDSIGN)
 	{
-		mTexEndSign.Load(".\\Data\\Images\\Map\\MapEndSign.tga");
+		if (mTexEndSign.id == NULL)
+			mTexEndSign.Load(".\\Data\\Images\\Map\\MapEndSign.tga");
 		mRender = false;
 		mTag = ECELLNUM::EENDSIGN;
 	}
@@ -74,14 +77,17 @@ public:
 class CMapBossRoomSign : public CMapChip {
 private:
 	CTexture mTexBossRoomSign;
+	bool mColFlg;
 
 public:
 	static CMapBossRoomSign *mpBossRoomSign;
 	CMapBossRoomSign(const CVector2& pos)
 		//CMapChipÇ≈èâä˙âª
-		: CMapChip(pos, CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL, SIGN_UV, ECELLNUM::EBOSSROOM)
+		: CMapChip(pos, CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL, NULL, NULL, NULL, NULL, ECELLNUM::EBOSSROOM)
 	{
-		mTexBossRoomSign.Load(".\\Data\\Images\\Map\\MapEndSign.tga");
+		if (mTexBossRoomSign.id == NULL)
+			mTexBossRoomSign.Load(".\\Data\\Images\\Map\\MapBossRoomSign.tga");
+		mColFlg = false;
 		mRender = false;
 		mTag = ECELLNUM::EBOSSROOM;
 	}
