@@ -21,6 +21,7 @@ void CSceneChange::Init(){
 	mTitle.Init();
 	mEditer.Init();
 	mRanking.Init();
+	mScore.Init();
 	mName.Init();
 	mBGM.Init();
 }
@@ -44,6 +45,7 @@ void CSceneChange::Update(){
 
 	case ECSCENECHANGE_NUM::ENAME:
 		mName.Update();
+		break;
 
 	case ECSCENECHANGE_NUM::ERESULT:
 		mScore.Update();

@@ -4,6 +4,7 @@
 #include "CScene.h"
 #include "CMain.h"
 
+
 struct  SRanking{
 	char n[3];
 	int s;
@@ -11,21 +12,25 @@ struct  SRanking{
 
 class CGetScore:public CScene{
 public:
+	int mJewelScore;
+	int mMiniJewelScore;
+	int mTimerScore;
+	int mLifeScore;
 	static int mScore;
-	bool mSort;
+	static bool mSort;
 	int mdammy;
-	int mScoreRank;
+	int mdammy2;
 	CGetScore(){
 		mSceneTag = ESCORE;
 	}
-	virtual void Init();
-	virtual void Update();
+	void Init();
+	void Update();
 };
 
 class CName:public CScene{
 public:
 	static char name[3];
-	int charnum = 0;
+	static int charnum;
 	CName(){
 		CScene::mSceneTag = ENAME;
 	}
@@ -40,6 +45,6 @@ public:
 	}
 	void Init();
 	void Update();
-	void Sort();
+	void Sort(int score , char *name);
 };
 #endif
