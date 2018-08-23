@@ -8,6 +8,10 @@ int CTime::ElapsedStartTime = 0;	//計測開始時間
 float CTime::FPS = 0;				//フレームレート
 float CTime::RenderFPS = 0;			//出力 フレームレート
 
+float CTime::GetTime(){
+	return clock() - ElapsedStartTime;
+}
+
 void CTime::GetStartTime(){
 	ElapsedStartTime = clock();
 }

@@ -26,6 +26,9 @@ public:
 	};
 	static bool mCheat[CHEAT_NUM::ESIZE];
 	static CCamera2D mCamera;
+	static int mTime;
+	static float mTimeSec;
+	static int mTimeMin;
 
 	CTexture mTexBack;								//背景
 	CTexture mTexUI;								//UI テクスチャー

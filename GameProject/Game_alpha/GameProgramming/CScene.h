@@ -34,11 +34,10 @@ public:
 		ETITLE = 1,
 		EGAME,
 		ERANKING,
-		ERESULT,
 		EEDITER,
 		EEXIT,
 		ESIZE,
-		ESCORE,
+		ERESULT,
 		ENAME,
 	};
 	static int changenum;

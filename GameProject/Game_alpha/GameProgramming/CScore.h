@@ -18,8 +18,7 @@ public:
 	int mLifeScore;
 	static int mScore;
 	static bool mSort;
-	int mdammy;
-	int mdammy2;
+	int mdummy;
 	CGetScore(){
 		mSceneTag = ESCORE;
 	}

@@ -2,6 +2,8 @@
 #include "CKey.h"
 #include "CGamePad.h"
 #include "CPlayerT.h"
+#include "CTime.h"
+#include "CGame2.h"
 #include <stdio.h>
 #include <string.h>
 #include <Windows.h>
@@ -15,8 +17,7 @@ wchar_t bufw[64];
 
 void CGetScore::Init(){
 	mScore = 0;
-	mdammy = 0;
-	mdammy2 = 0;
+	mdummy = 0;
 	mJewelScore = 150;
 	mMiniJewelScore = 10;
 	mLifeScore = 100;
@@ -30,24 +31,24 @@ void CGetScore::Update(){
 		mScore++;
 	}
 	
-	mdammy = CPlayerT::mpPlayer->mJewel * mJewelScore;
-	mScore += mdammy;
-	swprintf(bufw, L"ダイヤモンド  %3d ×%4d = %4d", CPlayerT::mpPlayer->mJewel,mJewelScore,mdammy);
-	CText::DrawStringW(bufw, -100, 200, 20, 1.0f, 0);
-	mdammy = CPlayerT::mpPlayer->mMiniJewel* mMiniJewelScore;
-	mScore += mdammy;
-	swprintf(bufw, L"ダイヤモンド  %3d ×%4d = %4d", CPlayerT::mpPlayer->mMiniJewel,mMiniJewelScore,mdammy);
-	CText::DrawStringW(bufw, -100, 100, 20, 1.0f, 0);
-	mdammy = CPlayerT::mpPlayer->mLife * mLifeScore;
-	mScore += mdammy;
-	swprintf(bufw, L"ザンキ     %3d ×%4d = %4d", CPlayerT::mpPlayer->mLife,mLifeScore,mdammy);
-	CText::DrawStringW(bufw, -100, 0, 20, 1.0f, 0);
-	mdammy = CPlayerT::mpPlayer->mLife * mLifeScore;
-	mScore += mdammy;
-	swprintf(bufw, L"タイマー    %3d ×%4d", mTimerScore,mdammy);
-	CText::DrawStringW(bufw, -100, -100, 20, 1.0f, 0);
-	swprintf(bufw, L"スコア      %4d", mScore);
-	CText::DrawStringW(bufw, -100, -200, 20, 1.0f, 0);
+	mdummy = CPlayerT::mpPlayer->mJewel * mJewelScore;
+	mScore += mdummy;
+	swprintf(bufw, L"宝            %3d ×%4d  = %4d", CPlayerT::mpPlayer->mJewel,mJewelScore,mdummy);
+	CText::DrawStringW(bufw, -300, 200, 20, 1.0f, 0);
+	mdummy = CPlayerT::mpPlayer->mMiniJewel* mMiniJewelScore;
+	mScore += mdummy;
+	swprintf(bufw, L"石            %3d ×%4d  = %4d", CPlayerT::mpPlayer->mMiniJewel,mMiniJewelScore,mdummy);
+	CText::DrawStringW(bufw, -300, 100, 20, 1.0f, 0);
+	mdummy = CPlayerT::mpPlayer->mLife * mLifeScore;
+	mScore += mdummy;
+	swprintf(bufw, L"命            %3d ×%4d  = %4d", CPlayerT::mpPlayer->mLife,mLifeScore,mdummy);
+	CText::DrawStringW(bufw, -300, 0, 20, 1.0f, 0);
+	mdummy = (CGame2::mTimeMin * 60 + CGame2::mTimeSec) * mTimerScore;
+	mScore += mdummy;
+	swprintf(bufw, L"タイマー       %02d:%02.0f × %3d  = %4d", CGame2::mTimeMin,CGame2::mTimeSec,mTimerScore,mdummy);
+	CText::DrawStringW(bufw, -300, -100, 20, 1.0f, 0);
+	swprintf(bufw, L"スコア                       %4d", mScore);
+	CText::DrawStringW(bufw, -300, -200, 20, 1.0f, 0);
 	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2)){
 		CSceneChange::changenum = CSceneChange::ENAME;
 		mSort = true;

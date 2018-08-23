@@ -17,6 +17,7 @@ public:
 	static int ElapsedTimeMin();
 	static float ElapsedTimeSec();
 	static float FrameRate();
+	static float GetTime();
 };
 
 #endif
