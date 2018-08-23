@@ -38,11 +38,6 @@ void CTitle::Update(){
 			CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ERANKING);
 			break;
 
-		case CSceneChange::ECSCENECHANGE_NUM::ERESULT:
-			CSceneChange::changenum = cursor_num;
-			CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ERESULT);
-			break;
-
 		case CSceneChange::ECSCENECHANGE_NUM::EEDITER:
 			mEditer.Init();
 			CSceneChange::changenum = cursor_num;
@@ -71,16 +66,12 @@ void CTitle::Update(){
 		swprintf(cursor_buf, L"\n→");
 		break;
 
-	case CSceneChange::ECSCENECHANGE_NUM::ERESULT:
+	case CSceneChange::ECSCENECHANGE_NUM::EEDITER:
 		swprintf(cursor_buf, L"\n\n→");
 		break;
 
-	case CSceneChange::ECSCENECHANGE_NUM::EEDITER:
-		swprintf(cursor_buf, L"\n\n\n→");
-		break;
-
 	case CSceneChange::ECSCENECHANGE_NUM::EEXIT:
-		swprintf(cursor_buf, L"\n\n\n\n→");
+		swprintf(cursor_buf, L"\n\n\n→");
 		break;
 
 	default:
@@ -89,7 +80,7 @@ void CTitle::Update(){
 }
 
 void CTitle::Render(){
-	CText::DrawStringWSetColor(L" ゲームスタート\n ランキング\n スコア\n エディター(かり)\n ゲームしゅうりょう", -200, 0, 32, WHITE, 1.0f, 0);
+	CText::DrawStringWSetColor(L" ゲームスタート\n ランキング\n エディター(かり)\n ゲームしゅうりょう", -200, 0, 32, WHITE, 1.0f, 0);
 	CText::DrawStringWSetColor(cursor_buf, -200, 0, 32, WHITE, 1.0f, 0);
 
 	CMapBackImage::RenderFade();

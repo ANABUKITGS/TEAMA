@@ -13,6 +13,9 @@
 #include "CMapScroll.h"
 
 bool CGame2::mCheat[CHEAT_NUM::ESIZE];
+int CGame2::mTime;
+int CGame2::mTimeMin;
+float CGame2::mTimeSec;
 CMapBackImage *mBackImage[4];
 
 CCamera2D CGame2::mCamera;
@@ -110,6 +113,11 @@ void CGame2::Update() {
 	}
 	if (CKey::Push('A')) {
 		mCamera.x -= 5;
+	}
+	if (CKey::Push('P')) {
+		CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ERESULT;
+		mTimeMin = CTime::ElapsedTimeMin();
+		mTimeSec = CTime::ElapsedTimeSec();
 	}
 	if (CGamePad::Once(PAD_10) || CKey::Once(VK_ESCAPE)){
 		CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ETITLE;
