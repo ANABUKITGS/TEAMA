@@ -56,6 +56,7 @@ private:
 	CTexture mTexEndSign;
 
 public:
+	static CMapEndSign *mpEndSign;
 	CMapEndSign(const CVector2& pos)
 		//CMapChipÇ≈èâä˙âª
 		: CMapChip(pos, CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL, SIGN_UV, ECELLNUM::EENDSIGN)
@@ -75,6 +76,7 @@ private:
 	CTexture mTexBossRoomSign;
 
 public:
+	static CMapBossRoomSign *mpBossRoomSign;
 	CMapBossRoomSign(const CVector2& pos)
 		//CMapChipÇ≈èâä˙âª
 		: CMapChip(pos, CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL, SIGN_UV, ECELLNUM::EBOSSROOM)

@@ -11,11 +11,13 @@ class CMapScroll : public CRectangle{
 public:
 	static float add_scroll;
 	static bool scroll_flg;
+	static bool scroll_stop;
 	static CMapScroll *mScroll;
 	CMapScroll()
 		: CRectangle(CVector2(0, 0), CVector2(0, 0), NULL)
 	{
 		scroll_flg = false;
+		scroll_stop = false;
 		mRender = false;
 		mTag = ECELLNUM::ENONE;
 		CTaskManager::Get()->Add(this);

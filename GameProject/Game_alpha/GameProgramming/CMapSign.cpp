@@ -1,6 +1,9 @@
 #include "CMapSign.h"
 #include "CMapBackImage.h"
 
+CMapEndSign *CMapEndSign::mpEndSign = 0;
+CMapBossRoomSign *CMapBossRoomSign::mpBossRoomSign = 0;
+
 //チュートリアル 看板
 void CMapSign::Update() {
 	CMapChip::Update();

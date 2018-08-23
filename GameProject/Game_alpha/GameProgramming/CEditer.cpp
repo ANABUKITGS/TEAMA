@@ -555,11 +555,11 @@ void CEditer::MakeTaskList(int *gamemap) {
 
 				//チュートリアル 終了 看板
 				if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EENDSIGN)
-					new CMapEndSign(POS(i, j));
+					CMapEndSign::mpEndSign = new CMapEndSign(POS(i, j));
 
 				//ボスの部屋 看板
 				if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EBOSSROOM)
-					new CMapBossRoomSign(POS(i, j));
+					CMapBossRoomSign::mpBossRoomSign = new CMapBossRoomSign(POS(i, j));
 			}
 		}
 	}

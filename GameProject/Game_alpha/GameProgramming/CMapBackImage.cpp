@@ -16,7 +16,7 @@ CTexture CMapBackImage::mTexFade;
 float CMapBackImage::mAlpha;
 
 void CMapBackImage::Update(){
-	if (CGame2::mCheat[CGame2::CHEAT_NUM::ESCROLL] || CMapScroll::scroll_flg){
+	if ((CGame2::mCheat[CGame2::CHEAT_NUM::ESCROLL] || CMapScroll::scroll_flg) && !CMapScroll::scroll_stop){
 		switch (texnum){
 		case ETEXTURE_LAYER::LAYER1:
 			mPosition.x += CMapScroll::add_scroll * 0.8;
