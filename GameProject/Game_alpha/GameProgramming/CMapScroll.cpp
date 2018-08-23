@@ -36,4 +36,5 @@ void CMapScroll::Update(){
 void CMapScroll::Reset(){
 	mPosition.x = CPlayerT::mpPlayer->mPosition.x;
 	scroll_flg = false;
+	scroll_stop = false;
 }
