@@ -52,21 +52,44 @@ bool CMapBelt::Collision(CRectangle *r) {
 }
 
 void CMapBelt::Render(){
-	mRender = false;
 	switch (texture_pos){
-	case 1:
+	case ETEXTURE_POSNUM::ELEFT:
 		mTexBelt.DrawImage(BELT_UV1L);
 		break;
 
-	case 2:
+	case ETEXTURE_POSNUM::ECENTER:
 		mTexBelt.DrawImage(BELT_UV2);
 		break;
 
-	case 3:
+	case ETEXTURE_POSNUM::ERIGHT:
 		mTexBelt.DrawImage(BELT_UV1R);
+		break;
+
+	case ETEXTURE_POSNUM::EONE:
+		mTexBelt.DrawImage(BELT_UV3);
 		break;
 
 	default:
 		break;
 	}
+}
+
+void CMapBeltSign::Update(){
+	CRectangle::Update();
+	switch (mDirection){
+	case ECELLNUM::EBELTL:
+		mRotation += BELT_SPEED;
+		break;
+
+	case ECELLNUM::EBELTR:
+		mRotation -= BELT_SPEED;
+		break;
+
+	default:
+		break;
+	}
+}
+
+void CMapBeltSign::Render(){
+	CRectangle::Render();
 }

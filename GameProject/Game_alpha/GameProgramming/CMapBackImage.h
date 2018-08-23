@@ -14,7 +14,7 @@ private:
 	CTexture mTexLayer1;
 	CTexture mTexLayer2;
 
-	static CTexture mTexFade;
+	static CTexture mTexFade;	//ÉçÅ[ÉhÇµÇ»Ç¢
 	static float mAlpha;
 
 public:
@@ -40,8 +40,10 @@ public:
 	CMapBackImage(const CVector2 &pos, ETEXTURE_LAYER tag)
 		: CRectangle(pos, CVector2(0, 0), NULL)
 	{
-		mTexLayer1.Load(".\\Data\\Images\\Map\\Background1_1.tga");
-		mTexLayer2.Load(".\\Data\\Images\\Map\\Background1_2.tga");
+		if (mTexLayer1.id == NULL || mTexLayer2.id == NULL){
+			mTexLayer1.Load(".\\Data\\Images\\Map\\Background1_1.tga");
+			mTexLayer2.Load(".\\Data\\Images\\Map\\Background1_2.tga");
+		}
 
 		texnum = tag;
 		mTag = ECELLNUM::ENONE;

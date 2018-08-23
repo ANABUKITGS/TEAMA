@@ -90,10 +90,11 @@ void CMapBackImage::RenderFade(){
 		if (mAlpha > 0.0f)
 			mAlpha -= 0.025f;
 
-		if (mAlpha <= 1.0f){
+		if (mAlpha <= 0.0f){
 			mAlpha = 0.0f;
 			mFade = EFADE_NUM::EFALSE;
 		}
 	}
 	mTexFade.DrawImageSetColor(FADE_UV, 0.0f, 0.0f, 0.0f, mAlpha);
+	CText::DrawStringW(L"ƒ[ƒh‚¿‚ã‚¤", 0, 0, 32, mAlpha, 0);
 }

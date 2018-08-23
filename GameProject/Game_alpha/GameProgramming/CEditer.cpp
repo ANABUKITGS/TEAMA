@@ -459,30 +459,30 @@ void CEditer::MakeTaskList(int *gamemap) {
 				//ベルトコンベア 左
 				else if (gamemap[i * MAP_SIZEX + j] == EBELTL){
 					if (gamemap[i*MAP_SIZEX + j - 1] != ECELLNUM::EBELTL && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EBELTL)
-						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTL, 1);
+						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTL, CMapBelt::ETEXTURE_POSNUM::ELEFT);
 
 					else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EBELTL && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EBELTL)
-						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTL, 2);
+						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTL, CMapBelt::ETEXTURE_POSNUM::ECENTER);
 
 					else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EBELTL && gamemap[i * MAP_SIZEX + j + 1] != ECELLNUM::EBELTL)
-						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTL, 3);
+						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTL, CMapBelt::ETEXTURE_POSNUM::ERIGHT);
 
 					else
-						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTL, 4);
+						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTL, CMapBelt::ETEXTURE_POSNUM::EONE);
 				}
 				//ベルトコンベア 右
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EBELTR){
 					if (gamemap[i*MAP_SIZEX + j - 1] != ECELLNUM::EBELTR && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EBELTR)
-						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTR, 1);
+						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTR, CMapBelt::ETEXTURE_POSNUM::ELEFT);
 
 					else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EBELTR && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EBELTR)
-						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTR, 2);
+						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTR, CMapBelt::ETEXTURE_POSNUM::ECENTER);
 
 					else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EBELTR && gamemap[i * MAP_SIZEX + j + 1] != ECELLNUM::EBELTR)
-						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTR, 3);
+						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTR, CMapBelt::ETEXTURE_POSNUM::ERIGHT);
 
 					else
-						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTR, 4);
+						new CMapBelt(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::EBELTR, CMapBelt::ETEXTURE_POSNUM::EONE);
 				}
 				
 				//宝石
