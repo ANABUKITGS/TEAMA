@@ -118,7 +118,7 @@ void CGame2::Update() {
 		mCamera.x -= 5;
 	}
 	if (CKey::Push('P')) {
-		CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ERESULT;
+		CMapBackImage::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ERESULT);
 		mTimeMin = CTime::ElapsedTimeMin();
 		mTimeSec = CTime::ElapsedTimeSec();
 	}

@@ -2,6 +2,7 @@
 #include "CGame2.h"
 #include "CScene.h"
 #include "CMapBackImage.h"
+#include "CTime.h"
 
 bool CBoss::mBossLose = false;
 
@@ -181,10 +182,12 @@ void CBoss::Update(){
 					else
 						mAlpha = 1.0f;
 				}
-				else if (!mBossDeleteTime){
-					mBossLose = true;
-					CMapBackImage::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ERESULT);
-				}
+			}
+			else {
+				mBossLose = true;
+				CMapBackImage::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ERESULT);
+				CGame2::mTimeMin = CTime::ElapsedTimeMin();
+				CGame2::mTimeSec = CTime::ElapsedTimeSec();
 			}
 			break;
 		//ダメージ処理終了
