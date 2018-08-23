@@ -194,6 +194,8 @@ bool CBoss::Collision(CRectangle*p){
 			case ESEARCH:
 			case ESWITCH:
 			case EPLAYER:
+			case EENDSIGN:
+			case EBOSSROOM:
 				break;
 
 			default:

@@ -42,6 +42,9 @@ void CGame2::Init(const char *map) {
 	//チート初期化
 	for (int i = CHEAT_NUM::EFLAG; i < CHEAT_NUM::ESIZE; i++)
 		mCheat[i] = false;
+
+	//スクロール 停止 解除
+	CMapScroll::scroll_stop = false;
 }
 
 void CGame2::MapLoad(const char *map){
@@ -124,9 +127,12 @@ void CGame2::Update() {
 		CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETITLE);
 	}
 	if (CGamePad::Once(PAD_9) || CKey::Once(VK_RETURN)){
-		if (CMapBackImage::mMapfile == CMapBackImage::EGAMEMAP_NUM::ETUTORIAL)
-			CMapBackImage::mMapfile = CMapBackImage::EGAMEMAP_NUM::EMAIN;
-		CMapBackImage::mFade = CMapBackImage::EFADE_NUM::EFADEOUT;
+		if (CMapBackImage::mMapfile != CMapBackImage::EGAMEMAP_NUM::EMAIN){
+			if (CMapBackImage::mMapfile == CMapBackImage::EGAMEMAP_NUM::ETUTORIAL){
+				CMapBackImage::mMapfile = CMapBackImage::EGAMEMAP_NUM::EMAIN;
+			}
+			CMapBackImage::mFade = CMapBackImage::EFADE_NUM::EFADEOUT;
+		}
 	}
 
 #ifdef _DEBUG
@@ -156,6 +162,14 @@ void CGame2::Update() {
 }
 
 void CGame2::Render() {
+	if (CPlayerT::mpPlayer == NULL){
+		CBGM::AllStop();
+		CSE::AllStop();
+		MessageBox(NULL, "マップにプレイヤーが設置されていません。", "エラー", 0x00040010L);
+		CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ETITLE;
+		CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETITLE);
+		return;
+	}
 //	CCamera2D::Begin(0.0, WINDOW_SIZE_W, 0.0, WINDOW_SIZE_H);
 	mCamera.x = CMapScroll::mScroll->mPosition.x;
 	mCamera.y = CMapScroll::mScroll->mPosition.y;
