@@ -89,6 +89,7 @@
     <ClCompile Include="CCharcter.cpp" />
     <ClCompile Include="CCollision.cpp" />
     <ClCompile Include="CEditer.cpp" />
+    <ClCompile Include="CEfect.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CFileIO.cpp" />
     <ClCompile Include="CMapBackImage.cpp" />
@@ -131,6 +132,7 @@
     <ClInclude Include="CCamera2D.h" />
     <ClInclude Include="CCharcter.h" />
     <ClInclude Include="CCollision.h" />
+    <ClInclude Include="CEfect.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CFileIO.h" />
     <ClInclude Include="CMapBackImage.h" />
