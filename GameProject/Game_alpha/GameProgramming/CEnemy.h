@@ -6,12 +6,13 @@
 #include "CWeapon.h"
 #include "CCharcter.h"
 #include "CPlayerT.h"
+#include "CScene.h"
 
 #define MONITOR_TIME			180
 #define WALK_TIME				180
-#define ENEMY_VELOCITY_X_LIMIT	4.5f
-#define ENEMY_VELOCITY_X		1.25f	//“ü—Í
-#define ENEMY_VELOCITY_X_ICE	0.15f	//“ü—Í •X‘«ê
+#define ENEMY_VELOCITY_X_LIMIT	4.0f
+#define ENEMY_VELOCITY_X		0.625f	//“ü—Í
+#define ENEMY_VELOCITY_X_ICE	0.05f	//“ü—Í •X‘«ê
 #define ENEMY_VELOCITY_X2		0.25f	//”ñ“ü—Í
 #define ENEMY_VELOCITY_X2_ICE	0.05f	//”ñ“ü—Í •X‘«ê
 #define E_SEARCHRANGE			250		//õ“G”ÍˆÍ
@@ -77,7 +78,6 @@ public:
 		mpEWeapon=0;	//“G‚Ìƒˆ[ƒˆ[‚Ì’l‚ğ0‚É‚µ‚Ä‚¨‚­
 		mPriority = 1;
 		mDirection = true;
-		enemy_ani = EENEMYANI::EWALK;
 		mMonitorTime = MONITOR_TIME;
 		mWalkTime = WALK_TIME;
 		mDownTime = DOWN_TIME;
@@ -94,7 +94,10 @@ public:
 		mTag = tag;
 		mRender = false;
 		mIce = false;
-		enemy_ani = EENEMYANI::EIDOL;
+		if (CSceneChange::changenum == CSceneChange::EEDITER)
+			enemy_ani = EENEMYANI::EIDOL;
+		else
+			enemy_ani = EENEMYANI::EWALK;
 		enemy_ani_count = 0;
 		enemy_ani_count_flame = 0;
 		ENEMY_ANI_COUNT_FLAME = 0;

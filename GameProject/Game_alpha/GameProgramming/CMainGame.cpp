@@ -23,7 +23,7 @@ void CGame::Init(){
 	}
 	mapsctoll_flag = false;
 	pauseflag = false;
-	mMapIO.GameMapLoad(mMapIO.ETUTORIAL);
+	//mMapIO.GameMapLoad(mMapIO.ETUTORIAL);
 }
 
 void CGame::Update(){

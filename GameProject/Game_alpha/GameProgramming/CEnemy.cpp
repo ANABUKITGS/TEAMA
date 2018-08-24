@@ -72,17 +72,25 @@ void  CEnemy::Update(){
 					mDirection = true;
 			}
 
-			if (mVelocityX < 0){
+			if (mVelocityX < 0.0f){
 				if (!mIce)
 					mVelocityX += ENEMY_VELOCITY_X2;
 				else
 					mVelocityX += ENEMY_VELOCITY_X2_ICE;
 			}
-			else if (mVelocityX > 0){
+			else if (mVelocityX > 0.0f){
 				if (!mIce)
 					mVelocityX -= ENEMY_VELOCITY_X2;
 				else
 					mVelocityX -= ENEMY_VELOCITY_X2_ICE;
+			}
+			if (mDirection){
+				mPosition.x += mVelocityX;
+				mpSearch->mPosition = CVector2(mPosition.x + 100, mPosition.y);
+			}
+			else{
+				mPosition.x += mVelocityX;
+				mpSearch->mPosition = CVector2(mPosition.x - 100, mPosition.y);
 			}
 			mAttackInterval2 = ATTACK_INTERVAL2;
 			break;
@@ -140,7 +148,7 @@ void  CEnemy::Update(){
 		default:
 			break;
 		}
-		if (mVelocityX < ENEMY_VELOCITY_X2_ICE && mVelocityX > -ENEMY_VELOCITY_X2_ICE)
+		if (mVelocityX - ENEMY_VELOCITY_X2_ICE < 0.0f && mVelocityX + ENEMY_VELOCITY_X2_ICE > 0.0f)
 			mVelocityX = 0.0f;
 		Gravity();
 	}

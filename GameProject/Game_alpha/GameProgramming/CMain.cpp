@@ -87,12 +87,15 @@ void CMain::Update() {
 	//漢字 テスト
 	if (CSceneChange::changenum == CSceneChange::ECSCENECHANGE_NUM::ETITLE)
 	CText::DrawStringW(L"かんじの ひょうじテスト\n[制作チーム]\n前田  拓磨\n長尾  蓮\n小見山 嶺治\n南木  彩希\n石田  萌夏\n\n[先生]\n高橋  忍  先生\n平田  大  先生\n井上  萌美 先生", -640, 328, 32, 1.0f, 0);
+#endif
 
+	CFade mFade;
+	mFade.RenderFade();
+
+#ifdef _DEBUG
 	//フレームレート
 	char fps_buf[16];
 	sprintf(fps_buf, "%4.1fFPS", CTime::FrameRate());
 	CText::DrawStringSetColor(fps_buf, -640, 344, 16, 0.0f, 1.0f, 0.0f, 1.0f, 0);
 #endif
-	CFade mFade;
-	mFade.RenderFade();
 }

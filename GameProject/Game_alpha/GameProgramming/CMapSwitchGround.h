@@ -13,6 +13,8 @@
 
 class CMapSwitchGround :public CMapChip{
 private:
+	float mAlpha1;
+	float mAlpha2;
 	CTexture mTexSwitchGround;
 
 public:
@@ -21,8 +23,10 @@ public:
 		//CMapChipÇ≈èâä˙âª
 		:CMapChip(pos, CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL, NULL, NULL, NULL, NULL, ECELLNUM::ESWITCH_GROUND1)
 	{
-		CMapSwitchGround::mNumber = number;
-		if (mNumber==ESWITCH_GROUND1)
+		mAlpha1 = 1.0f;
+		mAlpha2 = 0.5f;
+		CMapSwitchGround::mNumber = ESWITCH_GROUND2;
+		if (number == ESWITCH_GROUND1)
 			mTag = ESWITCH_GROUND1;
 		else
 			mTag = ESWITCH_GROUND2;

@@ -24,15 +24,17 @@ void CFade::Init(){
 }
 
 void CFade::ChangeFade(int scene){
-	change_scene = scene;
-	mFade = EFADE_NUM::EFADEOUT;
+	if (mFade == EFADE_NUM::EFALSE){
+		change_scene = scene;
+		mFade = EFADE_NUM::EFADEOUT;
+	}
 }
 
 void CFade::RenderFade(){
 	extern CGame2 mGame2;
 	mRectFade.Update();
 
-	if (mFade == EFADE_NUM::EFALSE){
+	if (mFade == EFADE_NUM::EFALSE && mAlpha <= 0.0f){
 		mAlpha = 0.0f;
 		return;
 	}

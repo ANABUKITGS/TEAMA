@@ -49,19 +49,29 @@ bool CMapSwitchGround::Collision(CRectangle *r) {
 
 void CMapSwitchGround::Render(){
 	if (mTag == ECELLNUM::ESWITCH_GROUND1){
-		if (mNumber == mTag)
-			mTexSwitchGround.DrawImage(SWITCH_GROUND_POS, SWITCH_GROUND_UV1, 1.0f);
-
-		else
-			mTexSwitchGround.DrawImage(SWITCH_GROUND_POS, SWITCH_GROUND_UV1, 0.5f);
+		if (mNumber == mTag){
+			if (mAlpha1 < 1.0f)
+				mAlpha1 += 0.05f;
+			mTexSwitchGround.DrawImage(SWITCH_GROUND_POS, SWITCH_GROUND_UV1, mAlpha1);
+		}
+		else{
+			if (mAlpha1 > 0.5f)
+				mAlpha1 -= 0.05f;
+			mTexSwitchGround.DrawImage(SWITCH_GROUND_POS, SWITCH_GROUND_UV1, mAlpha1);
+		}
 	}
 
 	if (mTag == ECELLNUM::ESWITCH_GROUND2){
-		if (mNumber == mTag)
-			mTexSwitchGround.DrawImage(SWITCH_GROUND_POS, SWITCH_GROUND_UV2, 1.0f);
-
-		else
-			mTexSwitchGround.DrawImage(SWITCH_GROUND_POS, SWITCH_GROUND_UV2, 0.5f);
+		if (mNumber == mTag){
+			if (mAlpha2 < 1.0f)
+				mAlpha2 += 0.05f;
+			mTexSwitchGround.DrawImage(SWITCH_GROUND_POS, SWITCH_GROUND_UV2, mAlpha2);
+		}
+		else{
+			if (mAlpha2 > 0.5f)
+				mAlpha2 -= 0.05f;
+			mTexSwitchGround.DrawImage(SWITCH_GROUND_POS, SWITCH_GROUND_UV2, mAlpha2);
+		}
 	}
 }
 
@@ -89,14 +99,14 @@ bool CMapSwitch::Collision(CRectangle *r) {
 
 void CMapSwitch::Render(){
 	switch (CMapSwitchGround::mNumber){
-	case ECELLNUM::ESWITCH_GROUND1:
+	case ECELLNUM::ESWITCH_GROUND2:
 		if (switch_ani_count > 2)
 			switch_ani_count = 2;
 
 		mTexSwitch.DrawImage(SWITCH_POS, SWITCH_UV, 1.0f);
 		break;
 
-	case ECELLNUM::ESWITCH_GROUND2:
+	case ECELLNUM::ESWITCH_GROUND1:
 		if (switch_ani_count <= 0)
 			switch_ani_count = 0;
 
@@ -109,10 +119,10 @@ void CMapSwitch::Render(){
 
 	switch_ani_count_frame++;
 	if (switch_ani_count_frame > SWITCH_ANI_COUNT_FRAME){
-		if (CMapSwitchGround::mNumber == ECELLNUM::ESWITCH_GROUND1)
+		if (CMapSwitchGround::mNumber == ECELLNUM::ESWITCH_GROUND2 && switch_ani_count < 2)
 			switch_ani_count++;
 
-		else
+		else if (CMapSwitchGround::mNumber == ECELLNUM::ESWITCH_GROUND1 && switch_ani_count > 0)
 			switch_ani_count--;
 
 		switch_ani_count_frame = 0;

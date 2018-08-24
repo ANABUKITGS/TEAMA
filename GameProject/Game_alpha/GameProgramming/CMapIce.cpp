@@ -34,6 +34,7 @@ bool CMapIce::Collision(CRectangle *r) {
 			if (mPosition.y < r->mPosition.y) {
 				r->mPosition.y = r->mPosition.y - aj.y;
 				r->mVelocityY = 0.0f;
+				r->mIce = true;
 				if (r->mTag == ECELLNUM::EPLAYER){
 					CPlayerT::mpPlayer->mJumpCount = 0;
 				}

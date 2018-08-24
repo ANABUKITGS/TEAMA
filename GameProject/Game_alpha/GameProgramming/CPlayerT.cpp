@@ -278,7 +278,7 @@ void CPlayerT::Forward(){
 			}
 		}
 	}
-	if (mVelocityX < PLAYER_VELOCITY_X2_ICE && mVelocityX > -PLAYER_VELOCITY_X2_ICE)
+	if (mVelocityX - PLAYER_VELOCITY_X2_ICE < 0.0f && mVelocityX + PLAYER_VELOCITY_X2_ICE > 0.0f)
 		mVelocityX = 0.0f;
 }
 
