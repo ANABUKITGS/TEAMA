@@ -50,7 +50,6 @@ void CSceneChange::Update(){
 		break;
 
 	case ECSCENECHANGE_NUM::ERESULT:
-		CTaskManager::Get()->Destroy();
 		if (CSceneResult::mResultTag == CSceneResult::ESCORE)
 			CSceneResult::mResultTag = CSceneResult::ESCORE;
 		mResult.Update();

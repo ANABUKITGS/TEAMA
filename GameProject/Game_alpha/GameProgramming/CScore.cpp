@@ -20,7 +20,7 @@ int CScore::mTimerScore;
 int CScore::mScoreNum;
 
 char buf[11];
-wchar_t bufw[256];
+wchar_t bufw[512];
 int mCount[5] = {0,0,0,0,0};
 enum CSceneResult::EResultTag CSceneResult::mResultTag;
 
@@ -134,8 +134,12 @@ void CName::Update(){
 	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2))
 		CSceneResult::mResultTag = CSceneResult::ERANKING;
 	glColor4f(1.0f, 1.0f, 0.0f, 1.0f);  //ï`âÊêFÅ@â©êF
-	sprintf(buf2, "%s", name);
-	CText::DrawString(buf2, -100, 0, 50, 1.0f, 0);
+	sprintf(buf, "%s", name);
+	CText::DrawString(buf, -100, 0, 50, 1.0f, 0);
+	swprintf(bufw, L"Å£");
+	CText::DrawStringW(bufw, -97+50*charnum, 50 , 40, 1.0f, 0);
+	swprintf(bufw, L"Å•");
+	CText::DrawStringW(bufw, -97 + 50 * charnum, -50, 40, 1.0f, 0);
 }
 
 void CRanking::Init(){
