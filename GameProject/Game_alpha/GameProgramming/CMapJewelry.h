@@ -7,6 +7,7 @@
 //宝石のマッピングデータ
 #define JEWELRY_UV mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE / 2, mPosition.y + CELLSIZE / 2, 0, 64, 64, 0
 #define JEWELRY2_UV mPosition.x - CELLSIZE / 4, mPosition.x + CELLSIZE / 4, mPosition.y - CELLSIZE / 4, mPosition.y + CELLSIZE / 4, 0, 64, 128, 64
+#define EFECT_INTERVAL 10
 
 class CWeapon;
 /*
@@ -23,7 +24,7 @@ public:
 	CMapJewelry()
 		: CMapChip(CVector2(0,0), CVector2(CELLSIZE / 3, CELLSIZE / 2), NULL, NULL, NULL, NULL, NULL, EJEWELRY)
 	{
-		mIntervalEfe = 5;
+		mIntervalEfe = EFECT_INTERVAL;
 	}
 	CMapJewelry(const CVector2& pos) 
 		//CMapChipで初期化
@@ -49,6 +50,7 @@ private:
 	CRectangle *mpWeapon;
 
 public:
+	int mIntervalEfe;
 	CMapMiniJewelry(const CVector2& pos)
 		//CMapChipで初期化
 		: CMapChip(pos, CVector2(CELLSIZE / 4, CELLSIZE / 2), NULL, NULL, NULL, NULL, NULL, EJEWELRY2)
@@ -56,6 +58,7 @@ public:
 		mRender = false;
 		mTexJewel.Load(".\\Data\\Images\\Map\\MapJewel.tga");
 		mpWeapon = 0;
+		mIntervalEfe = EFECT_INTERVAL;
 	}
 	void Update();	//動きを処理する
 	void Render();	//描画を処理する

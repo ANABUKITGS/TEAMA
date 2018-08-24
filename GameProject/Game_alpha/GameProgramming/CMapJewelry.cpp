@@ -7,17 +7,18 @@
 
 void CMapJewelry::Update() {
 	mIntervalEfe--;
-	if (mIntervalEfe<0){
-		mIntervalEfe = 0;
-		new CEfect(mPosition);
-	}
 	if (mpWeapon != 0){
 		mPosition = mpWeapon->mPosition;
+	}
+	else if (mIntervalEfe<0){
+		mIntervalEfe = EFECT_INTERVAL;
+		new CEfect(mPosition);
 	}
 }
 
 void CMapJewelry::Render(){
 	mTexJewel.DrawImage(JEWELRY_UV, 1.0f);
+	
 }
 
 /*
@@ -41,13 +42,19 @@ bool CMapJewelry::Collision(CRectangle *r) {
 }
 
 void CMapMiniJewelry::Update() {
+	mIntervalEfe--;
 	if (mpWeapon != 0){
 		mPosition = mpWeapon->mPosition;
+	}
+	 else if (mIntervalEfe<0){
+		mIntervalEfe = EFECT_INTERVAL;
+		new CEfect(mPosition);
 	}
 }
 
 void CMapMiniJewelry::Render(){
 	mTexJewel.DrawImage(JEWELRY2_UV, 1.0f);
+
 }
 
 /*
