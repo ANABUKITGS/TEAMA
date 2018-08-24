@@ -1,6 +1,7 @@
 #include "CPlayerT.h"
 #include "CMapSwitchGround.h"
 #include "CScene.h"
+#include "CFade.h"
 #include "CMapScroll.h"
 
 #define PLAYER_VELOCITY_X		1.25f	//“ü—Í
@@ -110,6 +111,9 @@ void CPlayerT::Update(){
 			mVelocityY = 0.0f;
 			mPosition.y = 720.0f + CELLSIZE;
 		}
+	}
+	if (mLife == 0){
+		CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
 	}
 }
 
