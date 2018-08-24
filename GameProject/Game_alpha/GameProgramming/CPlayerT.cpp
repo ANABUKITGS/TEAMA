@@ -186,10 +186,12 @@ void CPlayerT::Forward(){
 
 			if (CKey::Push('D')){
 				mDirection = true;
-				if (mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit)
-					mVelocityX += PLAYER_VELOCITY_X;
-				else
-					mVelocityX += PLAYER_VELOCITY_X_ICE;
+				if (mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit){
+					if (!mIce)
+						mVelocityX += PLAYER_VELOCITY_X;
+					else
+						mVelocityX += PLAYER_VELOCITY_X_ICE;
+				}
 
 				if (!mAir)
 					player_ani = EPLAYERANI::ETURN;
@@ -213,11 +215,12 @@ void CPlayerT::Forward(){
 
 			if (CKey::Push('A')){
 				mDirection = false;
-				if (mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit)
-				if (!mIce)
-					mVelocityX -= PLAYER_VELOCITY_X;
-				else
-					mVelocityX -= PLAYER_VELOCITY_X_ICE;
+				if (mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit){
+					if (!mIce)
+						mVelocityX -= PLAYER_VELOCITY_X;
+					else
+						mVelocityX -= PLAYER_VELOCITY_X_ICE;
+				}
 
 				if (!mAir)
 					player_ani = EPLAYERANI::ETURN;
@@ -321,24 +324,26 @@ bool CPlayerT::Collision(CRectangle *p) {
 				mIce = true;
 				break;
 
+			case ESWITCH_GROUND1:
+			case ESWITCH_GROUND2:
+			case ECHIKUWA:
+			case EBELTL:
+			case EBELTR:
+			case EUNDER:
+				mIce = false;
+				break;
+
 			case EENEMY1:
 			case EENEMY2:
 			case EENEMY3:
 			case EBOSS:
-			case ESWITCH_GROUND1:
-			case ESWITCH_GROUND2:
 			case ENONE:
-			case ECHIKUWA:
-			case EBELTL:
-			case EBELTR:
 			case EPWEAPON:
 			case ESEARCH:
 			case ESWITCH:
-			case EUNDER:
 			case ESIGN:
 			case EENDSIGN:
 			case EBOSSROOM:
-				mIce = false;
 				break;
 
 			default:

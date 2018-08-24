@@ -112,5 +112,5 @@ void CFade::RenderFade(){
 	mTexFade.DrawImageSetColor(FADE_UV, BLACK, mAlpha);
 	//mRectFade.Render(BLACK, mAlpha);
 	if (mFade != EFADE_NUM::ETRUE && (change_scene == CSceneChange::ECSCENECHANGE_NUM::EGAME || change_scene == CSceneChange::ECSCENECHANGE_NUM::EEDITER))
-		CText::DrawStringW(L"ÉçÅ[ÉhíÜ...", 0, 0, 32, mAlpha, 0);
+		CText::DrawStringW(L"Now Loading...", 192, -360, 32, mAlpha, 0);
 }

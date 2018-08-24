@@ -25,12 +25,26 @@ void  CEnemy::Update(){
 				enemy_ani_count = 0;
 			}
 
+			if (mVelocityX < ENEMY_VELOCITY_X_LIMIT && mVelocityX > -ENEMY_VELOCITY_X_LIMIT){
+				if (mDirection){
+					if (!mIce)
+						mVelocityX += ENEMY_VELOCITY_X;
+					else
+						mVelocityX += ENEMY_VELOCITY_X_ICE;
+				}
+				else{
+					if (!mIce)
+						mVelocityX -= ENEMY_VELOCITY_X;
+					else
+						mVelocityX -= ENEMY_VELOCITY_X_ICE;
+				}
+			}
 			if (mDirection){
-				mPosition.x += mVelocity;
+				mPosition.x += mVelocityX;
 				mpSearch->mPosition = CVector2(mPosition.x + 100, mPosition.y);
 			}
 			else{
-				mPosition.x -= mVelocity;
+				mPosition.x += mVelocityX;
 				mpSearch->mPosition = CVector2(mPosition.x - 100, mPosition.y);
 			}
 			if (mWalkTime < 0){
@@ -56,21 +70,38 @@ void  CEnemy::Update(){
 				else
 					mDirection = true;
 			}
+
+			if (mVelocityX < 0){
+				if (!mIce)
+					mVelocityX += ENEMY_VELOCITY_X2;
+				else
+					mVelocityX += ENEMY_VELOCITY_X2_ICE;
+			}
+			else if (mVelocityX > 0){
+				if (!mIce)
+					mVelocityX -= ENEMY_VELOCITY_X2;
+				else
+					mVelocityX -= ENEMY_VELOCITY_X2_ICE;
+			}
 			break;
 
 		case EENEMYANI::EYOYO:
 			//敵がヨーヨーを発射していなければ、ヨーヨーを発射して処理を行う
 			if (!mpEWeapon){
 				if (mAttackInterval < 0){
-					mAttackInterval = ATTACK_INTERVAL;
-					//敵のヨーヨーを敵の位置よりも少し前に呼び出す
-					mpEWeapon = new CWeapon(EEWEAPON, mPosition, mDirection);
+					mAttackInterval2--;
+					if (mAttackInterval2 < 0){
+						mAttackInterval = ATTACK_INTERVAL;
+						mAttackInterval2 = ATTACK_INTERVAL2;
+						//敵のヨーヨーを敵の位置よりも少し前に呼び出す
+						mpEWeapon = new CWeapon(EEWEAPON, mPosition, mDirection);
 
-					if (mDirection)		//敵が右を向いている時には右にヨーヨーを進ませる
-						mpEWeapon->mPosition.x += 10;
+						if (mDirection)		//敵が右を向いている時には右にヨーヨーを進ませる
+							mpEWeapon->mPosition.x += 10;
 
-					else				//敵が左を向いている時には左にヨーヨーを進ませる
-						mpEWeapon->mPosition.x -= 10;
+						else				//敵が左を向いている時には左にヨーヨーを進ませる
+							mpEWeapon->mPosition.x -= 10;
+					}
 				}
 			}
 			//敵のヨーヨーが発射された時の処理を行う
@@ -108,6 +139,8 @@ void  CEnemy::Update(){
 		default:
 			break;
 		}
+		if (mVelocityX < ENEMY_VELOCITY_X2_ICE && mVelocityX > -ENEMY_VELOCITY_X2_ICE)
+			mVelocityX = 0.0f;
 		Gravity();
 	}
 	CRectangle::Update();
@@ -126,32 +159,34 @@ bool CEnemy::Collision(CRectangle*p){
 				}
 
 				break;
+				
+			case EICE:
+				mIce = true;
+
+			case ESWITCH_GROUND1:
+			case ESWITCH_GROUND2:
+			case ECHIKUWA:
+			case EBELTL:
+			case EBELTR:
+			case EUNDER:
+				mIce = false;
+				break;
 
 			case EENEMY1:
 			case EENEMY2:
 			case EENEMY3:
-				//mVelocityY = 0.0f;
-				//mPosition.x = mPosition.x + aj.x;
-				//break;
-
-			case ESWITCH_GROUND1:
-			case ESWITCH_GROUND2:
+			case EBOSS:
 			case ENONE:
-			case ECHIKUWA:
-			case EJEWELRY:
-			case EJEWELRY2:
-			case EBELTL:
-			case EBELTR:
-			case ESIGN:
-			case ECHECKPOINT:
 			case ESEARCH:
 			case ESWITCH:
-			case EUNDER:
-			case EPLAYER:
-			case EBOSS:
-			case EEWEAPON:
+			case ESIGN:
 			case EENDSIGN:
 			case EBOSSROOM:
+			case EJEWELRY:
+			case EJEWELRY2:
+			case ECHECKPOINT:
+			case EPLAYER:
+			case EEWEAPON:
 				break;
 
 			default:

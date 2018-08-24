@@ -7,12 +7,17 @@
 #include "CCharcter.h"
 #include "CPlayerT.h"
 
-#define MONITOR_TIME	180
-#define WALK_TIME		180
-#define ENEMY_VELOCITY	4.0f
-#define E_SEARCHRANGE	250	//索敵範囲
-#define DOWN_TIME		100
-#define ATTACK_INTERVAL	120
+#define MONITOR_TIME			180
+#define WALK_TIME				180
+#define ENEMY_VELOCITY_X_LIMIT	4.5f
+#define ENEMY_VELOCITY_X		1.25f	//入力
+#define ENEMY_VELOCITY_X_ICE	0.15f	//入力 氷足場
+#define ENEMY_VELOCITY_X2		0.25f	//非入力
+#define ENEMY_VELOCITY_X2_ICE	0.05f	//非入力 氷足場
+#define E_SEARCHRANGE			250		//索敵範囲
+#define DOWN_TIME				100
+#define ATTACK_INTERVAL			120
+#define ATTACK_INTERVAL2		30
 
 class CSearch :public CRectangle{
 public:
@@ -59,24 +64,25 @@ public:
 	CWeapon*mpEWeapon;	//敵が出すヨーヨーのインスタンス
 	CSearch* mpSearch;
 	static CEnemy *mpEnemy;
-	float mVelocity;	//移動スピード
 	int mMonitorTime;	//立ち止まる時間
 	int mWalkTime;		//歩く時間
 	int mDownTime;		//ダウンしてから消えるまでの時間
-	int mAttackInterval;//攻撃インターバル
+	int mAttackInterval;//次の攻撃までの時間
+	int mAttackInterval2;	//索敵範囲内に入られてからの時間
 
 
 	CEnemy(){
-		mVelocityY = 0;	//重力の初期値を0にする
+		mVelocityY = 0.0f;	//重力の初期値を0にする
+		mVelocityX = 0.0f;
 		mpEWeapon=0;	//敵のヨーヨーの値を0にしておく
 		mPriority = 1;
 		mDirection = true;
 		enemy_ani = EENEMYANI::EWALK;
-		mVelocity = ENEMY_VELOCITY;
 		mMonitorTime = MONITOR_TIME;
 		mWalkTime = WALK_TIME;
 		mDownTime = DOWN_TIME;
 		mAttackInterval = ATTACK_INTERVAL;
+		mAttackInterval2 = ATTACK_INTERVAL2;
 		CTaskManager::Get()->Add(this);
 	}
 
@@ -87,6 +93,7 @@ public:
 		mpSearch = new CSearch(CVector2(position.x + 128, position.y));
 		mTag = tag;
 		mRender = false;
+		mIce = false;
 		enemy_ani = EENEMYANI::EWALK;
 		enemy_ani_count = 0;
 		enemy_ani_count_flame = 0;
