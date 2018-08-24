@@ -186,6 +186,7 @@ void CBoss::Update(){
 			}
 			else {
 				mBossLose = true;
+				CSceneResult::mResultTag = CSceneResult::ESCORE;
 				CMapBackImage::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ERESULT);
 				CGame2::mTimeMin = CTime::ElapsedTimeMin();
 				CGame2::mTimeSec = CTime::ElapsedTimeSec();

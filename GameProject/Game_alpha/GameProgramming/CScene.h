@@ -15,7 +15,7 @@ extern CText ENumText;
 
 class CScene{
 public:
-	char buf2[11];
+	char buf2[16];
 	virtual ~CScene(){}
 	virtual void Init(){}
 	virtual void Update(){}

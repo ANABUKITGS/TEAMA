@@ -6,6 +6,7 @@
 
 
 struct  SRanking{
+	char r[4];
 	char n[3];
 	int s;
 };

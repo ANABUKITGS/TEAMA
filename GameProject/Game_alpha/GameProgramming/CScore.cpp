@@ -18,6 +18,7 @@ int CScore::mMiniJewelScore;
 int CScore::mLifeScore;
 int CScore::mTimerScore;
 int CScore::mScoreNum;
+
 char buf[11];
 wchar_t bufw[256];
 int mCount[5] = {0,0,0,0,0};
@@ -138,12 +139,15 @@ void CName::Update(){
 }
 
 void CRanking::Init(){
-	for (int i = 0; i < 3; i++){
-		mRanking[i].s = 300 - i * 100;
-		for (int j = 0; j < 3; j++){
-			mRanking[i].n[j] = 'a';
-		}
-	}
+	mRanking[0].s = 300;
+	mRanking[1].s = 200;
+	mRanking[2].s = 100;
+	strcpy(mRanking[0].r, "1st");
+	strcpy(mRanking[1].r, "2st");
+	strcpy(mRanking[2].r, "3st");
+	strcpy(mRanking[0].n, "aaa");
+	strcpy(mRanking[1].n, "aaa");
+	strcpy(mRanking[2].n, "aaa");
 }
 void CRanking::Update(){
 	if (CScore::mSort){
@@ -154,12 +158,12 @@ void CRanking::Update(){
 	swprintf(bufw, L"ƒ‰ƒ“ƒLƒ“ƒO");
 	CText::DrawStringW(bufw, -75, 200, 30, 1.0f, 0);
 	for (int i = 0; i < 3; i++){
-		swprintf(bufw, L"%4.2d", i + 1);
-		CText::DrawStringW(bufw, -300, 100 + i * -100, 40, 1.0f, 0);
+		sprintf(buf2, "%3s", mRanking[i].r);
+		CText::DrawString(buf2, -300, 100 + i * -100, 40, 1.0f, 0);
 		swprintf(bufw, L"%d", mRanking[i].s);
-		CText::DrawStringW(bufw, 100, 100 + i * -100, 40, 1.0f, 0);
+		CText::DrawStringW(bufw, 200, 100 + i * -100, 40, 1.0f, 0);
 		sprintf(buf2, "%3s", mRanking[i].n);
-		CText::DrawString(buf2, -100, 100 + i * -100, 40, 1.0f, 0);
+		CText::DrawString(buf2, -60, 100 + i * -100, 40, 1.0f, 0);
 	}
 	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2))
 		CMapBackImage::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
