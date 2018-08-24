@@ -68,6 +68,9 @@ public:
 		mRender = false;
 		mTag = ECELLNUM::EENDSIGN;
 	}
+	~CMapEndSign(){
+		mpEndSign = 0;
+	}
 	void Update();
 	bool Collision(CRectangle *r);	//Õ“Ë‚Ìˆ—
 	void Render();
@@ -77,9 +80,9 @@ public:
 class CMapBossRoomSign : public CMapChip {
 private:
 	CTexture mTexBossRoomSign;
-	bool mColFlg;
 
 public:
+	bool mColFlg;
 	static CMapBossRoomSign *mpBossRoomSign;
 	CMapBossRoomSign(const CVector2& pos)
 		//CMapChip‚Å‰Šú‰»
@@ -90,6 +93,9 @@ public:
 		mColFlg = false;
 		mRender = false;
 		mTag = ECELLNUM::EBOSSROOM;
+	}
+	~CMapBossRoomSign(){
+		mpBossRoomSign = 0;
 	}
 	void Update();
 	bool Collision(CRectangle *r);	//Õ“Ë‚Ìˆ—

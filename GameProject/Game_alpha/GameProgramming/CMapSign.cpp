@@ -1,5 +1,6 @@
 #include "CMapSign.h"
 #include "CFade.h"
+#include "CBossLifeBar.h"
 
 CMapEndSign *CMapEndSign::mpEndSign = 0;
 CMapBossRoomSign *CMapBossRoomSign::mpBossRoomSign = 0;
@@ -87,8 +88,9 @@ bool CMapBossRoomSign::Collision(CRectangle *r) {
 			}
 		}
 		else{
-			if (CRectangle::Collision(r) && r->mPosition.x > mPosition.x){
+			if (CRectangle::Collision(r) && r->mPosition.x > mPosition.x && !mColFlg){
 				mColFlg = true;
+				new CBossLifeBar();
 				return true;
 			}
 		}

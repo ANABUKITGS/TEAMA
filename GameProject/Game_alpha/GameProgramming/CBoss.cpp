@@ -52,7 +52,7 @@ void CBoss::Update(){
 						mAttackBehavior = EDASH;
 						break;
 					case 3://1はジャンプ
-						if (mBossDamageCnt == 2){
+						if (mBossLife <= mBossMaxLife * 0.2){
 							CEnemy::mpEnemy = new CEnemy(mPosition, EENEMY1);
 						}
 						IdolInterval = NULL;
@@ -165,7 +165,7 @@ void CBoss::Update(){
 			else
 				mVelocityX = -5;
 			//一定回数攻撃されると撃破される
-			if (mBossDamageCnt == 3)
+			if (mBossLife <= 0)
 				mAttackBehavior = EDOWN;
 
 			else if (mBossAnimeFream > 1){
@@ -228,6 +228,8 @@ void CBoss::Update(){
 
 
 		mPosition.x += mVelocityX;
+		mBossLifeProportion = static_cast <float> (mBossLife) / static_cast <float> (mBossMaxLife);
+
 		//基底クラスの更新処理
 		CRectangle::Update();
 	}
@@ -251,7 +253,7 @@ bool CBoss::Collision(CRectangle*p){
 					return false;
 				//無敵時間のフラグがOFFの時にダメージを加算する
 				else{
-					mBossDamageCnt++;
+					mBossLife--;
 					//無敵時間のフラグをONにする
 					Invincible = true;
 					//攻撃を受けた時のアニメーションをする

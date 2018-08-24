@@ -544,7 +544,7 @@ void CEditer::MakeTaskList(int *gamemap) {
 
 						//É{ÉX
 						else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EBOSS)
-							new CBoss(POS(i, j));
+							CBoss::mpBoss = new CBoss(POS(i, j));
 					}
 				}
 

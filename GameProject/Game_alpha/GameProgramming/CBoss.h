@@ -19,6 +19,7 @@
 #define BOSSINVINCIBLE 120	
 #define BOSSNEXTBEHAVIOR 70				//ボスの待機から次の行動までの時間
 #define BOSS_LOSE_TIME 120				//やられてからの待ち時間
+#define BOSS_LIFE 5						//ボスの初期HP
 
 class CBoss : public CCharcter{
 //自クラスだけ使用可能
@@ -32,13 +33,14 @@ private:
 	int mBossAnimeFream;				//ボスのアニメーションのテクスチャの枚数
 	int mBehaviorPattern;				//ボスの一部の行動にランダム要素を追加
 	int mBossDeleteTime;				//ボスが消滅する時間の変数
-	int mBossDamageCnt;					//ボスがダメージを受けた時に加算する変数
+	int mBossLife;						//ボスのHP
 	int mBossJumprad;					//ボスのジャンプをするタイミングをランダムにする
 	int mBossJcnt;						//ボスのジャンプ間隔
 	int Boss_Ani_Count_Frame;			//一コマのフレーム数
 	int mBossInvincibleTime;			//ボスの無敵時間
 	int mBossIBehavior;					//待機状態からのランダム行動
 	int mBossLoseTime;					//やられてからの待ち時間
+	int mBossMaxLife;					//ボスのHPの最大値
 	bool Invincible;					//無敵時間用変数を追加
 	bool mMant_One;						//一回だけマントの行動をとる変数
 	void BossJump();
@@ -64,7 +66,8 @@ private:
 		Boss_Ani_Count=0;
 		Boss_Ani_Count_Frame=0;
 		mBossAnimeFream=0;
-		mBossDamageCnt=0;
+		mBossLife = mBossMaxLife = BOSS_LIFE;
+		mBossLifeProportion = 0.0f;
 		mBossJcnt=0;					//ジャンプ間隔変数の値を0にする
 		mBossJumprad=0;					//最初のジャンプタイミングを初期化する
 		mBossDeleteTime = BOSS_DELCNT;	//ボスの消滅時間を初期化
@@ -84,6 +87,7 @@ private:
 
 //共通使用可能
 public:
+	float mBossLifeProportion;			//ボスのHPの割合
 	static CBoss*mpBoss;
 	//引数有のコンストラクタで出現位置を設定
 	CBoss(CVector2 Pos)

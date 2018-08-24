@@ -94,7 +94,7 @@ public:
 		mTag = tag;
 		mRender = false;
 		mIce = false;
-		enemy_ani = EENEMYANI::EWALK;
+		enemy_ani = EENEMYANI::EIDOL;
 		enemy_ani_count = 0;
 		enemy_ani_count_flame = 0;
 		ENEMY_ANI_COUNT_FLAME = 0;
