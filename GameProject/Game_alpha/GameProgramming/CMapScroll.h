@@ -7,12 +7,14 @@
 
 #define SCROLL_SPEED 0.75f
 
+#define DISPLAY_LEFT mPosition
+
 class CMapScroll : public CRectangle{
 public:
 	static float add_scroll;
 	static bool scroll_flg;
 	static bool scroll_stop;
-	static CMapScroll *mScroll;
+	static CMapScroll *mpScroll;
 	CMapScroll()
 		: CRectangle(CVector2(0, 0), CVector2(0, 0), NULL)
 	{
@@ -23,7 +25,7 @@ public:
 		CTaskManager::Get()->Add(this);
 	}
 	~CMapScroll(){
-		mScroll = 0;
+		mpScroll = 0;
 	}
 
 	void Update();

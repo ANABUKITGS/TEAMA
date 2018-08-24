@@ -8,6 +8,7 @@
 #include "CScene.h"
 #include "CTime.h"
 #include "CSE.h"
+#include "CFade.h"
 
 CTexture mtexture;
 CSceneChange mChange;
@@ -21,6 +22,8 @@ void CMain::Init() {
 	mChange.Init();
 	swprintf(gamepad_name, L"");
 	CSE::Init();
+	CFade mFade;
+	mFade.Init();
 }
 
 //繰り返し実行する処理の定義
@@ -90,4 +93,6 @@ void CMain::Update() {
 	sprintf(fps_buf, "%4.1fFPS", CTime::FrameRate());
 	CText::DrawStringSetColor(fps_buf, -640, 344, 16, 0.0f, 1.0f, 0.0f, 1.0f, 0);
 #endif
+	CFade mFade;
+	mFade.RenderFade();
 }

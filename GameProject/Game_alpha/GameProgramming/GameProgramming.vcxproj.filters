@@ -43,6 +43,7 @@
     <ClCompile Include="CBoss.cpp" />
     <ClCompile Include="CMapIce.cpp" />
     <ClCompile Include="CEfect.cpp" />
+    <ClCompile Include="CFade.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCamera2D.h" />
@@ -88,6 +89,7 @@
     <ClInclude Include="CBoss.h" />
     <ClInclude Include="CMapIce.h" />
     <ClInclude Include="CEfect.h" />
+    <ClInclude Include="CFade.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />

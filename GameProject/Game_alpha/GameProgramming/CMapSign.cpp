@@ -1,5 +1,5 @@
 #include "CMapSign.h"
-#include "CMapBackImage.h"
+#include "CFade.h"
 
 CMapEndSign *CMapEndSign::mpEndSign = 0;
 CMapBossRoomSign *CMapBossRoomSign::mpBossRoomSign = 0;
@@ -46,12 +46,12 @@ void CMapEndSign::Update() {
 }
 
 bool CMapEndSign::Collision(CRectangle *r) {
-	if (CMapBackImage::mFade == CMapBackImage::EFADE_NUM::EFALSE && CMapBackImage::mMapfile == CMapBackImage::EGAMEMAP_NUM::ETUTORIAL){
+	if (CFade::mFade == CFade::EFADE_NUM::EFALSE && CFade::mMapfile == CFade::EGAMEMAP_NUM::ETUTORIAL){
 		// “–‚½‚Á‚Ä‚¢‚é‚©
 		if (r->mTag == EPLAYER){
 			if (CRectangle::Collision(r)){
-				CMapBackImage::mMapfile = CMapBackImage::EGAMEMAP_NUM::EMAIN;
-				CMapBackImage::mFade = CMapBackImage::EFADE_NUM::EFADEOUT;
+				CFade::mMapfile = CFade::EGAMEMAP_NUM::EMAIN;
+				CFade::mFade = CFade::EFADE_NUM::EFADEOUT;
 				return true;
 			}
 		}

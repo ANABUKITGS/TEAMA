@@ -14,30 +14,11 @@ private:
 	CTexture mTexLayer1;
 	CTexture mTexLayer2;
 
-	static CTexture mTexFade;	//ロードしない
-	static float mAlpha;
-	static int change_scene;
-
 public:
 	enum ETEXTURE_LAYER{
 		LAYER1 = 1,
 		LAYER2,
 	};
-
-	enum EGAMEMAP_NUM{
-		ETUTORIAL = 1,
-		EMAIN,
-		EEDITER,
-	};
-	static EGAMEMAP_NUM mMapfile;
-
-	enum EFADE_NUM{
-		EFALSE = 1,	//無効
-		EFADEOUT,	//フェードアウト
-		ETRUE,		//有効, フェードイン
-	};
-	static EFADE_NUM mFade;	//フェード効果
-
 	CMapBackImage(const CVector2 &pos, ETEXTURE_LAYER tag)
 		: CRectangle(pos, CVector2(0, 0), NULL)
 	{
@@ -60,8 +41,5 @@ public:
 	}
 	void Update();
 	void Render();
-
-	static void ChangeFade(int);
-	static void RenderFade();
 };
 #endif

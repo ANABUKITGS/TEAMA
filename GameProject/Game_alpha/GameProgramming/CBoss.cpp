@@ -2,7 +2,7 @@
 #include "CGame2.h"
 #include "CScore.h"
 #include "CScene.h"
-#include "CMapBackImage.h"
+#include "CFade.h"
 #include "CTime.h"
 
 bool CBoss::mBossLose = false;
@@ -187,7 +187,7 @@ void CBoss::Update(){
 			}
 			else {
 				mBossLose = true;
-				CMapBackImage::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ERESULT);
+				CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ERESULT);
 				CGame2::mTimeMin = CTime::ElapsedTimeMin();
 				CGame2::mTimeSec = CTime::ElapsedTimeSec();
 				CScore::GetScore();

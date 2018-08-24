@@ -3,7 +3,7 @@
 #include "CGame2.h"
 #include "CTime.h"
 #include "CBGM.h"
-#include "CMapBackImage.h"
+#include "CFade.h"
 
 extern CEditer mEditer;
 extern CGame mGame;
@@ -29,21 +29,21 @@ void CTitle::Update(){
 	if (CGamePad::Once(PAD_2) || CKey::Once(VK_RETURN) || CKey::Once(VK_SPACE)){
 		switch (cursor_num){
 		case CSceneChange::ECSCENECHANGE_NUM::EGAME:
-			CMapBackImage::mMapfile = CMapBackImage::EGAMEMAP_NUM::ETUTORIAL;
-			CMapBackImage::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::EGAME);
+			CFade::mMapfile = CFade::EGAMEMAP_NUM::ETUTORIAL;
+			CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::EGAME);
 			break;
 
 		case CSceneChange::ECSCENECHANGE_NUM::ERANKING:
-			CMapBackImage::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ERANKING);
+			CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ERANKING);
 			break;
 
 		case CSceneChange::ECSCENECHANGE_NUM::EEDITER:
 			mEditer.Init();
-			CMapBackImage::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::EEDITER);
+			CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::EEDITER);
 			break;
 
 		case CSceneChange::ECSCENECHANGE_NUM::EEXIT:
-			CMapBackImage::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::EEXIT);
+			CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::EEXIT);
 			break;
 
 		default:

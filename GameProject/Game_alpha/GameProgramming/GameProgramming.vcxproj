@@ -91,6 +91,7 @@
     <ClCompile Include="CEditer.cpp" />
     <ClCompile Include="CEfect.cpp" />
     <ClCompile Include="CEnemy.cpp" />
+    <ClCompile Include="CFade.cpp" />
     <ClCompile Include="CFileIO.cpp" />
     <ClCompile Include="CMapBackImage.cpp" />
     <ClCompile Include="CMapBelt.cpp" />
@@ -134,6 +135,7 @@
     <ClInclude Include="CCollision.h" />
     <ClInclude Include="CEfect.h" />
     <ClInclude Include="CEnemy.h" />
+    <ClInclude Include="CFade.h" />
     <ClInclude Include="CFileIO.h" />
     <ClInclude Include="CMapBackImage.h" />
     <ClInclude Include="CMapBelt.h" />

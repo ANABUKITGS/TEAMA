@@ -90,7 +90,7 @@ void CPlayerT::Update(){
 	}
 	if (!CGame2::mCheat[CGame2::CHEAT_NUM::EAREA] && CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
 		//エリア外
-		if (mPosition.x + CELLSIZE < CMapScroll::mScroll->mPosition.x - 640.0f ||	//エリア外(左)
+		if (mPosition.x + CELLSIZE < CMapScroll::mpScroll->mPosition.x - 640.0f ||	//エリア外(左)
 			mPosition.y + CELLSIZE < 0.0f){	//エリア外(下)
 			mPosition = mReSpornPos;
 			mVelocityX = mVelocityY = 0.0f;
@@ -98,12 +98,12 @@ void CPlayerT::Update(){
 			mJumpCount = 0;
 			if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI])
 				mLife--;
-			CMapScroll::mScroll->Reset();
+			CMapScroll::mpScroll->Reset();
 		}
 
 		//エリア外(右)
-		if (mPosition.x > CMapScroll::mScroll->mPosition.x + 640.0f)
-			mPosition.x = CMapScroll::mScroll->mPosition.x + 640.0f;
+		if (mPosition.x > CMapScroll::mpScroll->mPosition.x + 640.0f)
+			mPosition.x = CMapScroll::mpScroll->mPosition.x + 640.0f;
 
 		//エリア外(上)
 		if (mPosition.y - CELLSIZE > 720.0f){
@@ -295,7 +295,7 @@ bool CPlayerT::Collision(CRectangle *p) {
 						if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI]){
 							mLife--;
 							mPosition = mReSpornPos;
-							CMapScroll::mScroll->Reset();
+							CMapScroll::mpScroll->Reset();
 						}
 					}
 				}

@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <Windows.h>
-#include "CMapBackImage.h"
+#include "CFade.h"
 
 int CScore::mScore[5] = { 0, 0, 0, 0, 0 };;
 char CName::name[3] = { 'aaa' };
@@ -162,7 +162,7 @@ void CRanking::Update(){
 		CText::DrawString(buf2, -100, 100 + i * -100, 40, 1.0f, 0);
 	}
 	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2))
-		CMapBackImage::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
+		CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
 }
 void CRanking::Sort(int score, char *name){
 	if (mRanking[2].s <= score){

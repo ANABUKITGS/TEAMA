@@ -9,6 +9,7 @@
 #include "CTime.h"
 #include "CBGM.h"
 #include "CMapBackImage.h"
+#include "CFade.h"
 #include "CMapSwitchGround.h"
 #include "CMapSign.h"
 #include "CMapScroll.h"
@@ -32,7 +33,7 @@ void CGame2::Init(const char *map) {
 
 
 	//カメラ基点
-	CMapScroll::mScroll = new CMapScroll();
+	CMapScroll::mpScroll = new CMapScroll();
 
 	//スイッチ足場 青 有効化
 	CMapSwitchGround::mNumber = ESWITCH_GROUND1;
@@ -126,15 +127,16 @@ void CGame2::Update() {
 		
 	}
 	if (CGamePad::Once(PAD_10) || CKey::Once(VK_ESCAPE)){
-		CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ETITLE;
-		CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETITLE);
+		CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
+		//CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ETITLE;
+		//CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETITLE);
 	}
 	if (CGamePad::Once(PAD_9) || CKey::Once(VK_RETURN)){
-		if (CMapBackImage::mMapfile != CMapBackImage::EGAMEMAP_NUM::EMAIN){
-			if (CMapBackImage::mMapfile == CMapBackImage::EGAMEMAP_NUM::ETUTORIAL){
-				CMapBackImage::mMapfile = CMapBackImage::EGAMEMAP_NUM::EMAIN;
+		if (CFade::mMapfile != CFade::EGAMEMAP_NUM::EMAIN){
+			if (CFade::mMapfile == CFade::EGAMEMAP_NUM::ETUTORIAL){
+				CFade::mMapfile = CFade::EGAMEMAP_NUM::EMAIN;
 			}
-			CMapBackImage::mFade = CMapBackImage::EFADE_NUM::EFADEOUT;
+			CFade::mFade = CFade::EFADE_NUM::EFADEOUT;
 		}
 	}
 
@@ -174,13 +176,11 @@ void CGame2::Render() {
 		return;
 	}
 //	CCamera2D::Begin(0.0, WINDOW_SIZE_W, 0.0, WINDOW_SIZE_H);
-	mCamera.x = CMapScroll::mScroll->mPosition.x;
-	mCamera.y = CMapScroll::mScroll->mPosition.y;
+	mCamera.x = CMapScroll::mpScroll->mPosition.x;
+	mCamera.y = CMapScroll::mpScroll->mPosition.y;
 	mCamera.Begin();
 	CTaskManager::Get()->Render();
 	CCamera2D::End();
-
-	CMapBackImage::RenderFade();
 #ifdef _DEBUG
 	wchar_t jumptime_buf[256];
 	swprintf(jumptime_buf, L"プレイヤー\nmVelocityX\n%6.2f\nmVelocityY\n%6.2f\nmPosition.x\n%.2f\nmPosition.y\n%.2f", CPlayerT::mpPlayer->mVelocityX, CPlayerT::mpPlayer->mVelocityY, CPlayerT::mpPlayer->mPosition.x, CPlayerT::mpPlayer->mPosition.y);

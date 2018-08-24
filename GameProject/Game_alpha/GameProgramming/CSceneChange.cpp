@@ -2,7 +2,6 @@
 #include "CScore.h"
 #include "CBGM.h"
 #include "CGame2.h"
-#include "CMapBackImage.h"
 
 CCharcter player;
 CEditer mEditer;
@@ -70,7 +69,6 @@ void CSceneChange::Update(){
 	default:
 		break;
 	}
-	CMapBackImage::RenderFade();
 }
 
 void CSceneChange::Render(){
