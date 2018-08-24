@@ -19,13 +19,12 @@ void CBoss::Update(){
 		//一定時間経過すると乱数を出す
 		else{
 			mBossJumprad = rand() / 100 % 7;
-			printf("%d\n", mBossJumprad);
 			mBossJcnt = NULL;
 		}
 		//ジャンプの処理ここまで
 
 		//待機状態からランダムで行動をとる(移動、ジャンプ、攻撃のどれか)
-		mBossIBehavior = rand() / 1000 % 3;
+		mBossIBehavior = rand() / 1000 % 6;
 
 		//行動パターン処理
 		switch (mAttackBehavior){
@@ -49,11 +48,11 @@ void CBoss::Update(){
 				//指定した秒数を超えれば行動をランダムでとる
 				else{
 					switch (mBossIBehavior){
-					case 0://0は移動
+					case 0: case 1: case 2://0,1,2は移動
 						IdolInterval = NULL;
 						mAttackBehavior = EDASH;
 						break;
-					case 1://1はジャンプ
+					case 3://1はジャンプ
 						if (mBossDamageCnt == 2){
 							CEnemy::mpEnemy = new CEnemy(mPosition, EENEMY1);
 						}
@@ -65,6 +64,10 @@ void CBoss::Update(){
 							mVelocityX = BOSSMOVESPEED*3;
 						mAttackBehavior = EJUMP;
 						break;
+
+					default:
+						IdolInterval = 50;
+					break;
 					}
 				}
 			}
@@ -332,9 +335,9 @@ void CBoss::Render(){
 		//	mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
 		//	mPosition.y + CELLSIZE * 2, mBossAnimeFream * 256, (mBossAnimeFream + 1) * 256, 2304, 2048, mAlpha);
 
-		if (mBossAnimeFream > 3)
-			mBossAnimeFream = 2;
-		Boss_Ani_Count_Frame = 20;
+		if (mBossAnimeFream > 4)
+			mBossAnimeFream = 0;
+		Boss_Ani_Count_Frame = 9;
 		if (!mDirection)	//左向き
 			mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
 			mPosition.y + CELLSIZE * 2, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 512, 256, mAlpha);
@@ -350,7 +353,7 @@ void CBoss::Render(){
 			//ループの先頭に戻る
 			mBossAnimeFream = 0;
 		//次のコマに行くタイミング
-		Boss_Ani_Count_Frame = 12;
+		Boss_Ani_Count_Frame = 5;
 
 		if (!mDirection)	//左向き
 			mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
@@ -476,7 +479,7 @@ void CBoss::Render(){
 		if (mBossAnimeFream > 1){
 			mBossAnimeFream = 0;
 		}
-		Boss_Ani_Count_Frame = 15;
+		Boss_Ani_Count_Frame = 12;
 
 		if (!mDirection)	//左向き
 			mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
@@ -494,16 +497,22 @@ void CBoss::Render(){
 			mBossAnimeFream = 3;
 
 		//アニメーションの速さを指定
-		Boss_Ani_Count_Frame = 8;
+		Boss_Ani_Count_Frame = 6;
 
-		//左向き
-		if (!mDirection)
-			mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
-			mPosition.y + CELLSIZE * 2, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 1280, 1024, mAlpha);
-		//右向き
-		else
-			mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
-			mPosition.y + CELLSIZE * 2, mBossAnimeFream * 256, (mBossAnimeFream + 1) * 256, 1280, 1024, mAlpha);
+		if (mBossAnimeFream == 3)
+			mTexture.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE*2,
+			mPosition.y + CELLSIZE, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 1280, 1024, mAlpha);
+
+		else{
+			//左向き
+			if (!mDirection)
+				mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
+				mPosition.y + CELLSIZE * 2, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 1280, 1024, mAlpha);
+			//右向き
+			else
+				mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
+				mPosition.y + CELLSIZE * 2, mBossAnimeFream * 256, (mBossAnimeFream + 1) * 256, 1280, 1024, mAlpha);
+		}
 		break;
 	}
 	//次のコマに行く為に加算する
