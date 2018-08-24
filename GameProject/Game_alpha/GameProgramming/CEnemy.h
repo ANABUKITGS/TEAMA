@@ -101,6 +101,9 @@ public:
 		else if (tag == ECELLNUM::EENEMY3)
 			mTexEnemy03.Load(".\\Data\\Images\\Enemy\\Enemy03.tga");
 	}
+	~CEnemy(){
+		mpEnemy = 0;
+	}
 
 	void Update();
 	void Render();

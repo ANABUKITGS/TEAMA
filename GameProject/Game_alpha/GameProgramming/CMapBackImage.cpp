@@ -110,9 +110,6 @@ void CMapBackImage::RenderFade(){
 				CBGM::AllStop();
 				CSE::AllStop();
 				CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::EEXIT;
-				_sleep(500);
-				exit(0);
-				return;
 				break;
 
 			case CSceneChange::ECSCENECHANGE_NUM::ERESULT:

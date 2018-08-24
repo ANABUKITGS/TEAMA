@@ -33,6 +33,7 @@ void CSceneChange::Update(){
 	mBGM.Update();
 	switch (changenum){
 	case ECSCENECHANGE_NUM::ETITLE:
+		CTaskManager::Get()->Destroy();
 		mTitle.Update();
 		mTitle.Render();
 		break;
@@ -43,11 +44,13 @@ void CSceneChange::Update(){
 		break;
 
 	case ECSCENECHANGE_NUM::ERANKING:
+		CTaskManager::Get()->Destroy();
 		CSceneResult::mResultTag = CSceneResult::ERANKING;
 		mResult.Update();
 		break;
 
 	case ECSCENECHANGE_NUM::ERESULT:
+		CTaskManager::Get()->Destroy();
 		if (CSceneResult::mResultTag == CSceneResult::ESCORE)
 			CSceneResult::mResultTag = CSceneResult::ESCORE;
 		mResult.Update();
@@ -59,6 +62,9 @@ void CSceneChange::Update(){
 		break;
 
 	case ECSCENECHANGE_NUM::EEXIT:
+		CTaskManager::Get()->Destroy();
+		_sleep(500);
+		exit(0);
 		break;
 
 	default:
