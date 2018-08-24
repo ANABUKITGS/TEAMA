@@ -2,6 +2,7 @@
 #include "CRectangle.h"
 #include "CMap.h"
 #include "CMapScroll.h"
+#include "CScene.h"
 
 CTaskManager *CTaskManager::mpInstance = 0;
 
@@ -54,8 +55,9 @@ void CTaskManager::Add(CTask*task){
 void CTaskManager::Update(){
 	CRectangle*p = (CRectangle*)mpHead;	//子クラスのカレントにキャスト変換した先頭タスクを代入
 	while (p){	//カレントp
-		if (p->mPosition.x + 1280 > CMapScroll::mpScroll->mPosition.x
-			&& p->mPosition.x - 1280 < CMapScroll::mpScroll->mPosition.x)
+		if (CSceneChange::changenum == CSceneChange::ECSCENECHANGE_NUM::EEDITER ||
+			(CMapScroll::mpScroll != NULL && p->mPosition.x + 1280 > CMapScroll::mpScroll->mPosition.x
+			&& p->mPosition.x - 1280 < CMapScroll::mpScroll->mPosition.x))
 			p->Update();	//現在カレントの更新処理を行う
 		p = (CRectangle*)p->mpNext;	//キャスト変換を行ったタスクの次をカレントに代入
 	}
@@ -78,8 +80,9 @@ void CTaskManager::Update(){
 void CTaskManager::Render(){
 	CRectangle*p = (CRectangle*)mpHead;	//子クラスのカレントにキャスト変換した先頭タスクを代入
 	while (p){	//カレントp
-		if (p->mPosition.x + 1280 > CMapScroll::mpScroll->mPosition.x
-			&& p->mPosition.x - 1280 < CMapScroll::mpScroll->mPosition.x){
+		if (CSceneChange::changenum == CSceneChange::ECSCENECHANGE_NUM::EEDITER ||
+			(CMapScroll::mpScroll != NULL && p->mPosition.x + 1280 > CMapScroll::mpScroll->mPosition.x
+			&& p->mPosition.x - 1280 < CMapScroll::mpScroll->mPosition.x)){
 			if (p->mEnabled) {
 				if (p->mRender)
 					p->Render(WHITE, 1.0f);	//現在カレントの描画処理を行う
@@ -88,6 +91,7 @@ void CTaskManager::Render(){
 		}
 		p = (CRectangle*)p->mpNext;	//キャスト変換を行ったタスクの次をカレントに代入
 	}
+
 }
 
 void CTaskManager::Remove(){

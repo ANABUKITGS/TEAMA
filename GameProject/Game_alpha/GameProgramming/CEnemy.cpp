@@ -51,6 +51,7 @@ void  CEnemy::Update(){
 				enemy_ani = EENEMYANI::EIDOL;
 				enemy_ani_count = 0;
 			}
+			mAttackInterval2 = ATTACK_INTERVAL2;
 			break;
 
 		case EENEMYANI::EIDOL:
@@ -83,16 +84,16 @@ void  CEnemy::Update(){
 				else
 					mVelocityX -= ENEMY_VELOCITY_X2_ICE;
 			}
+			mAttackInterval2 = ATTACK_INTERVAL2;
 			break;
 
 		case EENEMYANI::EYOYO:
+			mAttackInterval2--;
 			//敵がヨーヨーを発射していなければ、ヨーヨーを発射して処理を行う
 			if (!mpEWeapon){
 				if (mAttackInterval < 0){
-					mAttackInterval2--;
 					if (mAttackInterval2 < 0){
 						mAttackInterval = ATTACK_INTERVAL;
-						mAttackInterval2 = ATTACK_INTERVAL2;
 						//敵のヨーヨーを敵の位置よりも少し前に呼び出す
 						mpEWeapon = new CWeapon(EEWEAPON, mPosition, mDirection);
 

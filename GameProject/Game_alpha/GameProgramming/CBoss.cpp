@@ -5,7 +5,6 @@
 #include "CFade.h"
 #include "CTime.h"
 
-bool CBoss::mBossLose = false;
 CBoss *CBoss::mpBoss = 0;
 
 void CBoss::Update(){
@@ -189,11 +188,14 @@ void CBoss::Update(){
 				}
 			}
 			else {
-				mBossLose = true;
-				CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ERESULT);
-				CGame2::mTimeMin = CTime::ElapsedTimeMin();
-				CGame2::mTimeSec = CTime::ElapsedTimeSec();
-				CScore::GetScore();
+				mBossLoseTime--;
+				if (mBossLoseTime <= 0){
+					CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ERESULT);
+					CGame2::mTimeMin = CTime::ElapsedTimeMin();
+					CGame2::mTimeSec = CTime::ElapsedTimeSec();
+					CScore::GetScore();
+					mBossLoseTime = 0;
+				}
 			}
 			break;
 		//ダメージ処理終了

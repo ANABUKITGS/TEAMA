@@ -18,6 +18,7 @@
 #define STARTBEHAVIOR 600				//ボス戦開始時のみ使用
 #define BOSSINVINCIBLE 120	
 #define BOSSNEXTBEHAVIOR 70				//ボスの待機から次の行動までの時間
+#define BOSS_LOSE_TIME 120				//やられてからの待ち時間
 
 class CBoss : public CCharcter{
 //自クラスだけ使用可能
@@ -37,6 +38,7 @@ private:
 	int Boss_Ani_Count_Frame;			//一コマのフレーム数
 	int mBossInvincibleTime;			//ボスの無敵時間
 	int mBossIBehavior;					//待機状態からのランダム行動
+	int mBossLoseTime;					//やられてからの待ち時間
 	bool Invincible;					//無敵時間用変数を追加
 	bool mMant_One;						//一回だけマントの行動をとる変数
 	void BossJump();
@@ -71,6 +73,7 @@ private:
 		mDirection = false;				//最初の向きを左向きにする
 		mBossBehavior = BEHAVIOR;		//敵の行動値を代入
 		mBossAttackItr = 0;
+		mBossLoseTime = BOSS_LOSE_TIME;
 		mAttackBehavior = EIDOL;		//待機状態にする
 		mTag = EBOSS;					//タグをボスにする
 		mPriority = 10;					//優先度を設定
@@ -81,7 +84,6 @@ private:
 
 //共通使用可能
 public:
-	static bool mBossLose;	//ボスのやられフラグ
 	static CBoss*mpBoss;
 	//引数有のコンストラクタで出現位置を設定
 	CBoss(CVector2 Pos)
@@ -89,7 +91,6 @@ public:
 	{
 		//サイズを指定（テクスチャは別で用意するので引数には入れない）
 		SetRectangle(Pos, CVector2(32,90),NULL);
-		mBossLose = false;
 	}
 	~CBoss(){
 		mpBoss = 0;
