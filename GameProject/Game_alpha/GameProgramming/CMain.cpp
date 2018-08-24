@@ -8,7 +8,6 @@
 #include "CScene.h"
 #include "CTime.h"
 #include "CSE.h"
-#include "CFade.h"
 
 CTexture mtexture;
 CSceneChange mChange;
@@ -16,21 +15,17 @@ CScene::ESceneTag CMain::mSceneTag = CScene::EROOT;
 
 wchar_t gamepad_name[64];
 
-CFade mFade;
-
 //初めに1回だけ実行する処理の定義
 void CMain::Init() {
 	CText::Init();
 	mChange.Init();
 	swprintf(gamepad_name, L"");
 	CSE::Init();
-	mFade.Init();
 }
 
 //繰り返し実行する処理の定義
 void CMain::Update() {
 	mChange.Update();
-	mFade.RenderFade();
 	/*１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ*/
 #ifdef _DEBUG
 	if (CGamePad::Push(PAD_1))
