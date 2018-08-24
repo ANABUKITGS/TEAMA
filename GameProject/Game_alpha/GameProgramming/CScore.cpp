@@ -164,7 +164,7 @@ void CRanking::Update(){
 	for (int i = 0; i < 3; i++){
 		sprintf(buf2, "%3s", mRanking[i].r);
 		CText::DrawString(buf2, -300, 100 + i * -100, 40, 1.0f, 0);
-		swprintf(bufw, L"%d", mRanking[i].s);
+		swprintf(bufw, L"%4d", mRanking[i].s);
 		CText::DrawStringW(bufw, 200, 100 + i * -100, 40, 1.0f, 0);
 		sprintf(buf2, "%3s", mRanking[i].n);
 		CText::DrawString(buf2, -60, 100 + i * -100, 40, 1.0f, 0);
