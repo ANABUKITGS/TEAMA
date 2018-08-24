@@ -123,6 +123,7 @@ void CGame2::Update() {
 		mTimeMin = CTime::ElapsedTimeMin();
 		mTimeSec = CTime::ElapsedTimeSec();
 		CScore::GetScore();
+		CSceneResult::mResultTag = CSceneResult::ESCORE;
 		CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ERESULT;
 		
 	}
