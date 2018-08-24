@@ -1,10 +1,16 @@
 #include "CMapJewelry.h"
 #include "CSE.h"
 #include "CWeapon.h"
+#include "CEfect.h"
 
 
 
 void CMapJewelry::Update() {
+	mIntervalEfe--;
+	if (mIntervalEfe<0){
+		mIntervalEfe = 0;
+		new CEfect(mPosition);
+	}
 	if (mpWeapon != 0){
 		mPosition = mpWeapon->mPosition;
 	}

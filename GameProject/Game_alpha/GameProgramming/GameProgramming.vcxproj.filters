@@ -42,6 +42,7 @@
     <ClCompile Include="CMapScroll.cpp" />
     <ClCompile Include="CBoss.cpp" />
     <ClCompile Include="CMapIce.cpp" />
+    <ClCompile Include="CEfect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCamera2D.h" />
@@ -86,6 +87,7 @@
     <ClInclude Include="CMapScroll.h" />
     <ClInclude Include="CBoss.h" />
     <ClInclude Include="CMapIce.h" />
+    <ClInclude Include="CEfect.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />
