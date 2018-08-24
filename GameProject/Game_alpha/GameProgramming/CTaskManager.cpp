@@ -1,6 +1,7 @@
 #include "CTaskManager.h"
 #include "CRectangle.h"
 #include "CMap.h"
+#include "CMapScroll.h"
 
 CTaskManager *CTaskManager::mpInstance = 0;
 
@@ -53,7 +54,9 @@ void CTaskManager::Add(CTask*task){
 void CTaskManager::Update(){
 	CRectangle*p = (CRectangle*)mpHead;	//子クラスのカレントにキャスト変換した先頭タスクを代入
 	while (p){	//カレントp
-		p->Update();	//現在カレントの更新処理を行う
+		if (p->mPosition.x + 1280 > CMapScroll::mpScroll->mPosition.x
+			&& p->mPosition.x - 1280 < CMapScroll::mpScroll->mPosition.x)
+			p->Update();	//現在カレントの更新処理を行う
 		p = (CRectangle*)p->mpNext;	//キャスト変換を行ったタスクの次をカレントに代入
 	}
 	p = (CRectangle*)mpHead;	//子クラスのカレントにキャスト変換した先頭タスクを代入
@@ -75,10 +78,13 @@ void CTaskManager::Update(){
 void CTaskManager::Render(){
 	CRectangle*p = (CRectangle*)mpHead;	//子クラスのカレントにキャスト変換した先頭タスクを代入
 	while (p){	//カレントp
-		if (p->mEnabled) {
-			if (p->mRender)
-				p->Render(WHITE, 1.0f);	//現在カレントの描画処理を行う
-			p->Render();
+		if (p->mPosition.x + 1280 > CMapScroll::mpScroll->mPosition.x
+			&& p->mPosition.x - 1280 < CMapScroll::mpScroll->mPosition.x){
+			if (p->mEnabled) {
+				if (p->mRender)
+					p->Render(WHITE, 1.0f);	//現在カレントの描画処理を行う
+				p->Render();
+			}
 		}
 		p = (CRectangle*)p->mpNext;	//キャスト変換を行ったタスクの次をカレントに代入
 	}
