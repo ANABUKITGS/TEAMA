@@ -10,6 +10,20 @@ struct  SRanking{
 	int s;
 };
 
+class CSceneResult :public CScene{
+public:
+	CTexture mTexResult;
+	CTexture mTexResultback;
+	enum EResultTag{
+		EROOT,
+		ESCORE,
+		ENAME,
+		ERANKING,
+	};
+	static EResultTag mResultTag;
+	void Init();
+	void Update();
+};
 class CScore:public CScene{
 public:
 	static int mJewelScore;
@@ -18,7 +32,7 @@ public:
 	static int mLifeScore;
 	static int mScore[5];
 	static bool mSort;
-	int mScoreNum;
+	static int mScoreNum;
 	CScore(){
 		mSceneTag = ESCORE;
 	}

@@ -16,9 +16,40 @@ int CScore::mJewelScore;
 int CScore::mMiniJewelScore;
 int CScore::mLifeScore;
 int CScore::mTimerScore;
+int CScore::mScoreNum;
 char buf[11];
-wchar_t bufw[64];
+wchar_t bufw[256];
 int mCount[5] = {0,0,0,0,0};
+enum CSceneResult::EResultTag CSceneResult::mResultTag;
+
+extern CScore mScore;
+extern CName mName;
+extern CRanking mRanking;
+
+
+void CSceneResult::Init(){
+	mTexResult.Load(".//Data//Images//Result//result.tga");
+	mTexResultback.Load(".//Data//Images//Result//titleback.tga");
+	mResultTag = ESCORE;
+}
+void CSceneResult::Update(){
+	
+	mTexResultback.DrawImage(-640, 640, -360, 360, 0, 1280, 720, 0, 1.0f);
+	mTexResult.DrawImage(-382, 382, -320, 320, 0, 764, 640, 0, 1.0f);
+	switch (mResultTag){
+	case CSceneResult::ESCORE:
+		mScore.Update();
+		break;
+	case CSceneResult::ENAME:
+		mName.Update();
+		break;
+	case CSceneResult::ERANKING:
+		mRanking.Update();
+		break;
+	default:
+		break;
+	}
+}
 
 void CScore::Init(){
 	mJewelScore = 150;
@@ -31,18 +62,10 @@ void CScore::Update(){
 	if (mScore[mScoreNum] <= mCount[mScoreNum])
 		mScoreNum++;
 	mCount[mScoreNum]=CountUp(mScore[mScoreNum], mCount[mScoreNum]);
-	swprintf(bufw, L"•ó            %3d ~%4d  = %4d", CPlayerT::mpPlayer->mJewel,mJewelScore,mCount[0]);
-	CText::DrawStringW(bufw, -300, 200, 20, 1.0f, 0);
-	swprintf(bufw, L"Î            %3d ~%4d  = %4d", CPlayerT::mpPlayer->mMiniJewel,mMiniJewelScore,mCount[1]);
-	CText::DrawStringW(bufw, -300, 100, 20, 1.0f, 0);
-	swprintf(bufw, L"–½            %3d ~%4d  = %4d", CPlayerT::mpPlayer->mLife,mLifeScore,mCount[2]);
-	CText::DrawStringW(bufw, -300, 0, 20, 1.0f, 0);
-	swprintf(bufw, L"ƒ^ƒCƒ}[       %02d:%02.0f ~ %3d  = %4d", CGame2::mTimeMin,CGame2::mTimeSec,-mTimerScore,-mCount[3]);
-	CText::DrawStringW(bufw, -300, -100, 20, 1.0f, 0);
-	swprintf(bufw, L"ƒXƒRƒA                       %4d", mCount[4]);
-	CText::DrawStringW(bufw, -300, -200, 20, 1.0f, 0);
+	swprintf(bufw, L"•ó      %3d ~%4d  = %4d\n\nÎ      %3d ~%4d  = %4d\n\n–½      %3d ~%4d  = %4d\n\nƒ^ƒCƒ}[ %02d:%02.0f ~ %3d  = %4d\n\n\n\nƒXƒRƒA                 %4d", CPlayerT::mpPlayer->mJewel, mJewelScore, mCount[0], CPlayerT::mpPlayer->mMiniJewel, mMiniJewelScore, mCount[1], CPlayerT::mpPlayer->mLife, mLifeScore, mCount[2], CGame2::mTimeMin, CGame2::mTimeSec, -mTimerScore, -mCount[3], mCount[4]);
+	CText::DrawStringW(bufw, -350, 100, 30, 1.0f, 0);
 	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2)){
-		CSceneChange::changenum = CSceneChange::ENAME;
+		CSceneResult::mResultTag = CSceneResult::ENAME;
 		mSort = true;
 		for (int i = 0; i < 3; i++){
 			CName::name[i] = 'a';
@@ -55,7 +78,10 @@ void CScore::Update(){
 int CScore::CountUp(int max,int count){
 	if (max>0){
 		if (max > count){
-			count++;
+			if (max - count > 10)
+				count += 10;
+			else
+				count++;
 			return count;
 		}
 	}
@@ -68,11 +94,12 @@ void CScore::GetScore(){
 		mCount[i] = 0;
 		mScore[i] = 0;
 	}
+	mScoreNum = 0;
 	mScore[0] = CPlayerT::mpPlayer->mJewel * mJewelScore;
 	mScore[1] = CPlayerT::mpPlayer->mMiniJewel* mMiniJewelScore;
 	mScore[2] = CPlayerT::mpPlayer->mLife * mLifeScore;
 	mScore[3] = ((CGame2::mTimeMin * 60 + CGame2::mTimeSec)/6) * mTimerScore;
-	mScore[4] += mScore[0] + mScore[1] + mScore[2] + mScore[3];
+	mScore[4] += mScore[0] + mScore[1] + mScore[2] - mScore[3];
 }
 
 void CName::Init(){
@@ -103,7 +130,7 @@ void CName::Update(){
 	if (charnum < 2)
 		charnum++;
 	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2))
-		CSceneChange::changenum = CSceneChange::ERANKING;
+		CSceneResult::mResultTag = CSceneResult::ERANKING;
 	glColor4f(1.0f, 1.0f, 0.0f, 1.0f);  //•`‰æF@‰©F
 	sprintf(buf2, "%s", name);
 	CText::DrawString(buf2, -100, 0, 50, 1.0f, 0);
@@ -124,14 +151,14 @@ void CRanking::Update(){
 	}
 	glColor4f(1.0f, 1.0f, 0.0f, 1.0f);  //•`‰æF@‰©
 	swprintf(bufw, L"ƒ‰ƒ“ƒLƒ“ƒO");
-	CText::DrawStringW(bufw, 0, 200, 20, 1.0f, 0);
+	CText::DrawStringW(bufw, -75, 200, 30, 1.0f, 0);
 	for (int i = 0; i < 3; i++){
 		swprintf(bufw, L"%4.2d", i + 1);
-		CText::DrawStringW(bufw, -200, 100 + i * -100, 20, 1.0f, 0);
+		CText::DrawStringW(bufw, -300, 100 + i * -100, 40, 1.0f, 0);
 		swprintf(bufw, L"%d", mRanking[i].s);
-		CText::DrawStringW(bufw, 200, 100 + i * -100, 20, 1.0f, 0);
+		CText::DrawStringW(bufw, 100, 100 + i * -100, 40, 1.0f, 0);
 		sprintf(buf2, "%3s", mRanking[i].n);
-		CText::DrawString(buf2, 0, 100 + i * -100, 20, 1.0f, 0);
+		CText::DrawString(buf2, -100, 100 + i * -100, 40, 1.0f, 0);
 	}
 	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2))
 		CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ETITLE;

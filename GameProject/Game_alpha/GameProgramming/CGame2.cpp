@@ -5,6 +5,7 @@
 #include "CMapChip.h"
 #include "CPlayerT.h"
 #include "CScene.h"
+#include "CScore.h"
 #include "CTime.h"
 #include "CBGM.h"
 #include "CMapBackImage.h"
@@ -118,9 +119,11 @@ void CGame2::Update() {
 		mCamera.x -= 5;
 	}
 	if (CKey::Push('P')) {
-		CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ERESULT;
 		mTimeMin = CTime::ElapsedTimeMin();
 		mTimeSec = CTime::ElapsedTimeSec();
+		CScore::GetScore();
+		CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ERESULT;
+		
 	}
 	if (CGamePad::Once(PAD_10) || CKey::Once(VK_ESCAPE)){
 		CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ETITLE;

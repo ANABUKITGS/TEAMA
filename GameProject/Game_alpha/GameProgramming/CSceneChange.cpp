@@ -8,6 +8,7 @@ CEditer mEditer;
 CGame mGame;
 CGame2 mGame2;
 CTitle mTitle;
+CSceneResult mResult;
 CScore mScore;
 CRanking mRanking;
 CName mName;
@@ -20,6 +21,7 @@ void CSceneChange::Init(){
 	mGame.Init();
 	mTitle.Init();
 	mEditer.Init();
+	mResult.Init();
 	mRanking.Init();
 	mScore.Init();
 	mName.Init();
@@ -40,15 +42,14 @@ void CSceneChange::Update(){
 		break;
 
 	case ECSCENECHANGE_NUM::ERANKING:
-		mRanking.Update();
-		break;
-
-	case ECSCENECHANGE_NUM::ENAME:
-		mName.Update();
+		CSceneResult::mResultTag = CSceneResult::ERANKING;
+		mResult.Update();
 		break;
 
 	case ECSCENECHANGE_NUM::ERESULT:
-		mScore.Update();
+		if (CSceneResult::mResultTag == CSceneResult::ESCORE)
+			CSceneResult::mResultTag = CSceneResult::ESCORE;
+		mResult.Update();
 		break;
 
 	case ECSCENECHANGE_NUM::EEDITER:
