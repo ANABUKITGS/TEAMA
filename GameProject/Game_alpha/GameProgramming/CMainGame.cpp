@@ -2,6 +2,7 @@
 #include "CGamePad.h"
 #include "CCollision.h"
 #include "CBGM.h"
+#include "CMapBackImage.h"
 
 extern CMapIO mMapIO;
 extern CCharcter player;
@@ -200,9 +201,8 @@ void CPauseMenu::Update(){
 
 			case ETITLE:
 				pauseflag = false;
-				CSceneChange::changenum = CSceneChange::ETITLE;
 				cursor_num = EBACK;
-				CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETITLE);
+				CMapBackImage::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
 				break;
 
 			default:

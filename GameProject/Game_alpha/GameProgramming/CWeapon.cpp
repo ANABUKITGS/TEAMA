@@ -1,6 +1,7 @@
 #include "CWeapon.h"
 #include "CPlayerT.h"
 #include "CEnemy.h"
+#include "CBoss.h"
 void CWeapon::Update(){
 	mRotation += 10;			//–ˆƒtƒŒ[ƒ€10‚¸‚Â‰ñ“]‚³‚¹‚é
 	mLife--;
@@ -26,7 +27,7 @@ void CWeapon::Update(){
 			else
 				CPlayerT::mpPlayer->player_ani = CPlayerT::EPLAYERANI::EIDOL;
 			CPlayerT::mpPlayer->player_ani_count = 0;
-			CPlayerT::mpPlayer->player_ani_count_flame = 0;
+			CPlayerT::mpPlayer->player_ani_count_frame = 0;
 		}
 	}
 	else{
@@ -38,7 +39,7 @@ void CWeapon::Update(){
 			else
 				CPlayerT::mpPlayer->player_ani = CPlayerT::EPLAYERANI::EIDOL;
 			CPlayerT::mpPlayer->player_ani_count = 0;
-			CPlayerT::mpPlayer->player_ani_count_flame = 0;
+			CPlayerT::mpPlayer->player_ani_count_frame = 0;
 		}
 	}
 

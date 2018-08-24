@@ -30,23 +30,20 @@ void CTitle::Update(){
 		switch (cursor_num){
 		case CSceneChange::ECSCENECHANGE_NUM::EGAME:
 			CMapBackImage::mMapfile = CMapBackImage::EGAMEMAP_NUM::ETUTORIAL;
-			CMapBackImage::mFade = CMapBackImage::EFADE_NUM::EFADEOUT;
+			CMapBackImage::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::EGAME);
 			break;
 
 		case CSceneChange::ECSCENECHANGE_NUM::ERANKING:
-			CSceneChange::changenum = cursor_num;
-			CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ERANKING);
+			CMapBackImage::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ERANKING);
 			break;
 
 		case CSceneChange::ECSCENECHANGE_NUM::EEDITER:
 			mEditer.Init();
-			CSceneChange::changenum = cursor_num;
-			CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETUTORIAL);
+			CMapBackImage::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::EEDITER);
 			break;
 
 		case CSceneChange::ECSCENECHANGE_NUM::EEXIT:
-			_sleep(500);
-			exit(0);
+			CMapBackImage::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::EEXIT);
 			break;
 
 		default:
@@ -82,6 +79,4 @@ void CTitle::Update(){
 void CTitle::Render(){
 	CText::DrawStringWSetColor(L" ゲームスタート\n ランキング\n エディター(かり)\n ゲームしゅうりょう", -200, 0, 32, WHITE, 1.0f, 0);
 	CText::DrawStringWSetColor(cursor_buf, -200, 0, 32, WHITE, 1.0f, 0);
-
-	CMapBackImage::RenderFade();
 }

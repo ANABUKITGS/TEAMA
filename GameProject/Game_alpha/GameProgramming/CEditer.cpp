@@ -9,6 +9,7 @@
 #include "CMapChikuwa.h"
 #include "CMapBelt.h"
 #include "CMapSwitchGround.h"
+#include "CMapIce.h"
 #include "CMapCheckPoint.h"
 #include "CMapBox.h"
 #include "CMapSteel.h"
@@ -307,16 +308,10 @@ void CEditer::Render(){
 void CEditer::MakeTaskList(int *gamemap) {
 	static CTexture mTexUI;// .Load(".\\Data\\Images\\Map\\MapUI.tga");
 	static CTexture mTexObject;// .Load(".\\Data\\Images\\Map\\MapObject.tga");
-	static CTexture mTexCharacter;// .Load(".\\Data\\Images\\Map\\MapCharacter.tga");
-	static CTexture mTexPlayer;// .Load(".\\Data\\Images\\Map\\MapPlayer.tga");
-	static CTexture mTexEnemy;// .Load(".\\Data\Images\\Map\\MapEnemy.tga");
 
 	if (mTexUI.id == 0) {
 		mTexUI.Load(".\\Data\\Images\\Map\\MapUI.tga");
 		mTexObject.Load(".\\Data\\Images\\Map\\MapObject.tga");
-		mTexCharacter.Load(".\\Data\\Images\\Map\\MapCharacter.tga");
-		mTexPlayer.Load(".\\Data\\Images\\Map\\MapPlayer.tga");
-		//	mTexEnemy.Load(".\\Data\Images\\Map\\MapEnemy.tga");
 	}
 
 
@@ -499,11 +494,11 @@ void CEditer::MakeTaskList(int *gamemap) {
 
 				//スイッチ床1
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::ESWITCH_GROUND1)
-					new CMapSwitchGround(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::ESWITCH_GROUND1);
+					new CMapSwitchGround(POS(i, j), ECELLNUM::ESWITCH_GROUND1);
 
 				//スイッチ床2
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::ESWITCH_GROUND2)
-					new CMapSwitchGround(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), ECELLNUM::ESWITCH_GROUND2);
+					new CMapSwitchGround(POS(i, j), ECELLNUM::ESWITCH_GROUND2);
 
 				//チェックポイント
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::ECHECKPOINT)
@@ -511,7 +506,22 @@ void CEditer::MakeTaskList(int *gamemap) {
 
 				//スイッチ
 				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::ESWITCH)
-					new CMapSwitch(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1));
+					new CMapSwitch(POS(i, j));
+
+				//氷
+				else if (gamemap[i * MAP_SIZEX + j] == ECELLNUM::EICE){
+					if (gamemap[i*MAP_SIZEX + j - 1] != ECELLNUM::EICE && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EICE)
+						new CMapIce(POS(i, j), CMapIce::ETEXTURE_POSNUM::ELEFT);
+
+					else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EICE && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EICE)
+						new CMapIce(POS(i, j), CMapIce::ETEXTURE_POSNUM::ECENTER);
+
+					else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EICE && gamemap[i * MAP_SIZEX + j + 1] != ECELLNUM::EICE)
+						new CMapIce(POS(i, j), CMapIce::ETEXTURE_POSNUM::ERIGHT);
+
+					else
+						new CMapIce(POS(i, j), CMapIce::ETEXTURE_POSNUM::EONE);
+				}
 
 				//プレイヤー ~ ボス
 				if (gamemap[i * MAP_SIZEX + j] >= ECELLNUM::EPLAYER && gamemap[i * MAP_SIZEX + j] <= ECELLNUM::EBOSS){

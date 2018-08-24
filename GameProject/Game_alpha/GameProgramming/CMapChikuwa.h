@@ -26,7 +26,6 @@ public:
 		collision_flg = false;
 		setpos.x = mPosition.x;
 		setpos.y = mPosition.y;
-		mPriority = -10;
 		mTexChikuwa.Load(".\\Data\\Images\\Map\\MapChikuwa.tga");
 	}
 	void Update();

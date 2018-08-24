@@ -36,14 +36,12 @@ bool CMapChikuwa::Collision(CRectangle *r) {
 		CVector2 aj;
 		if (CRectangle::Collision(r) && CRectangle::Collision(r, &aj)) {
 			//¶
-			if (mPosition.x - CELLSIZE / 2 > r->mPosition.x) {
+			if (mPosition.x - CELLSIZE / 2 > r->mPosition.x){
 				r->mPosition.x = r->mPosition.x - aj.x;
-				return true;
 			}
 			//‰E
-			if (mPosition.x + CELLSIZE / 2 < r->mPosition.x) {
+			if (mPosition.x + CELLSIZE / 2 < r->mPosition.x){
 				r->mPosition.x = r->mPosition.x - aj.x;
-				return true;
 			}
 			//‰º
 			if (mPosition.y > r->mPosition.y) {
@@ -67,6 +65,7 @@ bool CMapChikuwa::Collision(CRectangle *r) {
 					CPlayerT::mpPlayer->mJumpCount = 0;
 				}
 			}
+			return true;
 		}
 	}
 	return false;

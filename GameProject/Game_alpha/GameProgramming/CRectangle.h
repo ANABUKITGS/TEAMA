@@ -25,6 +25,7 @@ public:
 	float mUv[4];	//テクスチャマッピングデータ
 	float mRight, mLeft, mTop, mBottom;
 	float mAlpha;
+	bool mIce;			//氷の足場
 	CRectangle()
 		: mRotation(0.0f)
 		, mpTexture(0)
@@ -33,6 +34,7 @@ public:
 		, mVelocityX(0.0f)
 		, mVelocityY(0.0f)
 		, mDirection(false)
+		, mIce(false)
 	{}
 	/*
 	position:位置

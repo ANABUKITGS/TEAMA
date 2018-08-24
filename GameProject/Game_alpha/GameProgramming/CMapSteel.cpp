@@ -28,8 +28,26 @@ bool CMapSteel::Collision(CRectangle *r) {
 					r->mTag == EENEMY2 ||
 					r->mTag == EENEMY3 ||
 					r->mTag == EBOSS) {
-					r->mPosition = r->mPosition - aj;
-					return true;
+					//左
+					if (mPosition.x - CELLSIZE / 2 > r->mPosition.x) {
+						r->mPosition.x = r->mPosition.x - aj.x;
+						r->mVelocityX = 0.0f;
+					}
+					//右
+					if (mPosition.x + CELLSIZE / 2 < r->mPosition.x) {
+						r->mPosition.x = r->mPosition.x - aj.x;
+						r->mVelocityX = 0.0f;
+					}
+					//下
+					if (mPosition.y > r->mPosition.y) {
+						r->mPosition.y = r->mPosition.y - aj.y;
+						r->mVelocityY = 0.0f;
+					}
+					//上
+					if (mPosition.y < r->mPosition.y) {
+						r->mPosition.y = r->mPosition.y - aj.y;
+						r->mVelocityY = 0.0f;
+					}
 				}
 				//自身を押し返す当たり判定
 				else{
@@ -37,26 +55,15 @@ bool CMapSteel::Collision(CRectangle *r) {
 						r->mTag != EEWEAPON){
 						mVelocityY = 0.0f;
 						mPosition = mPosition + aj;
-						return true;
 					}
 				}
 			}
-			//落下状態
-			else if (mBreak &&
-				r->mTag == EPLAYER ||
-				r->mTag == EENEMY1 ||
-				r->mTag == EENEMY2 ||
-				r->mTag == EENEMY3 ||
-				r->mTag == EBOSS) {
-
-				return true;
-			}
 
 			//プレイヤーのヨーヨー
-			if (r->mTag == EPWEAPON) {
+			if (r->mTag == EPWEAPON)
 				mBreak = true;
-				return true;
-			}
+
+			return true;
 		}
 	}
 	return false;
