@@ -192,7 +192,7 @@ void CGame2::Render() {
 	wchar_t time_buf[64];
 	for (int i = 0; i < 16; i++)
 		time_buf[i] = '\0';
-	swprintf(time_buf, L"%02d:%06.3f\n  •ó~%2d\n  Î~%2d\n  –½~%2d", CTime::ElapsedTimeMin(), CTime::ElapsedTimeSec(), CPlayerT::mpPlayer->mJewel, CPlayerT::mpPlayer->mMiniJewel, CPlayerT::mpPlayer->mLife);
+	swprintf(time_buf, L"%02d:%06.3f\n  •ó~%2d\n  •Ð~%2d\n  –½~%2d", CTime::ElapsedTimeMin(), CTime::ElapsedTimeSec(), CPlayerT::mpPlayer->mJewel, CPlayerT::mpPlayer->mMiniJewel, CPlayerT::mpPlayer->mLife);
 	CText::DrawStringW(time_buf, 352, 328, 32, 1.0f, 0);
 }
 
