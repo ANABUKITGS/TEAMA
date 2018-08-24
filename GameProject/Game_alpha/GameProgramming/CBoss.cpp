@@ -1,5 +1,6 @@
 #include "CBoss.h"
 #include "CGame2.h"
+#include "CScore.h"
 #include "CScene.h"
 #include "CMapBackImage.h"
 #include "CTime.h"
@@ -188,6 +189,7 @@ void CBoss::Update(){
 				CMapBackImage::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ERESULT);
 				CGame2::mTimeMin = CTime::ElapsedTimeMin();
 				CGame2::mTimeSec = CTime::ElapsedTimeSec();
+				CScore::GetScore();
 			}
 			break;
 		//ダメージ処理終了
