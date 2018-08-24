@@ -19,7 +19,9 @@ public:
 		mRender = false;
 		mVelocityY = 5.0f;
 		mAlpha = 1.0f;
+		mTag = ENONE;
 		mLife = EFECT_LIFE;
+		mPriority = -2;
 		CTaskManager::Get()->Add(this);
 	}
 
@@ -27,8 +29,8 @@ public:
 		:CEfect()
 	{
 		CRectangle(pos, CVector2(32, 32), &mTexkira);
-		mPosition.x = pos.x + (float)(rand() % 70 - 60);
-		mPosition.y = pos.y + (float)(rand() % 70 - 60);
+		mPosition.x = pos.x + (float)(rand() % 80 - 40);
+		mPosition.y = pos.y + (float)(rand() % 80 - 40);
 
 	}
 	void Update();
