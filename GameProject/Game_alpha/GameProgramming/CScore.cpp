@@ -63,7 +63,7 @@ void CScore::Update(){
 	if (mScore[mScoreNum] <= mCount[mScoreNum])
 		mScoreNum++;
 	mCount[mScoreNum]=CountUp(mScore[mScoreNum], mCount[mScoreNum]);
-	swprintf(bufw, L"•ó      %3d ~%4d  = %4d\n\nÎ      %3d ~%4d  = %4d\n\n–½      %3d ~%4d  = %4d\n\nƒ^ƒCƒ}[ %02d:%02.0f ~ %3d  = %4d\n\n\n\nƒXƒRƒA                 %4d", CPlayerT::mpPlayer->mJewel, mJewelScore, mCount[0], CPlayerT::mpPlayer->mMiniJewel, mMiniJewelScore, mCount[1], CPlayerT::mpPlayer->mLife, mLifeScore, mCount[2], CGame2::mTimeMin, CGame2::mTimeSec, -mTimerScore, -mCount[3], mCount[4]);
+	swprintf(bufw, L"•ó      %3d ~%4d  = %4d\n\n•Ð      %3d ~%4d  = %4d\n\n–½      %3d ~%4d  = %4d\n\nƒ^ƒCƒ}[ %02d:%02.0f ~ %3d  = %4d\n\n\n\nƒXƒRƒA                 %4d", CPlayerT::mpPlayer->mJewel, mJewelScore, mCount[0], CPlayerT::mpPlayer->mMiniJewel, mMiniJewelScore, mCount[1], CPlayerT::mpPlayer->mLife, mLifeScore, mCount[2], CGame2::mTimeMin, CGame2::mTimeSec, -mTimerScore, -mCount[3], mCount[4]);
 	CText::DrawStringW(bufw, -350, 100, 30, 1.0f, 0);
 	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2)){
 		CSceneResult::mResultTag = CSceneResult::ENAME;
