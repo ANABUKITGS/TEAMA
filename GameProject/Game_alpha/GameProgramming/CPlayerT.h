@@ -83,6 +83,9 @@ public:
 		SetRectangle(position, CVector2(16, 60), NULL);
 		mReSpornPos = position;
 	}
+	~CPlayerT(){
+		mpPlayer = 0;
+	}
 
 	void Update();
 	void Forward();

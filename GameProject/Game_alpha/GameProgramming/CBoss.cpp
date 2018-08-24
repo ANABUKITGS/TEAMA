@@ -6,6 +6,7 @@
 #include "CTime.h"
 
 bool CBoss::mBossLose = false;
+CBoss *CBoss::mpBoss = 0;
 
 void CBoss::Update(){
 	if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){

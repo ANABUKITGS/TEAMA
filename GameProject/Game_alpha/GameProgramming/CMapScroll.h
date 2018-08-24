@@ -22,6 +22,9 @@ public:
 		mTag = ECELLNUM::ENONE;
 		CTaskManager::Get()->Add(this);
 	}
+	~CMapScroll(){
+		mScroll = 0;
+	}
 
 	void Update();
 	void Reset();
