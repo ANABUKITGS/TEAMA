@@ -35,34 +35,49 @@ bool CMapChikuwa::Collision(CRectangle *r) {
 
 		CVector2 aj;
 		if (CRectangle::Collision(r) && CRectangle::Collision(r, &aj)) {
-			//左
-			if (mPosition.x - CELLSIZE / 2 > r->mPosition.x){
-				r->mPosition.x = r->mPosition.x - aj.x;
+			//左右
+			if (mPosition.x - mScale.x > r->mPosition.x || mPosition.x + mScale.x < r->mPosition.x) {
+				//左
+				if (mPosition.x - mScale.x > r->mPosition.x) {
+					r->mPosition.x = r->mPosition.x - aj.x;
+				}
+				//右
+				if (mPosition.x + mScale.x < r->mPosition.x) {
+					r->mPosition.x = r->mPosition.x - aj.x;
+				}
 			}
-			//右
-			if (mPosition.x + CELLSIZE / 2 < r->mPosition.x){
-				r->mPosition.x = r->mPosition.x - aj.x;
-			}
-			//下
-			if (mPosition.y > r->mPosition.y) {
-				//落下中は無視
-				if (collision_flg &&
-					(r->mTag == ECELLNUM::EENEMY1 ||
-					r->mTag == ECELLNUM::EENEMY2 ||
-					r->mTag == ECELLNUM::EENEMY3 ||
-					r->mTag == ECELLNUM::EBOSS))
-					return false;
+			//上下
+			else {
+				//下
+				if (mPosition.y - mScale.y > r->mPosition.y) {
+					//落下中は無視
+					if (collision_flg &&
+						(r->mTag == ECELLNUM::EENEMY1 ||
+						r->mTag == ECELLNUM::EENEMY2 ||
+						r->mTag == ECELLNUM::EENEMY3 ||
+						r->mTag == ECELLNUM::EBOSS)){
+						//左
+						if (mPosition.x - mScale.x > r->mPosition.x) {
+							r->mPosition.x = r->mPosition.x - aj.x;
+						}
+						//右
+						if (mPosition.x + mScale.x < r->mPosition.x) {
+							r->mPosition.x = r->mPosition.x - aj.x;
+						}
+						return false;
+					}
 
-				r->mPosition.y =r->mPosition.y - aj.y;
-				r->mVelocityY = 0.0f;
-			}
-			//上
-			if (mPosition.y < r->mPosition.y) {
-				r->mPosition.y = r->mPosition.y - aj.y;
-				r->mVelocityY = r->mVelocityY - aj.y;
-				if (r->mTag == ECELLNUM::EPLAYER){
-					collision_flg = true;
-					CPlayerT::mpPlayer->mJumpCount = 0;
+					r->mPosition.y = r->mPosition.y - aj.y;
+					r->mVelocityY = 0.0f;
+				}
+				//上
+				if (mPosition.y + mScale.y < r->mPosition.y) {
+					r->mPosition.y = r->mPosition.y - aj.y;
+					r->mVelocityY = r->mVelocityY - aj.y;
+					if (r->mTag == ECELLNUM::EPLAYER){
+						collision_flg = true;
+						CPlayerT::mpPlayer->mJumpCount = 0;
+					}
 				}
 			}
 			return true;

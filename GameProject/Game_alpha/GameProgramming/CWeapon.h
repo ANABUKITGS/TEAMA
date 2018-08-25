@@ -7,14 +7,14 @@
 #define WEAPOM_VELOCITY	12.0f
 #define WEAPON_LIFE		20
 
-#define PSTRING_UV_L		mPosition.x, CPlayerT::mpPlayer->mPosition.x, mPosition.y - 10, mPosition.y + 10, 0, 64, 128, 64
-#define PSTRING_UV_R		CPlayerT::mpPlayer->mPosition.x, mPosition.x, mPosition.y - 10, mPosition.y + 10, 0, 64, 128, 64
+#define PSTRING_UV_L		mPosition.x, CPlayerT::mpPlayer->mPosition.x - 51, mPosition.y - 10, mPosition.y + 10, 0, 64, 128, 64
+#define PSTRING_UV_R		CPlayerT::mpPlayer->mPosition.x + 51, mPosition.x, mPosition.y - 10, mPosition.y + 10, 0, 64, 128, 64
 
-#define ESTRING_UV_L		mpEWeapon->mPosition.x, mPosition.x, mpEWeapon->mPosition.y - 10, mpEWeapon->mPosition.y + 10, 0, 64, 128, 64
-#define ESTRING_UV_R		mPosition.x, mpEWeapon->mPosition.x, mpEWeapon->mPosition.y - 10, mpEWeapon->mPosition.y + 10, 0, 64, 128, 64
+#define ESTRING_UV_L		mpEWeapon->mPosition.x, mpEWeapon->mPosInit.x, mpEWeapon->mPosition.y - 10, mpEWeapon->mPosition.y + 10, 0, 64, 128, 64
+#define ESTRING_UV_R		mpEWeapon->mPosInit.x, mpEWeapon->mPosition.x, mpEWeapon->mPosition.y - 10, mpEWeapon->mPosition.y + 10, 0, 64, 128, 64
 
-#define BSTRING_UV_L		mpBWeapon->mPosition.x, mPosition.x, mpBWeapon->mPosition.y - 10, mpBWeapon->mPosition.y + 10, 0, 64, 128, 64
-#define BSTRING_UV_R		mPosition.x, mpBWeapon->mPosition.x, mpBWeapon->mPosition.y - 10, mpBWeapon->mPosition.y + 10, 0, 64, 128, 64
+#define BSTRING_UV_L		mpBWeapon->mPosition.x, mpBWeapon->mPosInit.x, mpBWeapon->mPosition.y - 10, mpBWeapon->mPosition.y + 10, 0, 64, 128, 64
+#define BSTRING_UV_R		mpBWeapon->mPosInit.x, mpBWeapon->mPosition.x, mpBWeapon->mPosition.y - 10, mpBWeapon->mPosition.y + 10, 0, 64, 128, 64
 
 class CWeapon : public CRectangle{
 public:
@@ -43,7 +43,12 @@ public:
 
 		else if (tag == ECELLNUM::EEWEAPON || tag == ECELLNUM::EBWEAPON)
 			mTexYoyo.Load(".\\Data\\Images\\Enemy\\Yoyo.tga");
-		SetRectangle(position, CVector2(10, 10), &mTexYoyo);
+
+		if (tag == ECELLNUM::EPWEAPON || tag == ECELLNUM::EEWEAPON)
+			SetRectangle(position, CVector2(10, 10), &mTexYoyo);
+
+		else if (tag == ECELLNUM::EBWEAPON)
+			SetRectangle(position, CVector2(20, 20), &mTexYoyo);
 		mPosInit = position;
 		mDirection = direction;
 		mTag = tag;

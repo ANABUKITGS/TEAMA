@@ -18,7 +18,7 @@
 #define STARTBEHAVIOR 600				//ボス戦開始時のみ使用
 #define BOSSINVINCIBLE 120	
 #define BOSSNEXTBEHAVIOR 70				//ボスの待機から次の行動までの時間
-#define BOSS_LOSE_TIME 120				//やられてからの待ち時間
+#define BOSS_DOWN_TIME 120				//やられてからの待ち時間
 #define BOSS_LIFE 50					//ボスの初期HP
 
 #define BOSS_TEX_POS mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - mScale.y, mPosition.y - mScale.y + CELLSIZE * 4	//テクスチャー Position
@@ -41,21 +41,9 @@ private:
 	int Boss_Ani_Count_Frame;			//一コマのフレーム数
 	int mBossInvincibleTime;			//ボスの無敵時間
 	int mBossIBehavior;					//待機状態からのランダム行動
-	int mBossLoseTime;					//やられてからの待ち時間
 	bool Invincible;					//無敵時間用変数を追加
-	bool mMant_One;						//一回だけマントの行動をとる変数
 	void BossJump();
-	enum AttackBehavior{
-		EIDOL,							//待機
-		EMANTO,							//マントのしぐさ？
-		EBWEAPON,						//武器を使用
-		EDASH,							//走る
-		EJUMP,							//ジャンプ
-		EDAMAGE,						//ダメージ
-		EDOWN,							//ダウン
-		ESIZE,
-	};
-	AttackBehavior mAttackBehavior;
+
 	//引数無しコンストラクタで変数等の初期化処理
 	CBoss()
 		:mpBWeapon(0)
@@ -73,11 +61,10 @@ private:
 		mBossJumprad=0;					//最初のジャンプタイミングを初期化する
 		mBossDeleteTime = BOSS_DELCNT;	//ボスの消滅時間を初期化
 		Invincible = false;				//無敵時間は最初偽にして初期化
-		mMant_One = true;				//マントの行動最初は偽で初期化
 		mDirection = false;				//最初の向きを左向きにする
 		mBossBehavior = BEHAVIOR;		//敵の行動値を代入
 		mBossAttackItr = 0;
-		mBossLoseTime = BOSS_LOSE_TIME;
+		mBossBattle = false;
 		mAttackBehavior = EIDOL;		//待機状態にする
 		mTag = EBOSS;					//タグをボスにする
 		mPriority = 10;					//優先度を設定
@@ -88,9 +75,22 @@ private:
 
 //共通使用可能
 public:
+	enum AttackBehavior{
+		EIDOL,							//待機
+		EMANTO,							//マントのしぐさ？
+		EBWEAPON,						//武器を使用
+		EDASH,							//走る
+		EJUMP,							//ジャンプ
+		EDAMAGE,						//ダメージ
+		EDOWN,							//ダウン
+		ESIZE,
+	};
+
 	int mBossLife;						//ボスのHP
 	int mBossMaxLife;					//ボスのHPの最大値
 	float mBossLifeProportion;			//ボスのHPの割合
+	bool mBossBattle;					//バトル開始フラグ
+	AttackBehavior mAttackBehavior;
 	static CBoss*mpBoss;
 	//引数有のコンストラクタで出現位置を設定
 	CBoss(CVector2 Pos)

@@ -2,6 +2,7 @@
 #include "CPlayerT.h"
 #include "CMapSign.h"
 #include "CFade.h"
+#include "CBoss.h"
 
 float CMapScroll::add_scroll = 0.0f;
 bool CMapScroll::scroll_flg = false;
@@ -13,8 +14,14 @@ void CMapScroll::Update(){
 	if ((CFade::mMapfile == CFade::EGAMEMAP_NUM::ETUTORIAL &&
 		CMapEndSign::mpEndSign != NULL &&CMapEndSign::mpEndSign->mPosition.x <= mPosition.x + 608.0f) ||
 		((CFade::mMapfile == CFade::EGAMEMAP_NUM::EMAIN || CFade::mMapfile == CFade::EGAMEMAP_NUM::EEDITER) &&
-		CMapBossRoomSign::mpBossRoomSign != NULL && CMapBossRoomSign::mpBossRoomSign->mPosition.x <= mPosition.x - 608.0f))
+		CMapBossRoomSign::mpBossRoomSign != NULL && CMapBossRoomSign::mpBossRoomSign->mPosition.x <= mPosition.x - 608.0f)){
 		scroll_stop = true;
+
+		if (CBoss::mpBoss != NULL && !CBoss::mpBoss->mBossBattle){
+			CBoss::mpBoss->mBossBattle = true;
+			CBoss::mpBoss->mAttackBehavior = CBoss::AttackBehavior::EMANTO;	//ƒAƒCƒhƒ‹ó‘Ô
+		}
+	}
 
 	if (!CGame2::mCheat[CGame2::CHEAT_NUM::ESCROLL]){
 		if (!scroll_stop){
@@ -46,8 +53,9 @@ void CMapScroll::Update(){
 		mPosition.y = CPlayerT::mpPlayer->mPosition.y;
 	}
 
-	if (CMapBossRoomSign::mpBossRoomSign != NULL && CMapBossRoomSign::mpBossRoomSign->mColFlg)
+	if (CMapBossRoomSign::mpBossRoomSign != NULL && CMapBossRoomSign::mpBossRoomSign->mColFlg){
 		boss_scroll = true;
+	}
 }
 
 void CMapScroll::Reset(){

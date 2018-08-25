@@ -105,13 +105,18 @@ bool CMapBossRoomSign::Collision(CRectangle *r) {
 			}
 		}
 		else{
-			if (r->mTag == EPLAYER && CRectangle::Collision(r) && r->mPosition.x > mPosition.x && !mColFlg){
-				mColFlg = true;
-				CMapBossRoomSign::mpBossRoomSign->mScale.x = 0.0f;
-				if (CBossLifeBar::mpBossLifeBar == NULL)
-					CBossLifeBar::mpBossLifeBar = new CBossLifeBar();
-				CPlayerT::mpPlayer->mMaxJewel = CPlayerT::mpPlayer->mJewel;
-				return true;
+			if (r->mTag == EPLAYER && CRectangle::Collision(r) && r->mPosition.x > mPosition.x){
+				CGame2::mCheat[CGame2::CHEAT_NUM::ESCROLL] = false;
+				CMapScroll::scroll_stop = false;
+				if (mPosition.x + CELLSIZE / 2 < r->mPosition.x && !mColFlg){
+					mColFlg = true;
+					CMapBossRoomSign::mpBossRoomSign->mScale.x = 0.0f;
+					if (CBossLifeBar::mpBossLifeBar == NULL)
+						CBossLifeBar::mpBossLifeBar = new CBossLifeBar();
+					CPlayerT::mpPlayer->mMaxJewel = CPlayerT::mpPlayer->mJewel;
+					CPlayerT::mpPlayer->player_ani = CPlayerT::EPLAYERANI::EIDOL;
+					return true;
+				}
 			}
 		}
 	}

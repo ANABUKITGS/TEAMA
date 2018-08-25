@@ -47,7 +47,7 @@ void CWeapon::Update(){
 
 }
 void CWeapon::Render(){
-	if (mTag == ECELLNUM::EPWEAPON || mTag == ECELLNUM::EBWEAPON){
+	if (mTag == ECELLNUM::EPWEAPON){
 		if (mDirection)
 			mTexYoyo.DrawImage(PSTRING_UV_R, 1.0f);
 
@@ -71,12 +71,16 @@ bool CWeapon::Collision(CRectangle *p){
 				if (p->mAlpha < 1)
 					break;
 			case EBOSS:
+				if (CBoss::mpBoss != NULL && CBoss::mpBoss->mAttackBehavior != CBoss::AttackBehavior::EDOWN)
+					mLife = 0;
+				break;
+
 			case EJEWELRY:
 			case EJEWELRY2:
 			case EBOX:
 			case ESTEEL:
 			case ESWITCH:
-				mLife = 0;
+			mLife = 0;
 				break;
 
 			default:

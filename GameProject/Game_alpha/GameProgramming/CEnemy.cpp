@@ -1,5 +1,6 @@
 #include "CEnemy.h"
 #include "CScene.h"
+#include "CBoss.h"
 
 /*
 敵の索敵範囲
@@ -103,19 +104,17 @@ void  CEnemy::Update(){
 					if (mAttackInterval2 < 0){
 						mAttackInterval = ATTACK_INTERVAL;
 						//敵のヨーヨーを敵の位置よりも少し前に呼び出す
-						mpEWeapon = new CWeapon(EEWEAPON, mPosition, mDirection);
+						if (mDirection)
+							mpEWeapon = new CWeapon(EEWEAPON, mPosition + CVector2(56.0f, 13.0f), mDirection);
 
-						if (mDirection)		//敵が右を向いている時には右にヨーヨーを進ませる
-							mpEWeapon->mPosition.x += 10;
-
-						else				//敵が左を向いている時には左にヨーヨーを進ませる
-							mpEWeapon->mPosition.x -= 10;
+						else
+							mpEWeapon = new CWeapon(EEWEAPON, mPosition + CVector2(-56.0f, 13.0f), mDirection);
 					}
 				}
 			}
 			//敵のヨーヨーが発射された時の処理を行う
 			else {
-				if (mpEWeapon->mLife < 0){
+				if (mpEWeapon->mLife <= -1){
 					mpEWeapon = 0;
 					if (mAttackInterval < 0){
 						enemy_ani_count = 0;
@@ -151,6 +150,10 @@ void  CEnemy::Update(){
 		if (mVelocityX - ENEMY_VELOCITY_X2_ICE < 0.0f && mVelocityX + ENEMY_VELOCITY_X2_ICE > 0.0f)
 			mVelocityX = 0.0f;
 		Gravity();
+
+		if ((mAlpha < 1.0f && enemy_ani != EENEMYANI::EDOWN) ||
+			(CBoss::mpBoss != NULL && enemy_ani != EENEMYANI::EDOWN && CBoss::mpBoss->mAttackBehavior == CBoss::AttackBehavior::EDOWN))
+			enemy_ani = EENEMYANI::EDAMAGE;
 	}
 	CRectangle::Update();
 }
@@ -159,7 +162,7 @@ bool CEnemy::Collision(CRectangle*p){
 		CVector2 aj;
 		if (CRectangle::Collision(p, &aj)) {
 			switch (p->mTag){
-			case EPWEAPON:
+			case ECELLNUM::EPWEAPON:
 				if (enemy_ani != EENEMYANI::EDAMAGE && enemy_ani != EENEMYANI::EDOWN){
 						enemy_ani = EENEMYANI::EDAMAGE;
 						new CMapJewelry(p->mPosition);
@@ -169,33 +172,36 @@ bool CEnemy::Collision(CRectangle*p){
 
 				break;
 				
-			case EICE:
+			case ECELLNUM::EICE:
 				mIce = true;
 
-			case ESWITCH_GROUND1:
-			case ESWITCH_GROUND2:
-			case ECHIKUWA:
-			case EBELTL:
-			case EBELTR:
-			case EUNDER:
+			case ECELLNUM::ESWITCH_GROUND1:
+			case ECELLNUM::ESWITCH_GROUND2:
+			case ECELLNUM::ECHIKUWA:
+			case ECELLNUM::EBELTL:
+			case ECELLNUM::EBELTR:
+			case ECELLNUM::EUNDER:
 				mIce = false;
 				break;
 
-			case EENEMY1:
-			case EENEMY2:
-			case EENEMY3:
-			case EBOSS:
-			case ENONE:
-			case ESEARCH:
-			case ESWITCH:
-			case ESIGN:
-			case EENDSIGN:
-			case EBOSSROOM:
-			case EJEWELRY:
-			case EJEWELRY2:
-			case ECHECKPOINT:
-			case EPLAYER:
-			case EEWEAPON:
+			case ECELLNUM::EENEMY1:
+			case ECELLNUM::EENEMY2:
+			case ECELLNUM::EENEMY3:
+			case ECELLNUM::EBOSS:
+			case ECELLNUM::ENONE:
+			case ECELLNUM::EBOX:
+			case ECELLNUM::ESTEEL:
+			case ECELLNUM::ESEARCH:
+			case ECELLNUM::ESWITCH:
+			case ECELLNUM::ESIGN:
+			case ECELLNUM::EENDSIGN:
+			case ECELLNUM::EBOSSROOM:
+			case ECELLNUM::EJEWELRY:
+			case ECELLNUM::EJEWELRY2:
+			case ECELLNUM::ECHECKPOINT:
+			case ECELLNUM::EPLAYER:
+			case ECELLNUM::EEWEAPON:
+			case ECELLNUM::EBWEAPON:
 				break;
 
 			default:
@@ -204,6 +210,8 @@ bool CEnemy::Collision(CRectangle*p){
 					if (aj.x > 0) {
 						mPosition.x = mPosition.x + aj.x;
 						enemy_ani = EENEMYANI::EIDOL;
+						if (mIce)
+							mVelocityX = 0.0f;
 					}
 				}
 				//左空き
@@ -211,6 +219,8 @@ bool CEnemy::Collision(CRectangle*p){
 					if (aj.x < 0) {
 						mPosition.x = mPosition.x + aj.x;
 						enemy_ani = EENEMYANI::EIDOL;
+						if (mIce)
+							mVelocityX = 0.0f;
 					}
 				}
 				//下空き
@@ -303,8 +313,7 @@ void CEnemy::Render(){
 			else
 				//ヨーヨーの紐
 				mpEWeapon->mTexYoyo.DrawImage(ESTRING_UV_L, 1.0f);
-		}
-		if (mpEWeapon){
+
 			if (enemy_ani_count > 1)
 				enemy_ani_count = 1;
 
@@ -331,7 +340,7 @@ void CEnemy::Render(){
 					mTexEnemy03.DrawImage(ENEMY_TEX_POS, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 256, 128, mAlpha);
 			}
 		}
-		else{
+		else {
 			if (enemy_ani_count > 0)
 				enemy_ani_count = 0;
 

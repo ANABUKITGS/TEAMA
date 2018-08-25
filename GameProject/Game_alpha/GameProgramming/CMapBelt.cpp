@@ -19,12 +19,12 @@ bool CMapBelt::Collision(CRectangle *r) {
 		CVector2 aj;
 		if (CRectangle::Collision(r) && CRectangle::Collision(r, &aj)) {
 			//¶
-			if (texture_pos == 1 && mPosition.x - CELLSIZE / 2 > r->mPosition.x) {
+			if (texture_pos == 1 && mPosition.x - mScale.x > r->mPosition.x) {
 				r->mPosition.x = r->mPosition.x - aj.x;
 				return true;
 			}
 			//‰E
-			if (texture_pos == 3 && mPosition.x + CELLSIZE /2 < r->mPosition.x) {
+			if (texture_pos == 3 && mPosition.x + mScale.x < r->mPosition.x) {
 				r->mPosition.x = r->mPosition.x - aj.x;
 				return true;
 			}

@@ -203,7 +203,7 @@ void CGame2::Render() {
 		CText::DrawStringW(L"JACK", -64, 328, 32, 1.0f, 0);
 #ifdef _DEBUG
 		wchar_t bosslife_buf[16];
-		swprintf(bosslife_buf, L"%2d/%2d", CBoss::mpBoss->mBossLife, CBoss::mpBoss->mBossMaxLife);
+		swprintf(bosslife_buf, L"%2d/%-1d", CBoss::mpBoss->mBossLife, CBoss::mpBoss->mBossMaxLife);
 		CText::DrawStringW(bosslife_buf, -80, 296, 32, 1.0f, 0);
 #endif
 	}

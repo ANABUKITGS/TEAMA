@@ -9,7 +9,7 @@
 CBoss *CBoss::mpBoss = 0;
 
 void CBoss::Update(){
-	if (CMapBossRoomSign::mpBossRoomSign != NULL && CMapBossRoomSign::mpBossRoomSign->mColFlg){
+	if (CMapBossRoomSign::mpBossRoomSign != NULL && CMapBossRoomSign::mpBossRoomSign->mColFlg && mBossBattle){
 		if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
 			static int IdolInterval = 0;//待機状態から次の行動に移るまでの時間
 			//ボスとプレイヤーとのベクトルを出す
@@ -37,12 +37,8 @@ void CBoss::Update(){
 					mDirection = false;
 				else
 					mDirection = true;
-				//プレイヤーが一定範囲内に入ればマントのアニメーションを(1回だけ)
-				if (mMant_One){
-					if (STARTBEHAVIOR > abs(mAttack_Search.x))
-						mAttackBehavior = EMANTO;
-				}
-				else{
+
+				if (mAttackBehavior != EMANTO){
 					//次の行動までの時間を加算する
 					if (IdolInterval != BOSSNEXTBEHAVIOR)
 						IdolInterval++;
@@ -54,7 +50,7 @@ void CBoss::Update(){
 							mAttackBehavior = EDASH;
 							break;
 						case 3://1はジャンプ
-							if (mBossLife <= mBossMaxLife * 0.2){
+							if (mBossLife <= mBossMaxLife * 0.5){
 								CEnemy::mpEnemy = new CEnemy(mPosition, EENEMY1);
 							}
 							IdolInterval = NULL;
@@ -72,6 +68,7 @@ void CBoss::Update(){
 						}
 					}
 				}
+				mpBWeapon = 0;
 				break;
 				//待機状態処理終了
 
@@ -80,9 +77,9 @@ void CBoss::Update(){
 			case EMANTO:
 				//ボスのアニメーションが最後まで行くと処理開始
 				if (mBossAnimeFream > 4){
-					mMant_One = false;
 					mAttackBehavior = EIDOL;
 				}
+				mpBWeapon = 0;
 				break;//ループ終了
 
 
@@ -129,7 +126,11 @@ void CBoss::Update(){
 						//攻撃間隔を戻す
 						mBossAttackItr = ATTACK_INTERVAL;
 						//ボスのヨーヨーを呼び出す
-						mpBWeapon = new CWeapon(ECELLNUM::EBWEAPON, mPosition, mDirection);
+						if (mDirection)
+							mpBWeapon = new CWeapon(ECELLNUM::EBWEAPON, mPosition + CVector2(82.0f, 32.0f), mDirection);
+
+						else
+							mpBWeapon = new CWeapon(ECELLNUM::EBWEAPON, mPosition + CVector2(-82.0f, 32.0f), mDirection);
 
 						mpBWeapon->mScale = CVector2(20, 20);
 
@@ -150,11 +151,12 @@ void CBoss::Update(){
 					//ボスのヨーヨーの寿命が来たら
 					if (mpBWeapon->mLife < 0){
 						//ヨーヨーを消す
-						mpBWeapon = 0;
+						mpBWeapon = NULL;
 						//ヨーヨーのアニメーションを最初に戻す
 						mBossAnimeFream = 0;
 						//待機状態にする
-						mAttackBehavior = EIDOL;
+						if (mpBWeapon == NULL)
+							mAttackBehavior = EIDOL;
 					}
 				}
 				break;//ループ終了
@@ -190,13 +192,14 @@ void CBoss::Update(){
 					}
 				}
 				else {
-					mBossLoseTime--;
-					if (mBossLoseTime <= 0){
+					static int mBossDownTime = 0;
+					mBossDownTime++;
+					if (mBossDownTime >= BOSS_DOWN_TIME){
 						CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ERESULT);
 						CGame2::mTimeMin = CTime::ElapsedTimeMin();
 						CGame2::mTimeSec = CTime::ElapsedTimeSec();
 						CScore::GetScore();
-						mBossLoseTime = 0;
+						return;
 					}
 				}
 				break;
@@ -237,6 +240,7 @@ void CBoss::Update(){
 		}
 	}
 	else if (CMapBossRoomSign::mpBossRoomSign != NULL && !CMapBossRoomSign::mpBossRoomSign->mColFlg){
+		mBossBattle = false;
 		mPosition = mBossDefaultPos;
 		mAttackBehavior = EIDOL;
 		mVelocityX = mVelocityY = 0.0f;
@@ -249,13 +253,13 @@ bool CBoss::Collision(CRectangle*p){
 		CVector2 aj;
 		if (CRectangle::Collision(p, &aj)) {
 			switch (p->mTag){
-			case EUNDER:
+			case ECELLNUM::EUNDER:
 				if ((mPosition.y > p->mPosition.y) && mVelocityY < 0){
 					mVelocityY = 0.0f;
 					mPosition = mPosition + aj;
 				}
 				break;
-			case EPWEAPON://プレイヤーのヨーヨーと衝突した時
+			case ECELLNUM::EPWEAPON://プレイヤーのヨーヨーと衝突した時
 				mVelocityY = 0.0f;
 				if (Invincible)
 					return false;
@@ -270,22 +274,24 @@ bool CBoss::Collision(CRectangle*p){
 						mAttackBehavior = EDAMAGE;
 				}
 				break;
-			case ESWITCH_GROUND1:
-			case ESWITCH_GROUND2:
-			case ENONE:
-			case ECHIKUWA:
-			case EBELTL:
-			case EBELTR:
-			case ESIGN:
-			case EEWEAPON:
-			case ESEARCH:
-			case ESWITCH:
-			case EPLAYER:
-			case EENEMY1:
-			case EENEMY2:
-			case EENEMY3:
-			case EICE:
-			case EBOSSROOM:
+			case ECELLNUM::ESWITCH_GROUND1:
+			case ECELLNUM::ESWITCH_GROUND2:
+			case ECELLNUM::ENONE:
+			case ECELLNUM::EBOX:
+			case ECELLNUM::ESTEEL:
+			case ECELLNUM::ECHIKUWA:
+			case ECELLNUM::EBELTL:
+			case ECELLNUM::EBELTR:
+			case ECELLNUM::ESIGN:
+			case ECELLNUM::EEWEAPON:
+			case ECELLNUM::ESEARCH:
+			case ECELLNUM::ESWITCH:
+			case ECELLNUM::EPLAYER:
+			case ECELLNUM::EENEMY1:
+			case ECELLNUM::EENEMY2:
+			case ECELLNUM::EENEMY3:
+			case ECELLNUM::EICE:
+			case ECELLNUM::EBOSSROOM:
 				break;
 
 			default:
@@ -295,6 +301,8 @@ bool CBoss::Collision(CRectangle*p){
 					if (!(p->mColFlg & EDT_RIGHT)) {
 						mPosition.x = mPosition.x + aj.x;
 						//mAttackBehavior = EIDOL;
+						if (mIce)
+							mVelocityX = 0.0f;
 					}
 				}
 				else if (aj.x < 0) {
@@ -302,6 +310,8 @@ bool CBoss::Collision(CRectangle*p){
 					if (!(p->mColFlg & EDT_LEFT)) {
 						mPosition.x = mPosition.x + aj.x;
 						//mAttackBehavior = EIDOL;
+						if (mIce)
+							mVelocityX = 0.0f;
 					}
 				}
 				if (CRectangle::Collision(p, &aj, &ad)) {

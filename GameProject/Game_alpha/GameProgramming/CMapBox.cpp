@@ -1,5 +1,6 @@
 #include "CMapBox.h"
 #include "CScene.h"
+#include "CPlayerT.h"
 
 void CMapBox::Update() {
 	if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
@@ -28,25 +29,31 @@ bool CMapBox::Collision(CRectangle *r) {
 					r->mTag == EENEMY2 ||
 					r->mTag == EENEMY3 ||
 					r->mTag == EBOSS) {
-					//左
-					if (mPosition.x - CELLSIZE / 2 > r->mPosition.x) {
-						r->mPosition.x = r->mPosition.x - aj.x;
-						r->mVelocityX = 0.0f;
+					//左右
+					if (mPosition.x - mScale.x > r->mPosition.x || mPosition.x + mScale.x < r->mPosition.x) {
+						//左
+						if (mPosition.x - mScale.x > r->mPosition.x) {
+							r->mPosition.x = r->mPosition.x - aj.x;
+						}
+						//右
+						if (mPosition.x + mScale.x < r->mPosition.x) {
+							r->mPosition.x = r->mPosition.x - aj.x;
+						}
 					}
-					//右
-					if (mPosition.x + CELLSIZE / 2 < r->mPosition.x) {
-						r->mPosition.x = r->mPosition.x - aj.x;
-						r->mVelocityX = 0.0f;
-					}
-					//下
-					if (mPosition.y > r->mPosition.y) {
-						r->mPosition.y = r->mPosition.y - aj.y;
-						r->mVelocityY = 0.0f;
-					}
-					//上
-					if (mPosition.y < r->mPosition.y) {
-						r->mPosition.y = r->mPosition.y - aj.y;
-						r->mVelocityY = 0.0f;
+					//上下
+					else {
+						//下
+						if (mPosition.y - mScale.y > r->mPosition.y) {
+							r->mPosition.y = r->mPosition.y - aj.y;
+							r->mVelocityY = 0.0f;
+						}
+						//上
+						if (mPosition.y + mScale.y < r->mPosition.y) {
+							r->mPosition.y = r->mPosition.y - aj.y;
+							r->mVelocityY = 0.0f;
+							if (r->mTag == ECELLNUM::EPLAYER)
+								CPlayerT::mpPlayer->mJumpCount = 0;
+						}
 					}
 				}
 				//自身を押し返す当たり判定

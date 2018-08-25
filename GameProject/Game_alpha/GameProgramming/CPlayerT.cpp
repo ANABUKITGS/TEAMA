@@ -19,7 +19,7 @@ CMapSwitchGround *mSwitch;
 int CPlayerT::player_ani;
 
 void CPlayerT::Update(){
-	if (player_ani != EPLAYERANI::EDAMAGE){
+	if (player_ani != EPLAYERANI::EDAMAGE && player_ani != EPLAYERANI::EDOWN){
 		if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
 			if (mpWeapon == 0){
 				if ((CGamePad::Push(PAD_1) || CKey::Push(VK_UP))){
@@ -29,19 +29,25 @@ void CPlayerT::Update(){
 					if (mAir){
 						if (mAerialAttack){
 							mAerialAttack = false;
-							mpWeapon = new CWeapon(EPWEAPON, mPosition, mDirection);
-							if (mDirection)		//weaponの位置をプレイヤーの向いている方向へ10ずらす
-								mpWeapon->mPosition.x += 10;
-							else
-								mpWeapon->mPosition.x -= 10;
+							if (mDirection){
+								mpWeapon = new CWeapon(EPWEAPON, mPosition + CVector2(0.0f, 6.0f), mDirection);
+								mpWeapon->mPosition.x += 51.0f;
+							}
+							else{
+								mpWeapon = new CWeapon(EPWEAPON, mPosition + CVector2(0.0f, 6.0f), mDirection);
+								mpWeapon->mPosition.x -= 51.0f;
+							}
 						}
 					}
 					else{
-						mpWeapon = new CWeapon(EPWEAPON, mPosition, mDirection);
-						if (mDirection)		//weaponの位置をプレイヤーの向いている方向へ10ずらす
-							mpWeapon->mPosition.x += 10;
-						else
-							mpWeapon->mPosition.x -= 10;
+						if (mDirection){
+							mpWeapon = new CWeapon(EPWEAPON, mPosition + CVector2(0.0f, 6.0f), mDirection);
+							mpWeapon->mPosition.x += 51.0f;
+						}
+						else{
+							mpWeapon = new CWeapon(EPWEAPON, mPosition + CVector2(0.0f, 6.0f), mDirection);
+							mpWeapon->mPosition.x -= 51.0f;
+						}
 					}
 				}
 
@@ -79,7 +85,9 @@ void CPlayerT::Update(){
 			if (mpWeapon == 0){
 				Dash();
 				Gravity();
-				Forward();
+				if (CMapBossRoomSign::mpBossRoomSign == NULL ||
+					(!CMapBossRoomSign::mpBossRoomSign->mColFlg || (CMapBossRoomSign::mpBossRoomSign->mColFlg && CBoss::mpBoss->mBossBattle)))
+					Forward();
 				CRectangle::Update();
 			}
 
@@ -112,9 +120,6 @@ void CPlayerT::Update(){
 			mVelocityY = 0.0f;
 			mPosition.y = 720.0f + CELLSIZE;
 		}
-	}
-	if (mLife == 0){
-		CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
 	}
 }
 
@@ -289,8 +294,8 @@ bool CPlayerT::Collision(CRectangle *p) {
 		CVector2 aj;
 		if (CRectangle::Collision(p, &aj)) {
 			switch (p->mTag){
-			case EEWEAPON:
-			case EBWEAPON:
+			case ECELLNUM::EEWEAPON:
+			case ECELLNUM::EBWEAPON:
 				if (!mUnrivaled){
 					mUnrivaled = true;
 					player_ani = EPLAYERANI::EDAMAGE;
@@ -306,11 +311,11 @@ bool CPlayerT::Collision(CRectangle *p) {
 				}
 				break;
 
-			case EJEWELRY:
+			case ECELLNUM::EJEWELRY:
 				mJewel++;
 				break;
 
-			case EJEWELRY2:
+			case ECELLNUM::EJEWELRY2:
 				mMiniJewel++;
 				if (mMiniJewel == 10){
 					mJewel++;
@@ -318,34 +323,36 @@ bool CPlayerT::Collision(CRectangle *p) {
 				}
 				break;
 
-			case ECHECKPOINT:
+			case ECELLNUM::ECHECKPOINT:
 				mReSpornPos = p->mPosition;
 				break;
 
-			case EICE:
+			case ECELLNUM::EICE:
 				mIce = true;
 				break;
 
-			case ESWITCH_GROUND1:
-			case ESWITCH_GROUND2:
-			case ECHIKUWA:
-			case EBELTL:
-			case EBELTR:
-			case EUNDER:
+			case ECELLNUM::ESWITCH_GROUND1:
+			case ECELLNUM::ESWITCH_GROUND2:
+			case ECELLNUM::ECHIKUWA:
+			case ECELLNUM::EBELTL:
+			case ECELLNUM::EBELTR:
+			case ECELLNUM::EUNDER:
 				mIce = false;
 				break;
 
-			case EENEMY1:
-			case EENEMY2:
-			case EENEMY3:
-			case EBOSS:
-			case ENONE:
-			case EPWEAPON:
-			case ESEARCH:
-			case ESWITCH:
-			case ESIGN:
-			case EENDSIGN:
-			case EBOSSROOM:
+			case ECELLNUM::EENEMY1:
+			case ECELLNUM::EENEMY2:
+			case ECELLNUM::EENEMY3:
+			case ECELLNUM::EBOSS:
+			case ECELLNUM::ENONE:
+			case ECELLNUM::EBOX:
+			case ECELLNUM::ESTEEL:
+			case ECELLNUM::EPWEAPON:
+			case ECELLNUM::ESEARCH:
+			case ECELLNUM::ESWITCH:
+			case ECELLNUM::ESIGN:
+			case ECELLNUM::EENDSIGN:
+			case ECELLNUM::EBOSSROOM:
 				break;
 
 			default:
@@ -355,14 +362,16 @@ bool CPlayerT::Collision(CRectangle *p) {
 							//右空き
 							if (!(p->mColFlg & EDT_RIGHT)) {
 								mPosition.x = mPosition.x + aj.x;
-								mVelocityX = 0.0f;
+								if (mIce)
+									mVelocityX = 0.0f;
 							}
 						}
 						else if (aj.x < 0) {
 							//左空き
 							if (!(p->mColFlg & EDT_LEFT)) {
 								mPosition.x = mPosition.x + aj.x;
-								mVelocityX = 0.0f;
+								if (mIce)
+									mVelocityX = 0.0f;
 							}
 						}
 						if (CRectangle::Collision(p, &aj, &ad)) {
@@ -395,7 +404,6 @@ bool CPlayerT::Collision(CRectangle *p) {
 }
 
 void CPlayerT::Render(){
-	mRender = false;
 	switch (player_ani){
 	case EPLAYERANI::EIDOL:
 		if (player_ani_count > 7)
@@ -511,7 +519,26 @@ void CPlayerT::Render(){
 		break;
 
 	case EPLAYERANI::EDOWN:
+		if (player_ani_count > 1)
+			player_ani_count = 1;
 
+		PLAYER_ANI_COUNT_FRAME = 10;
+
+		if (!mDirection)	//左向き
+			mTexPlayer.DrawImage(PLAYER_TEX_POS, player_ani_count * 128, (player_ani_count + 1) * 128, 896, 768, mAlpha);
+		else				//右向き
+			mTexPlayer.DrawImage(PLAYER_TEX_POS, (player_ani_count + 1) * 128, player_ani_count * 128, 896, 768, mAlpha);
+
+		//タイトルに戻る
+		if (player_ani_count >= 1){
+			static int mDownTime = 0;
+			mDownTime++;
+			if (mDownTime >= PLAYER_DOWN_TIME){
+				CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
+				player_ani_count = player_ani_count_frame = 0;
+				return;
+			}
+		}
 		break;
 
 	default:
@@ -537,46 +564,57 @@ void CPlayerT::Dash(){
 }
 
 void CPlayerT::Die(){
-	if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI]){
-		mLife--;
-		if (CBoss::mpBoss != NULL)
-			CBoss::mpBoss->mBossMaxLife = CBoss::mpBoss->mBossLife;
-		mpWeapon = 0;
-		mJewel = 3;
+	if (player_ani != EPLAYERANI::EDOWN){
+		if (CMapBossRoomSign::mpBossRoomSign != NULL){
+			CMapScroll::boss_scroll = false;
+			CMapBossRoomSign::mpBossRoomSign->mColFlg = false;
+			CMapBossRoomSign::mpBossRoomSign->mScale.x = 0.0f;
+		}
+		mPosition = mReSpornPos;
+		CMapScroll::mpScroll->Reset();
+		player_ani_count = 0;
+		player_ani_count_frame = 0;
+		player_ani = EPLAYERANI::EIDOL;
+
+		if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI]){
+			mLife--;
+			if (CBoss::mpBoss != NULL)
+				CBoss::mpBoss->mBossMaxLife = CBoss::mpBoss->mBossLife;
+			mpWeapon = 0;
+
+			//ゲームオーバー
+			if (mLife < 0){
+				player_ani = EPLAYERANI::EDOWN;
+				return;
+			}
+			mJewel = 3;
+		}
 	}
-	if (CMapBossRoomSign::mpBossRoomSign != NULL){
-		CMapScroll::boss_scroll = false;
-		CMapBossRoomSign::mpBossRoomSign->mColFlg = false;
-		CMapBossRoomSign::mpBossRoomSign->mScale.x = 0.0f;
-	}
-	mPosition = mReSpornPos;
-	CMapScroll::mpScroll->Reset();
-	player_ani_count = 0;
-	player_ani_count_frame = 0;
-	player_ani = EPLAYERANI::EIDOL;
 }
 
 void CPlayerT::Damage(ECELLNUM tag){
-	switch (tag){
-	case ECELLNUM::EEWEAPON:
-		mJewel--;
-		break;
+	if (player_ani != EPLAYERANI::EDOWN){
+		switch (tag){
+		case ECELLNUM::EEWEAPON:
+			mJewel--;
+			break;
 
-	case ECELLNUM::EBWEAPON:
-		if (mJewel < static_cast <float> (mMaxJewel)* 0.2){
-			Die();
+		case ECELLNUM::EBWEAPON:
+			if (mJewel < static_cast <float> (mMaxJewel)* 0.2){
+				Die();
+				break;
+			}
+			else{
+				if (static_cast <float> (mMaxJewel)* 0.2 > 1.0f)
+					mJewel -= static_cast <float> (mMaxJewel)* 0.1;
+
+				else
+					mJewel--;
+			}
+			break;
+
+		default:
 			break;
 		}
-		else{
-			if (static_cast <float> (mMaxJewel)* 0.2 > 1.0f)
-				mJewel -= static_cast <float> (mMaxJewel)* 0.1;
-
-			else
-				mJewel--;
-		}
-		break;
-
-	default:
-		break;
 	}
 }
