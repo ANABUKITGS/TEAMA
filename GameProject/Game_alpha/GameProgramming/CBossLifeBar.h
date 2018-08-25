@@ -18,6 +18,7 @@ private:
 	//float mBlue;
 
 public:
+	static CBossLifeBar *mpBossLifeBar;
 	CBossLifeBar(){
 		mRed = 0.0f;
 		mGreen = 1.0f;
@@ -31,9 +32,15 @@ public:
 		CTaskManager::Get()->Add(this);
 
 		CBoss::mpBoss->mBossMaxLife = CBoss::mpBoss->mBossLife = BOSS_LIFE - CPlayerT::mpPlayer->mJewel;
+		CPlayerT::mpPlayer->mMaxJewel = CPlayerT::mpPlayer->mJewel;
+	}
+
+	~CBossLifeBar(){
+		mpBossLifeBar = 0;
 	}
 
 	void Update();
 	void Render();
+	void Remove();
 };
 #endif

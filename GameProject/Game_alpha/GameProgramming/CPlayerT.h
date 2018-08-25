@@ -12,6 +12,8 @@
 #define VELOCITYX_LIMIT 5.0f
 #define DAMAGE_INTERVAL 180
 
+#define PLAYER_TEX_POS mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - mScale.y, mPosition.y - mScale.y + CELLSIZE * 2
+
 
 class CPlayerT : public CCharcter {
 private:
@@ -41,6 +43,7 @@ public:
 	bool mAir;				//true:空中 false:地上
 	int mLife;				//プレイヤーの残機
 	int mJewel;				//ジュエル所持数
+	int mMaxJewel;			//ボスの部屋でのジュエル所持数
 	int mMiniJewel;			//ミニジュエル所持数
 	int mDamageInterval;	//ダメージインターバル
 	bool mUnrivaled;		//true:無敵状態
@@ -69,7 +72,8 @@ public:
 		player_ani_count = 0;
 		player_ani_count_frame = 0;
 		PLAYER_ANI_COUNT_FRAME = 1;
-		mJewel = 1;
+		mJewel = 3;
+		mMaxJewel = 0;
 		mMiniJewel = 0;
 		mLife = 3;
 		mDamageInterval = DAMAGE_INTERVAL;
@@ -80,7 +84,7 @@ public:
 	CPlayerT::CPlayerT(const CVector2&position)
 		: CPlayerT()
 	{
-		SetRectangle(position, CVector2(16, 60), NULL);
+		SetRectangle(position + CVector2(0.0f, 28.0f), CVector2(16, 60), NULL);
 		mReSpornPos = position;
 	}
 	~CPlayerT(){
@@ -92,6 +96,8 @@ public:
 	void Attack();
 	void Render();
 	void Dash();
+	void Damage(ECELLNUM);
+	void Die();
 
 	bool Collision(CRectangle *p);
 

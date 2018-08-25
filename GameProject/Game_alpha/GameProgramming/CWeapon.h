@@ -41,7 +41,7 @@ public:
 		if (tag == ECELLNUM::EPWEAPON)
 			mTexYoyo.Load(".\\Data\\Images\\Player\\Yoyo.tga");
 
-		else if (tag == ECELLNUM::EEWEAPON)
+		else if (tag == ECELLNUM::EEWEAPON || tag == ECELLNUM::EBWEAPON)
 			mTexYoyo.Load(".\\Data\\Images\\Enemy\\Yoyo.tga");
 		SetRectangle(position, CVector2(10, 10), &mTexYoyo);
 		mPosInit = position;

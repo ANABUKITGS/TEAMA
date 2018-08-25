@@ -21,11 +21,14 @@
 #define BOSS_LOSE_TIME 120				//やられてからの待ち時間
 #define BOSS_LIFE 50					//ボスの初期HP
 
+#define BOSS_TEX_POS mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - mScale.y, mPosition.y - mScale.y + CELLSIZE * 4	//テクスチャー Position
+
 class CBoss : public CCharcter{
 //自クラスだけ使用可能
 private:
 	CTexture mTexture;					//ボスに貼り付けるテクスチャ
 	CVector2 mAttack_Search;			//ボスとプレイヤーとの距離を出す
+	CVector2 mBossDefaultPos;			//ボスの初期位置
 	CWeapon*mpBWeapon;					//ボスの武器使用クラスをインスタンスにする
 	float mBossBehavior;				//敵の各行動に入る判別距離
 	int mBossAttackItr;					//ボスのヨーヨー発射間隔
@@ -94,7 +97,8 @@ public:
 		:CBoss()
 	{
 		//サイズを指定（テクスチャは別で用意するので引数には入れない）
-		SetRectangle(Pos, CVector2(32,90),NULL);
+		SetRectangle(Pos + CVector2(0.0f, 56.0f), CVector2(32, 90), NULL);
+		mBossDefaultPos = Pos + CVector2(0.0f, 56.0f);
 	}
 	~CBoss(){
 		mpBoss = 0;

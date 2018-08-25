@@ -5,8 +5,10 @@
 #include "CCamera2D.h"
 #include "CGame2.h"
 
-#define SIGN_UV			mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE / 2, mPosition.y + CELLSIZE / 2, 0, 64, 64 * 6, 64 * 5
-#define TEXTVIEW_UV		CGame2::mCamera.x - 256, CGame2::mCamera.x + 255, CGame2::mCamera.y - 256, CGame2::mCamera.y + 256, 0, 512, 512, 0
+#define SIGN_UV				mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE / 2, mPosition.y + CELLSIZE / 2, 0, 64, 64, 0
+#define BOSSROOM_SIGN_UV	mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 0, 64, mTexPosY + 128, mTexPosY
+#define BOSSROOM_SIGN_UV2	mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 0, 64, 256, 128
+#define TEXTVIEW_UV			CGame2::mCamera.x - 256, CGame2::mCamera.x + 255, CGame2::mCamera.y - 256, CGame2::mCamera.y + 256, 0, 512, 512, 0
 
 #define DRAWSTRING_UV	text_buf, -256, 192, 32, 3, 1.0f
 #define TEXT1			L"hogehogehoge\nÇ†Ç¢Ç§Ç¶Ç®Ç©Ç´Ç≠ÇØÇ±\n0123456789"
@@ -80,16 +82,18 @@ public:
 class CMapBossRoomSign : public CMapChip {
 private:
 	CTexture mTexBossRoomSign;
+	int mTexPosY;
 
 public:
 	bool mColFlg;
 	static CMapBossRoomSign *mpBossRoomSign;
 	CMapBossRoomSign(const CVector2& pos)
 		//CMapChipÇ≈èâä˙âª
-		: CMapChip(pos, CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL, NULL, NULL, NULL, NULL, ECELLNUM::EBOSSROOM)
+		: CMapChip(pos + CVector2(0.0f, CELLSIZE / 2), CVector2(CELLSIZE / 2, CELLSIZE), NULL, NULL, NULL, NULL, NULL, ECELLNUM::EBOSSROOM)
 	{
 		if (mTexBossRoomSign.id == NULL)
 			mTexBossRoomSign.Load(".\\Data\\Images\\Map\\MapBossRoomSign.tga");
+		mTexPosY = 0;
 		mColFlg = false;
 		mRender = false;
 		mTag = ECELLNUM::EBOSSROOM;

@@ -66,31 +66,51 @@ void CMapEndSign::Render(){
 
 //ƒ{ƒX‚Ì•”‰® ŠÅ”Â
 void CMapBossRoomSign::Update() {
+	if (mColFlg){
+		if (mTexPosY > -128)
+			mTexPosY -= 8;
+
+		if (mTexPosY <= -128)
+			mTexPosY = -128;
+	}
+	else{
+		mTexPosY = 0;
+	}
+	mScale.x = CELLSIZE / 2;
 	CMapChip::Update();
 }
 
 bool CMapBossRoomSign::Collision(CRectangle *r) {
 	// “–‚½‚Á‚Ä‚¢‚é‚©
-	if (r->mTag == EPLAYER){
+	if (r->mTag == EPLAYER ||
+		r->mTag == EENEMY1 ||
+		r->mTag == EENEMY2 ||
+		r->mTag == EENEMY3 ||
+		r->mTag == EBOSS){
 		if (mColFlg){
 			CVector2 aj;
 			if (CRectangle::Collision(r) && CRectangle::Collision(r, &aj)) {
 				//¶
-				if (mPosition.x - CELLSIZE / 2 > r->mPosition.x) {
+				if (mPosition.x - CELLSIZE / 2 >= r->mPosition.x) {
 					r->mPosition.x = r->mPosition.x - aj.x;
+					r->mVelocityX = 0.0f;
 					return true;
 				}
 				//‰E
 				if (mPosition.x + CELLSIZE / 2 < r->mPosition.x) {
 					r->mPosition.x = r->mPosition.x - aj.x;
+					r->mVelocityX = 0.0f;
 					return true;
 				}
 			}
 		}
 		else{
-			if (CRectangle::Collision(r) && r->mPosition.x > mPosition.x && !mColFlg){
+			if (r->mTag == EPLAYER && CRectangle::Collision(r) && r->mPosition.x > mPosition.x && !mColFlg){
 				mColFlg = true;
-				new CBossLifeBar();
+				CMapBossRoomSign::mpBossRoomSign->mScale.x = 0.0f;
+				if (CBossLifeBar::mpBossLifeBar == NULL)
+					CBossLifeBar::mpBossLifeBar = new CBossLifeBar();
+				CPlayerT::mpPlayer->mMaxJewel = CPlayerT::mpPlayer->mJewel;
 				return true;
 			}
 		}
@@ -99,5 +119,9 @@ bool CMapBossRoomSign::Collision(CRectangle *r) {
 }
 
 void CMapBossRoomSign::Render(){
-	mTexBossRoomSign.DrawImage(SIGN_UV, 1.0f);
+	if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER)
+		mTexBossRoomSign.DrawImage(BOSSROOM_SIGN_UV, 1.0f);
+
+	else
+		mTexBossRoomSign.DrawImage(BOSSROOM_SIGN_UV2, 0.5f);
 }

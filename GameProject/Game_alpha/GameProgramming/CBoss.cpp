@@ -4,205 +4,207 @@
 #include "CScene.h"
 #include "CFade.h"
 #include "CTime.h"
+#include "CMapSign.h"
 
 CBoss *CBoss::mpBoss = 0;
 
 void CBoss::Update(){
-	if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
-		static int IdolInterval = 0;//待機状態から次の行動に移るまでの時間
-		//ボスとプレイヤーとのベクトルを出す
-		mAttack_Search = CPlayerT::mpPlayer->mPosition - mPosition;
-		//一定間隔でジャンプの乱数を出す(とりあえず1秒に一回)
-		if (mBossJcnt < BOSSJUMPTIME)
-			mBossJcnt++;
-		//一定時間経過すると乱数を出す
-		else{
-			mBossJumprad = rand() / 100 % 7;
-			mBossJcnt = NULL;
-		}
-		//ジャンプの処理ここまで
-
-		//待機状態からランダムで行動をとる(移動、ジャンプ、攻撃のどれか)
-		mBossIBehavior = rand() / 1000 % 6;
-
-		//行動パターン処理
-		switch (mAttackBehavior){
-
-
-		//待機状態
-		case EIDOL:
-			if (mPosition.x > CPlayerT::mpPlayer->mPosition.x)
-				mDirection = false;
-			else
-				mDirection = true;
-			//プレイヤーが一定範囲内に入ればマントのアニメーションを(1回だけ)
-			if (mMant_One){
-				if (STARTBEHAVIOR > abs(mAttack_Search.x))
-					mAttackBehavior = EMANTO;
-			}
+	if (CMapBossRoomSign::mpBossRoomSign != NULL && CMapBossRoomSign::mpBossRoomSign->mColFlg){
+		if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
+			static int IdolInterval = 0;//待機状態から次の行動に移るまでの時間
+			//ボスとプレイヤーとのベクトルを出す
+			mAttack_Search = CPlayerT::mpPlayer->mPosition - mPosition;
+			//一定間隔でジャンプの乱数を出す(とりあえず1秒に一回)
+			if (mBossJcnt < BOSSJUMPTIME)
+				mBossJcnt++;
+			//一定時間経過すると乱数を出す
 			else{
-				//次の行動までの時間を加算する
-				if (IdolInterval != BOSSNEXTBEHAVIOR)
-					IdolInterval++;
-				//指定した秒数を超えれば行動をランダムでとる
-				else{
-					switch (mBossIBehavior){
-					case 0: case 1: case 2://0,1,2は移動
-						IdolInterval = NULL;
-						mAttackBehavior = EDASH;
-						break;
-					case 3://1はジャンプ
-						if (mBossLife <= mBossMaxLife * 0.2){
-							CEnemy::mpEnemy = new CEnemy(mPosition, EENEMY1);
-						}
-						IdolInterval = NULL;
-						mVelocityY = BOSSGVELOCITY;
-						if (!mDirection)
-							mVelocityX = -BOSSMOVESPEED*3;
-						else
-							mVelocityX = BOSSMOVESPEED*3;
-						mAttackBehavior = EJUMP;
-						break;
+				mBossJumprad = rand() / 100 % 7;
+				mBossJcnt = NULL;
+			}
+			//ジャンプの処理ここまで
 
-					default:
-						IdolInterval = 50;
-					break;
+			//待機状態からランダムで行動をとる(移動、ジャンプ、攻撃のどれか)
+			mBossIBehavior = rand() / 1000 % 6;
+
+			//行動パターン処理
+			switch (mAttackBehavior){
+
+
+				//待機状態
+			case EIDOL:
+				if (mPosition.x > CPlayerT::mpPlayer->mPosition.x)
+					mDirection = false;
+				else
+					mDirection = true;
+				//プレイヤーが一定範囲内に入ればマントのアニメーションを(1回だけ)
+				if (mMant_One){
+					if (STARTBEHAVIOR > abs(mAttack_Search.x))
+						mAttackBehavior = EMANTO;
+				}
+				else{
+					//次の行動までの時間を加算する
+					if (IdolInterval != BOSSNEXTBEHAVIOR)
+						IdolInterval++;
+					//指定した秒数を超えれば行動をランダムでとる
+					else{
+						switch (mBossIBehavior){
+						case 0: case 1: case 2://0,1,2は移動
+							IdolInterval = NULL;
+							mAttackBehavior = EDASH;
+							break;
+						case 3://1はジャンプ
+							if (mBossLife <= mBossMaxLife * 0.2){
+								CEnemy::mpEnemy = new CEnemy(mPosition, EENEMY1);
+							}
+							IdolInterval = NULL;
+							mVelocityY = BOSSGVELOCITY;
+							if (!mDirection)
+								mVelocityX = -BOSSMOVESPEED * 3;
+							else
+								mVelocityX = BOSSMOVESPEED * 3;
+							mAttackBehavior = EJUMP;
+							break;
+
+						default:
+							IdolInterval = 50;
+							break;
+						}
 					}
 				}
-			}
-			break;
-		//待機状態処理終了
+				break;
+				//待機状態処理終了
 
 
-		//最初のマントの処理
-		case EMANTO:
-			//ボスのアニメーションが最後まで行くと処理開始
-			if (mBossAnimeFream > 4){
-				mMant_One = false;
-				mAttackBehavior = EIDOL;
-			}
-			break;//ループ終了
-
-
-		//ボスの走る処理
-		case EDASH:
-
-			if (!mDirection)
-				mVelocityX = -BOSSMOVESPEED;
-			else
-				mVelocityX = BOSSMOVESPEED;
-
-			//乱数値が真(1)の時だけボスがジャンプをする
-			if (mBossJumprad == 1){
-				mVelocityY = BOSSGVELOCITY;
-				if (!mDirection)
-					mVelocityX = -BOSSMOVESPEED * 3;
-				else
-					mVelocityX = BOSSMOVESPEED * 3;
-				mAttackBehavior = EJUMP;//ボスの行動をジャンプにする
-			}
-			else{
-				//プレイヤーとの距離が一定範囲内に入れば、攻撃を出す
-				if (abs(mAttack_Search.x) < mBossBehavior){
-					mBossAttackItr = 0;
-					mAttackBehavior = EBWEAPON;
-					mVelocityX = 0;
-				}
-			}
-			break;//ループ終了
-		//走る処理終了
-
-
-		//ボスのジャンプ処理
-		case EJUMP:
-			break;
-		//ジャンプ処理終了
-
-		//ボスの攻撃処理
-		case EBWEAPON:
-			//ボスがヨーヨーを出してない時
-			if (!mpBWeapon){
-				//ボスの攻撃間隔が無くなった時
-				if (mBossAttackItr <= 0){
-					//攻撃間隔を戻す
-					mBossAttackItr = ATTACK_INTERVAL;
-					//ボスのヨーヨーを呼び出す
-					mpBWeapon = new CWeapon(EEWEAPON, mPosition, mDirection);
-
-					mpBWeapon->mScale = CVector2(20, 20);
-
-					if (mDirection)		//敵が右を向いている時には右にヨーヨーを進ませる
-						mpBWeapon->mPosition.x += 10;
-
-					else				//敵が左を向いている時には左にヨーヨーを進ませる
-						mpBWeapon->mPosition.x -= 10;
-				}
-				//ボスの攻撃間隔がある時
-				else{
-					//攻撃間隔を1フレームずつ減らす
-					mBossAttackItr--;
-				}
-			}
-			//敵のヨーヨーが発射された時の処理を行う
-			else {
-				//ボスのヨーヨーの寿命が来たら
-				if (mpBWeapon->mLife < 0){
-					//ヨーヨーを消す
-					mpBWeapon = 0;
-					//ヨーヨーのアニメーションを最初に戻す
-					mBossAnimeFream = 0;
-					//待機状態にする
+				//最初のマントの処理
+			case EMANTO:
+				//ボスのアニメーションが最後まで行くと処理開始
+				if (mBossAnimeFream > 4){
+					mMant_One = false;
 					mAttackBehavior = EIDOL;
 				}
-			}
-			break;//ループ終了
-		//攻撃処理終了
+				break;//ループ終了
 
-		//攻撃を受けた時
-		case EDAMAGE:
-			if (!mDirection)
-				mVelocityX = 5;
-			else
-				mVelocityX = -5;
-			//一定回数攻撃されると撃破される
-			if (mBossLife <= 0)
-				mAttackBehavior = EDOWN;
 
-			else if (mBossAnimeFream > 1){
-				mAttackBehavior = EIDOL;
-			}
-			break;//ループ終了
+				//ボスの走る処理
+			case EDASH:
 
-		case EDOWN://プレイヤーに負けた時
-			//最後までアニメーションが進んだ時に処理開始
-			if (mBossAnimeFream <3){
-				//消滅までのカウントダウン開始
-				if (mBossDeleteTime){
-					//0になるまで減算する
-					mBossDeleteTime--;
-					//消滅まで点滅？を繰り返す
-					if (mBossDeleteTime % 10 == 0)
-						mAlpha = 0.0f;
+				if (!mDirection)
+					mVelocityX = -BOSSMOVESPEED;
+				else
+					mVelocityX = BOSSMOVESPEED;
+
+				//乱数値が真(1)の時だけボスがジャンプをする
+				if (mBossJumprad == 1){
+					mVelocityY = BOSSGVELOCITY;
+					if (!mDirection)
+						mVelocityX = -BOSSMOVESPEED * 3;
 					else
-						mAlpha = 1.0f;
+						mVelocityX = BOSSMOVESPEED * 3;
+					mAttackBehavior = EJUMP;//ボスの行動をジャンプにする
 				}
-			}
-			else {
-				mBossLoseTime--;
-				if (mBossLoseTime <= 0){
-					CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ERESULT);
-					CGame2::mTimeMin = CTime::ElapsedTimeMin();
-					CGame2::mTimeSec = CTime::ElapsedTimeSec();
-					CScore::GetScore();
-					mBossLoseTime = 0;
+				else{
+					//プレイヤーとの距離が一定範囲内に入れば、攻撃を出す
+					if (abs(mAttack_Search.x) < mBossBehavior){
+						mBossAttackItr = 0;
+						mAttackBehavior = EBWEAPON;
+						mVelocityX = 0;
+					}
 				}
-			}
-			break;
-		//ダメージ処理終了
-		}
+				break;//ループ終了
+				//走る処理終了
 
 
-		//ダメージを受けた時に行う処理
+				//ボスのジャンプ処理
+			case EJUMP:
+				break;
+				//ジャンプ処理終了
+
+				//ボスの攻撃処理
+			case EBWEAPON:
+				//ボスがヨーヨーを出してない時
+				if (!mpBWeapon){
+					//ボスの攻撃間隔が無くなった時
+					if (mBossAttackItr <= 0){
+						//攻撃間隔を戻す
+						mBossAttackItr = ATTACK_INTERVAL;
+						//ボスのヨーヨーを呼び出す
+						mpBWeapon = new CWeapon(ECELLNUM::EBWEAPON, mPosition, mDirection);
+
+						mpBWeapon->mScale = CVector2(20, 20);
+
+						if (mDirection)		//敵が右を向いている時には右にヨーヨーを進ませる
+							mpBWeapon->mPosition.x += 10;
+
+						else				//敵が左を向いている時には左にヨーヨーを進ませる
+							mpBWeapon->mPosition.x -= 10;
+					}
+					//ボスの攻撃間隔がある時
+					else{
+						//攻撃間隔を1フレームずつ減らす
+						mBossAttackItr--;
+					}
+				}
+				//敵のヨーヨーが発射された時の処理を行う
+				else {
+					//ボスのヨーヨーの寿命が来たら
+					if (mpBWeapon->mLife < 0){
+						//ヨーヨーを消す
+						mpBWeapon = 0;
+						//ヨーヨーのアニメーションを最初に戻す
+						mBossAnimeFream = 0;
+						//待機状態にする
+						mAttackBehavior = EIDOL;
+					}
+				}
+				break;//ループ終了
+				//攻撃処理終了
+
+				//攻撃を受けた時
+			case EDAMAGE:
+				if (!mDirection)
+					mVelocityX = 5;
+				else
+					mVelocityX = -5;
+				//一定回数攻撃されると撃破される
+				if (mBossLife <= 0)
+					mAttackBehavior = EDOWN;
+
+				else if (mBossAnimeFream > 1){
+					mAttackBehavior = EIDOL;
+				}
+				break;//ループ終了
+
+			case EDOWN://プレイヤーに負けた時
+				//最後までアニメーションが進んだ時に処理開始
+				if (mBossAnimeFream < 3){
+					//消滅までのカウントダウン開始
+					if (mBossDeleteTime){
+						//0になるまで減算する
+						mBossDeleteTime--;
+						//消滅まで点滅？を繰り返す
+						if (mBossDeleteTime % 10 == 0)
+							mAlpha = 0.0f;
+						else
+							mAlpha = 1.0f;
+					}
+				}
+				else {
+					mBossLoseTime--;
+					if (mBossLoseTime <= 0){
+						CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ERESULT);
+						CGame2::mTimeMin = CTime::ElapsedTimeMin();
+						CGame2::mTimeSec = CTime::ElapsedTimeSec();
+						CScore::GetScore();
+						mBossLoseTime = 0;
+					}
+				}
+				break;
+				//ダメージ処理終了
+			}
+
+
+			//ダメージを受けた時に行う処理
 			if (Invincible){
 				mBossInvincibleTime--;
 				//無敵時間を追加
@@ -217,21 +219,27 @@ void CBoss::Update(){
 				}
 			}
 
-		//重力処理
-		Gravity();
+			//重力処理
+			Gravity();
 
-		if (mVelocityX > 0.0f)
-			mVelocityX -= 0.25f;
+			if (mVelocityX > 0.0f)
+				mVelocityX -= 0.25f;
 
-		if (mVelocityX < 0.0f)
-			mVelocityX += 0.25f;
+			if (mVelocityX < 0.0f)
+				mVelocityX += 0.25f;
 
 
-		mPosition.x += mVelocityX;
-		mBossLifeProportion = static_cast <float> (mBossLife) / static_cast <float> (mBossMaxLife);
+			mPosition.x += mVelocityX;
+			mBossLifeProportion = static_cast <float> (mBossLife) / static_cast <float> (mBossMaxLife);
 
-		//基底クラスの更新処理
-		CRectangle::Update();
+			//基底クラスの更新処理
+			CRectangle::Update();
+		}
+	}
+	else if (CMapBossRoomSign::mpBossRoomSign != NULL && !CMapBossRoomSign::mpBossRoomSign->mColFlg){
+		mPosition = mBossDefaultPos;
+		mAttackBehavior = EIDOL;
+		mVelocityX = mVelocityY = 0.0f;
 	}
 }
 
@@ -277,6 +285,7 @@ bool CBoss::Collision(CRectangle*p){
 			case EENEMY2:
 			case EENEMY3:
 			case EICE:
+			case EBOSSROOM:
 				break;
 
 			default:
@@ -333,21 +342,17 @@ void CBoss::Render(){
 		//Boss_Ani_Count_Frame = 20;
 
 		//if (!mDirection)//左向き
-		//	mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
-		//	mPosition.y + CELLSIZE * 2, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 2304, 2048, mAlpha);
+		//	mTexture.DrawImage(BOSS_TEX_POS, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 2304, 2048, mAlpha);
 		//else			//右向き
-		//	mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
-		//	mPosition.y + CELLSIZE * 2, mBossAnimeFream * 256, (mBossAnimeFream + 1) * 256, 2304, 2048, mAlpha);
+		//	mTexture.DrawImage(BOSS_TEX_POS, mBossAnimeFream * 256, (mBossAnimeFream + 1) * 256, 2304, 2048, mAlpha);
 
 		if (mBossAnimeFream > 4)
 			mBossAnimeFream = 0;
 		Boss_Ani_Count_Frame = 9;
 		if (!mDirection)	//左向き
-			mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
-			mPosition.y + CELLSIZE * 2, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 512, 256, mAlpha);
+			mTexture.DrawImage(BOSS_TEX_POS, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 512, 256, mAlpha);
 		else				//右向き
-			mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
-			mPosition.y + CELLSIZE * 2, mBossAnimeFream * 256, (mBossAnimeFream + 1) * 256, 512, 256, mAlpha);
+			mTexture.DrawImage(BOSS_TEX_POS, mBossAnimeFream * 256, (mBossAnimeFream + 1) * 256, 512, 256, mAlpha);
 
 		break;
 
@@ -360,8 +365,7 @@ void CBoss::Render(){
 		Boss_Ani_Count_Frame = 5;
 
 		if (!mDirection)	//左向き
-			mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
-			mPosition.y + CELLSIZE * 2, (mBossAnimeFream+1) * 256, mBossAnimeFream * 256, 512, 256, mAlpha);
+			mTexture.DrawImage(BOSS_TEX_POS, (mBossAnimeFream+1) * 256, mBossAnimeFream * 256, 512, 256, mAlpha);
 		else				//右向き
 			mTexture.DrawImage(mPosition.x - CELLSIZE*2, mPosition.x + CELLSIZE*2, mPosition.y - CELLSIZE*2,
 			mPosition.y + CELLSIZE*2, mBossAnimeFream * 256, (mBossAnimeFream+1) * 256, 512, 256, mAlpha);
@@ -374,12 +378,10 @@ void CBoss::Render(){
 		Boss_Ani_Count_Frame = 5;
 
 		if (!mDirection)//左向き
-			mTexture.DrawImage(mPosition.x - CELLSIZE*2, mPosition.x + CELLSIZE*2, mPosition.y - CELLSIZE*2,
-			mPosition.y + CELLSIZE*2, (mBossAnimeFream+1) * 256, mBossAnimeFream * 256, 256, 0, mAlpha);
+			mTexture.DrawImage(BOSS_TEX_POS, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 256, 0, mAlpha);
 
 		else//右向き
-			mTexture.DrawImage(mPosition.x - CELLSIZE*2, mPosition.x + CELLSIZE*2,mPosition.y - CELLSIZE*2, 
-			mPosition.y + CELLSIZE*2, mBossAnimeFream * 256, (mBossAnimeFream+1) * 256, 256, 0, mAlpha);
+			mTexture.DrawImage(BOSS_TEX_POS, mBossAnimeFream * 256, (mBossAnimeFream + 1) * 256, 256, 0, mAlpha);
 		break;
 
 	case EJUMP://ジャンプ動作
@@ -421,12 +423,10 @@ void CBoss::Render(){
 		//	Boss_Ani_Count_Frame = 4;
 
 		//	if (!mDirection)//左向き
-		//		mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
-		//		mPosition.y + CELLSIZE * 2, mBossAnimeFream * 256, (mBossAnimeFream + 1) * 256, 768, 512, mAlpha);
+		//		mTexture.DrawImage(BOSS_TEX_POS, mBossAnimeFream * 256, (mBossAnimeFream + 1) * 256, 768, 512, mAlpha);
 
 		//	else			//右向き
-		//		mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
-		//		mPosition.y + CELLSIZE * 2, (mBossAnimeFream+1) * 256, mBossAnimeFream * 256, 768, 512, mAlpha);
+		//		mTexture.DrawImage(BOSS_TEX_POS, (mBossAnimeFream+1) * 256, mBossAnimeFream * 256, 768, 512, mAlpha);
 		//}
 		//着地地点
 		else if (mVelocityY == 0.0f){
@@ -438,12 +438,10 @@ void CBoss::Render(){
 			Boss_Ani_Count_Frame = 10;
 
 			if (!mDirection)//左向き
-				mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
-				mPosition.y + CELLSIZE * 2, mBossAnimeFream * 256, (mBossAnimeFream + 1) * 256, 2506, 2250, mAlpha);
+				mTexture.DrawImage(BOSS_TEX_POS, mBossAnimeFream * 256, (mBossAnimeFream + 1) * 256, 2506, 2250, mAlpha);
 
 			else			//右向き
-				mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
-				mPosition.y + CELLSIZE * 2, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 2506, 2250, mAlpha);
+				mTexture.DrawImage(BOSS_TEX_POS, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 2506, 2250, mAlpha);
 		}
 		break;
 
@@ -470,12 +468,10 @@ void CBoss::Render(){
 
 			//左向き
 			if (!mDirection)
-				mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
-				mPosition.y + CELLSIZE * 2, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 2048, 1792, mAlpha);
+				mTexture.DrawImage(BOSS_TEX_POS, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 2048, 1792, mAlpha);
 			//右向き
 			else
-				mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
-				mPosition.y + CELLSIZE * 2, mBossAnimeFream * 256, (mBossAnimeFream + 1) * 256, 2048, 1792, mAlpha);
+				mTexture.DrawImage(BOSS_TEX_POS, mBossAnimeFream * 256, (mBossAnimeFream + 1) * 256, 2048, 1792, mAlpha);
 		break;
 
 
@@ -486,11 +482,9 @@ void CBoss::Render(){
 		Boss_Ani_Count_Frame = 12;
 
 		if (!mDirection)	//左向き
-			mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
-			mPosition.y + CELLSIZE * 2, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 1024, 768, mAlpha);
+			mTexture.DrawImage(BOSS_TEX_POS, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 1024, 768, mAlpha);
 		else				//右向き
-			mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
-			mPosition.y + CELLSIZE * 2, mBossAnimeFream * 256, (mBossAnimeFream + 1) * 256, 1024, 768, mAlpha);
+			mTexture.DrawImage(BOSS_TEX_POS, mBossAnimeFream * 256, (mBossAnimeFream + 1) * 256, 1024, 768, mAlpha);
 		break;
 
 
@@ -510,12 +504,10 @@ void CBoss::Render(){
 		else{
 			//左向き
 			if (!mDirection)
-				mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
-				mPosition.y + CELLSIZE * 2, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 1280, 1024, mAlpha);
+				mTexture.DrawImage(BOSS_TEX_POS, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 1280, 1024, mAlpha);
 			//右向き
 			else
-				mTexture.DrawImage(mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - CELLSIZE * 2,
-				mPosition.y + CELLSIZE * 2, mBossAnimeFream * 256, (mBossAnimeFream + 1) * 256, 1280, 1024, mAlpha);
+				mTexture.DrawImage(BOSS_TEX_POS, mBossAnimeFream * 256, (mBossAnimeFream + 1) * 256, 1280, 1024, mAlpha);
 		}
 		break;
 	}

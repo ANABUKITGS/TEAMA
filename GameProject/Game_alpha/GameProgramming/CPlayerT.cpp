@@ -3,6 +3,9 @@
 #include "CScene.h"
 #include "CFade.h"
 #include "CMapScroll.h"
+#include "CMapSign.h"
+#include "CBoss.h"
+#include "CBossLifeBar.h"
 
 #define PLAYER_VELOCITY_X		1.25f	//入力
 #define PLAYER_VELOCITY_X_ICE	0.15f	//入力 氷足場
@@ -97,9 +100,7 @@ void CPlayerT::Update(){
 			mVelocityX = mVelocityY = 0.0f;
 			player_ani = EPLAYERANI::EIDOL;
 			mJumpCount = 0;
-			if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI])
-				mLife--;
-			CMapScroll::mpScroll->Reset();
+			Die();
 		}
 
 		//エリア外(右)
@@ -289,6 +290,7 @@ bool CPlayerT::Collision(CRectangle *p) {
 		if (CRectangle::Collision(p, &aj)) {
 			switch (p->mTag){
 			case EEWEAPON:
+			case EBWEAPON:
 				if (!mUnrivaled){
 					mUnrivaled = true;
 					player_ani = EPLAYERANI::EDAMAGE;
@@ -296,14 +298,10 @@ bool CPlayerT::Collision(CRectangle *p) {
 					player_ani_count_frame = 0;
 					if (mJewel > 0){
 						if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI])
-							mJewel--;
+							Damage(p->mTag);
 					}
 					else{
-						if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI]){
-							mLife--;
-							mPosition = mReSpornPos;
-							CMapScroll::mpScroll->Reset();
-						}
+						Die();
 					}
 				}
 				break;
@@ -406,9 +404,9 @@ void CPlayerT::Render(){
 		PLAYER_ANI_COUNT_FRAME = 8;
 
 		if (!mDirection)	//左向き
-			mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 128, 0, mAlpha);
+			mTexPlayer.DrawImage(PLAYER_TEX_POS, player_ani_count * 128, (player_ani_count + 1) * 128, 128, 0, mAlpha);
 		else				//右向き
-			mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (player_ani_count + 1) * 128, player_ani_count * 128, 128, 0, mAlpha);
+			mTexPlayer.DrawImage(PLAYER_TEX_POS, (player_ani_count + 1) * 128, player_ani_count * 128, 128, 0, mAlpha);
 		break;
 
 	case EPLAYERANI::ERUN:
@@ -430,7 +428,7 @@ void CPlayerT::Render(){
 					PLAYER_ANI_COUNT_FRAME = 4;
 			}
 
-			mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 256, 128, mAlpha);
+			mTexPlayer.DrawImage(PLAYER_TEX_POS, player_ani_count * 128, (player_ani_count + 1) * 128, 256, 128, mAlpha);
 		}
 
 		else{				//右向き
@@ -448,7 +446,7 @@ void CPlayerT::Render(){
 					PLAYER_ANI_COUNT_FRAME = 4;
 			}
 
-			mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (player_ani_count + 1) * 128, player_ani_count * 128, 256, 128, mAlpha);
+			mTexPlayer.DrawImage(PLAYER_TEX_POS, (player_ani_count + 1) * 128, player_ani_count * 128, 256, 128, mAlpha);
 		}
 		break;
 
@@ -457,10 +455,10 @@ void CPlayerT::Render(){
 			player_ani_count = 0;
 
 		if (mDirection)	//右向き
-			mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 0, 128, 384, 256, mAlpha);
+			mTexPlayer.DrawImage(PLAYER_TEX_POS, 0, 128, 384, 256, mAlpha);
 
 		else			//左向き
-			mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 128, 0, 384, 256, 1.0f);
+			mTexPlayer.DrawImage(PLAYER_TEX_POS, 128, 0, 384, 256, 1.0f);
 		break;
 
 	case EPLAYERANI::EJUMP:
@@ -472,9 +470,9 @@ void CPlayerT::Render(){
 			PLAYER_ANI_COUNT_FRAME = 10;
 
 			if (!mDirection)	//左向き
-				mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 512, 384, mAlpha);
+				mTexPlayer.DrawImage(PLAYER_TEX_POS, player_ani_count * 128, (player_ani_count + 1) * 128, 512, 384, mAlpha);
 			else				//右向き
-				mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (player_ani_count + 1) * 128, player_ani_count * 128, 512, 384, mAlpha);
+				mTexPlayer.DrawImage(PLAYER_TEX_POS, (player_ani_count + 1) * 128, player_ani_count * 128, 512, 384, mAlpha);
 		}
 
 		else if (mVelocityY <= 0.0f){
@@ -482,9 +480,9 @@ void CPlayerT::Render(){
 				player_ani_count = 0;
 
 			if (!mDirection)	//左向き
-				mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 256, 384, 512, 384, mAlpha);
+				mTexPlayer.DrawImage(PLAYER_TEX_POS, 256, 384, 512, 384, mAlpha);
 			else				//右向き
-				mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 384, 256, 512, 384, mAlpha);
+				mTexPlayer.DrawImage(PLAYER_TEX_POS, 384, 256, 512, 384, mAlpha);
 		}
 		break;
 
@@ -495,9 +493,9 @@ void CPlayerT::Render(){
 		PLAYER_ANI_COUNT_FRAME = 4;
 
 		if (!mDirection)	//左向き
-			mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 640, 512, mAlpha);
+			mTexPlayer.DrawImage(PLAYER_TEX_POS, player_ani_count * 128, (player_ani_count + 1) * 128, 640, 512, mAlpha);
 		else				//右向き
-			mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (player_ani_count + 1) * 128, player_ani_count * 128, 640, 512, mAlpha);
+			mTexPlayer.DrawImage(PLAYER_TEX_POS, (player_ani_count + 1) * 128, player_ani_count * 128, 640, 512, mAlpha);
 		break;
 
 	case EPLAYERANI::EYOYO:
@@ -507,9 +505,9 @@ void CPlayerT::Render(){
 		PLAYER_ANI_COUNT_FRAME = 6;
 
 		if (!mDirection)	//左向き
-			mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, player_ani_count * 128, (player_ani_count + 1) * 128, 768, 640, mAlpha);
+			mTexPlayer.DrawImage(PLAYER_TEX_POS, player_ani_count * 128, (player_ani_count + 1) * 128, 768, 640, mAlpha);
 		else				//右向き
-			mTexPlayer.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (player_ani_count + 1) * 128, player_ani_count * 128, 768, 640, mAlpha);
+			mTexPlayer.DrawImage(PLAYER_TEX_POS, (player_ani_count + 1) * 128, player_ani_count * 128, 768, 640, mAlpha);
 		break;
 
 	case EPLAYERANI::EDOWN:
@@ -535,5 +533,50 @@ void CPlayerT::Dash(){
 	else{
 		mVelocityLimit = VELOCITYX_LIMIT;
 		mDash = false;
+	}
+}
+
+void CPlayerT::Die(){
+	if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI]){
+		mLife--;
+		if (CBoss::mpBoss != NULL)
+			CBoss::mpBoss->mBossMaxLife = CBoss::mpBoss->mBossLife;
+		mpWeapon = 0;
+		mJewel = 3;
+	}
+	if (CMapBossRoomSign::mpBossRoomSign != NULL){
+		CMapScroll::boss_scroll = false;
+		CMapBossRoomSign::mpBossRoomSign->mColFlg = false;
+		CMapBossRoomSign::mpBossRoomSign->mScale.x = 0.0f;
+	}
+	mPosition = mReSpornPos;
+	CMapScroll::mpScroll->Reset();
+	player_ani_count = 0;
+	player_ani_count_frame = 0;
+	player_ani = EPLAYERANI::EIDOL;
+}
+
+void CPlayerT::Damage(ECELLNUM tag){
+	switch (tag){
+	case ECELLNUM::EEWEAPON:
+		mJewel--;
+		break;
+
+	case ECELLNUM::EBWEAPON:
+		if (mJewel < static_cast <float> (mMaxJewel)* 0.2){
+			Die();
+			break;
+		}
+		else{
+			if (static_cast <float> (mMaxJewel)* 0.2 > 1.0f)
+				mJewel -= static_cast <float> (mMaxJewel)* 0.1;
+
+			else
+				mJewel--;
+		}
+		break;
+
+	default:
+		break;
 	}
 }

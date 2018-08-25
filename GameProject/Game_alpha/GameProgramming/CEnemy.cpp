@@ -245,23 +245,23 @@ void CEnemy::Render(){
 
 		if (mTag == ECELLNUM::EENEMY1){
 			if (!mDirection)	//左向き
-				mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 2 * 128, (2 + 1) * 128, 128, 0, mAlpha);
+				mTexEnemy01.DrawImage(ENEMY_TEX_POS, 2 * 128, (2 + 1) * 128, 128, 0, mAlpha);
 			else				//右向き
-				mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (2 + 1) * 128, 2 * 128, 128, 0, mAlpha);
+				mTexEnemy01.DrawImage(ENEMY_TEX_POS, (2 + 1) * 128, 2 * 128, 128, 0, mAlpha);
 		}
 
 		if (mTag == ECELLNUM::EENEMY2){
 			if (!mDirection)	//左向き
-				mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 2 * 128, (2 + 1) * 128, 128, 0, mAlpha);
+				mTexEnemy02.DrawImage(ENEMY_TEX_POS, 2 * 128, (2 + 1) * 128, 128, 0, mAlpha);
 			else				//右向き
-				mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (2 + 1) * 128, 2 * 128, 128, 0, mAlpha);
+				mTexEnemy02.DrawImage(ENEMY_TEX_POS, (2 + 1) * 128, 2 * 128, 128, 0, mAlpha);
 		}
 
 		if (mTag == ECELLNUM::EENEMY3){
 			if (!mDirection)	//左向き
-				mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 2 * 128, (2 + 1) * 128, 128, 0, mAlpha);
+				mTexEnemy03.DrawImage(ENEMY_TEX_POS, 2 * 128, (2 + 1) * 128, 128, 0, mAlpha);
 			else				//右向き
-				mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (2 + 1) * 128, 2 * 128, 128, 0, mAlpha);
+				mTexEnemy03.DrawImage(ENEMY_TEX_POS, (2 + 1) * 128, 2 * 128, 128, 0, mAlpha);
 		}
 		break;
 	case EENEMYANI::ETURN:
@@ -274,23 +274,23 @@ void CEnemy::Render(){
 
 		if (mTag == ECELLNUM::EENEMY1){
 			if (!mDirection)	//左向き
-				mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 128, 0, mAlpha);
+				mTexEnemy01.DrawImage(ENEMY_TEX_POS, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 128, 0, mAlpha);
 			else				//右向き
-				mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 128, 0, mAlpha);
+				mTexEnemy01.DrawImage(ENEMY_TEX_POS, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 128, 0, mAlpha);
 		}
 
 		if (mTag == ECELLNUM::EENEMY2){
 			if (!mDirection)	//左向き
-				mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 128, 0, mAlpha);
+				mTexEnemy02.DrawImage(ENEMY_TEX_POS, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 128, 0, mAlpha);
 			else				//右向き
-				mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 128, 0, mAlpha);
+				mTexEnemy02.DrawImage(ENEMY_TEX_POS, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 128, 0, mAlpha);
 		}
 
 		if (mTag == ECELLNUM::EENEMY3){
 			if (!mDirection)	//左向き
-				mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 128, 0, mAlpha);
+				mTexEnemy03.DrawImage(ENEMY_TEX_POS, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 128, 0, mAlpha);
 			else				//右向き
-				mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 128, 0, mAlpha);
+				mTexEnemy03.DrawImage(ENEMY_TEX_POS, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 128, 0, mAlpha);
 		}
 		break;
 
@@ -312,23 +312,23 @@ void CEnemy::Render(){
 
 			if (mTag == ECELLNUM::EENEMY1){
 				if (!mDirection)	//左向き
-					mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 256, 128, mAlpha);
+					mTexEnemy01.DrawImage(ENEMY_TEX_POS, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 256, 128, mAlpha);
 				else				//右向き
-					mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 256, 128, mAlpha);
+					mTexEnemy01.DrawImage(ENEMY_TEX_POS, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 256, 128, mAlpha);
 			}
 
 			if (mTag == ECELLNUM::EENEMY2){
 				if (!mDirection)	//左向き
-					mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 256, 128, mAlpha);
+					mTexEnemy02.DrawImage(ENEMY_TEX_POS, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 256, 128, mAlpha);
 				else				//右向き
-					mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 256, 128, mAlpha);
+					mTexEnemy02.DrawImage(ENEMY_TEX_POS, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 256, 128, mAlpha);
 			}
 
 			if (mTag == ECELLNUM::EENEMY3){
 				if (!mDirection)	//左向き
-					mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 256, 128, mAlpha);
+					mTexEnemy03.DrawImage(ENEMY_TEX_POS, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 256, 128, mAlpha);
 				else				//右向き
-					mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 256, 128, mAlpha);
+					mTexEnemy03.DrawImage(ENEMY_TEX_POS, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 256, 128, mAlpha);
 			}
 		}
 		else{
@@ -339,23 +339,23 @@ void CEnemy::Render(){
 
 			if (mTag == ECELLNUM::EENEMY1){
 				if (!mDirection)	//左向き
-					mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 2 * 128, (2 + 1) * 128, 128, 0, mAlpha);
+					mTexEnemy01.DrawImage(ENEMY_TEX_POS, 2 * 128, (2 + 1) * 128, 128, 0, mAlpha);
 				else				//右向き
-					mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (2 + 1) * 128, 2 * 128, 128, 0, mAlpha);
+					mTexEnemy01.DrawImage(ENEMY_TEX_POS, (2 + 1) * 128, 2 * 128, 128, 0, mAlpha);
 			}
 
 			if (mTag == ECELLNUM::EENEMY2){
 				if (!mDirection)	//左向き
-					mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 2 * 128, (2 + 1) * 128, 128, 0, mAlpha);
+					mTexEnemy02.DrawImage(ENEMY_TEX_POS, 2 * 128, (2 + 1) * 128, 128, 0, mAlpha);
 				else				//右向き
-					mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (2 + 1) * 128, 2 * 128, 128, 0, mAlpha);
+					mTexEnemy02.DrawImage(ENEMY_TEX_POS, (2 + 1) * 128, 2 * 128, 128, 0, mAlpha);
 			}
 
 			if (mTag == ECELLNUM::EENEMY3){
 				if (!mDirection)	//左向き
-					mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 2 * 128, (2 + 1) * 128, 128, 0, mAlpha);
+					mTexEnemy03.DrawImage(ENEMY_TEX_POS, 2 * 128, (2 + 1) * 128, 128, 0, mAlpha);
 				else				//右向き
-					mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (2 + 1) * 128, 2 * 128, 128, 0, mAlpha);
+					mTexEnemy03.DrawImage(ENEMY_TEX_POS, (2 + 1) * 128, 2 * 128, 128, 0, mAlpha);
 			}
 		}
 		break;
@@ -366,23 +366,23 @@ void CEnemy::Render(){
 
 		if (mTag == ECELLNUM::EENEMY1){
 			if (!mDirection)	//左向き
-				mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 384, 256, mAlpha);
+				mTexEnemy01.DrawImage(ENEMY_TEX_POS, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 384, 256, mAlpha);
 			else				//右向き
-				mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 384, 256, mAlpha);
+				mTexEnemy01.DrawImage(ENEMY_TEX_POS, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 384, 256, mAlpha);
 		}
 
 		if (mTag == ECELLNUM::EENEMY2){
 			if (!mDirection)	//左向き
-				mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 384, 256, mAlpha);
+				mTexEnemy02.DrawImage(ENEMY_TEX_POS, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 384, 256, mAlpha);
 			else				//右向き
-				mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 384, 256, mAlpha);
+				mTexEnemy02.DrawImage(ENEMY_TEX_POS, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 384, 256, mAlpha);
 		}
 
 		if (mTag == ECELLNUM::EENEMY3){
 			if (!mDirection)	//左向き
-				mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 384, 256, mAlpha);
+				mTexEnemy03.DrawImage(ENEMY_TEX_POS, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 384, 256, mAlpha);
 			else				//右向き
-				mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 384, 256, mAlpha);
+				mTexEnemy03.DrawImage(ENEMY_TEX_POS, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 384, 256, mAlpha);
 		}
 
 		if (enemy_ani_count > 1)
@@ -398,23 +398,23 @@ void CEnemy::Render(){
 
 		if (mTag == ECELLNUM::EENEMY1){
 			if (!mDirection)	//左向き
-				mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 0, 128, 512, 384, mAlpha);
+				mTexEnemy01.DrawImage(ENEMY_TEX_POS, 0, 128, 512, 384, mAlpha);
 			else				//右向き
-				mTexEnemy01.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (0 + 1) * 128, enemy_ani_count * 128, 512, 384, mAlpha);
+				mTexEnemy01.DrawImage(ENEMY_TEX_POS, (0 + 1) * 128, enemy_ani_count * 128, 512, 384, mAlpha);
 		}
 
 		if (mTag == ECELLNUM::EENEMY2){
 			if (!mDirection)	//左向き
-				mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 512, 384, mAlpha);
+				mTexEnemy02.DrawImage(ENEMY_TEX_POS, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 512, 384, mAlpha);
 			else				//右向き
-				mTexEnemy02.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 512, 384, mAlpha);
+				mTexEnemy02.DrawImage(ENEMY_TEX_POS, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 512, 384, mAlpha);
 		}
 
 		if (mTag == ECELLNUM::EENEMY3){
 			if (!mDirection)	//左向き
-				mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 512, 384, mAlpha);
+				mTexEnemy03.DrawImage(ENEMY_TEX_POS, enemy_ani_count * 128, (enemy_ani_count + 1) * 128, 512, 384, mAlpha);
 			else				//右向き
-				mTexEnemy03.DrawImage(mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 512, 384, mAlpha);
+				mTexEnemy03.DrawImage(ENEMY_TEX_POS, (enemy_ani_count + 1) * 128, enemy_ani_count * 128, 512, 384, mAlpha);
 		}
 		break;
 

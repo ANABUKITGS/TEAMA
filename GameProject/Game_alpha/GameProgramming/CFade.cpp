@@ -23,11 +23,13 @@ void CFade::Init(){
 	mRectFade.SetVertex(-640, 640, -360, 360);
 }
 
-void CFade::ChangeFade(int scene){
+bool CFade::ChangeFade(int scene){
 	if (mFade == EFADE_NUM::EFALSE){
 		change_scene = scene;
 		mFade = EFADE_NUM::EFADEOUT;
+		return true;
 	}
+	return false;
 }
 
 void CFade::RenderFade(){

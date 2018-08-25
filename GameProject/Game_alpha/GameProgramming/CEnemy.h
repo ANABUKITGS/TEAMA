@@ -20,6 +20,8 @@
 #define ATTACK_INTERVAL			120
 #define ATTACK_INTERVAL2		30
 
+#define ENEMY_TEX_POS mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - mScale.y, mPosition.y - mScale.y + CELLSIZE * 2	//テクスチャー Position
+
 class CSearch :public CRectangle{
 public:
 	bool mDiscovery;	//true:索敵範囲内
@@ -89,7 +91,7 @@ public:
 	CEnemy::CEnemy(const CVector2&position, ECELLNUM tag)
 		: CEnemy()
 	{
-		SetRectangle(position, CVector2(32, 60), NULL);
+		SetRectangle(position + CVector2(0.0f, 28.0f), CVector2(32, 60), NULL);
 		mpSearch = new CSearch(CVector2(position.x + 128, position.y));
 		mTag = tag;
 		mRender = false;

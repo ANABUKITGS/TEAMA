@@ -13,6 +13,7 @@
 #include "CMapSwitchGround.h"
 #include "CMapSign.h"
 #include "CMapScroll.h"
+#include "CBoss.h"
 
 bool CGame2::mCheat[CHEAT_NUM::ESIZE];
 int CGame2::mTime;
@@ -133,11 +134,10 @@ void CGame2::Update() {
 		//CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETITLE);
 	}
 	if (CGamePad::Once(PAD_9) || CKey::Once(VK_RETURN)){
-		if (CFade::mMapfile != CFade::EGAMEMAP_NUM::EMAIN){
+		if (CFade::mMapfile != CFade::EGAMEMAP_NUM::EMAIN && CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::EGAME)){
 			if (CFade::mMapfile == CFade::EGAMEMAP_NUM::ETUTORIAL){
 				CFade::mMapfile = CFade::EGAMEMAP_NUM::EMAIN;
 			}
-			CFade::mFade = CFade::EFADE_NUM::EFADEOUT;
 		}
 	}
 
@@ -198,6 +198,15 @@ void CGame2::Render() {
 
 	if (CFade::mMapfile == CFade::EGAMEMAP_NUM::ETUTORIAL)
 		CText::DrawStringW(L"チュートリアル", -111, 328, 32, 1.0f, 0);
+
+	if (CMapBossRoomSign::mpBossRoomSign != NULL && CMapBossRoomSign::mpBossRoomSign->mColFlg){
+		CText::DrawStringW(L"JACK", -64, 328, 32, 1.0f, 0);
+#ifdef _DEBUG
+		wchar_t bosslife_buf[16];
+		swprintf(bosslife_buf, L"%2d/%2d", CBoss::mpBoss->mBossLife, CBoss::mpBoss->mBossMaxLife);
+		CText::DrawStringW(bosslife_buf, -80, 296, 32, 1.0f, 0);
+#endif
+	}
 }
 
 void CGame2::CheatText(){

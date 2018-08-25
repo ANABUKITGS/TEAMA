@@ -32,7 +32,7 @@ public:
 	static EFADE_NUM mFade;	//フェード効果
 
 	void Init();
-	static void ChangeFade(int);
+	static bool ChangeFade(int);
 	void RenderFade();
 };
 #endif

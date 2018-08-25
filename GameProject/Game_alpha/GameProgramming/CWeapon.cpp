@@ -47,7 +47,7 @@ void CWeapon::Update(){
 
 }
 void CWeapon::Render(){
-	if (mTag == ECELLNUM::EPWEAPON){
+	if (mTag == ECELLNUM::EPWEAPON || mTag == ECELLNUM::EBWEAPON){
 		if (mDirection)
 			mTexYoyo.DrawImage(PSTRING_UV_R, 1.0f);
 
@@ -84,6 +84,8 @@ bool CWeapon::Collision(CRectangle *p){
 			}
 			break;
 		case EEWEAPON:
+		case EBWEAPON:
+		case EPLAYER:
 			if (p->mTag == EBOX || p->mTag == ESTEEL)
 				mLife = 0;
 			break;
