@@ -110,6 +110,10 @@ void CFade::RenderFade(){
 				CPlayerT::mpPlayer->player_ani_count_frame = 0;
 				CPlayerT::mpPlayer->player_ani = CPlayerT::EPLAYERANI::EIDOL;
 				CPlayerT::mpPlayer->mpWeapon = 0;
+				CPlayerT::mpPlayer->mDirection = true;
+				CBoss::mpBoss->mDirection = false;
+				CBoss::mpBoss->mBossMaxLife = CBoss::mpBoss->mBossLife;
+				CBoss::mpBoss->mBossLifeProportion = static_cast <float> (CBoss::mpBoss->mBossLife) / static_cast <float> (CBoss::mpBoss->mBossMaxLife);
 
 				if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI]){
 					CPlayerT::mpPlayer->mLife--;

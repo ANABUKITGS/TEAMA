@@ -104,7 +104,6 @@ void CPlayerT::Update(){
 		//エリア外
 		if (mPosition.x + CELLSIZE < CMapScroll::mpScroll->mPosition.x - 640.0f ||	//エリア外(左)
 			mPosition.y + CELLSIZE < 0.0f){	//エリア外(下)
-			mPosition = mReSpornPos;
 			mVelocityX = mVelocityY = 0.0f;
 			mJumpCount = 0;
 			Die();
@@ -538,7 +537,7 @@ void CPlayerT::Render(){
 		if (player_ani_count >= 1){
 			mDownTime++;
 			if (mDownTime >= PLAYER_DOWN_TIME){
-				if (mLife >= 0)
+				if (mLife > 0)
 					CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::EPLAYERDOWN);
 
 				else
@@ -576,6 +575,7 @@ void CPlayerT::Die(){
 	if (player_ani != EDOWN){
 		player_ani = EPLAYERANI::EDOWN;
 		player_ani_count = player_ani_count_frame = 0;
+		mJewel = 0;
 	}
 }
 

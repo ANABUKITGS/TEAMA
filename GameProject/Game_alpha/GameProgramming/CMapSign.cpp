@@ -110,9 +110,11 @@ bool CMapBossRoomSign::Collision(CRectangle *r) {
 				CMapScroll::scroll_stop = false;
 				if (mPosition.x + CELLSIZE / 2 < r->mPosition.x && !mColFlg){
 					mColFlg = true;
-					CMapBossRoomSign::mpBossRoomSign->mScale.x = 0.0f;
 					if (CBossLifeBar::mpBossLifeBar == NULL)
 						CBossLifeBar::mpBossLifeBar = new CBossLifeBar();
+
+					if (CBossLifeBar::mpBossLifeBar != NULL)
+						CBossLifeBar::mpBossLifeBar->mScale.x = 0.0f;
 					CPlayerT::mpPlayer->mMaxJewel = CPlayerT::mpPlayer->mJewel;
 					CPlayerT::mpPlayer->player_ani = CPlayerT::EPLAYERANI::EIDOL;
 					return true;
