@@ -274,11 +274,32 @@ bool CBoss::Collision(CRectangle*p){
 						mAttackBehavior = EDAMAGE;
 				}
 				break;
+
+			case ECELLNUM::EBOX:
+			case ECELLNUM::ESTEEL:
+				//落下中のオブジェクトと接触した場合
+				if (p->mBreak){
+					mAttackBehavior = EDAMAGE;
+
+					mVelocityY = 0.0f;
+					if (Invincible)
+						return false;
+					//無敵時間のフラグがOFFの時にダメージを加算する
+					else{
+						mBossLife -= static_cast <float> (mBossMaxLife)* 0.2;
+						//無敵時間のフラグをONにする
+						Invincible = true;
+						//攻撃を受けた時のアニメーションをする
+						//一定回数以上の攻撃を受けてない時にアニメーションされる
+						if (mAttackBehavior != EDOWN)
+							mAttackBehavior = EDAMAGE;
+					}
+				}
+				break;
+
 			case ECELLNUM::ESWITCH_GROUND1:
 			case ECELLNUM::ESWITCH_GROUND2:
 			case ECELLNUM::ENONE:
-			case ECELLNUM::EBOX:
-			case ECELLNUM::ESTEEL:
 			case ECELLNUM::ECHIKUWA:
 			case ECELLNUM::EBELTL:
 			case ECELLNUM::EBELTR:

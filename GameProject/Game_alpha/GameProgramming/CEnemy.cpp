@@ -1,6 +1,8 @@
 #include "CEnemy.h"
 #include "CScene.h"
 #include "CBoss.h"
+#include "CMapBox.h"
+#include "CMapSteel.h"
 
 /*
 “G‚Ìõ“G”ÍˆÍ
@@ -184,13 +186,18 @@ bool CEnemy::Collision(CRectangle*p){
 				mIce = false;
 				break;
 
+			case ECELLNUM::EBOX:
+			case ECELLNUM::ESTEEL:
+				mIce = false;
+				if (p->mBreak)
+					enemy_ani = EENEMYANI::EDAMAGE;
+				break;
+
 			case ECELLNUM::EENEMY1:
 			case ECELLNUM::EENEMY2:
 			case ECELLNUM::EENEMY3:
 			case ECELLNUM::EBOSS:
 			case ECELLNUM::ENONE:
-			case ECELLNUM::EBOX:
-			case ECELLNUM::ESTEEL:
 			case ECELLNUM::ESEARCH:
 			case ECELLNUM::ESWITCH:
 			case ECELLNUM::ESIGN:

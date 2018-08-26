@@ -11,7 +11,7 @@
 #define JUMP_TIME_LIMIT 15
 #define VELOCITYX_LIMIT 5.0f
 #define DAMAGE_INTERVAL 180
-#define PLAYER_DOWN_TIME 120
+#define PLAYER_DOWN_TIME 60
 
 #define PLAYER_TEX_POS mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - mScale.y, mPosition.y - mScale.y + CELLSIZE * 2
 

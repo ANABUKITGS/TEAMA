@@ -1,11 +1,13 @@
 #include "CFade.h"
 #include "CGame2.h"
 #include "CPlayerT.h"
+#include "CBoss.h"
 #include "CScene.h"
 #include "CBGM.h"
 #include "CMapScroll.h"
 #include "CTime.h"
 #include "CTitle.h"
+#include "CMapSign.h"
 
 float CFade::mAlpha = 0.0f;
 int CFade::change_scene = CSceneChange::ECSCENECHANGE_NUM::ETITLE;
@@ -94,6 +96,27 @@ void CFade::RenderFade(){
 			case CSceneChange::ECSCENECHANGE_NUM::ERESULT:
 				CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ERESULT);
 				CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ERESULT;
+				break;
+
+			case CSceneChange::ECSCENECHANGE_NUM::EPLAYERDOWN:
+				if (CMapBossRoomSign::mpBossRoomSign != NULL){
+					CMapScroll::boss_scroll = false;
+					CMapBossRoomSign::mpBossRoomSign->mColFlg = false;
+					CMapBossRoomSign::mpBossRoomSign->mScale.x = 0.0f;
+				}
+				CPlayerT::mpPlayer->mPosition = CPlayerT::mpPlayer->mReSpornPos;
+				CMapScroll::mpScroll->Reset();
+				CPlayerT::mpPlayer->player_ani_count = 0;
+				CPlayerT::mpPlayer->player_ani_count_frame = 0;
+				CPlayerT::mpPlayer->player_ani = CPlayerT::EPLAYERANI::EIDOL;
+				CPlayerT::mpPlayer->mpWeapon = 0;
+
+				if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI]){
+					CPlayerT::mpPlayer->mLife--;
+					if (CBoss::mpBoss != NULL)
+						CBoss::mpBoss->mBossMaxLife = CBoss::mpBoss->mBossLife;
+					CPlayerT::mpPlayer->mJewel = 3;
+				}
 				break;
 
 			default:

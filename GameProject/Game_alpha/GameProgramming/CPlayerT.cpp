@@ -106,7 +106,6 @@ void CPlayerT::Update(){
 			mPosition.y + CELLSIZE < 0.0f){	//エリア外(下)
 			mPosition = mReSpornPos;
 			mVelocityX = mVelocityY = 0.0f;
-			player_ani = EPLAYERANI::EIDOL;
 			mJumpCount = 0;
 			Die();
 		}
@@ -125,7 +124,7 @@ void CPlayerT::Update(){
 
 //前進処理
 void CPlayerT::Forward(){
-	if (player_ani != EPLAYERANI::EDAMAGE){
+	if (player_ani != EPLAYERANI::EDAMAGE && player_ani != EPLAYERANI::EDOWN){
 		if (CGamePad::Push(PAD_LSTICKX, 0.1f) || CGamePad::Push(PAD_LSTICKX, -0.1f)){
 			if (!CMapScroll::scroll_flg)
 				CMapScroll::scroll_flg = true;
@@ -267,7 +266,7 @@ void CPlayerT::Forward(){
 			}
 
 			if (!mAir)
-				player_ani = EIDOL;
+				player_ani = EPLAYERANI::EIDOL;
 		}
 		mPosition.x += mVelocityX;
 		if (mUnrivaled){
@@ -290,120 +289,125 @@ void CPlayerT::Forward(){
 
 
 bool CPlayerT::Collision(CRectangle *p) {
-	if (p->GetEnabled()) {
-		CVector2 aj;
-		if (CRectangle::Collision(p, &aj)) {
-			switch (p->mTag){
-			case ECELLNUM::EEWEAPON:
-			case ECELLNUM::EBWEAPON:
-				if (!mUnrivaled){
-					mUnrivaled = true;
-					player_ani = EPLAYERANI::EDAMAGE;
-					player_ani_count = 0;
-					player_ani_count_frame = 0;
-					if (mJewel > 0){
-						if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI])
-							Damage(p->mTag);
+	if (player_ani != EPLAYERANI::EDAMAGE && player_ani != EPLAYERANI::EDOWN){
+		if (p->GetEnabled()) {
+			CVector2 aj;
+			if (CRectangle::Collision(p, &aj)) {
+				switch (p->mTag){
+				case ECELLNUM::EEWEAPON:
+				case ECELLNUM::EBWEAPON:
+					if (!mUnrivaled){
+						mUnrivaled = true;
+						player_ani = EPLAYERANI::EDAMAGE;
+						player_ani_count = 0;
+						player_ani_count_frame = 0;
+						if (mJewel > 0){
+							if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI])
+								Damage(p->mTag);
+						}
+						else{
+							Die();
+						}
 					}
-					else{
-						Die();
-					}
-				}
-				break;
+					break;
 
-			case ECELLNUM::EJEWELRY:
-				mJewel++;
-				break;
-
-			case ECELLNUM::EJEWELRY2:
-				mMiniJewel++;
-				if (mMiniJewel == 10){
+				case ECELLNUM::EJEWELRY:
 					mJewel++;
-					mMiniJewel = 0;
+					break;
+
+				case ECELLNUM::EJEWELRY2:
+					mMiniJewel++;
+					if (mMiniJewel == 10){
+						mJewel++;
+						mMiniJewel = 0;
+					}
+					break;
+
+				case ECELLNUM::ECHECKPOINT:
+					mReSpornPos = p->mPosition;
+					break;
+
+				case ECELLNUM::EICE:
+					mIce = true;
+					break;
+
+				case ECELLNUM::ESWITCH_GROUND1:
+				case ECELLNUM::ESWITCH_GROUND2:
+					if (CMapSwitchGround::mNumber != p->mTag)
+						break;
+				case ECELLNUM::ECHIKUWA:
+				case ECELLNUM::EBELTL:
+				case ECELLNUM::EBELTR:
+				case ECELLNUM::EUNDER:
+					mIce = false;
+					break;
+
+				case ECELLNUM::EENEMY1:
+				case ECELLNUM::EENEMY2:
+				case ECELLNUM::EENEMY3:
+				case ECELLNUM::EBOSS:
+				case ECELLNUM::ENONE:
+				case ECELLNUM::EBOX:
+				case ECELLNUM::ESTEEL:
+				case ECELLNUM::EPWEAPON:
+				case ECELLNUM::ESEARCH:
+				case ECELLNUM::ESWITCH:
+				case ECELLNUM::ESIGN:
+				case ECELLNUM::EENDSIGN:
+				case ECELLNUM::EBOSSROOM:
+					break;
+
+				default:
+				{
+						   CVector2 ad;
+						   if (aj.x > 0) {
+							   //右空き
+							   if (!(p->mColFlg & EDT_RIGHT)) {
+								   mPosition.x = mPosition.x + aj.x;
+								   if (mIce)
+									   mVelocityX = 0.0f;
+							   }
+						   }
+						   else if (aj.x < 0) {
+							   //左空き
+							   if (!(p->mColFlg & EDT_LEFT)) {
+								   mPosition.x = mPosition.x + aj.x;
+								   if (mIce)
+									   mVelocityX = 0.0f;
+							   }
+						   }
+						   if (CRectangle::Collision(p, &aj, &ad)) {
+							   if (ad.y < 0) {
+								   //下空き
+								   if (!(p->mColFlg & EDT_BOTTOM)) {
+									   mPosition.y = mPosition.y + ad.y;
+									   mVelocityY = 0.0f;
+								   }
+							   }
+							   else if (ad.y > 0) {
+								   //上空き
+								   if (!(p->mColFlg & EDT_TOP)) {
+									   mPosition.y = mPosition.y + ad.y;
+									   mJumpCount = 0;
+									   mVelocityY = 0.0f;
+								   }
+							   }
+						   }
 				}
-				break;
+					mIce = false;
+					break;
 
-			case ECELLNUM::ECHECKPOINT:
-				mReSpornPos = p->mPosition;
-				break;
 
-			case ECELLNUM::EICE:
-				mIce = true;
-				break;
-
-			case ECELLNUM::ESWITCH_GROUND1:
-			case ECELLNUM::ESWITCH_GROUND2:
-			case ECELLNUM::ECHIKUWA:
-			case ECELLNUM::EBELTL:
-			case ECELLNUM::EBELTR:
-			case ECELLNUM::EUNDER:
-				mIce = false;
-				break;
-
-			case ECELLNUM::EENEMY1:
-			case ECELLNUM::EENEMY2:
-			case ECELLNUM::EENEMY3:
-			case ECELLNUM::EBOSS:
-			case ECELLNUM::ENONE:
-			case ECELLNUM::EBOX:
-			case ECELLNUM::ESTEEL:
-			case ECELLNUM::EPWEAPON:
-			case ECELLNUM::ESEARCH:
-			case ECELLNUM::ESWITCH:
-			case ECELLNUM::ESIGN:
-			case ECELLNUM::EENDSIGN:
-			case ECELLNUM::EBOSSROOM:
-				break;
-
-			default:
-			{
-						CVector2 ad;
-						if (aj.x > 0) {
-							//右空き
-							if (!(p->mColFlg & EDT_RIGHT)) {
-								mPosition.x = mPosition.x + aj.x;
-								if (mIce)
-									mVelocityX = 0.0f;
-							}
-						}
-						else if (aj.x < 0) {
-							//左空き
-							if (!(p->mColFlg & EDT_LEFT)) {
-								mPosition.x = mPosition.x + aj.x;
-								if (mIce)
-									mVelocityX = 0.0f;
-							}
-						}
-						if (CRectangle::Collision(p, &aj, &ad)) {
-							if (ad.y < 0) {
-								//下空き
-								if (!(p->mColFlg & EDT_BOTTOM)) {
-									mPosition.y = mPosition.y + ad.y;
-									mVelocityY = 0.0f;
-								}
-							}
-							else if (ad.y > 0) {
-								//上空き
-								if (!(p->mColFlg & EDT_TOP)) {
-									mPosition.y = mPosition.y + ad.y;
-									mJumpCount = 0;
-									mVelocityY = 0.0f;
-								}
-							}
-						}
+				}
+				return true;
 			}
-				mIce = false;
-				break;
-
-
-			}
-			return true;
 		}
 	}
 	return false;
 }
 
 void CPlayerT::Render(){
+	static int mDownTime = 0;
 	switch (player_ani){
 	case EPLAYERANI::EIDOL:
 		if (player_ani_count > 7)
@@ -519,10 +523,11 @@ void CPlayerT::Render(){
 		break;
 
 	case EPLAYERANI::EDOWN:
+		CMapScroll::scroll_flg = false;
 		if (player_ani_count > 1)
 			player_ani_count = 1;
 
-		PLAYER_ANI_COUNT_FRAME = 10;
+		PLAYER_ANI_COUNT_FRAME = 30;
 
 		if (!mDirection)	//左向き
 			mTexPlayer.DrawImage(PLAYER_TEX_POS, player_ani_count * 128, (player_ani_count + 1) * 128, 896, 768, mAlpha);
@@ -531,14 +536,18 @@ void CPlayerT::Render(){
 
 		//タイトルに戻る
 		if (player_ani_count >= 1){
-			static int mDownTime = 0;
 			mDownTime++;
 			if (mDownTime >= PLAYER_DOWN_TIME){
-				CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
-				player_ani_count = player_ani_count_frame = 0;
-				return;
+				if (mLife >= 0)
+					CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::EPLAYERDOWN);
+
+				else
+					CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
+				mDownTime = 0;
 			}
+			return;
 		}
+		mDownTime = 0;
 		break;
 
 	default:
@@ -564,31 +573,9 @@ void CPlayerT::Dash(){
 }
 
 void CPlayerT::Die(){
-	if (player_ani != EPLAYERANI::EDOWN){
-		if (CMapBossRoomSign::mpBossRoomSign != NULL){
-			CMapScroll::boss_scroll = false;
-			CMapBossRoomSign::mpBossRoomSign->mColFlg = false;
-			CMapBossRoomSign::mpBossRoomSign->mScale.x = 0.0f;
-		}
-		mPosition = mReSpornPos;
-		CMapScroll::mpScroll->Reset();
-		player_ani_count = 0;
-		player_ani_count_frame = 0;
-		player_ani = EPLAYERANI::EIDOL;
-
-		if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI]){
-			mLife--;
-			if (CBoss::mpBoss != NULL)
-				CBoss::mpBoss->mBossMaxLife = CBoss::mpBoss->mBossLife;
-			mpWeapon = 0;
-
-			//ゲームオーバー
-			if (mLife < 0){
-				player_ani = EPLAYERANI::EDOWN;
-				return;
-			}
-			mJewel = 3;
-		}
+	if (player_ani != EDOWN){
+		player_ani = EPLAYERANI::EDOWN;
+		player_ani_count = player_ani_count_frame = 0;
 	}
 }
 

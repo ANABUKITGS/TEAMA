@@ -17,26 +17,31 @@ bool CMapIce::Collision(CRectangle *r) {
 
 		CVector2 aj;
 		if (CRectangle::Collision(r) && CRectangle::Collision(r, &aj)) {
-			//ç∂
-			if (mPosition.x - CELLSIZE / 2 > r->mPosition.x) {
-				r->mPosition.x = r->mPosition.x - aj.x;
+			//ç∂âE
+			if (mPosition.x - mScale.x > r->mPosition.x || mPosition.x + mScale.x < r->mPosition.x) {
+				//ç∂
+				if (mPosition.x - mScale.x > r->mPosition.x) {
+					r->mPosition.x = r->mPosition.x - aj.x;
+				}
+				//âE
+				if (mPosition.x + mScale.x < r->mPosition.x) {
+					r->mPosition.x = r->mPosition.x - aj.x;
+				}
 			}
-			//âE
-			if (mPosition.x + CELLSIZE / 2 < r->mPosition.x) {
-				r->mPosition.x = r->mPosition.x - aj.x;
-			}
-			//â∫
-			if (mPosition.y > r->mPosition.y) {
-				r->mPosition.y = r->mPosition.y - aj.y;
-				r->mVelocityY = 0.0f;
-			}
-			//è„
-			if (mPosition.y < r->mPosition.y) {
-				r->mPosition.y = r->mPosition.y - aj.y;
-				r->mVelocityY = 0.0f;
-				r->mIce = true;
-				if (r->mTag == ECELLNUM::EPLAYER){
-					CPlayerT::mpPlayer->mJumpCount = 0;
+			//è„â∫
+			else {
+				//â∫
+				if (mPosition.y - mScale.y > r->mPosition.y) {
+					r->mPosition.y = r->mPosition.y - aj.y;
+					r->mVelocityY = 0.0f;
+				}
+				//è„
+				if (mPosition.y + mScale.y < r->mPosition.y) {
+					r->mPosition.y = r->mPosition.y - aj.y;
+					r->mVelocityY = 0.0f;
+					r->mIce = true;
+					if (r->mTag == ECELLNUM::EPLAYER)
+						CPlayerT::mpPlayer->mJumpCount = 0;
 				}
 			}
 			return true;

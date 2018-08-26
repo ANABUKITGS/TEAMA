@@ -12,6 +12,7 @@
 class CRectangle : public CTask{
 public:
 	char mColFlg;	//ブロック空き方向フラグ
+	bool mBreak;	//落下オブジェクト 落下判定
 	ECELLNUM mTag;
 	CVector2 mPosition;	//四角形の中心座標	x四角形の中心のX座標	y四角形の中心Y座標
 	CVector2 mVector[4];	//四角形生成メソッドに使うインスタンス変数
@@ -35,6 +36,7 @@ public:
 		, mVelocityY(0.0f)
 		, mDirection(false)
 		, mIce(false)
+		, mBreak(false)
 	{}
 	/*
 	position:位置

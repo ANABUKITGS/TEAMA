@@ -38,6 +38,7 @@ public:
 		EEXIT,
 		ESIZE,
 		ERESULT,
+		EPLAYERDOWN
 	};
 	static int changenum;
 	void Init();

@@ -10,7 +10,6 @@ private:
 
 public:
 	float mVelocityY;
-	bool mBreak;
 	CMapBox(const CVector2& pos)
 		//CMapChipÇ≈èâä˙âª
 		: CMapChip(pos + CVector2(0.0f, CELLSIZE / 2), CVector2(CELLSIZE, CELLSIZE), NULL, NULL, NULL, NULL, NULL, ECELLNUM::EBOX)
