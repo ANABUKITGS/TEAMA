@@ -25,7 +25,7 @@ void CBoss::Update(){
 			}
 			//ジャンプの処理ここまで
 			//待機状態からランダムで行動をとる(移動、ジャンプ、攻撃のどれか)
-			mBossIBehavior = 4;// rand() / 1000 % 7;
+			mBossIBehavior =  rand() / 1000 % 7;
 			printf("%d\n", mBossAttackItr);
 			//行動パターン処理
 			switch (mAttackBehavior){
@@ -306,6 +306,10 @@ void CBoss::Update(){
 		mAttackBehavior = EIDOL;
 		mVelocityX = mVelocityY = 0.0f;
 	}
+	if (mPosition.y < -100){
+		mPosition.y = mBossDefaultPos.y;
+		mPosition.x = CMapScroll::mpScroll->mPosition.x;
+	}
 }
 
 bool CBoss::Collision(CRectangle*p){
@@ -322,7 +326,7 @@ bool CBoss::Collision(CRectangle*p){
 				break;
 			case ECELLNUM::EPWEAPON://プレイヤーのヨーヨーと衝突した時
 				mVelocityY = 0.0f;
-				if (Invincible)
+				if (Invincible||mAlpha==0.0)
 					return false;
 				//無敵時間のフラグがOFFの時にダメージを加算する
 				else{
