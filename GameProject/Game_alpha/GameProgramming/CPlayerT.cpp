@@ -341,13 +341,18 @@ bool CPlayerT::Collision(CRectangle *p) {
 					mIce = false;
 					break;
 
+				case ECELLNUM::EBOX:
+				case ECELLNUM::ESTEEL:
+					mIce = false;
+					//if (p->mBreak)
+					//	player_ani = EPLAYERANI::EDAMAGE;
+					break;
+
 				case ECELLNUM::EENEMY1:
 				case ECELLNUM::EENEMY2:
 				case ECELLNUM::EENEMY3:
 				case ECELLNUM::EBOSS:
 				case ECELLNUM::ENONE:
-				case ECELLNUM::EBOX:
-				case ECELLNUM::ESTEEL:
 				case ECELLNUM::EPWEAPON:
 				case ECELLNUM::ESEARCH:
 				case ECELLNUM::ESWITCH:

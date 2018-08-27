@@ -43,6 +43,8 @@ bool CMapIce::Collision(CRectangle *r) {
 					if (r->mTag == ECELLNUM::EPLAYER)
 						CPlayerT::mpPlayer->mJumpCount = 0;
 				}
+				else
+					r->mIce = false;
 			}
 			return true;
 		}

@@ -31,6 +31,7 @@ bool CMapBelt::Collision(CRectangle *r) {
 			//â∫
 			if (mPosition.y > r->mPosition.y) {
 				r->mPosition.y = r->mPosition.y - aj.y;
+				r->mVelocityY = 0.0f;
 			}
 			//è„
 			if (mPosition.y < r->mPosition.y) {

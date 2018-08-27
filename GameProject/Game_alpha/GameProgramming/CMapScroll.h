@@ -5,7 +5,7 @@
 #include "CMap.h"
 #include "CGame2.h"
 
-#define SCROLL_SPEED			0.75f
+#define SCROLL_SPEED			1.2f
 #define ADD_SCROLL_SPEED		SCROLL_SPEED * 5
 #define BOSSROOM_SCROLL_SPEED	SCROLL_SPEED * 10
 

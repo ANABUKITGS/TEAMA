@@ -16,8 +16,7 @@ bool CMapUnder::Collision(CRectangle*r){
 	if (r->mTag == ECELLNUM::EPLAYER ||
 		r->mTag == ECELLNUM::EENEMY1 ||
 		r->mTag == ECELLNUM::EENEMY2 ||
-		r->mTag == ECELLNUM::EENEMY3 |
-		r->mTag == ECELLNUM::EBOSS){
+		r->mTag == ECELLNUM::EENEMY3){
 		if (CRectangle::Collision(r) && CRectangle::Collision(r, &aj)) {
 			if (mPosition.y < r->mPosition.y - r->mScale.y) {
 				if (r->mTag == ECELLNUM::EPLAYER){
