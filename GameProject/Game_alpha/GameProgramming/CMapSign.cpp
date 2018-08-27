@@ -49,10 +49,10 @@ void CMapEndSign::Update() {
 bool CMapEndSign::Collision(CRectangle *r) {
 	if (CFade::mFade == CFade::EFADE_NUM::EFALSE && CFade::mMapfile == CFade::EGAMEMAP_NUM::ETUTORIAL){
 		// “–‚½‚Á‚Ä‚¢‚é‚©
-		if (r->mTag == EPLAYER){
+		if (r->mTag == ECELLNUM::EPLAYER){
 			if (CRectangle::Collision(r)){
 				CFade::mMapfile = CFade::EGAMEMAP_NUM::EMAIN;
-				CFade::mFade = CFade::EFADE_NUM::EFADEOUT;
+				CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::EGAME);
 				return true;
 			}
 		}
