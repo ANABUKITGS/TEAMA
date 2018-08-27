@@ -9,7 +9,6 @@
 
 #define BEHAVIOR 270.0f					//ボスの行動切り替え定数(移動から攻撃)
 #define BOSS_DELCNT 200					//ボスの消滅カウント（とりあえず100frameに設定）
-#define ANI_FPS 60						//ボスのアニメーションフレーム
 #define BOSSDAMAGECNT 180				//ボスがダメージを受けて無敵になる時間
 #define BOSSGVELOCITY 30.0f				//ボスのジャンプ定数
 #define BOSSJUMPTIME 60					//ボスのジャンプカウント(仮で60フレームに設定)
@@ -20,6 +19,8 @@
 #define BOSSNEXTBEHAVIOR 70				//ボスの待機から次の行動までの時間
 #define BOSS_DOWN_TIME 120				//やられてからの待ち時間
 #define BOSS_LIFE 50					//ボスの初期HP
+#define BOSSTELEPOA 180					//透明になれる最大時間
+#define BOSSTELEPO 120					//瞬間移動場所の値
 
 #define BOSS_TEX_POS mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - mScale.y, mPosition.y - mScale.y + CELLSIZE * 4	//テクスチャー Position
 
@@ -31,8 +32,10 @@ private:
 	CVector2 mBossDefaultPos;			//ボスの初期位置
 	CWeapon*mpBWeapon;					//ボスの武器使用クラスをインスタンスにする
 	float mBossBehavior;				//敵の各行動に入る判別距離
-	int mBossAttackItr;					//ボスのヨーヨー発射間隔
+	int mBossTelepo;					//瞬間移動した場所をランダムにする
+	int mBossAttackItr;					//ボスの透明時間を乱数で出す変数
 	int Boss_Ani_Count;					//次のコマに行く
+	int mBossAnimeFreamT;				//瞬間移動用変数（後で消す可能性）
 	int mBossAnimeFream;				//ボスのアニメーションのテクスチャの枚数
 	int mBehaviorPattern;				//ボスの一部の行動にランダム要素を追加
 	int mBossDeleteTime;				//ボスが消滅する時間の変数
@@ -42,6 +45,7 @@ private:
 	int mBossInvincibleTime;			//ボスの無敵時間
 	int mBossIBehavior;					//待機状態からのランダム行動
 	bool Invincible;					//無敵時間用変数を追加
+	bool mTelepoEnabled;
 	void BossJump();
 
 	//引数無しコンストラクタで変数等の初期化処理
@@ -57,13 +61,15 @@ private:
 		mBossAnimeFream=0;
 		mBossLife = mBossMaxLife = BOSS_LIFE;
 		mBossLifeProportion = 0.0f;
+		mBossAnimeFreamT = 4;			//逆再生アニメーション変数を初期化
+		mBossIBehavior = 0;				//待機状態から行動開始する変数
+		mBossTelepo = 0;				//瞬間移動の値を初期化
 		mBossJcnt=0;					//ジャンプ間隔変数の値を0にする
 		mBossJumprad=0;					//最初のジャンプタイミングを初期化する
 		mBossDeleteTime = BOSS_DELCNT;	//ボスの消滅時間を初期化
 		Invincible = false;				//無敵時間は最初偽にして初期化
 		mDirection = false;				//最初の向きを左向きにする
 		mBossBehavior = BEHAVIOR;		//敵の行動値を代入
-		mBossAttackItr = 0;
 		mBossBattle = false;
 		mAttackBehavior = EIDOL;		//待機状態にする
 		mTag = EBOSS;					//タグをボスにする
@@ -83,6 +89,7 @@ public:
 		EJUMP,							//ジャンプ
 		EDAMAGE,						//ダメージ
 		EDOWN,							//ダウン
+		ETELEPO,						//瞬間移動
 		ESIZE,
 	};
 
