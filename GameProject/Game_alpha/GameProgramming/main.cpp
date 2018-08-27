@@ -73,7 +73,7 @@ int main(void)
 		return -1;
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(1280, 720, "GET BACK DIAMOND", NULL, NULL);
+	window = glfwCreateWindow(1280, 720, "GET BACK DIAMOND", glfwGetPrimaryMonitor(), NULL);
 	if (!window)
 	{
 		glfwTerminate();
