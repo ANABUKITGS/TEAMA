@@ -4,13 +4,6 @@
 #include "CScene.h"
 #include "CMain.h"
 
-
-struct  SRanking{
-	char r[4];
-	char n[3];
-	int s;
-};
-
 class CSceneResult :public CScene{
 public:
 	CTexture mTexResult;
@@ -35,7 +28,7 @@ public:
 	static bool mSort;
 	static int mScoreNum;
 	CScore(){
-		mSceneTag = ESCORE;
+		CScene::mSceneTag = CScene::ESceneTag::ESCORE;
 	}
 	void Init();
 	void Update();
@@ -48,16 +41,21 @@ public:
 	static char name[3];
 	static int charnum;
 	CName(){
-		CScene::mSceneTag = ENAME;
+		CScene::mSceneTag = CScene::ESceneTag::ENAME;
 	}
 	void Init();
 	void Update();
 };
 class CRanking :public CScene{
 public:
+	struct  SRanking{
+		char r[4];
+		char n[3];
+		int s;
+	};
 	SRanking mRanking[3];
 	CRanking(){
-		mSceneTag = ERANKING;
+		CScene::mSceneTag = CScene::ESceneTag::ERANKING;
 	}
 	void Init();
 	void Update();

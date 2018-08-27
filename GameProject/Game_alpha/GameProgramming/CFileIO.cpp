@@ -1,21 +1,16 @@
 #include "CFileIO.h"
+#include "CScore.h"
 #define TUTORIAL_MAP	".\\Data\\Map\\MAP0.BIN"	//チュートリアルマップ ファイルパス
 #define GAME_MAP		".\\Data\\Map\\MAP1.BIN"	//ゲームマップ ファイルパス
 #define EDITER_MAP		".\\Data\\Map\\MAP2.BIN"	//エディットマップ ファイルパス
+#define RANKING_PATH	".\\Data\\RANKING.BIN"		//ランキングデータ ファイルパス
 
 extern CEditer mEditer;
 extern CGame mGame;
+extern CRanking mRanking;
 
 char cdir[MAX_PATH];	//ディレクトリ
 char filepath[MAX_PATH];	//開く / 保存する ファイルの フルパス
-
-void CFileIO::Init(){
-
-}
-
-void CFileIO::Update(){
-	
-}
 
 void CMapIO::GameMapLoad(int map){
 	if (map == EGAMEMAP)
@@ -170,4 +165,41 @@ void CMapIO::SaveDialog(HWND hWnd){	//保存 ダイアログ
 		CMapIO::Save();
 	}
 	SetCurrentDirectory(cdir);	//取得したディレクトリを カレントディレクトリに する
+}
+
+void CRankingIO::Load(){
+	FILE *fp = fopen(RANKING_PATH, "rb");	//ファイルを開く(書き込み)
+	if (fp == NULL){	//ファイルがなければ、空のファイルを作成
+		FILE *nfp = fopen(RANKING_PATH, "wb");	//ファイルを開く(書き込み)
+		fclose(nfp);	//ファイルを閉じる
+	}
+	else {
+		for (int i = 0; i < 3; i++){
+			fread(&mRanking.mRanking[i].n, sizeof(int), 1, fp);
+			fread(&mRanking.mRanking[i].s, sizeof(int), 1, fp);
+		}
+		char savemsg[MAX_PATH + 8];
+		sprintf(savemsg, "Load to %s\n", RANKING_PATH);
+		printf(savemsg);
+		fclose(fp);	//ファイルを閉じる
+	}
+}
+
+void CRankingIO::Save(){
+	FILE *fp = fopen(RANKING_PATH, "wb");	//ファイルを開く(書き込み)
+	if (fp == NULL){	//NULLが返ってきたらエラー発生
+		MessageBox(NULL, "ランキングデータの保存に失敗しました。", "エラー", 0x00040010L);
+		printf("Save : fopen error!\n");
+	}
+
+	else {
+		for (int i = 0; i < 3; i++){
+			fwrite(&mRanking.mRanking[i].n, sizeof(int), 1, fp);
+			fwrite(&mRanking.mRanking[i].s, sizeof(int), 1, fp);
+		}
+		char savemsg[MAX_PATH + 8];
+		sprintf(savemsg, "Save to %s\n", RANKING_PATH);
+		printf(savemsg);
+		fclose(fp);	//ファイルを閉じる
+	}
 }
