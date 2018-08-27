@@ -7,7 +7,7 @@
 #define BOSSLIFEBAR_X				256
 #define BOSSLIFEBAR_Y				16
 #define BOSSLIFEBAR_UV				mPosition.x - mScale.x, mPosition.x + mScale.x, mPosition.y - mScale.y, mPosition.y + mScale.y, 0, 512, 32, 0,  mRed, mGreen, 0.0f, 1.0f
-#define BOSSLIFEBAR_BACK_UV			mPosition.x - BOSSLIFEBAR_X, mPosition.x + BOSSLIFEBAR_X, mPosition.y - BOSSLIFEBAR_Y, mPosition.y + BOSSLIFEBAR_Y, 0, 512, 64, 32, 0.75f
+#define BOSSLIFEBAR_BACK_UV			mPosition.x - mScale.x, CMapScroll::mpScroll->mPosition.x + BOSSLIFEBAR_X, mPosition.y - BOSSLIFEBAR_Y, mPosition.y + BOSSLIFEBAR_Y, 0, 512, 64, 32, 0.75f
 #define BOSSLIFEBAR_HIGHLIGHT_UV	mPosition.x - mScale.x, mPosition.x + mScale.x, mPosition.y - mScale.y, mPosition.y + mScale.y, 0, 512, 96, 64, 1.0f
 #define BOSSLIFE_SPEED	2
 
