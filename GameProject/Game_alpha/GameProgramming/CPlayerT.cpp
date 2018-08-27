@@ -302,9 +302,11 @@ bool CPlayerT::Collision(CRectangle *p) {
 						player_ani_count = 0;
 						player_ani_count_frame = 0;
 						if (mJewel > 0){
-								new CDamageEfect(mPosition);
-							if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI])
+							if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI]){
 								Damage(p->mTag);
+								for (int i = 0; i < mDamage;i++)
+									new CDamageEfect(mPosition);
+							}
 						}
 						else{
 							Die();
@@ -590,7 +592,8 @@ void CPlayerT::Damage(ECELLNUM tag){
 	if (player_ani != EPLAYERANI::EDOWN){
 		switch (tag){
 		case ECELLNUM::EEWEAPON:
-			mJewel--;
+			mDamage = 1;
+			mJewel-=mDamage;
 			break;
 
 		case ECELLNUM::EBWEAPON:
@@ -599,11 +602,15 @@ void CPlayerT::Damage(ECELLNUM tag){
 				break;
 			}
 			else{
-				if (static_cast <float> (mMaxJewel)* 0.2 > 1.0f)
-					mJewel -= static_cast <float> (mMaxJewel)* 0.1;
+				if (static_cast <float> (mMaxJewel)* 0.2 > 1.0f){
+					mDamage = static_cast <float> (mMaxJewel)* 0.2;
+					mJewel -= mDamage;
+			}
 
-				else
-					mJewel--;
+				else{
+					mDamage = 1;
+					mJewel-=mDamage;
+				}
 			}
 			break;
 

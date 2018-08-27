@@ -50,6 +50,7 @@ public:
 	bool mUnrivaled;		//true:無敵状態
 	float mAlpha;			//アルファ値
 	CVector2 mReSpornPos;	//リスポーン地点
+	int mDamage;			//ダメージを受けた際のジュエルを減らす量
 
 	CWeapon *mpWeapon;
 	CPlayerT() 
