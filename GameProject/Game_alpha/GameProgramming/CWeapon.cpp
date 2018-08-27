@@ -93,10 +93,10 @@ bool CWeapon::Collision(CRectangle *p){
 			break;
 		case EEWEAPON:
 		case EBWEAPON:
-		case EPLAYER:
-			if (p->mTag == EBOX || p->mTag == ESTEEL)
+			if (p->mTag == EBOX || p->mTag == ESTEEL || p->mTag == EPLAYER)
 				mLife = 0;
 			break;
+
 		default:
 			break;
 		}

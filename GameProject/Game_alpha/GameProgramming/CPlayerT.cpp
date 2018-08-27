@@ -328,6 +328,7 @@ bool CPlayerT::Collision(CRectangle *p) {
 
 				case ECELLNUM::ECHECKPOINT:
 					mReSpornPos = p->mPosition;
+					mBackupJewel = mJewel* 0.8;
 					break;
 
 				case ECELLNUM::EICE:

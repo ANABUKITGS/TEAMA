@@ -49,6 +49,7 @@ public:
 	int mDamageInterval;	//ダメージインターバル
 	bool mUnrivaled;		//true:無敵状態
 	float mAlpha;			//アルファ値
+	int mBackupJewel;		//チェックポイント通過時のジュエル数
 	CVector2 mReSpornPos;	//リスポーン地点
 	int mDamage;			//ダメージを受けた際のジュエルを減らす量
 
@@ -75,7 +76,7 @@ public:
 		player_ani_count = 0;
 		player_ani_count_frame = 0;
 		PLAYER_ANI_COUNT_FRAME = 1;
-		mJewel = 3;
+		mBackupJewel=mJewel = 3;
 		mMaxJewel = 0;
 		mMiniJewel = 0;
 		mLife = 3;
