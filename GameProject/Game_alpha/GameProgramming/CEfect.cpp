@@ -11,12 +11,15 @@ void CEfect::Render(){
 }
 
 void CDamageEfect::Update(){
+	
+	mRotation+=mRotationAdd;
 	mLife--;
 	mPosition.x += mVelocityX;
 	Gravity();
 	if (mLife < 0)
 		mEnabled = false;
 	CRectangle::Update();
+	
 }
 
 void CDamageEfect::Gravity(){
@@ -28,7 +31,6 @@ void CDamageEfect::Gravity(){
 	//‘¬“x•ªˆÚ“®
 	mPosition.y += mVelocityY;
 }
-
 void CDamageEfect::Render(){
-	mTexture.DrawImage(DAMAGEEFECT_UV, 1.0f);
+	CRectangle::Render();
 }

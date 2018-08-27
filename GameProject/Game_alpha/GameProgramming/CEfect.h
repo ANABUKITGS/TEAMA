@@ -19,7 +19,7 @@ public:
 	CEfect(){
 		mTexkira.Load(".\\Data\\Images\\Efect\\kirakira.tga");
 		mRender = false;
-		mVelocityY = 5.0f;
+		mVelocityY = 10.0f;
 		mAlpha = 1.0f;
 		mTag = ENONE;
 		mLife = EFECT_LIFE;
@@ -41,17 +41,17 @@ public:
 
 class CDamageEfect :public CRectangle{
 public:
-
+	float mRotationAdd;
 	int mLife;
 	CTexture mTexture;
 
 	CDamageEfect(){
 		mTag = ENONE;
-		mRender = false;
 		mTexture.Load(".\\Data\\Images\\Map\\MapJewel.tga");
 		mLife = DAMAGEFEECT_LIFE;
-		mVelocityX = rand() % 4 - 2;
-		mVelocityY = rand() % 5 + 5;
+		mVelocityX = rand() % 8 - 4;
+		mVelocityY = rand() % 5 + 16;
+		mRotationAdd = (float)(rand() % 8 - 4);
 		mPriority = -2;
 		CTaskManager::Get()->Add(this);
 	}
@@ -59,7 +59,12 @@ public:
 	CDamageEfect(CVector2 pos)
 		:CDamageEfect()
 	{
-		CRectangle(pos, CVector2(32, 32), &mTexture);
+		CRectangle(pos, CVector2(32,32), &mTexture);
+		SetRectangle(pos, CVector2(32,32), &mTexture);
+		mUv[0] = 0;
+		mUv[1] = 64;
+		mUv[2] = 64;
+		mUv[3] = 0;
 	}
 	void Update();
 	void Gravity();
