@@ -120,7 +120,7 @@ void CFade::RenderFade(){
 					CPlayerT::mpPlayer->mLife--;
 					if (CBoss::mpBoss != NULL)
 						CBoss::mpBoss->mBossMaxLife = CBoss::mpBoss->mBossLife;
-					CPlayerT::mpPlayer->mJewel = 3;
+					CPlayerT::mpPlayer->mJewel = CPlayerT::mpPlayer->mBackupJewel;
 				}
 				break;
 

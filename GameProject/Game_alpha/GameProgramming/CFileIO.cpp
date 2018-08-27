@@ -171,6 +171,12 @@ void CRankingIO::Load(){
 	FILE *fp = fopen(RANKING_PATH, "rb");	//ファイルを開く(書き込み)
 	if (fp == NULL){	//ファイルがなければ、空のファイルを作成
 		FILE *nfp = fopen(RANKING_PATH, "wb");	//ファイルを開く(書き込み)
+		for (int i = 0; i < 3; i++){
+			sprintf(mRanking.mRanking[i].n, "???");
+			mRanking.mRanking[i].s = 0;
+			fwrite(&mRanking.mRanking[i].n, sizeof(int), 1, nfp);
+			fwrite(&mRanking.mRanking[i].s, sizeof(int), 1, nfp);
+		}
 		fclose(nfp);	//ファイルを閉じる
 	}
 	else {
