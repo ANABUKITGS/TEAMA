@@ -44,8 +44,9 @@ void CBossLifeBar::Update(){
 
 void CBossLifeBar::Render(){
 	if (CBoss::mpBoss != NULL && CMapBossRoomSign::mpBossRoomSign->mColFlg){
-		mTexLifeBar.DrawImageSetColor(BOSSLIFEBAR_BACK_UV);
+		mTexLifeBar.DrawImage(BOSSLIFEBAR_BACK_UV);
 		mTexLifeBar.DrawImageSetColor(BOSSLIFEBAR_UV);
+		mTexLifeBar.DrawImage(BOSSLIFEBAR_HIGHLIGHT_UV);
 		CText::DrawStringW(L"JACK", 0, 0, 64, 1.0f, 0);
 	}
 }
