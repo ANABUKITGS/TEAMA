@@ -76,7 +76,6 @@ void CMapBossRoomSign::Update() {
 	else{
 		mTexPosY = 0;
 	}
-	mScale.x = CELLSIZE / 2;
 	CMapChip::Update();
 }
 
