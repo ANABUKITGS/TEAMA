@@ -7,6 +7,7 @@
 class CMapSteel : public CMapChip{
 private:
 	CTexture mTexSteel;
+	CVector2 mDefaultPos;
 
 public:
 	float mVelocityY;
@@ -19,6 +20,7 @@ public:
 		mRender = false;
 		mBreak = false;
 		mTexSteel.Load(".\\Data\\Images\\Map\\MapSteel.tga");
+		mDefaultPos = pos;
 	}
 	void Update();	//“®‚«‚ğˆ—‚·‚é
 	void Render();	//•`‰æ‚ğˆ—‚·‚é

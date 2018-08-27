@@ -254,9 +254,9 @@ bool CBoss::Collision(CRectangle*p){
 		if (CRectangle::Collision(p, &aj)) {
 			switch (p->mTag){
 			case ECELLNUM::EUNDER:
-				if ((mPosition.y > p->mPosition.y) && mVelocityY < 0){
+				if ((mPosition.y > p->mPosition.y) && mVelocityY <= 0.0f){
 					mVelocityY = 0.0f;
-					mPosition = mPosition + aj;
+					mPosition.y = mPosition.y + aj.y;
 				}
 				break;
 			case ECELLNUM::EPWEAPON://プレイヤーのヨーヨーと衝突した時
@@ -313,6 +313,8 @@ bool CBoss::Collision(CRectangle*p){
 			case ECELLNUM::EENEMY3:
 			case ECELLNUM::EICE:
 			case ECELLNUM::EBOSSROOM:
+			case ECELLNUM::EJEWELRY:
+			case ECELLNUM::EJEWELRY2:
 				break;
 
 			default:

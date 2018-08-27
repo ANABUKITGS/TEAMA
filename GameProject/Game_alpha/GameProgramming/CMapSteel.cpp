@@ -6,8 +6,11 @@ void CMapSteel::Update() {
 	if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
 		if (mBreak)
 		Gravity();
-		if (mPosition.y < -100)
-			mEnabled = false;
+		if (mPosition.y < -10000.0f){
+			mPosition = mDefaultPos;
+			mVelocityY = 0.0f;
+			mBreak = false;
+		}
 	}
 	CMapChip::Update();
 }
@@ -27,8 +30,7 @@ bool CMapSteel::Collision(CRectangle *r) {
 				if (r->mTag == EPLAYER ||
 					r->mTag == EENEMY1 ||
 					r->mTag == EENEMY2 ||
-					r->mTag == EENEMY3 ||
-					r->mTag == EBOSS) {
+					r->mTag == EENEMY3) {
 					//¶‰E
 					if (mPosition.x - mScale.x > r->mPosition.x || mPosition.x + mScale.x < r->mPosition.x) {
 						//¶
@@ -58,11 +60,12 @@ bool CMapSteel::Collision(CRectangle *r) {
 				}
 				//Ž©g‚ð‰Ÿ‚µ•Ô‚·“–‚½‚è”»’è
 				else{
-					if (r->mTag != EPWEAPON &&
-						r->mTag != EEWEAPON){
-						mVelocityY = 0.0f;
-						mPosition = mPosition + aj;
-					}
+					//if (r->mTag != EPWEAPON &&
+					//	r->mTag != EEWEAPON &&
+					//	r->mTag != EBOSS){
+					//	mVelocityY = 0.0f;
+					//	mPosition = mPosition + aj;
+					//}
 				}
 			}
 
