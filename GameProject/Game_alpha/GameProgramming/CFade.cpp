@@ -102,7 +102,6 @@ void CFade::RenderFade(){
 				if (CMapBossRoomSign::mpBossRoomSign != NULL){
 					CMapScroll::boss_scroll = false;
 					CMapBossRoomSign::mpBossRoomSign->mColFlg = false;
-					CMapBossRoomSign::mpBossRoomSign->mScale.x = 0.0f;
 				}
 				CPlayerT::mpPlayer->mPosition = CPlayerT::mpPlayer->mReSpornPos;
 				CMapScroll::mpScroll->Reset();

@@ -8,6 +8,7 @@
 #include <string.h>
 #include <Windows.h>
 #include "CFade.h"
+#include "CFileIO.h"
 
 int CScore::mScore[5] = { 0, 0, 0, 0, 0 };;
 char CName::name[3] = { 'aaa' };
@@ -152,6 +153,8 @@ void CRanking::Init(){
 	strcpy(mRanking[0].n, "aaa");
 	strcpy(mRanking[1].n, "aaa");
 	strcpy(mRanking[2].n, "aaa");
+	CRankingIO mRankingIO;
+	mRankingIO.Load();
 }
 void CRanking::Update(){
 	if (CScore::mSort){
@@ -193,4 +196,6 @@ void CRanking::Sort(int score, char *name){
 			strcpy(mRanking[2].n, name);
 		}
 	}
+	CRankingIO mRankingIO;
+	mRankingIO.Save();
 }

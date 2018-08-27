@@ -6,14 +6,9 @@
 #include <shobjidl.h>
 #include <direct.h>
 #include "CMap.h"
+//#include "CScore.h"
 
-class CFileIO{
-public:
-	void Init();
-	void Update();
-};
-
-class CMapIO : public CFileIO{
+class CMapIO{
 public:
 	enum EGAMEMAP_FILENAME{
 		ETUTORIAL = 1,	//チュートリアルマップ
@@ -35,5 +30,12 @@ public:
 
 	//ファイル 名前をつけて保存 ダイアログ
 	void SaveDialog(HWND);
+};
+
+class CRankingIO{
+public:
+	void Load();
+
+	void Save();
 };
 #endif
