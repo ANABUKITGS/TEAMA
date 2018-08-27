@@ -51,7 +51,7 @@ void CEditer::Init(){
 void CEditer::Update(){
 	CMapSwitchGround::mNumber = ESWITCH_GROUND1;
 	if (!pauseflag){
-		if ((CGamePad::OncePush(PAD_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f)) && cursor_posY - 1 >= 0){
+		if ((CGamePad::OncePush(PAD_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f) || CKey::OncePush('W')) && cursor_posY - 1 >= 0){
 			//if (editmap_rect[cursor_posY][cursor_posX].mTop + CELLSIZE >= 360){
 			//	for (int i = 0; i < MAP_SIZEY; i++){
 			//		for (int j = 0; j < MAP_SIZEX; j++){
@@ -64,7 +64,7 @@ void CEditer::Update(){
 			editmap_cursor[cursor_posY][cursor_posX] = ENONE;
 			cursor_posY = cursor_posY - 1;
 		}
-		if ((CGamePad::OncePush(PAD_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f)) && cursor_posY + 1 < MAP_SIZEY){
+		if ((CGamePad::OncePush(PAD_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f) || CKey::OncePush('S')) && cursor_posY + 1 < MAP_SIZEY){
 			//if (editmap_rect[cursor_posY][cursor_posX].mBottom - CELLSIZE <= -360){
 			//	for (int i = 0; i < MAP_SIZEY; i++){
 			//		for (int j = 0; j < MAP_SIZEX; j++){
@@ -77,7 +77,7 @@ void CEditer::Update(){
 			editmap_cursor[cursor_posY][cursor_posX] = ENONE;
 			cursor_posY = cursor_posY + 1;
 		}
-		if ((CGamePad::OncePush(PAD_LEFT) || CGamePad::OncePush(PAD_LSTICKX, -0.5f)) && cursor_posX - 1 >= 0){
+		if ((CGamePad::OncePush(PAD_LEFT) || CGamePad::OncePush(PAD_LSTICKX, -0.5f) || CKey::OncePush('A')) && cursor_posX - 1 >= 0){
 			if (editmap_rect[cursor_posY][cursor_posX].mLeft - CELLSIZE <= -640){
 				for (int i = 0; i < MAP_SIZEY; i++){
 					for (int j = 0; j < MAP_SIZEX; j++){
@@ -90,7 +90,7 @@ void CEditer::Update(){
 			editmap_cursor[cursor_posY][cursor_posX] = ENONE;
 			cursor_posX = cursor_posX - 1;
 		}
-		if ((CGamePad::OncePush(PAD_RIGHT) || CGamePad::OncePush(PAD_LSTICKX, 0.5f)) && cursor_posX + 1 < MAP_SIZEX){
+		if ((CGamePad::OncePush(PAD_RIGHT) || CGamePad::OncePush(PAD_LSTICKX, 0.5f) || CKey::OncePush('D')) && cursor_posX + 1 < MAP_SIZEX){
 			if (editmap_rect[cursor_posY][cursor_posX].mRight + CELLSIZE / 2 >= 640){
 				for (int i = 0; i < MAP_SIZEY; i++){
 					for (int j = 0; j < MAP_SIZEX; j++){
@@ -103,19 +103,19 @@ void CEditer::Update(){
 			editmap_cursor[cursor_posY][cursor_posX] = ENONE;
 			cursor_posX = cursor_posX + 1;
 		}
-		if (CGamePad::OncePush(PAD_5) || CGamePad::OncePush(PAD_7)){	//パーツ選択
+		if (CGamePad::OncePush(PAD_5) || CGamePad::OncePush(PAD_7) || CKey::OncePush(VK_LEFT)){	//パーツ選択
 			if (setcell <= EGROUND)
 				setcell = ECELLNUM::ESIZE - 1;
 			else
 				setcell--;
 		}
-		if (CGamePad::OncePush(PAD_6) || CGamePad::OncePush(PAD_8)){	//パーツ選択
+		if (CGamePad::OncePush(PAD_6) || CGamePad::OncePush(PAD_8) || CKey::OncePush(VK_RIGHT)){	//パーツ選択
 			if (setcell >= ECELLNUM::ESIZE - 1)
 				setcell = ECELLNUM::EGROUND;
 			else
 				setcell++;
 		}
-		if (CGamePad::Push(PAD_2)){	//設置
+		if (CGamePad::Push(PAD_2) || CKey::Once(VK_RETURN)){	//設置
 			if (editmap[cursor_posY][cursor_posX] != ENONE && editmap[cursor_posY][cursor_posX] == setcell)
 				return;
 
@@ -180,7 +180,7 @@ void CEditer::Update(){
 			MakeTaskList((int *)editmap);
 		}
 
-		if (CGamePad::Push(PAD_3)){	//削除
+		if (CGamePad::Push(PAD_3) || CKey::Once(VK_DELETE) || CKey::Once(VK_BACK)){	//削除
 			if (editmap[cursor_posY][cursor_posX] == ENONE)
 				return;
 			if (editmap[cursor_posY][cursor_posX] >= EPLAYER && editmap[cursor_posY][cursor_posX] <= EBOSS){
@@ -200,18 +200,18 @@ void CEditer::Update(){
 			MakeTaskList((int *)editmap);
 		}
 
-		if (CGamePad::Once(PAD_10)){
+		if (CGamePad::Once(PAD_10) || CKey::Once(VK_ESCAPE)){
 			pauseflag = true;
 		}
 
-		if (CGamePad::Once(PAD_9)){
+		if (CGamePad::Once(PAD_9) || CKey::Once('G')){
 			if (guideIO)
 				guideIO = false;
 			else
 				guideIO = true;
 		}
 
-		if (CGamePad::Once(PAD_4)){
+		if (CGamePad::Once(PAD_4) || CKey::Once('R')){
 			int msg_button;
 			msg_button = MessageBox(NULL, "マップをリセットしますか?\n保存していないマップは失われます", "マップのリセット", 0x00040031L);
 			if (msg_button == IDYES || msg_button == IDOK){
@@ -308,10 +308,12 @@ void CEditer::Render(){
 void CEditer::MakeTaskList(int *gamemap) {
 	static CTexture mTexUI;// .Load(".\\Data\\Images\\Map\\MapUI.tga");
 	static CTexture mTexObject;// .Load(".\\Data\\Images\\Map\\MapObject.tga");
+	static CTexture mTexGround;
 
 	if (mTexUI.id == 0) {
 		mTexUI.Load(".\\Data\\Images\\Map\\MapUI.tga");
 		mTexObject.Load(".\\Data\\Images\\Map\\MapObject.tga");
+		mTexGround.Load(".\\Data\\Images\\Map\\MapGround.tga");
 	}
 
 
@@ -340,22 +342,22 @@ void CEditer::MakeTaskList(int *gamemap) {
 					if (gamemap[(i - 1) * MAP_SIZEX + j] != ECELLNUM::EGROUND && gamemap[(i + 1) * MAP_SIZEX + j] != ECELLNUM::EGROUND){
 						//左右 なし
 						if (gamemap[i*MAP_SIZEX + j - 1] != ECELLNUM::EGROUND && gamemap[i * MAP_SIZEX + j + 1] != ECELLNUM::EGROUND){
-							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1));
+							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexGround, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1));
 						}
 						//左 なし, 右 あり
 						else if (gamemap[i*MAP_SIZEX + j - 1] != ECELLNUM::EGROUND && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EGROUND){
 							colFlg |= EDT_RIGHT;
-							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 1, CELLSIZE * 2, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1));
+							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexGround, CELLSIZE * 1, CELLSIZE * 2, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1));
 						}
 						//左 あり, 右 あり
 						else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EGROUND && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EGROUND){
 							colFlg |= EDT_RIGHT | EDT_LEFT;
-							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 2, CELLSIZE * 3, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1));
+							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexGround, CELLSIZE * 2, CELLSIZE * 3, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1));
 						}
 						//左 あり, 右 なし
 						else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EGROUND && gamemap[i * MAP_SIZEX + j + 1] != ECELLNUM::EGROUND){
 							colFlg |= EDT_LEFT;
-							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 2, CELLSIZE * 1, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1));
+							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexGround, CELLSIZE * 2, CELLSIZE * 1, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1));
 						}
 					}
 					//上 なし, 下 あり
@@ -363,23 +365,23 @@ void CEditer::MakeTaskList(int *gamemap) {
 						colFlg |= EDT_BOTTOM;
 						//左右 なし
 						if (gamemap[i*MAP_SIZEX + j - 1] != ECELLNUM::EGROUND && gamemap[i * MAP_SIZEX + j + 1] != ECELLNUM::EGROUND){
-							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 1, CELLSIZE * 2, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1));
+							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexGround, CELLSIZE * 1, CELLSIZE * 2, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1));
 							mapchip->mRotation = -90;
 						}
 						//左 なし, 右 あり
 						else if (gamemap[i*MAP_SIZEX + j - 1] != EGROUND && gamemap[i * MAP_SIZEX + j + 1] == EGROUND){
 							colFlg |= EDT_RIGHT;
-							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 3, CELLSIZE * 4, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1));
+							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexGround, CELLSIZE * 3, CELLSIZE * 4, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1));
 						}
 						//左 あり, 右 あり
 						else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EGROUND && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EGROUND){
 							colFlg |= EDT_RIGHT | EDT_LEFT;
-							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 4, CELLSIZE * 5, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1));
+							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexGround, CELLSIZE * 4, CELLSIZE * 5, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1));
 						}
 						//左 あり, 右 なし
 						else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EGROUND && gamemap[i * MAP_SIZEX + j + 1] != ECELLNUM::EGROUND){
 							colFlg |= EDT_LEFT;
-							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 4, CELLSIZE * 3, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1));
+							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexGround, CELLSIZE * 4, CELLSIZE * 3, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1));
 						}
 					}
 					//上 あり, 下 なし
@@ -387,23 +389,23 @@ void CEditer::MakeTaskList(int *gamemap) {
 						colFlg |= EDT_TOP;
 						//左右 なし
 						if (gamemap[i*MAP_SIZEX + j - 1] != ECELLNUM::EGROUND && gamemap[i * MAP_SIZEX + j + 1] != ECELLNUM::EGROUND){
-							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 1, CELLSIZE * 2, CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), CELLSIZE * gamemap[i * MAP_SIZEX + j]);
+							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexGround, CELLSIZE * 1, CELLSIZE * 2, CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), CELLSIZE * gamemap[i * MAP_SIZEX + j]);
 							mapchip->mRotation = 90;
 						}
 						//左 なし, 右 あり
 						else if (gamemap[i*MAP_SIZEX + j - 1] != ECELLNUM::EGROUND && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EGROUND){
 							colFlg |= EDT_RIGHT;
-							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 3, CELLSIZE * 4, CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), CELLSIZE * gamemap[i * MAP_SIZEX + j]);
+							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexGround, CELLSIZE * 3, CELLSIZE * 4, CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), CELLSIZE * gamemap[i * MAP_SIZEX + j]);
 						}
 						//左 あり, 右 あり
 						else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EGROUND && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EGROUND){
 							colFlg |= EDT_RIGHT | EDT_LEFT;
-							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 4, CELLSIZE * 5, CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), CELLSIZE * gamemap[i * MAP_SIZEX + j]);
+							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexGround, CELLSIZE * 4, CELLSIZE * 5, CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), CELLSIZE * gamemap[i * MAP_SIZEX + j]);
 						}
 						//左 あり, 右 なし
 						else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EGROUND && gamemap[i * MAP_SIZEX + j + 1] != ECELLNUM::EGROUND){
 							colFlg |= EDT_LEFT;
-							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 4, CELLSIZE * 3, CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), CELLSIZE * gamemap[i * MAP_SIZEX + j]);
+							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexGround, CELLSIZE * 4, CELLSIZE * 3, CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), CELLSIZE * gamemap[i * MAP_SIZEX + j]);
 						}
 					}
 					//上 あり, 下 あり
@@ -411,29 +413,29 @@ void CEditer::MakeTaskList(int *gamemap) {
 						colFlg |= EDT_TOP | EDT_BOTTOM;
 						//左右 なし
 						if (gamemap[i*MAP_SIZEX + j - 1] != ECELLNUM::EGROUND && gamemap[i * MAP_SIZEX + j + 1] != ECELLNUM::EGROUND){
-							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 2, CELLSIZE * 3, CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), CELLSIZE * gamemap[i * MAP_SIZEX + j]);
+							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexGround, CELLSIZE * 2, CELLSIZE * 3, CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), CELLSIZE * gamemap[i * MAP_SIZEX + j]);
 							mapchip->mRotation = 90;
 						}
 						//左 なし, 右 あり
 						else if (gamemap[i*MAP_SIZEX + j - 1] != ECELLNUM::EGROUND && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EGROUND){
 							colFlg |= EDT_RIGHT;
-							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 4, CELLSIZE * 5, CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), CELLSIZE * gamemap[i * MAP_SIZEX + j]);
+							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexGround, CELLSIZE * 4, CELLSIZE * 5, CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), CELLSIZE * gamemap[i * MAP_SIZEX + j]);
 							mapchip->mRotation = -90;
 						}
 						//左 あり, 右 あり
 						else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EGROUND && gamemap[i * MAP_SIZEX + j + 1] == ECELLNUM::EGROUND){
 							colFlg |= EDT_RIGHT | EDT_LEFT;
-							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 5, CELLSIZE * 6, CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), CELLSIZE * gamemap[i * MAP_SIZEX + j]);
+							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexGround, CELLSIZE * 5, CELLSIZE * 6, CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), CELLSIZE * gamemap[i * MAP_SIZEX + j]);
 						}
 						//左 あり, 右 なし
 						else if (gamemap[i*MAP_SIZEX + j - 1] == ECELLNUM::EGROUND && gamemap[i * MAP_SIZEX + j + 1] != ECELLNUM::EGROUND){
 							colFlg |= EDT_LEFT;
-							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 5, CELLSIZE * 4, CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), CELLSIZE * gamemap[i * MAP_SIZEX + j]);
+							mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexGround, CELLSIZE * 5, CELLSIZE * 4, CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1), CELLSIZE * gamemap[i * MAP_SIZEX + j]);
 							mapchip->mRotation = 90;
 						}
 					}
 					else {
-						mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexObject, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1));
+						mapchip = new CMapChip(POS(i, j), CVector2(CELLSIZE / 2, CELLSIZE / 2), &mTexGround, CELLSIZE * 0, CELLSIZE * 1, CELLSIZE * gamemap[i * MAP_SIZEX + j], CELLSIZE * (gamemap[i * MAP_SIZEX + j] - 1));
 					}
 					mapchip->mColFlg = colFlg;
 				}

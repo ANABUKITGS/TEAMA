@@ -28,9 +28,9 @@ void CTexture::Load(const char* filename) {
 	//テクスチャデータの作成
 	glGenTextures(1, &id);
 	glBindTexture(GL_TEXTURE_2D, id);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);	//バイリニア法
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);	//バイリニア法
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);	//バイリニア法
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);	//ニアレストネイバー法
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);	//ニアレストネイバー法
 //	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);	//ニアレストネイバー法
 	if (header.depth == 32)
 		//アルファ有りのテクスチャ作成
