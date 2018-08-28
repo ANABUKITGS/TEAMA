@@ -25,7 +25,7 @@ void CBoss::Update(){
 			}
 			//ジャンプの処理ここまで
 			//待機状態からランダムで行動をとる(移動、ジャンプ、攻撃のどれか)
-			mBossIBehavior = 1;// rand() / 1000 % 7;
+			mBossIBehavior =  rand() / 1000 % 7;
 			printf("%d\n", mBossAttackItr);
 			//行動パターン処理
 			switch (mAttackBehavior){
@@ -147,7 +147,7 @@ void CBoss::Update(){
 				else {
 					//ボスのヨーヨーの寿命が来たら
 					if (mpBWeapon->mLife < 0){
-						if (mpBWeapon->mPosition.x==mPosition.x&&mBossAnimeFream==3)
+						if (mpBWeapon->mPosition.x<mPosition.x)
 						//ヨーヨーを消す
 						mpBWeapon = NULL;
 						if (mpBWeapon == NULL)
@@ -544,13 +544,10 @@ void CBoss::Render(){
 			else
 				//ヨーヨーの紐
 				mpBWeapon->mTexYoyo.DrawImage(BSTRING_UV_R, 1.0f);
-			if (mBossAnimeFream > 3)
-				mBossAnimeFream = 3;
 		}
-		else{
-			if (mBossAnimeFream > 2)
-				mBossAnimeFream = 0;
-		}
+		if (mBossAnimeFream > 3)
+			mBossAnimeFream = 3;
+
 			Boss_Ani_Count = 8;
 
 			//左向き
