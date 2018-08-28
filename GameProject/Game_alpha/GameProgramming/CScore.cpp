@@ -112,16 +112,20 @@ void CName::Init(){
 void CName::Update(){
 	if (CKey::Once(VK_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f)){
 		if (name[charnum] == 'z')
-			name[charnum] = '1';
+			name[charnum] = '0';
 		else if (name[charnum] == '9')
+			name[charnum] = '-';
+		else if (name[charnum] == '.')
 			name[charnum] = 'a';
 		else
 			name[charnum]++;
 	}
 	if (CKey::Once(VK_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f)){
-		if (name[charnum] == 'a')
+		if (name[charnum] == '-')
 			name[charnum] = '9';
-		else if (name[charnum] == '1')
+		else if (name[charnum] == 'a')
+			name[charnum] = '.';
+		else if (name[charnum] == '0')
 			name[charnum] = 'z';
 		else
 			name[charnum]--;
