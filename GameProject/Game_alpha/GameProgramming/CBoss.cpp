@@ -25,7 +25,7 @@ void CBoss::Update(){
 			}
 			//ジャンプの処理ここまで
 			//待機状態からランダムで行動をとる(移動、ジャンプ、攻撃のどれか)
-			mBossIBehavior =  rand() / 1000 % 7;
+			mBossIBehavior = 1;// rand() / 1000 % 7;
 			printf("%d\n", mBossAttackItr);
 			//行動パターン処理
 			switch (mAttackBehavior){
@@ -125,9 +125,9 @@ void CBoss::Update(){
 
 				//ボスの攻撃処理
 			case EBWEAPON:
-				//ボスがヨーヨーを出してない時
-				if (!mpBWeapon){
-					//ボスのアニメーションが最後まで行くと
+					//ボスがヨーヨーを出してない時
+					if (!mpBWeapon){
+						//ボスのアニメーションが最後まで行くと
 						//ボスのヨーヨーを呼び出す
 						if (mDirection)
 							mpBWeapon = new CWeapon(ECELLNUM::EBWEAPON, mPosition + CVector2(82.0f, 32.0f), mDirection);
@@ -142,22 +142,24 @@ void CBoss::Update(){
 
 						else				//敵が左を向いている時には左にヨーヨーを進ませる
 							mpBWeapon->mPosition.x -= 10;
-				}
-				//敵のヨーヨーが発射された時の処理を行う
-				else {
-					//ボスのヨーヨーの寿命が来たら
-					if (mpBWeapon->mLife < 0){
-						if (mpBWeapon->mPosition.x<mPosition.x)
-						//ヨーヨーを消す
-						mpBWeapon = NULL;
-						if (mpBWeapon == NULL)
-						//ヨーヨーのアニメーションを最初に戻す
-						mBossAnimeFream = 0;
-						//待機状態にする
-						if (mBossAnimeFream == 0)
-						mAttackBehavior = EIDOL;
 					}
-				}
+					//敵のヨーヨーが発射された時の処理を行う
+					else {
+						CVector2 mWeaponVec;
+						mWeaponVec = mpBWeapon->mPosition - mPosition;
+						//ボスのヨーヨーの寿命が来たら
+						if (mpBWeapon->mLife < 0){
+							if (abs(mWeaponVec.x)>mPosition.x)
+								//ヨーヨーを消す
+								mpBWeapon = NULL;
+							if (mpBWeapon == NULL)
+								//ヨーヨーのアニメーションを最初に戻す
+								mBossAnimeFream = 0;
+							//待機状態にする
+							if (mBossAnimeFream == 0)
+								mAttackBehavior = EIDOL;
+						}
+					}
 				break;//ループ終了
 				//攻撃処理終了
 		case ETELEPO://瞬間移動
@@ -545,8 +547,8 @@ void CBoss::Render(){
 				//ヨーヨーの紐
 				mpBWeapon->mTexYoyo.DrawImage(BSTRING_UV_R, 1.0f);
 		}
-		if (mBossAnimeFream > 3)
-			mBossAnimeFream = 3;
+			if (mBossAnimeFream > 3)
+				mBossAnimeFream = 3;
 
 			Boss_Ani_Count = 8;
 
