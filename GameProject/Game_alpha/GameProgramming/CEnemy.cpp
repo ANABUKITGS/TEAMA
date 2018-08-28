@@ -209,6 +209,7 @@ bool CEnemy::Collision(CRectangle*p){
 			case ECELLNUM::EPLAYER:
 			case ECELLNUM::EEWEAPON:
 			case ECELLNUM::EBWEAPON:
+			case ECELLNUM::ESDIAMOND:
 				break;
 
 			default:

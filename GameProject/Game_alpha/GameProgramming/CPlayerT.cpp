@@ -105,8 +105,6 @@ void CPlayerT::Update(){
 		//エリア外
 		if (mPosition.x + CELLSIZE < CMapScroll::mpScroll->mPosition.x - 640.0f ||	//エリア外(左)
 			mPosition.y + CELLSIZE < 0.0f){	//エリア外(下)
-			mVelocityX = mVelocityY = 0.0f;
-			mJumpCount = 0;
 			Die();
 		}
 
@@ -328,7 +326,10 @@ bool CPlayerT::Collision(CRectangle *p) {
 
 				case ECELLNUM::ECHECKPOINT:
 					mReSpornPos = p->mPosition;
-					mBackupJewel = mJewel* 0.8;
+					if (mJewel > 3)
+						mBackupJewel = mJewel;
+					else
+						mBackupJewel = 3;
 					break;
 
 				case ECELLNUM::EICE:
@@ -364,6 +365,7 @@ bool CPlayerT::Collision(CRectangle *p) {
 				case ECELLNUM::ESIGN:
 				case ECELLNUM::EENDSIGN:
 				case ECELLNUM::EBOSSROOM:
+				case ECELLNUM::ESDIAMOND:
 					break;
 
 				default:
@@ -585,7 +587,8 @@ void CPlayerT::Die(){
 	if (player_ani != EDOWN){
 		player_ani = EPLAYERANI::EDOWN;
 		player_ani_count = player_ani_count_frame = 0;
-		mJewel = 0;
+		if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI])
+			mJewel = 0;
 	}
 }
 

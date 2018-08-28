@@ -198,15 +198,6 @@ void CGame2::Render() {
 
 	if (CFade::mMapfile == CFade::EGAMEMAP_NUM::ETUTORIAL)
 		CText::DrawStringW(L"チュートリアル", -111, 328, 32, 1.0f, 0);
-
-	if (CMapBossRoomSign::mpBossRoomSign != NULL && CMapBossRoomSign::mpBossRoomSign->mColFlg){
-		CText::DrawStringW(L"JACK", -64, 328, 32, 1.0f, 0);
-#ifdef _DEBUG
-		wchar_t bosslife_buf[16];
-		swprintf(bosslife_buf, L"%2d/%-1d", CBoss::mpBoss->mBossLife, CBoss::mpBoss->mBossMaxLife);
-		CText::DrawStringW(bosslife_buf, -80, 296, 32, 1.0f, 0);
-#endif
-	}
 }
 
 void CGame2::CheatText(){

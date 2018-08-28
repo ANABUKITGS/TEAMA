@@ -54,6 +54,27 @@ void CBossLifeBar::Render(){
 		mTexLifeBar.DrawImage(BOSSLIFEBAR_BACK_UV);
 		mTexLifeBar.DrawImageSetColor(BOSSLIFEBAR_UV);
 		mTexLifeBar.DrawImage(BOSSLIFEBAR_HIGHLIGHT_UV);
-		CText::DrawStringW(L"JACK", 0, 0, 64, 1.0f, 0);
+		CText::DrawStringW(L"JACK", CMapScroll::mpScroll->mPosition.x, mPosition.x + 8, 32, 1.0f, 0);
+#ifdef _DEBUG
+		wchar_t bosslife_buf[8];
+		wchar_t bossmaxlife_buf[8];
+		if (CBoss::mpBoss->mBossLife < 999 && CBoss::mpBoss->mBossLife > -999)
+			swprintf(bosslife_buf, L"%4d", CBoss::mpBoss->mBossLife);
+		else if (CBoss::mpBoss->mBossLife >= 999)
+			swprintf(bosslife_buf, L"%4d", 999);
+		else if (CBoss::mpBoss->mBossLife <= -999)
+			swprintf(bosslife_buf, L"-999");
+
+		if (CBoss::mpBoss->mBossMaxLife < 999 && CBoss::mpBoss->mBossMaxLife > -999)
+			swprintf(bossmaxlife_buf, L"%-3d", CBoss::mpBoss->mBossMaxLife);
+		else if (CBoss::mpBoss->mBossMaxLife >= 999)
+			swprintf(bossmaxlife_buf, L"%3d", 999);
+		else if (CBoss::mpBoss->mBossMaxLife <= -999)
+			swprintf(bossmaxlife_buf, L"%3d", -999);
+
+		CText::DrawStringW(bosslife_buf, CMapScroll::mpScroll->mPosition.x - 144, mPosition.y - 16, 32, 1.0f, 0);
+		CText::DrawStringW(bossmaxlife_buf, CMapScroll::mpScroll->mPosition.x + 16, mPosition.y - 16, 32, 1.0f, 0);
+		CText::DrawString("/", CMapScroll::mpScroll->mPosition.x - 16, mPosition.y - 16, 32, 1.0f, 0);
+#endif
 	}
 }

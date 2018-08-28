@@ -38,6 +38,7 @@ enum ECELLNUM{
 	EEWEAPON,			//敵武器
 	EBWEAPON,			//ボスの武器
 	ESEARCH,			//敵の索敵範囲
+	ESDIAMOND,			//Sダイヤ
 };
 
 
