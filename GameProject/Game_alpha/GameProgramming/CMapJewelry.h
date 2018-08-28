@@ -2,12 +2,13 @@
 #define CMAPJEWELRY_H
 
 #include "CMapChip.h"
+#include "CMapScroll.h"
 
 
 //宝石のマッピングデータ
 #define JEWELRY_UV mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE / 2, mPosition.y + CELLSIZE / 2, 0, 64, 64, 0
 #define JEWELRY2_UV mPosition.x - CELLSIZE / 4, mPosition.x + CELLSIZE / 4, mPosition.y - CELLSIZE / 4, mPosition.y + CELLSIZE / 4, 0, 64, 128, 64
-#define SDIAMOND_UV mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE / 2, mPosition.y + CELLSIZE / 2, 0, 64, 64, 0
+#define SDIAMOND_UV mPosition.x - CELLSIZE * 0.75, mPosition.x + CELLSIZE * 0.75, mPosition.y - CELLSIZE * 0.75, mPosition.y + CELLSIZE * 0.75, 0, 128, 128, 0
 #define EFECT_INTERVAL 10
 
 class CWeapon;
@@ -29,7 +30,7 @@ public:
 	}
 	CMapJewelry(const CVector2& pos) 
 		//CMapChipで初期化
-		: CMapChip(pos, CVector2(CELLSIZE / 3, CELLSIZE / 2), NULL, NULL, NULL, NULL, NULL, EJEWELRY)
+		: CMapChip(pos, CVector2(CELLSIZE * 0.75 / 2, CELLSIZE * 0.75), NULL, NULL, NULL, NULL, NULL, EJEWELRY)
 	{
 		mRender = false;
 		mTexJewel.Load(".\\Data\\Images\\Map\\MapJewel.tga");
@@ -77,7 +78,7 @@ public:
 	int mIntervalEfe;
 	static bool mGetFlg;
 	CSDiamond(CVector2 pos)
-		:CRectangle(pos + CVector2(0.0f, 10.0f), CVector2(CELLSIZE / 3, CELLSIZE / 2), NULL)
+		:CRectangle(pos + CVector2(0.0f, 10.0f), CVector2(CELLSIZE / 3 * 2, CELLSIZE), NULL)
 	{
 		mIntervalEfe = EFECT_INTERVAL;
 		mpWeapon = 0;
@@ -87,7 +88,7 @@ public:
 		mRender = false;
 		mTag = ECELLNUM::ESDIAMOND;
 		mVelocityY = 30.0f;
-		mPriority = -10;
+		mPriority = -2;
 		CTaskManager::Get()->Add(this);
 	}
 	~CSDiamond(){

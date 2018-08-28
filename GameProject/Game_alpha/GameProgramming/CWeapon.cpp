@@ -84,6 +84,7 @@ bool CWeapon::Collision(CRectangle *p){
 			case EBOX:
 			case ESTEEL:
 			case ESWITCH:
+			case ESDIAMOND:
 			mLife = 0;
 				break;
 

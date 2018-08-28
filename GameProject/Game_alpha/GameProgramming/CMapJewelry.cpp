@@ -88,15 +88,10 @@ void CSDiamond::Update(){
 		mIntervalEfe = EFECT_INTERVAL;
 		new CEfect(mPosition);
 	}
-
-	if (mPosition.y <= 144.0f){
-		mVelocityY = 0.0f;
-		mPosition.y = 144.0f;
-	}
-	else{
-		if (mpWeapon == NULL)
-			Gravity();
-	}
+	if (mpWeapon == NULL && mPosition.y > 160.0f)
+		Gravity();
+	else
+		mPosition.y = 160.0f;
 }
 
 bool CSDiamond::Collision(CRectangle *r){
@@ -110,15 +105,34 @@ bool CSDiamond::Collision(CRectangle *r){
 			mEnabled = false;
 			CSE::mSoundJewelry.Play();
 			mGetFlg = true;
-			return true;
 			break;
 
 		case ECELLNUM::EPWEAPON:
 			mpWeapon = r;
 			break;
 
-		default:
-			break;
+		//case ECELLNUM::ENONE:
+		//case ECELLNUM::ESIGN:
+		//case ECELLNUM::EEWEAPON:
+		//case ECELLNUM::ESEARCH:
+		//case ECELLNUM::ESWITCH:
+		//case ECELLNUM::EBOX:
+		//case ECELLNUM::ESTEEL:
+		//	
+		//case ECELLNUM::EENEMY1:
+		//case ECELLNUM::EENEMY2:
+		//case ECELLNUM::EENEMY3:
+		//case ECELLNUM::EBOSS:
+		//case ECELLNUM::EJEWELRY:
+		//case ECELLNUM::EJEWELRY2:
+		//case ECELLNUM::ESDIAMOND:
+		//	break;
+
+		//default:
+		//	mPosition.y = mPosition.y + aj.y;
+		//	mVelocityY = 0.0f;
+		//	break;
+			return true;
 		}
 	}
 	return false;

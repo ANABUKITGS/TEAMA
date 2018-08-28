@@ -11,7 +11,7 @@
 #include "CFileIO.h"
 
 int CScore::mScore[5] = { 0, 0, 0, 0, 0 };;
-char CName::name[3] = { 'aaa' };
+char CName::name[3] = { '   ' };
 int CName::charnum = 0;
 bool CScore::mSort = false;
 int CScore::mJewelScore;
@@ -71,7 +71,7 @@ void CScore::Update(){
 		CSceneResult::mResultTag = CSceneResult::ENAME;
 		mSort = true;
 		for (int i = 0; i < 3; i++){
-			CName::name[i] = 'a';
+			CName::name[i] = 'A';
 		}
 		CName::charnum = 0;
 	}
@@ -111,22 +111,22 @@ void CName::Init(){
 }
 void CName::Update(){
 	if (CKey::Once(VK_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f)){
-		if (name[charnum] == 'z')
+		if (name[charnum] == 'Z')
 			name[charnum] = '0';
 		else if (name[charnum] == '9')
-			name[charnum] = '-';
+			name[charnum] = '.';
 		else if (name[charnum] == '.')
-			name[charnum] = 'a';
+			name[charnum] = 'A';
 		else
 			name[charnum]++;
 	}
 	if (CKey::Once(VK_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f)){
-		if (name[charnum] == '-')
-			name[charnum] = '9';
-		else if (name[charnum] == 'a')
+		if (name[charnum] == 'A')
 			name[charnum] = '.';
+		else if (name[charnum] == '.')
+			name[charnum] = '9';
 		else if (name[charnum] == '0')
-			name[charnum] = 'z';
+			name[charnum] = 'Z';
 		else
 			name[charnum]--;
 	}
