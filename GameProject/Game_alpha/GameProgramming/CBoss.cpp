@@ -243,8 +243,10 @@ void CBoss::Update(){
 				}
 				else {
 					static int mBossDownTime = 0;
+					if (CSDiamond::mpSDiamond == NULL && !CSDiamond::mGetFlg)
+						CSDiamond::mpSDiamond = new CSDiamond(CVector2(mPosition.x, mPosition.y));
 					mBossDownTime++;
-					if (mBossDownTime >= BOSS_DOWN_TIME){
+					if (mBossDownTime >= BOSS_DOWN_TIME && CSDiamond::mGetFlg){
 						CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ERESULT);
 						CGame2::mTimeMin = CTime::ElapsedTimeMin();
 						CGame2::mTimeSec = CTime::ElapsedTimeSec();
@@ -374,6 +376,7 @@ bool CBoss::Collision(CRectangle*p){
 			case ECELLNUM::EBOSSROOM:
 			case ECELLNUM::EJEWELRY:
 			case ECELLNUM::EJEWELRY2:
+			case ECELLNUM::ESDIAMOND:
 				break;
 
 			default:
