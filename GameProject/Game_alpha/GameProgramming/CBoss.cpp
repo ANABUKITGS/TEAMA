@@ -25,7 +25,7 @@ void CBoss::Update(){
 			}
 			//ジャンプの処理ここまで
 			//待機状態からランダムで行動をとる(移動、ジャンプ、攻撃のどれか)
-			mBossIBehavior =  rand() / 1000 % 7;
+			mBossIBehavior = 1;// rand() / 1000 % 7;
 			printf("%d\n", mBossAttackItr);
 			//行動パターン処理
 			switch (mAttackBehavior){
@@ -127,6 +127,7 @@ void CBoss::Update(){
 			case EBWEAPON:
 				//ボスがヨーヨーを出してない時
 				if (!mpBWeapon){
+					//ボスのアニメーションが最後まで行くと
 						//ボスのヨーヨーを呼び出す
 						if (mDirection)
 							mpBWeapon = new CWeapon(ECELLNUM::EBWEAPON, mPosition + CVector2(82.0f, 32.0f), mDirection);
@@ -146,13 +147,15 @@ void CBoss::Update(){
 				else {
 					//ボスのヨーヨーの寿命が来たら
 					if (mpBWeapon->mLife < 0){
+						if (mpBWeapon->mPosition.x==mPosition.x&&mBossAnimeFream==3)
 						//ヨーヨーを消す
 						mpBWeapon = NULL;
+						if (mpBWeapon == NULL)
 						//ヨーヨーのアニメーションを最初に戻す
 						mBossAnimeFream = 0;
 						//待機状態にする
-						if (mpBWeapon == NULL)
-							mAttackBehavior = EIDOL;
+						if (mBossAnimeFream == 0)
+						mAttackBehavior = EIDOL;
 					}
 				}
 				break;//ループ終了
@@ -201,22 +204,8 @@ void CBoss::Update(){
 						mBossAnimeFream = 0;
 						//カウントが0になったら
 						if (mBossAttackItr <=0){
-							if (mPosition.x < CMapScroll::mpScroll->mPosition.x + 575 &&
-								mPosition.x > CMapScroll::mpScroll->mPosition.x - 576)
 							//プレイヤーの後ろに出現させる
 							mTelepoEnabled = true;
-							else{
-								//プレイヤーの後ろに出現させる
-								mTelepoEnabled = true;
-								if (CPlayerT::mpPlayer->mDirection){
-									mPosition.x = CPlayerT::mpPlayer->mPosition.x + BOSSTELEPO;
-									mDirection = true;
-								}
-								else{
-									mPosition.x = CPlayerT::mpPlayer->mPosition.x - BOSSTELEPO;
-									mDirection = false;
-								}
-							}
 						}
 					}
 				}
@@ -313,7 +302,6 @@ void CBoss::Update(){
 }
 
 bool CBoss::Collision(CRectangle*p){
-	//return false;
 	if (p->GetEnabled()){
 		CVector2 aj;
 		if (CRectangle::Collision(p, &aj)) {
@@ -325,8 +313,12 @@ bool CBoss::Collision(CRectangle*p){
 				}
 				break;
 			case ECELLNUM::EPWEAPON://プレイヤーのヨーヨーと衝突した時
+				if (CPlayerT::mpPlayer->mpWeapon->mPosition.x > mPosition.x)
+					mDirection = true;
+				else
+					mDirection = false;
 				mVelocityY = 0.0f;
-				if (Invincible||mAlpha==0.0)
+				if (Invincible)
 					return false;
 				//無敵時間のフラグがOFFの時にダメージを加算する
 				else{
@@ -342,6 +334,8 @@ bool CBoss::Collision(CRectangle*p){
 
 			case ECELLNUM::EBOX:
 			case ECELLNUM::ESTEEL:
+				if (mAttackBehavior == EDAMAGE)
+					return false;
 				//落下中のオブジェクトと接触した場合
 				if (p->mBreak){
 					mAttackBehavior = EDAMAGE;
@@ -547,17 +541,14 @@ void CBoss::Render(){
 			else
 				//ヨーヨーの紐
 				mpBWeapon->mTexYoyo.DrawImage(BSTRING_UV_R, 1.0f);
-		}
-		if (mpBWeapon){
 			if (mBossAnimeFream > 3)
 				mBossAnimeFream = 3;
 		}
 		else{
-			if (mBossAnimeFream > 1)
+			if (mBossAnimeFream > 2)
 				mBossAnimeFream = 0;
 		}
-
-			Boss_Ani_Count = 15;
+			Boss_Ani_Count = 8;
 
 			//左向き
 			if (!mDirection)
