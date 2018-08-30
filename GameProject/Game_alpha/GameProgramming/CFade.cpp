@@ -134,6 +134,7 @@ void CFade::RenderFade(){
 			default:
 				break;
 			}
+			CSDiamond::mGetFlg = false;
 		}
 
 		if (CPlayerT::mpPlayer != NULL)
