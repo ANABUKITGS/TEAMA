@@ -24,6 +24,7 @@
 
 #define BOSS_TEX_POS mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - mScale.y, mPosition.y - mScale.y + CELLSIZE * 4	//テクスチャー Position
 
+
 class CBoss : public CCharcter{
 //自クラスだけ使用可能
 private:
