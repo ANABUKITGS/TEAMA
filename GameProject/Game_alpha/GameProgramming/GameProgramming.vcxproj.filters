@@ -32,7 +32,6 @@
     <ClCompile Include="CTitle.cpp" />
     <ClCompile Include="CVector2.cpp" />
     <ClCompile Include="CWeapon.cpp" />
-    <ClCompile Include="CXInput.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CBGM.cpp" />
     <ClCompile Include="CSE.cpp" />
@@ -78,7 +77,6 @@
     <ClInclude Include="CTitle.h" />
     <ClInclude Include="CVector2.h" />
     <ClInclude Include="CWeapon.h" />
-    <ClInclude Include="CXInput.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="CSound.h" />
     <ClInclude Include="CBGM.h" />

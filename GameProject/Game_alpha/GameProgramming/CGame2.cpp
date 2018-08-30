@@ -196,8 +196,10 @@ void CGame2::Render() {
 	swprintf(time_buf, L"%02d:%06.3f\n  宝×%2d\n  片×%2d\n  命×%2d", CTime::ElapsedTimeMin(), CTime::ElapsedTimeSec(), CPlayerT::mpPlayer->mJewel, CPlayerT::mpPlayer->mMiniJewel, CPlayerT::mpPlayer->mLife);
 	CText::DrawStringW(time_buf, 352, 328, 32, 1.0f, 0);
 
-	if (CFade::mMapfile == CFade::EGAMEMAP_NUM::ETUTORIAL)
+	if (CFade::mMapfile == CFade::EGAMEMAP_NUM::ETUTORIAL){
 		CText::DrawStringW(L"チュートリアル", -111, 328, 32, 1.0f, 0);
+		CText::DrawStringW(L"９で スキップすることが できます。", -216, 304, 24, 1.0f, 0);
+	}
 }
 
 void CGame2::CheatText(){

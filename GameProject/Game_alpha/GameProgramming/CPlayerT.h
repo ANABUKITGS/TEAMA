@@ -6,12 +6,13 @@
 #include "CWeapon.h"
 #include "CGame2.h"
 
-#define PLAYER_VELOCITY_X 5.0f
-#define PLAYER_VELOCITY_Y 20.0f
-#define JUMP_TIME_LIMIT 15
-#define VELOCITYX_LIMIT 5.0f
-#define DAMAGE_INTERVAL 180
-#define PLAYER_DOWN_TIME 60
+#define PLAYER_VELOCITY_X		5.0f
+#define PLAYER_VELOCITY_Y		20.0f
+#define JUMP_TIME_LIMIT			15
+#define VELOCITYX_LIMIT			5.0f
+#define DAMAGE_INTERVAL			180
+#define PLAYER_DOWN_TIME		60
+#define PLAYER_GAMEOVER_TIME	120
 
 #define PLAYER_TEX_POS mPosition.x - CELLSIZE, mPosition.x + CELLSIZE, mPosition.y - mScale.y, mPosition.y - mScale.y + CELLSIZE * 2
 

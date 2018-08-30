@@ -117,7 +117,6 @@ void CFade::RenderFade(){
 				}
 
 				if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI]){
-					CPlayerT::mpPlayer->mLife--;
 					if (CBoss::mpBoss != NULL)
 						CBoss::mpBoss->mBossMaxLife = CBoss::mpBoss->mBossLife;
 					CPlayerT::mpPlayer->mJewel = CPlayerT::mpPlayer->mBackupJewel;

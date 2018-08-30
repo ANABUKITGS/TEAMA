@@ -35,6 +35,8 @@ void CMapScroll::Update(){
 
 				mPosition.x += add_scroll;
 			}
+			if (!scroll_flg && CPlayerT::mpPlayer->player_ani != CPlayerT::EPLAYERANI::EDOWN)
+				mPosition.x = CPlayerT::mpPlayer->mPosition.x + 544.0f;
 		}
 		else{
 			if (CMapEndSign::mpEndSign != NULL && CFade::mMapfile == CFade::EGAMEMAP_NUM::ETUTORIAL)
@@ -59,7 +61,7 @@ void CMapScroll::Update(){
 }
 
 void CMapScroll::Reset(){
-	mPosition.x = CPlayerT::mpPlayer->mPosition.x;
+	mPosition.x = CPlayerT::mpPlayer->mPosition.x + 544.0f;
 	scroll_flg = false;
 	scroll_stop = false;
 }

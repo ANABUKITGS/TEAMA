@@ -299,15 +299,12 @@ bool CPlayerT::Collision(CRectangle *p) {
 						player_ani = EPLAYERANI::EDAMAGE;
 						player_ani_count = 0;
 						player_ani_count_frame = 0;
-						if (mJewel > 0){
+						if (mJewel >= 0){
 							if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI]){
 								Damage(p->mTag);
 								for (int i = 0; i < mDamage;i++)
 									new CDamageEfect(mPosition);
 							}
-						}
-						else{
-							Die();
 						}
 					}
 					break;
@@ -418,7 +415,10 @@ bool CPlayerT::Collision(CRectangle *p) {
 }
 
 void CPlayerT::Render(){
+	//やられてからの待ち時間
 	static int mDownTime = 0;
+	//ゲームオーバーでの待ち時間
+	static int mGameOverTime = 0;
 	switch (player_ani){
 	case EPLAYERANI::EIDOL:
 		if (player_ani_count > 7)
@@ -549,16 +549,23 @@ void CPlayerT::Render(){
 		if (player_ani_count >= 1){
 			mDownTime++;
 			if (mDownTime >= PLAYER_DOWN_TIME){
-				if (mLife > 0)
+				mGameOverTime++;
+				if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI] && mLife > 0)
+					mLife--;
+				if (mLife >= 1)
 					CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::EPLAYERDOWN);
 
-				else
-					CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
+				else{
+					if ((CGamePad::Once(PAD_2) || CKey::Once(VK_RIGHT) || CKey::Once(VK_RETURN)) && mGameOverTime >= PLAYER_DOWN_TIME)
+						CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
+				}
 				mDownTime = 0;
+				mGameOverTime = 0;
 			}
 			return;
 		}
 		mDownTime = 0;
+		mGameOverTime = 0;
 		break;
 
 	default:
@@ -589,6 +596,7 @@ void CPlayerT::Die(){
 		player_ani_count = player_ani_count_frame = 0;
 		if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI])
 			mJewel = 0;
+		CMapScroll::boss_scroll = false;
 	}
 }
 
@@ -598,6 +606,8 @@ void CPlayerT::Damage(ECELLNUM tag){
 		case ECELLNUM::EEWEAPON:
 			mDamage = 1;
 			mJewel-=mDamage;
+			if (mJewel <= 0)
+				Die();
 			break;
 
 		case ECELLNUM::EBWEAPON:
