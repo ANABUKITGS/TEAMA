@@ -25,7 +25,7 @@ void CBoss::Update(){
 			}
 			//ジャンプの処理ここまで
 			//待機状態からランダムで行動をとる(移動、ジャンプ、攻撃のどれか)
-			mBossIBehavior = 3;// rand() / 1000 % 7;
+			mBossIBehavior = rand() / 1000 % 7;
 			printf("%d\n", mBossAnimeFream);
 			//行動パターン処理
 			switch (mAttackBehavior){
