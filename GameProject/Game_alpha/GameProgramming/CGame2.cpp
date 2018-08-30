@@ -24,6 +24,7 @@ CMapBackImage *mBackImage[4];
 CCamera2D CGame2::mCamera;
 
 void CGame2::Init(const char *map) {
+	CMapScroll::scroll_flg = false;
 	mCamera.SetOrtho(WINDOW_SIZE_W / 2, WINDOW_SIZE_H / 2, WINDOW_SIZE_W / 2, WINDOW_SIZE_H / 2);
 	MapLoad(map);
 	//背景
@@ -120,6 +121,7 @@ void CGame2::Update() {
 	if (CKey::Push('A')) {
 		mCamera.x -= 5;
 	}
+#ifndef _DEBUG
 	if (CKey::Push('P')) {
 		mTimeMin = CTime::ElapsedTimeMin();
 		mTimeSec = CTime::ElapsedTimeSec();
@@ -128,6 +130,7 @@ void CGame2::Update() {
 		CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ERESULT);
 		
 	}
+#endif
 	if (CGamePad::Once(PAD_10) || CKey::Once(VK_ESCAPE)){
 		CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
 		//CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ETITLE;
@@ -200,6 +203,15 @@ void CGame2::Render() {
 		CText::DrawStringW(L"チュートリアル", -111, 328, 32, 1.0f, 0);
 		CText::DrawStringW(L"９で スキップすることが できます。", -216, 304, 24, 1.0f, 0);
 	}
+
+	static float mTextAlpha = 0.0f;
+	if (CPlayerT::mpPlayer->mLife < 1){
+		mTextAlpha += 0.1f;
+		CText::DrawStringW(L"ゲームオーバー", -224, -32, 64, mTextAlpha, 0);
+		CText::DrawStringW(L"２で タイトルに もどる", -192, -64, 24, mTextAlpha, 0);
+	}
+	else
+		mTextAlpha = 0.0f;
 }
 
 void CGame2::CheatText(){

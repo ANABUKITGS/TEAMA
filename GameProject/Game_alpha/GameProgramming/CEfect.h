@@ -6,7 +6,7 @@
 #include "CTaskManager.h"
 #include <stdlib.h>
 
-#define EFECT_LIFE 30 
+//#define EFECT_LIFE 30 
 #define EFECT_UV mPosition.x - 16 / 2, mPosition.x + 16 / 2, mPosition.y - 16 / 2, mPosition.y + 16 / 2, 0, 32, 32, 0
 #define DAMAGEFEECT_LIFE 30
 #define DAMAGEEFECT_UV mPosition.x - 16 / 2, mPosition.x + 16 / 2, mPosition.y - 16 / 2, mPosition.y + 16 / 2, 0, 32, 32, 0
@@ -14,7 +14,7 @@
 class CEfect :public CRectangle{
 public:
 	CTexture mTexkira;
-	int mLife;
+	//int mLife;
 
 	CEfect(){
 		mTexkira.Load(".\\Data\\Images\\Efect\\kirakira.tga");
@@ -22,7 +22,7 @@ public:
 		mVelocityY = 10.0f;
 		mAlpha = 1.0f;
 		mTag = ENONE;
-		mLife = EFECT_LIFE;
+		//mLife = EFECT_LIFE;
 		mPriority = -2;
 		CTaskManager::Get()->Add(this);
 	}

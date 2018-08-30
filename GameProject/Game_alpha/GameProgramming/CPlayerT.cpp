@@ -124,9 +124,11 @@ void CPlayerT::Update(){
 void CPlayerT::Forward(){
 	if (player_ani != EPLAYERANI::EDAMAGE && player_ani != EPLAYERANI::EDOWN){
 		if (CGamePad::Push(PAD_LSTICKX, 0.1f) || CGamePad::Push(PAD_LSTICKX, -0.1f)){
-			if (!CMapScroll::scroll_flg)
+			if (!CMapScroll::scroll_flg){
 				CMapScroll::scroll_flg = true;
-
+				if (player_ani != EPLAYERANI::EDOWN && !CGame2::mCheat[CGame2::CHEAT_NUM::ESCROLL])
+					CMapScroll::mpScroll->mPosition.x = mPosition.x + 544.0f;
+			}
 			if (CGamePad::Push(PAD_LSTICKX, 0.1f)){
 				float hoge = mVelocityLimit * CGamePad::GetStick(PAD_LSTICKX);
 				mDirection = true;
@@ -188,9 +190,11 @@ void CPlayerT::Forward(){
 			}
 		}
 		else if (CKey::Push('D') || CKey::Push('A')){
-			if (!CMapScroll::scroll_flg)
+			if (!CMapScroll::scroll_flg){
 				CMapScroll::scroll_flg = true;
-
+				if (player_ani != EPLAYERANI::EDOWN && !CGame2::mCheat[CGame2::CHEAT_NUM::ESCROLL])
+					CMapScroll::mpScroll->mPosition.x = mPosition.x + 544.0f;
+			}
 			if (CKey::Push('D')){
 				mDirection = true;
 				if (mVelocityX < mVelocityLimit && mVelocityX > -mVelocityLimit){
@@ -534,6 +538,7 @@ void CPlayerT::Render(){
 		break;
 
 	case EPLAYERANI::EDOWN:
+		Gravity();
 		CMapScroll::scroll_flg = false;
 		if (player_ani_count > 1)
 			player_ani_count = 1;
@@ -550,17 +555,18 @@ void CPlayerT::Render(){
 			mDownTime++;
 			if (mDownTime >= PLAYER_DOWN_TIME){
 				mGameOverTime++;
-				if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI] && mLife > 0)
+				if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI] && mLife > 0 && mDownTime == PLAYER_DOWN_TIME)
 					mLife--;
 				if (mLife >= 1)
 					CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::EPLAYERDOWN);
 
 				else{
-					if ((CGamePad::Once(PAD_2) || CKey::Once(VK_RIGHT) || CKey::Once(VK_RETURN)) && mGameOverTime >= PLAYER_DOWN_TIME)
+					if ((CGamePad::Once(PAD_2) || CKey::Once(VK_RIGHT) || CKey::Once(VK_RETURN)) && mGameOverTime >= PLAYER_DOWN_TIME){
 						CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
+						mDownTime = 0;
+						mGameOverTime = 0;
+					}
 				}
-				mDownTime = 0;
-				mGameOverTime = 0;
 			}
 			return;
 		}
@@ -577,6 +583,8 @@ void CPlayerT::Render(){
 		player_ani_count++;
 		player_ani_count_frame = 0;
 	}
+	mDownTime = 0;
+	mGameOverTime = 0;
 }
 
 void CPlayerT::Dash(){
@@ -597,6 +605,7 @@ void CPlayerT::Die(){
 		if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI])
 			mJewel = 0;
 		CMapScroll::boss_scroll = false;
+		CSDiamond::mGetFlg = false;
 	}
 }
 
@@ -611,19 +620,21 @@ void CPlayerT::Damage(ECELLNUM tag){
 			break;
 
 		case ECELLNUM::EBWEAPON:
-			if (mJewel < static_cast <float> (mMaxJewel)* 0.2){
-				Die();
-				break;
-			}
-			else{
-				if (static_cast <float> (mMaxJewel)* 0.2 > 1.0f){
-					mDamage = static_cast <float> (mMaxJewel)* 0.2;
-					mJewel -= mDamage;
-			}
-
+			if (CSDiamond::mpSDiamond == NULL){
+				if (mJewel < static_cast <float> (mMaxJewel)* 0.2){
+					Die();
+					break;
+				}
 				else{
-					mDamage = 1;
-					mJewel-=mDamage;
+					if (static_cast <float> (mMaxJewel)* 0.2 > 1.0f){
+						mDamage = static_cast <float> (mMaxJewel)* 0.2;
+						mJewel -= mDamage;
+					}
+
+					else{
+						mDamage = 1;
+						mJewel -= mDamage;
+					}
 				}
 			}
 			break;

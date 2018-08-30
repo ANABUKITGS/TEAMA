@@ -121,6 +121,14 @@ void CFade::RenderFade(){
 						CBoss::mpBoss->mBossMaxLife = CBoss::mpBoss->mBossLife;
 					CPlayerT::mpPlayer->mJewel = CPlayerT::mpPlayer->mBackupJewel;
 				}
+				if (mMapfile == CFade::EGAMEMAP_NUM::ETUTORIAL)
+					CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETUTORIAL);
+
+				else if (mMapfile == CFade::EGAMEMAP_NUM::EMAIN)
+					CBGM::ChangeMusic(CBGM::EMUSIC_NUM::EMAIN);
+
+				else if (mMapfile == CFade::EGAMEMAP_NUM::EEDITER)
+					CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETUTORIAL);
 				break;
 
 			default:

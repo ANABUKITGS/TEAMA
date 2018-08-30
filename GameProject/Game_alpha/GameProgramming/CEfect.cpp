@@ -13,10 +13,11 @@ void CEfect::Render(){
 void CDamageEfect::Update(){
 	
 	mRotation+=mRotationAdd;
-	mLife--;
+	//mLife--;
 	mPosition.x += mVelocityX;
 	Gravity();
-	if (mLife < 0)
+	//if (mLife < 0)
+	if (mPosition.y <= -10.0f)
 		mEnabled = false;
 	CRectangle::Update();
 	

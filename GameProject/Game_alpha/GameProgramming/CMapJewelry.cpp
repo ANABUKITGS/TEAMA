@@ -49,7 +49,7 @@ void CMapMiniJewelry::Update() {
 	}
 	 else if (mIntervalEfe<0){
 		mIntervalEfe = EFECT_INTERVAL;
-		new CEfect(mPosition);
+		//new CEfect(mPosition);
 	}
 }
 
@@ -97,7 +97,7 @@ void CSDiamond::Update(){
 bool CSDiamond::Collision(CRectangle *r){
 	// “–‚½‚Á‚Ä‚¢‚é‚©
 	CVector2 aj;
-	if (CRectangle::Collision(r, &aj)) {
+	if (CRectangle::Collision(r, &aj) && r->GetEnabled()) {
 		//ƒvƒŒƒCƒ„[‚Ü‚½‚Í•Ší‚ÉÕ“Ë
 		switch (r->mTag) {
 		case ECELLNUM::EPLAYER:
