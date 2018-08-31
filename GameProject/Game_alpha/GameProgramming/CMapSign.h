@@ -17,6 +17,11 @@
 class CMapSign : public CMapChip {
 private:
 	CTexture mTexSign;
+	struct SMapSign{
+		bool flg;
+		wchar_t text[MAX_PATH];
+	};
+	static SMapSign mSignText[5];
 
 public:
 	int sign_num;
@@ -29,6 +34,7 @@ public:
 			mTexSign.Load(".\\Data\\Images\\Map\\MapSign.tga");
 		mRender = false;
 		mTag = ECELLNUM::ESIGN;
+		mSignText[0].flg = true;
 	}
 	void Update();
 	bool Collision(CRectangle *r);	//è’ìÀéûÇÃèàóù
@@ -38,7 +44,6 @@ public:
 class CMapTextView : public CRectangle{
 private:
 	CTexture mTexTextView;
-	wchar_t text_buf[256];
 
 public:
 	CMapTextView::CMapTextView()
@@ -48,7 +53,6 @@ public:
 		if (mTexTextView.id == NULL)
 			mTexTextView.Load(".\\Data\\Images\\Map\\TextView.tga");
 		mRender = false;
-		swprintf(text_buf, TEXT1);
 	}
 	void Update();
 	void Render();

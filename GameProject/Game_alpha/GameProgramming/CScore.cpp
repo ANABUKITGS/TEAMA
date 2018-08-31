@@ -31,8 +31,8 @@ extern CRanking mRanking;
 
 
 void CSceneResult::Init(){
-	mTexResult.Load(".//Data//Images//Result//result.tga");
-	mTexResultback.Load(".//Data//Images//Result//titleback.tga");
+	mTexResult.Load(".\\Data\\Images\\Result\\result.tga");
+	mTexResultback.Load(".\\Data\\Images\\Result\\titleback.tga");
 	mResultTag = ESCORE;
 }
 void CSceneResult::Update(){
@@ -60,8 +60,10 @@ void CScore::Init(){
 	mLifeScore = 100;
 	mTimerScore = 1;
 	mScoreNum = 0;
+	mTexResultTitle.Load(".\\Data\\Images\\Result\\Title.tga");
 }
 void CScore::Update(){	
+	mTexResultTitle.DrawImage(-255, 255, 158, 300, 0, 510, 143, 0, 1.0f);
 	if (mScore[mScoreNum] <= mCount[mScoreNum])
 		mScoreNum++;
 	mCount[mScoreNum]=CountUp(mScore[mScoreNum], mCount[mScoreNum]);
@@ -159,8 +161,10 @@ void CRanking::Init(){
 	strcpy(mRanking[2].n, "aaa");
 	CRankingIO mRankingIO;
 	mRankingIO.Load();
+	mTexRankingTitle.Load(".\\Data\\Images\\Ranking\\Title.tga");
 }
 void CRanking::Update(){
+	mTexRankingTitle.DrawImage(-250, 250, 152, 272, 0, 501, 120, 0, 1.0f);
 	if (CScore::mSort){
 		Sort(CScore::mScore[4], CName::name);
 		CScore::mSort = false;

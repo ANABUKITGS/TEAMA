@@ -19,6 +19,9 @@ public:
 	void Update();
 };
 class CScore:public CScene{
+private:
+	CTexture mTexResultTitle;
+
 public:
 	static int mJewelScore;
 	static int mMiniJewelScore;
@@ -47,6 +50,9 @@ public:
 	void Update();
 };
 class CRanking :public CScene{
+private:
+	CTexture mTexRankingTitle;
+
 public:
 	struct  SRanking{
 		char r[4];

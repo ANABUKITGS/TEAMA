@@ -1,6 +1,8 @@
 #include "CText.h"
 
-#define CSIZE 64
+#define CSIZE			64
+#define CSIZE_ITEM		72
+#define CSIZE_IMPACT	24
 
 int CText::ds = 0;
 float CText::uv[4];
@@ -8,13 +10,15 @@ float CText::uv[4];
 CTexture CText::mTexture01;	//テキスト テクスチャー M+ 1m bold
 CTexture CText::mTexture02;	//テキスト テクスチャー nintendoP Seurat
 CTexture CText::mTexture03;	//テキスト テクスチャー アイテム
+CTexture CText::mTexture04;	//テキスト テクスチャー Impact Font
 int CText::soundtime;		//文字表示音 間隔
 bool CText::textlimit;		//変数 加算時間
 
 void CText::Init(){
 	mTexture01.Load(".\\Data\\Images\\Font\\Mplus_1m_bold-Unicode_064.tga");
 	mTexture02.Load(".\\Data\\Images\\Font\\nintendoP_Seurat_064.tga");
-	mTexture03.Load(".\\Data\\Images\\Font\\Item.tga");
+	mTexture03.Load(".\\Data\\Images\\Font\\UI.tga");
+	mTexture04.Load(".\\Data\\Images\\Font\\Impact.tga");
 }
 
 void CText::DrawText(char a, float left, float right, float bottom, float top, float r, float g, float b, float alpha){
@@ -117,7 +121,7 @@ void CText::DrawStringSetColor(char s[], float left, float bottom, float size, f
 	CText::SetDrawString(s, left, bottom, size, r, g, b, alpha, drawspeed);
 }
 
-void CText::DrawTextW(wchar_t a, float left, float right, float bottom, float top,float r, float g, float b, float alpha){
+void CText::DrawTextW(wchar_t a, float left, float right, float bottom, float top,float r, float g, float b, float alpha, int font){
 	/*Unicode*/
 	if (a >= L'ぁ' && a <= 0x30A0){			//U+3041 ~ U+30A0
 		a = a - L'ぁ';
@@ -161,10 +165,20 @@ void CText::DrawTextW(wchar_t a, float left, float right, float bottom, float to
 		CText::uv[3] = CSIZE * 6;
 	}
 	else if (a == L'×'){					//U+00D7
-		CText::uv[0] = 6 * CSIZE;
-		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 7;
-		CText::uv[3] = CSIZE * 6;
+		if (font == 0){
+			CText::uv[0] = 6 * CSIZE;
+			CText::uv[1] = CText::uv[0] + CSIZE;
+			CText::uv[2] = CSIZE * 7;
+			CText::uv[3] = CSIZE * 6;
+		}
+		else if (font == 1){
+			CText::uv[0] = 12 * CSIZE_IMPACT;
+			CText::uv[1] = CText::uv[0] + CSIZE_IMPACT;
+			CText::uv[2] = CSIZE_IMPACT * 1;
+			CText::uv[3] = CSIZE_IMPACT * 0;
+			mTexture04.DrawImageSetColor(left, right, bottom, top, CText::uv[0], CText::uv[1], CText::uv[2], CText::uv[3], 1.0f, 1.0f, 1.0f, alpha);
+			return;
+		}
 	}
 	else if (a >= L'▲' && a <= L'△'){		//U+25B2	上向き, U+25B3	右向き
 		a = a - L'▲';
@@ -231,26 +245,26 @@ void CText::DrawTextW(wchar_t a, float left, float right, float bottom, float to
 		CText::uv[3] = CSIZE * 10;
 	}
 	else if (a == L'宝'){					//U+5B9D	アイテム フォント
-		CText::uv[0] = 0 * CSIZE;
-		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 1;
-		CText::uv[3] = CSIZE * 0;
+		CText::uv[0] = 0 * CSIZE_ITEM;
+		CText::uv[1] = CText::uv[0] + CSIZE_ITEM;
+		CText::uv[2] = CSIZE_ITEM * 1;
+		CText::uv[3] = CSIZE_ITEM * 0;
 		mTexture03.DrawImageSetColor(left, right, bottom, top, CText::uv[0], CText::uv[1], CText::uv[2], CText::uv[3], 1.0f, 1.0f, 1.0f, alpha);
 		return;
 	}
-	else if (a == L'片'){					//U+77F3	アイテム フォント
-		CText::uv[0] = 1 * CSIZE;
-		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 1;
-		CText::uv[3] = CSIZE * 0;
+	else if (a == L'片'){					//U+7247	アイテム フォント
+		CText::uv[0] = 1 * CSIZE_ITEM;
+		CText::uv[1] = CText::uv[0] + CSIZE_ITEM;
+		CText::uv[2] = CSIZE_ITEM * 1;
+		CText::uv[3] = CSIZE_ITEM * 0;
 		mTexture03.DrawImageSetColor(left, right, bottom, top, CText::uv[0], CText::uv[1], CText::uv[2], CText::uv[3], 1.0f, 1.0f, 1.0f, alpha);
 		return;
 	}
 	else if (a == L'命'){					//U+547D	アイテム フォント
-		CText::uv[0] = 2 * CSIZE;
-		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 1;
-		CText::uv[3] = CSIZE * 0;
+		CText::uv[0] = 2 * CSIZE_ITEM;
+		CText::uv[1] = CText::uv[0] + CSIZE_ITEM;
+		CText::uv[2] = CSIZE_ITEM * 1;
+		CText::uv[3] = CSIZE_ITEM * 0;
 		mTexture03.DrawImageSetColor(left, right, bottom, top, CText::uv[0], CText::uv[1], CText::uv[2], CText::uv[3], 1.0f, 1.0f, 1.0f, alpha);
 		return;
 	}
@@ -458,11 +472,38 @@ void CText::DrawTextW(wchar_t a, float left, float right, float bottom, float to
 		CText::uv[3] = CSIZE * 0;
 	}
 	else if (a >= L' ' && a <= L'@'){		//U+0020 ~ U+0040
-		a = a - L' ';
-		CText::uv[0] = a * CSIZE;
-		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 3;
-		CText::uv[3] = CSIZE * 2;
+		if (font == 0){
+			a = a - L' ';
+			CText::uv[0] = a * CSIZE;
+			CText::uv[1] = CText::uv[0] + CSIZE;
+			CText::uv[2] = CSIZE * 3;
+			CText::uv[3] = CSIZE * 2;
+		}
+		else if (font == 1){
+			if (a == L' '){
+				CText::uv[0] = 0 * CSIZE;
+				CText::uv[1] = CText::uv[0] + CSIZE;
+				CText::uv[2] = CSIZE * 3;
+				CText::uv[3] = CSIZE * 2;
+			}
+			else if (a == L'.'){
+				CText::uv[0] = 0 * CSIZE_IMPACT;
+				CText::uv[1] = CText::uv[0] + CSIZE_IMPACT;
+				CText::uv[2] = CSIZE_IMPACT * 1;
+				CText::uv[3] = CSIZE_IMPACT * 0;
+				mTexture04.DrawImageSetColor(left, right, bottom, top, CText::uv[0], CText::uv[1], CText::uv[2], CText::uv[3], 1.0f, 1.0f, 1.0f, alpha);
+				return;
+			}
+			else if (a >= L'0' && a <= L':'){
+				a = a - L'0';
+				CText::uv[0] = CSIZE_IMPACT * 1 + a * CSIZE_IMPACT;
+				CText::uv[1] = CText::uv[0] + CSIZE_IMPACT;
+				CText::uv[2] = CSIZE_IMPACT * 1;
+				CText::uv[3] = CSIZE_IMPACT * 0;
+				mTexture04.DrawImageSetColor(left, right, bottom, top, CText::uv[0], CText::uv[1], CText::uv[2], CText::uv[3], 1.0f, 1.0f, 1.0f, alpha);
+				return;
+			}
+		}
 	}
 	else if (a >= L'[' && a <= L'`'){		//U+005B ~ U+0060
 		a = a - L'[';
@@ -496,7 +537,7 @@ void CText::DrawTextW(wchar_t a, float left, float right, float bottom, float to
 	mTexture01.DrawImageSetColor(left, right, bottom, top, CText::uv[0], CText::uv[1], CText::uv[2], CText::uv[3], r, g, b, alpha);
 }
 
-void CText::SetDrawStringW(wchar_t s[], float left, float bottom, float size, float r, float g, float b, float alpha, int drawspeed){
+void CText::SetDrawStringW(wchar_t s[], float left, float bottom, float size, float r, float g, float b, float alpha, int drawspeed, int font = 0){
 	int j = 0;	//改行回数
 	int k = 0;	//改行位置
 	//文字列の長さを取得
@@ -514,17 +555,17 @@ void CText::SetDrawStringW(wchar_t s[], float left, float bottom, float size, fl
 			j++;
 		}
 		if (drawspeed <= 0)
-			CText::DrawTextW(s[i], left + (i - k)*size, left + (i - k)*size + size, bottom - (size * j), bottom + size - (size * j), r, g, b, alpha);
+			CText::DrawTextW(s[i], left + (i - k)*size, left + (i - k)*size + size, bottom - (size * j), bottom + size - (size * j), r, g, b, alpha, font);
 		else if (drawspeed > 0){
 			if (ds >= drawspeed * (i + 1)){
-				CText::DrawTextW(s[i], left + (i - k)*size, left + (i - k)*size + size, bottom - (size * j), bottom + size - (size * j), r, g, b, alpha);
+				CText::DrawTextW(s[i], left + (i - k)*size, left + (i - k)*size + size, bottom - (size * j), bottom + size - (size * j), r, g, b, alpha, font);
 				if (soundtime > drawspeed){
 					CSE::mSoundText.Play();
 					soundtime = 0;
 				}
 			}
 			else if (ds < drawspeed){
-				CText::DrawTextW(s[i], left + (i - k)*size, left + (i - k)*size + size, bottom - (size * j), bottom + size - (size * j), r, g, b, 0.0f);
+				CText::DrawTextW(s[i], left + (i - k)*size, left + (i - k)*size + size, bottom - (size * j), bottom + size - (size * j), r, g, b, 0.0f, font);
 			}
 		}
 		textlimit = true;
@@ -541,6 +582,10 @@ void CText::DrawStringW(wchar_t s[], float left, float bottom, float size, float
 
 void CText::DrawStringWSetColor(wchar_t s[], float left, float bottom, float size, float r, float g, float b, float alpha, int drawspeed){
 	CText::SetDrawStringW(s, left, bottom, size, r, g, b, alpha, drawspeed);
+}
+
+void CText::DrawStringImpact(wchar_t s[], float left, float bottom, float size, float alpha, int drawspeed){
+	CText::SetDrawStringW(s, left, bottom, size, 1.0f, 1.0f, 1.0f, alpha, drawspeed, 1);
 }
 
 void CText::DrawSppedReset(){

@@ -4,6 +4,7 @@
 
 CMapEndSign *CMapEndSign::mpEndSign = 0;
 CMapBossRoomSign *CMapBossRoomSign::mpBossRoomSign = 0;
+CMapSign::SMapSign CMapSign::mSignText[5];
 
 //チュートリアル 看板
 void CMapSign::Update() {
@@ -38,7 +39,6 @@ void CMapTextView::Update(){
 
 void CMapTextView::Render(){
 	mTexTextView.DrawImage(TEXTVIEW_UV, 1.0f);
-	CText::DrawStringW(DRAWSTRING_UV);
 }
 
 //チュートリアル 終了 看板
