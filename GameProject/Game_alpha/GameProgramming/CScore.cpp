@@ -170,7 +170,7 @@ void CRanking::Update(){
 		CScore::mSort = false;
 	}
 	glColor4f(1.0f, 1.0f, 0.0f, 1.0f);  //描画色　黄
-	swprintf(bufw, L"ランキング");
+	swprintf(bufw, L" ");
 	CText::DrawStringW(bufw, -75, 200, 30, 1.0f, 0);
 	for (int i = 0; i < 3; i++){
 		sprintf(buf2, "%3s", mRanking[i].r);

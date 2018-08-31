@@ -70,7 +70,7 @@ public:
 		: CMapChip(pos, CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL, NULL, NULL, NULL, NULL, ECELLNUM::EENDSIGN)
 	{
 		if (mTexEndSign.id == NULL)
-			mTexEndSign.Load(".\\Data\\Images\\Map\\MapEndSign.tga");
+			mTexEndSign.Load(".\\Data\\Images\\Map\\MapSign.tga");
 		mRender = false;
 		mTag = ECELLNUM::EENDSIGN;
 	}
