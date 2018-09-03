@@ -12,6 +12,8 @@
 
 #define DRAWSTRING_UV	text_buf, -256, 192, 32, 3, 1.0f
 
+#define SIGN_NUM		5
+
 //チュートリアル 看板
 class CMapSign : public CMapChip {
 private:
@@ -20,7 +22,7 @@ private:
 		bool flg;
 		wchar_t text[MAX_PATH];
 	};
-	static SMapSign mSignText[5];
+	static SMapSign mSignText[SIGN_NUM];
 
 public:
 	int sign_num;
@@ -33,7 +35,6 @@ public:
 			mTexSign.Load(".\\Data\\Images\\Map\\MapSign.tga");
 		mRender = false;
 		mTag = ECELLNUM::ESIGN;
-		mSignText[0].flg = true;
 		mView = false;
 	}
 	void Update();
