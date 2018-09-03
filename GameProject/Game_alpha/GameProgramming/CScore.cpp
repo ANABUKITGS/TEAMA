@@ -108,10 +108,10 @@ void CScore::GetScore(){
 }
 
 void CName::Init(){
-	CText::Init();
-	
+	mTexName.Load(".\\Data\\Images\\Result\\Name.tga");
 }
 void CName::Update(){
+	mTexName.DrawImage(-254, 254, 208, 300, 0, 508, 92, 0, 1.0f);
 	if (CKey::Once(VK_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f)){
 		if (name[charnum] == 'Z')
 			name[charnum] = '0';

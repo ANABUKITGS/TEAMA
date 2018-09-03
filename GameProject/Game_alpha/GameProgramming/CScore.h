@@ -40,6 +40,9 @@ public:
 };
 
 class CName:public CScene{
+private:
+	CTexture mTexName;
+
 public:
 	static char name[3];
 	static int charnum;
