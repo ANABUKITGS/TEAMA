@@ -40,9 +40,6 @@ void CGame2::Init(const char *map) {
 	//スイッチ足場 青 有効化
 	CMapSwitchGround::mNumber = ESWITCH_GROUND1;
 
-	//チュートリアル メッセージ
-	new CMapTextView();
-
 	//チート初期化
 	for (int i = CHEAT_NUM::EFLAG; i < CHEAT_NUM::ESIZE; i++)
 		mCheat[i] = false;
@@ -191,6 +188,12 @@ void CGame2::Render() {
 	CText::DrawStringW(jumptime_buf, 0, 0, 16, 1.0f, 0);
 	CheatText();
 #endif
+
+	//チュートリアル メッセージ
+	if (CMapSign::mView && CMapTextView::mpTextView == NULL){
+		CMapTextView::mpTextView = new CMapTextView();
+		CText::DrawSppedReset();
+	}
 
 	//経過時間
 	wchar_t time_buf[64];

@@ -8,10 +8,9 @@
 #define SIGN_UV				mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE / 2, mPosition.y + CELLSIZE / 2, 0, 64, 64, 0
 #define BOSSROOM_SIGN_UV	mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 0, 64, mTexPosY + 128, mTexPosY
 #define BOSSROOM_SIGN_UV2	mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 0, 64, 256, 128
-#define TEXTVIEW_UV			CGame2::mCamera.x - 256, CGame2::mCamera.x + 255, CGame2::mCamera.y - 256, CGame2::mCamera.y + 256, 0, 512, 512, 0
+#define TEXTVIEW_UV			CGame2::mCamera.x - 256, CGame2::mCamera.x + 256, CGame2::mCamera.y - 128, CGame2::mCamera.y + 128, 0, 512, 512, 0
 
 #define DRAWSTRING_UV	text_buf, -256, 192, 32, 3, 1.0f
-#define TEXT1			L"hogehogehoge\nあいうえおかきくけこ\n0123456789"
 
 //チュートリアル 看板
 class CMapSign : public CMapChip {
@@ -25,7 +24,7 @@ private:
 
 public:
 	int sign_num;
-	bool mView;
+	static bool mView;
 	CMapSign(const CVector2& pos)
 		//CMapChipで初期化
 		: CMapChip(pos, CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL, NULL, NULL, NULL, NULL, ECELLNUM::ESIGN)
@@ -35,6 +34,7 @@ public:
 		mRender = false;
 		mTag = ECELLNUM::ESIGN;
 		mSignText[0].flg = true;
+		mView = false;
 	}
 	void Update();
 	bool Collision(CRectangle *r);	//衝突時の処理
@@ -46,13 +46,16 @@ private:
 	CTexture mTexTextView;
 
 public:
+	static CMapTextView *mpTextView;
 	CMapTextView::CMapTextView()
 		: CRectangle(CVector2(CGame2::mCamera.x, CGame2::mCamera.y), CVector2(0, 0), NULL)
 	{
-		mPriority = -10;
-		if (mTexTextView.id == NULL)
-			mTexTextView.Load(".\\Data\\Images\\Map\\TextView.tga");
+		mPriority = -100;
 		mRender = false;
+		CTaskManager::Get()->Add(this);
+	}
+	~CMapTextView(){
+		mpTextView = 0;
 	}
 	void Update();
 	void Render();

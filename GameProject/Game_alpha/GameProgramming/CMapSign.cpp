@@ -5,6 +5,8 @@
 CMapEndSign *CMapEndSign::mpEndSign = 0;
 CMapBossRoomSign *CMapBossRoomSign::mpBossRoomSign = 0;
 CMapSign::SMapSign CMapSign::mSignText[5];
+bool CMapSign::mView = false;
+CMapTextView *CMapTextView::mpTextView = 0;
 
 //チュートリアル 看板
 void CMapSign::Update() {
@@ -15,8 +17,8 @@ bool CMapSign::Collision(CRectangle *r) {
 	// 当たっているか
 	if (r->mTag == EPLAYER){
 		if (CRectangle::Collision(r)){
-			CText::ds = 0;
 			mView = true;
+			CMapScroll::scroll_flg = false;
 			return true;
 		}
 		mView = false;
@@ -25,20 +27,18 @@ bool CMapSign::Collision(CRectangle *r) {
 }
 
 void CMapSign::Render(){
-	if (mView)
-		mTexSign.DrawImage(SIGN_UV, 1.0f);
-
-	else
-		mTexSign.DrawImage(SIGN_UV, 0.5f);
+	mTexSign.DrawImage(SIGN_UV, 1.0f);
 }
 
 //
 void CMapTextView::Update(){
-
+	if (!CMapSign::mView && mpTextView != NULL)
+		mEnabled = false;
 }
 
 void CMapTextView::Render(){
-	mTexTextView.DrawImage(TEXTVIEW_UV, 1.0f);
+	mTexTextView.DrawImageSetColor(TEXTVIEW_UV, BLACK, 0.5f);
+	CText::DrawStringW(L"[プレイヤーの そうさせつめい]\nＰ いどう\n１ ヨーヨー なげ\n２ ジャンプ\n３ ダッシュ\n９ チュートリアルを スキップ\n０ タイトルに もどる", CMapScroll::mpScroll->mPosition.x - 256, CMapScroll::mpScroll->mPosition.y + 128 - 32, 32, 1.0f, 2);
 }
 
 //チュートリアル 終了 看板
