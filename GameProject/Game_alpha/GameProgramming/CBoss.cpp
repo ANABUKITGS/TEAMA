@@ -549,7 +549,7 @@ void CBoss::Render(){
 				mTexture.DrawImage(BOSS_TEX_POS, mBossAnimeFream * 256, (mBossAnimeFream + 1) * 256, 1792, 1536, mAlpha);
 		}
 		//着地地点
-		else if (mVelocityY == 0.0){
+		else if (mVelocityY==0.0){
 			//アニメーションの枚数-1を指定し、その枚数を超えたら
 			if (mBossAnimeFream > 4)
 				mBossAnimeFream = 4;//ループ開始位置(1枚目のアニメーション)に戻る
