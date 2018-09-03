@@ -199,8 +199,23 @@ void CGame2::Render() {
 	wchar_t time_buf[64];
 	for (int i = 0; i < 16; i++)
 		time_buf[i] = '\0';
-	swprintf(time_buf, L"%02d:%06.3f\n  宝×%2d\n  片×%2d\n  命×%2d", CTime::ElapsedTimeMin(), CTime::ElapsedTimeSec(), CPlayerT::mpPlayer->mJewel, CPlayerT::mpPlayer->mMiniJewel, CPlayerT::mpPlayer->mLife);
-	CText::DrawStringImpact(time_buf, 352, 328, 24, 1.0f, 0);
+	swprintf(time_buf, L"%02d:%06.3f", CTime::ElapsedTimeMin(), CTime::ElapsedTimeSec());
+	CText::DrawStringImpact(time_buf, -620, 300, 32, 1.0f, 0);
+
+	//ダイヤモンド
+	swprintf(time_buf, L"宝");
+	CText::DrawStringImpact(time_buf, -620, 250, 40, 1.0f, 0);
+	swprintf(time_buf, L" × %02d", CPlayerT::mpPlayer->mJewel);
+	CText::DrawStringImpact(time_buf, -588, 258, 24, 1.0f, 0);
+	//ミニダイヤモンド
+	swprintf(time_buf, L"片");
+	CText::DrawStringImpact(time_buf, -612, 218, 24, 1.0f, 0);
+	swprintf(time_buf, L" × %02d", CPlayerT::mpPlayer->mMiniJewel);
+	CText::DrawStringImpact(time_buf, -588, 218, 24, 1.0f, 0);
+
+	//残機
+	swprintf(time_buf, L"命×%1d", CPlayerT::mpPlayer->mLife);
+	CText::DrawStringImpact(time_buf, -620, -350, 48, 1.0f, 0);
 
 	if (CFade::mMapfile == CFade::EGAMEMAP_NUM::ETUTORIAL){
 		CText::DrawStringW(L"チュートリアル", -111, 328, 32, 1.0f, 0);
