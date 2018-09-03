@@ -45,9 +45,21 @@ private:
 	int Boss_Ani_Count_Frame;			//一コマのフレーム数
 	int mBossInvincibleTime;			//ボスの無敵時間
 	int mBossIBehavior;					//待機状態からのランダム行動
+	int IdolInterval;					//待機状態から次の行動に移るまでの時間
 	bool Invincible;					//無敵時間用変数を追加
 	bool mTelepoEnabled;
-	void BossJump();
+	enum BehP{
+		EDASH_0,
+		EDASH_1,
+		EDASH_2,
+		EJUMP_3,
+		ETELEPO_4,
+		EIDOL_5,
+		EIDOL_6,
+
+		ESIZE_7,
+	};
+	void BossBehP(BehP);				//ボスが待機から行動起こす関数プロトタイプ
 
 	//引数無しコンストラクタで変数等の初期化処理
 	CBoss()
@@ -67,6 +79,7 @@ private:
 		mBossTelepo = 0;				//瞬間移動の値を初期化
 		mBossJcnt=0;					//ジャンプ間隔変数の値を0にする
 		mBossJumprad=0;					//最初のジャンプタイミングを初期化する
+		IdolInterval = 0;				//待機状態から次の行動に移るまでの時間を初期化
 		mBossDeleteTime = BOSS_DELCNT;	//ボスの消滅時間を初期化
 		Invincible = false;				//無敵時間は最初偽にして初期化
 		mDirection = false;				//最初の向きを左向きにする
@@ -84,13 +97,14 @@ private:
 public:
 	enum AttackBehavior{
 		EIDOL,							//待機
-		EMANTO,							//マントのしぐさ？
+		EMANTO,							//マント
 		EBWEAPON,						//武器を使用
 		EDASH,							//走る
 		EJUMP,							//ジャンプ
 		EDAMAGE,						//ダメージ
 		EDOWN,							//ダウン
 		ETELEPO,						//瞬間移動
+		EGUARD,							//ガード
 		ESIZE,
 	};
 
@@ -117,6 +131,10 @@ public:
 	void Render();
 	//衝突処理
 	bool Collision(CRectangle*);
+
+protected://疑似的にprivateに見せている
+	void Boss_A_BehP();
+	friend class CBoss;
 };
 
 #endif
