@@ -10,6 +10,7 @@
 #define EFECT_UV mPosition.x - 16 / 2, mPosition.x + 16 / 2, mPosition.y - 16 / 2, mPosition.y + 16 / 2, 0, 32, 32, 0
 #define DAMAGEFEECT_LIFE 30
 #define DAMAGEEFECT_UV mPosition.x - 16 / 2, mPosition.x + 16 / 2, mPosition.y - 16 / 2, mPosition.y + 16 / 2, 0, 32, 32, 0
+#define BOSSEFECT_UV mPosition.x - 128 , mPosition.x + 128 , mPosition.y - 90 , mPosition.y +166 , 0+ani_num*512, 512+ani_num*512, 512, 0
 
 class CEfect :public CRectangle{
 public:
@@ -68,6 +69,30 @@ public:
 	}
 	void Update();
 	void Gravity();
+	void Render();
+};
+class CBossEfect :public CRectangle{
+public:
+	int ani_num;
+	int ani_count;
+	CTexture mTexture;
+	CRectangle *mpRect;
+	CBossEfect(){
+		ani_num = 0;
+		ani_count = 5;
+		mTag = ENONE;
+		mRender = false;
+		mTexture.Load(".\\Data\\Images\\Efect\\boss_effect.tga");
+		CTaskManager::Get()->Add(this);
+
+	}
+	CBossEfect(CRectangle *p)
+		:CBossEfect()
+	{
+		SetRectangle(p->mPosition, CVector2(32, 90), NULL);
+		mpRect = p;
+	}
+	void Update();
 	void Render();
 };
 #endif
