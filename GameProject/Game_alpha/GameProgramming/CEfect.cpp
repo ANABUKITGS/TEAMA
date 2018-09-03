@@ -35,3 +35,20 @@ void CDamageEfect::Gravity(){
 void CDamageEfect::Render(){
 	CRectangle::Render();
 }
+
+void CBossEfect::Update(){
+	ani_count--;
+	if (ani_count < 0){
+		if (ani_num != 9)
+			ani_num++;
+		else
+			ani_num = 0;
+		ani_count = 5;
+	}
+	mPosition = mpRect->mPosition;
+	CRectangle::Update();
+}
+
+void CBossEfect::Render(){
+	mTexture.DrawImage(BOSSEFECT_UV, 1.0f);
+}
