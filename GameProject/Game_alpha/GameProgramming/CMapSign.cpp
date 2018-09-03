@@ -4,24 +4,35 @@
 
 CMapEndSign *CMapEndSign::mpEndSign = 0;
 CMapBossRoomSign *CMapBossRoomSign::mpBossRoomSign = 0;
-CMapSign::SMapSign CMapSign::mSignText[5];
 bool CMapSign::mView = false;
 CMapTextView *CMapTextView::mpTextView = 0;
+CMapTextView::SMapSign CMapTextView::mSignText[MAX_SIGN];
+wchar_t CMapTextView::view_text_buf[MAX_PATH];
 
 //チュートリアル 看板
 void CMapSign::Update() {
+	if (mPosition.x > 0 * CELLSIZE)
+		mSignTag = (mPosition.x / (10 * CELLSIZE));
+
+	else
+		mSignTag = NULL;
+
+	if (mView && CMapTextView::mpTextView != NULL)
+		CMapTextView::mpTextView->SignTag(mSignTag);
 	CMapChip::Update();
 }
 
 bool CMapSign::Collision(CRectangle *r) {
 	// 当たっているか
-	if (r->mTag == EPLAYER){
-		if (CRectangle::Collision(r)){
-			mView = true;
-			CMapScroll::scroll_flg = false;
-			return true;
+	if (mPosition.x <= CPlayerT::mpPlayer->mPosition.x + CELLSIZE * 2 && mPosition.x >= CPlayerT::mpPlayer->mPosition.x - CELLSIZE * 2){
+		if (r->mTag == EPLAYER){
+			if (CRectangle::Collision(r)){
+				mView = true;
+				CMapScroll::scroll_flg = false;
+				return true;
+			}
+			mView = false;
 		}
-		mView = false;
 	}
 	return false;
 }
@@ -38,7 +49,14 @@ void CMapTextView::Update(){
 
 void CMapTextView::Render(){
 	mTexTextView.DrawImageSetColor(TEXTVIEW_UV, BLACK, 0.5f);
-	CText::DrawStringW(L"[プレイヤーの そうさせつめい]\nＰ いどう\n１ ヨーヨー なげ\n２ ジャンプ\n３ ダッシュ\n９ チュートリアルを スキップ\n０ タイトルに もどる", CMapScroll::mpScroll->mPosition.x - 256, CMapScroll::mpScroll->mPosition.y + 128 - 32, 32, 1.0f, 2);
+	CText::DrawStringW(view_text_buf, CMapScroll::mpScroll->mPosition.x - 256, CMapScroll::mpScroll->mPosition.y + 128 - 32, 32, 1.0f, 2);
+}
+
+void CMapTextView::SignTag(int msign_tag){
+	if (msign_tag < MAX_SIGN && msign_tag >= 0)
+		wcscpy(view_text_buf, mSignText[msign_tag].text_buf);
+	else
+		swprintf(view_text_buf, L"(null)");
 }
 
 //チュートリアル 終了 看板
