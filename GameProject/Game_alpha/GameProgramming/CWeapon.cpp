@@ -3,6 +3,7 @@
 #include "CEnemy.h"
 #include "CBoss.h"
 void CWeapon::Update(){
+
 	mPosInit = mpCharcter->mPosition;
 	mRotation += 10;			//–ˆƒtƒŒ[ƒ€10‚¸‚Â‰ñ“]‚³‚¹‚é
 	mLife--;

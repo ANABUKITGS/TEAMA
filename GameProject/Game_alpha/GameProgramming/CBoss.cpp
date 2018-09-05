@@ -143,7 +143,7 @@ void CBoss::Boss_A_BehP(){
 			//ボスのヨーヨーを呼び出す
 			if (mBossAnimeFream > 3){
 				if (mDirection){
-					mpBWeapon = new CWeapon(this, ECELLNUM::EBWEAPON, mPosition + CVector2(-82.0f, 32.0f), mDirection);
+					mpBWeapon = new CWeapon(this, ECELLNUM::EBWEAPON, mPosition + CVector2(82.0f, 32.0f), mDirection);
 				}
 
 				else{
@@ -448,6 +448,7 @@ bool CBoss::Collision(CRectangle*p){
 			case ECELLNUM::EBELTR:
 			case ECELLNUM::ESIGN:
 			case ECELLNUM::EEWEAPON:
+			case ECELLNUM::EBWEAPON:
 			case ECELLNUM::ESEARCH:
 			case ECELLNUM::ESWITCH:
 			case ECELLNUM::EPLAYER:
@@ -599,13 +600,13 @@ void CBoss::Render(){
 
 	case EBWEAPON://攻撃
 		if (mpBWeapon != NULL){
-			if (!mDirection)
-				//ヨーヨーの紐
-				mpBWeapon->mTexYoyo.DrawImage(BSTRING_UV_L, 1.0f);
+			//if (!mDirection)
+			//	//ヨーヨーの紐
+			//	mpBWeapon->mTexYoyo.DrawImage(BSTRING_UV_L, 1.0f);
 
-			else
-				//ヨーヨーの紐
-				mpBWeapon->mTexYoyo.DrawImage(BSTRING_UV_R, 1.0f);
+			//else
+			//	//ヨーヨーの紐
+			//	mpBWeapon->mTexYoyo.DrawImage(BSTRING_UV_R, 1.0f);
 
 				mBossAnimeFream = 3;
 		}

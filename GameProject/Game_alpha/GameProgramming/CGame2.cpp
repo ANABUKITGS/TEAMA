@@ -199,7 +199,7 @@ void CGame2::Render() {
 	wchar_t time_buf[64];
 	for (int i = 0; i < 16; i++)
 		time_buf[i] = '\0';
-	swprintf(time_buf, L"%02d:%06.3f", CTime::ElapsedTimeMin(), CTime::ElapsedTimeSec());
+	swprintf(time_buf, L"%03d", (int)(CTime::GetTime()));
 	CText::DrawStringImpact(time_buf, -620, 300, 32, 1.0f, 0);
 
 	//ƒ_ƒCƒ„ƒ‚ƒ“ƒh

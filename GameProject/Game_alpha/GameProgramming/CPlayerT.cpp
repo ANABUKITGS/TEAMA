@@ -31,22 +31,22 @@ void CPlayerT::Update(){
 						if (mAerialAttack){
 							mAerialAttack = false;
 							if (mDirection){
-								mpWeapon = new CWeapon(this,EPWEAPON, mPosition + CVector2(0.0f, 6.0f), mDirection);
+								mpWeapon = new CWeapon(this,EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
 								mpWeapon->mPosition.x += 51.0f;
 							}
 							else{
-								mpWeapon = new CWeapon(this,EPWEAPON, mPosition + CVector2(0.0f, 6.0f), mDirection);
+								mpWeapon = new CWeapon(this,EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
 								mpWeapon->mPosition.x -= 51.0f;
 							}
 						}
 					}
 					else{
 						if (mDirection){
-							mpWeapon = new CWeapon(this,EPWEAPON, mPosition + CVector2(0.0f, 6.0f), mDirection);
+							mpWeapon = new CWeapon(this,EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
 							mpWeapon->mPosition.x += 51.0f;
 						}
 						else{
-							mpWeapon = new CWeapon(this,EPWEAPON, mPosition + CVector2(0.0f, 6.0f), mDirection);
+							mpWeapon = new CWeapon(this,EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
 							mpWeapon->mPosition.x -= 51.0f;
 						}
 					}
@@ -266,7 +266,7 @@ void CPlayerT::Forward(){
 					mVelocityX -= PLAYER_VELOCITY_X2_ICE;
 			}
 
-			if (!mAir)
+			if (!mAir && mpWeapon==0)
 				player_ani = EPLAYERANI::EIDOL;
 		}
 		mPosition.x += mVelocityX;
@@ -325,7 +325,7 @@ bool CPlayerT::Collision(CRectangle *p) {
 					break;
 
 				case ECELLNUM::ECHECKPOINT:
-					mReSpornPos = p->mPosition;
+					mReSpornPos = CVector2(p->mPosition.x,p->mPosition.y+32);
 					if (mJewel > 3)
 						mBackupJewel = mJewel;
 					else
