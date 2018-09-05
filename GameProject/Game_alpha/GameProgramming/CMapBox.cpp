@@ -1,5 +1,6 @@
 #include "CMapBox.h"
 #include "CScene.h"
+#include "CEfect.h"
 #include "CPlayerT.h"
 
 void CMapBox::Update() {
@@ -67,11 +68,18 @@ bool CMapBox::Collision(CRectangle *r) {
 					//	mPosition = mPosition + aj;
 					//}
 				}
+				//プレイヤーのヨーヨー
+				if (r->mTag == EPWEAPON)
+					mBreak = true;
 			}
-
-			//プレイヤーのヨーヨー
-			if (r->mTag == EPWEAPON)
-				mBreak = true;
+			
+			else if (r->mTag == EENEMY1 ||
+				r->mTag == EENEMY2 ||
+				r->mTag == EENEMY3 ||
+				r->mTag == EBOSS){
+				new CBoxEfect(mPosition);
+				mEnabled = false;
+			}
 
 			return true;
 		}

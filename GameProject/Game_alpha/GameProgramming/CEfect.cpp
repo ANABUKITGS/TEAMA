@@ -39,7 +39,7 @@ void CDamageEfect::Render(){
 void CBossEfect::Update(){
 	ani_count--;
 	if (ani_count < 0){
-		if (ani_num != 9)
+		if (ani_num != 8)
 			ani_num++;
 		else
 			ani_num = 0;
@@ -51,4 +51,20 @@ void CBossEfect::Update(){
 
 void CBossEfect::Render(){
 	mTexture.DrawImage(BOSSEFECT_UV, 1.0f);
+}
+
+void CBoxEfect::Update(){
+	ani_count--;
+	if (ani_count < 0){
+		if (ani_num != 6)
+			ani_num++;
+		else
+			mEnabled = false;
+		ani_count = 8;
+	}
+	CRectangle::Update();
+}
+
+void CBoxEfect::Render(){
+	mTexture.DrawImage(BOXEFECT_UV, 1.0f);
 }

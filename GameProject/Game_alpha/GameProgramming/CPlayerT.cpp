@@ -31,66 +31,65 @@ void CPlayerT::Update(){
 						if (mAerialAttack){
 							mAerialAttack = false;
 							if (mDirection){
-								mpWeapon = new CWeapon(EPWEAPON, mPosition + CVector2(0.0f, 6.0f), mDirection);
+								mpWeapon = new CWeapon(this,EPWEAPON, mPosition + CVector2(0.0f, 6.0f), mDirection);
 								mpWeapon->mPosition.x += 51.0f;
 							}
 							else{
-								mpWeapon = new CWeapon(EPWEAPON, mPosition + CVector2(0.0f, 6.0f), mDirection);
+								mpWeapon = new CWeapon(this,EPWEAPON, mPosition + CVector2(0.0f, 6.0f), mDirection);
 								mpWeapon->mPosition.x -= 51.0f;
 							}
 						}
 					}
 					else{
 						if (mDirection){
-							mpWeapon = new CWeapon(EPWEAPON, mPosition + CVector2(0.0f, 6.0f), mDirection);
+							mpWeapon = new CWeapon(this,EPWEAPON, mPosition + CVector2(0.0f, 6.0f), mDirection);
 							mpWeapon->mPosition.x += 51.0f;
 						}
 						else{
-							mpWeapon = new CWeapon(EPWEAPON, mPosition + CVector2(0.0f, 6.0f), mDirection);
+							mpWeapon = new CWeapon(this,EPWEAPON, mPosition + CVector2(0.0f, 6.0f), mDirection);
 							mpWeapon->mPosition.x -= 51.0f;
 						}
 					}
 				}
 
-				if (mJumpCount < 2 && (CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_RIGHT))){
-					player_ani_count = 0;
-					player_ani_count_frame = 0;
-				}
-				if (mJumpCount < 2 && (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) || CKey::Push(VK_RIGHT))){		//ジャンプ回数２未満かつ２キーまたは→キー入力
-					mAerialAttack = true;
-					//mAir = true;
-					if (!mJump)
-						mVelocityY = PLAYER_VELOCITY_Y;
-
-					if (!mAir)
-						player_ani = EPLAYERANI::EIDOL;
-					else{
-						if (mpWeapon != 0 && mpWeapon->mLife > 0 && !mpWeapon->mReturn)
-							player_ani = EPLAYERANI::EJUMP;
-					}
-					mJump = true;
-				}
-				else if (mJump){
-					mJumpCount++;
-					mJump = false;
-					mVelocityY = 0;
-				}
+				
 			}
 			else if (mpWeapon->mReturn){		//武器の生存時間が0以下
 				mpWeapon = 0;
 			}
 			else {								//武器の生存時間が0を超過
 				player_ani = EPLAYERANI::EYOYO;
-				//mpWeapon->Render();	//要らないのでは?
 			}
-			if (mpWeapon == 0){
+			if (mJumpCount < 2 && (CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_RIGHT))){
+				player_ani_count = 0;
+				player_ani_count_frame = 0;
+			}
+			if (mJumpCount < 2 && (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) || CKey::Push(VK_RIGHT))){		//ジャンプ回数２未満かつ２キーまたは→キー入力
+				mAerialAttack = true;
+				//mAir = true;
+				if (!mJump)
+					mVelocityY = PLAYER_VELOCITY_Y;
+
+				if (!mAir)
+					player_ani = EPLAYERANI::EIDOL;
+				else{
+					if (mpWeapon != 0 && mpWeapon->mLife > 0 && !mpWeapon->mReturn)
+						player_ani = EPLAYERANI::EJUMP;
+				}
+				mJump = true;
+			}
+			else if (mJump){
+				mJumpCount++;
+				mJump = false;
+				mVelocityY = 0;
+			}
 				Dash();
 				Gravity();
 				if (CMapBossRoomSign::mpBossRoomSign == NULL ||
 					(!CMapBossRoomSign::mpBossRoomSign->mColFlg || (CMapBossRoomSign::mpBossRoomSign->mColFlg && CBoss::mpBoss->mBossBattle)))
 					Forward();
+
 				CRectangle::Update();
-			}
 
 			if (mVelocityY < -1.0f && mVelocityY > -1.1f)
 				mAir = false;
