@@ -51,10 +51,11 @@ void CBossLifeBar::Update(){
 
 void CBossLifeBar::Render(){
 	if (CBoss::mpBoss != NULL && CMapBossRoomSign::mpBossRoomSign->mColFlg){
-		mTexLifeBar.DrawImage(BOSSLIFEBAR_BACK_UV);
+		mTexLifeBar.DrawImage(BOSSLIFEBAR_BACK_UV1);
 		mTexLifeBar.DrawImageSetColor(BOSSLIFEBAR_UV);
 		mTexLifeBar.DrawImage(BOSSLIFEBAR_HIGHLIGHT_UV);
 		CText::DrawStringW(L"JACK", CMapScroll::mpScroll->mPosition.x - 64, mPosition.y + 16, 32, 1.0f, 0);
+		mTexLifeBar.DrawImage(BOSSLIFEBAR_BACK_UV2);
 #ifdef _DEBUG
 		wchar_t bosslife_buf[8];
 		wchar_t bossmaxlife_buf[8];

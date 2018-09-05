@@ -4,10 +4,13 @@
 #include "CMapScroll.h"
 #include "CBoss.h"
 
-#define BOSSLIFEBAR_X				256
+#define BOSSLIFEBAR_X				210.5
 #define BOSSLIFEBAR_Y				16
+#define BOSSLIFEBAR_BACK_X			256
+#define BOSSLIFEBAR_BACK_Y			32
 #define BOSSLIFEBAR_UV				mPosition.x - mScale.x, mPosition.x + mScale.x, mPosition.y - mScale.y, mPosition.y + mScale.y, 0, 512, 32, 0,  mRed, mGreen, 0.0f, 1.0f
-#define BOSSLIFEBAR_BACK_UV			mPosition.x - mScale.x, CMapScroll::mpScroll->mPosition.x + BOSSLIFEBAR_X, mPosition.y - BOSSLIFEBAR_Y, mPosition.y + BOSSLIFEBAR_Y, 0, 512, 64, 32, 0.75f
+#define BOSSLIFEBAR_BACK_UV1		mPosition.x - mScale.x - 57, CMapScroll::mpScroll->mPosition.x + BOSSLIFEBAR_BACK_X - 15, mPosition.y - BOSSLIFEBAR_BACK_Y + 6, mPosition.y + BOSSLIFEBAR_BACK_Y + 6, 0, 512, 224, 160, 1.0f
+#define BOSSLIFEBAR_BACK_UV2		mPosition.x - mScale.x - 57, CMapScroll::mpScroll->mPosition.x + BOSSLIFEBAR_BACK_X - 15, mPosition.y - BOSSLIFEBAR_BACK_Y + 6, mPosition.y + BOSSLIFEBAR_BACK_Y + 6, 0, 512, 160, 96, 1.0f
 #define BOSSLIFEBAR_HIGHLIGHT_UV	mPosition.x - mScale.x, mPosition.x + mScale.x, mPosition.y - mScale.y, mPosition.y + mScale.y, 0, 512, 96, 64, 1.0f
 #define BOSSLIFE_SPEED	2
 
