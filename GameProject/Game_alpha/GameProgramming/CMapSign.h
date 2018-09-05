@@ -12,18 +12,15 @@
 
 #define DRAWSTRING_UV	text_buf, -256, 192, 32, 3, 1.0f
 
+#define MAX_SIGN		10
+
 //チュートリアル 看板
 class CMapSign : public CMapChip {
 private:
 	CTexture mTexSign;
-	struct SMapSign{
-		bool flg;
-		wchar_t text[MAX_PATH];
-	};
-	static SMapSign mSignText[5];
 
 public:
-	int sign_num;
+	int mSignTag;
 	static bool mView;
 	CMapSign(const CVector2& pos)
 		//CMapChipで初期化
@@ -33,7 +30,7 @@ public:
 			mTexSign.Load(".\\Data\\Images\\Map\\MapSign.tga");
 		mRender = false;
 		mTag = ECELLNUM::ESIGN;
-		mSignText[0].flg = true;
+		mSignTag = NULL;
 		mView = false;
 	}
 	void Update();
@@ -44,6 +41,12 @@ public:
 class CMapTextView : public CRectangle{
 private:
 	CTexture mTexTextView;
+	struct SMapSign{
+		bool flg;
+		wchar_t text_buf[MAX_PATH];
+	};
+	static SMapSign mSignText[MAX_SIGN];
+	static wchar_t view_text_buf[MAX_PATH];
 
 public:
 	static CMapTextView *mpTextView;
@@ -52,6 +55,21 @@ public:
 	{
 		mPriority = -100;
 		mRender = false;
+		for (int i = 0; i < MAX_SIGN; i++){
+			swprintf(mSignText[i].text_buf, L"Sign%02d", i + 1);
+		}
+		{
+			swprintf(mSignText[0].text_buf, L"[プレイヤーの そうさせつめい]\nＰ いどう\n１ ヨーヨー なげ\n２ ジャンプ\n３ ダッシュ\n９ チュートリアルを スキップ\n０ タイトルに もどる");
+			swprintf(mSignText[1].text_buf, L"[ダイヤモンドに ついて]\nダイヤモンドは ふれるか\nヨーヨーを あてることで\nてに いれることが\nできます。\nダイヤモンドがなくなると\nミスに なります。");
+			swprintf(mSignText[2].text_buf, L"[てきに ついて]\nてきは ヨーヨーを あてるか\nコンテナや てっこつを\nヨーヨーで おとして\nてきに あてることで\nたおすことが できます。");
+			swprintf(mSignText[3].text_buf, L"[スクロールに ついて]\nがめん ひだりや したから\nでてしまうと ミスに なります。");
+			swprintf(mSignText[4].text_buf, L"[こおりの あしばに ついて]\nこおりの あしばは\nとてもすべりやすいです。\nうまくプレイヤーを\nコントロールして\nてきの こうげきに\nあたらないように しましょう。");
+			swprintf(mSignText[5].text_buf, L"[ベルトコンベアに ついて]\nベルトコンベアに のると\nやじるしの ほうこうに\nながされて しまいます。");
+			swprintf(mSignText[6].text_buf, L"[おちるあしばに ついて]\nおちるあしばは のると\nしたに おちてしまいます。\nがめんの そとに おちると\nミスに なるので\nきをつけて すすみましょう。");
+			swprintf(mSignText[7].text_buf, L"[きりかわる あしばに ついて]\nヨーヨーを スイッチに あてると\nあかと あおの あしばが\nきりかわります。\nはんとうめいな あしばは\nさわることが できません。\nうまく スイッチを きりかえて\nすすみましょう。");
+			swprintf(mSignText[8].text_buf, L"おつかれさまでした。\nチュートリアルは これで\nおしまいです。\nみぎはしの かんばんに ふれると\nほんぺんの ステージが\nはじまります。");
+			swprintf(mSignText[9].text_buf, L"\n\nチュートリアル でぐち→");
+		}
 		CTaskManager::Get()->Add(this);
 	}
 	~CMapTextView(){
@@ -59,6 +77,7 @@ public:
 	}
 	void Update();
 	void Render();
+	void SignTag(int);
 };
 
 //チュートリアル終了 看板

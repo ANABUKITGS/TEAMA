@@ -128,10 +128,11 @@ bool CSDiamond::Collision(CRectangle *r){
 		//case ECELLNUM::ESDIAMOND:
 		//	break;
 
-		//default:
+		default:
 		//	mPosition.y = mPosition.y + aj.y;
 		//	mVelocityY = 0.0f;
-		//	break;
+			return false;
+			break;
 			return true;
 		}
 	}

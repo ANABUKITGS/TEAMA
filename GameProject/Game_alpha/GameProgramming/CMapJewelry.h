@@ -87,6 +87,7 @@ public:
 			mTexSDiamond.Load(".\\Data\\Images\\Boss\\SDiamond.tga");
 		mRender = false;
 		mTag = ECELLNUM::ESDIAMOND;
+		mVelocityX = 0.0f;
 		mVelocityY = 30.0f;
 		mPriority = -2;
 		CTaskManager::Get()->Add(this);
