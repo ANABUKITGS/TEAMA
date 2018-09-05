@@ -12,7 +12,7 @@
 
 #define DRAWSTRING_UV	text_buf, -256, 192, 32, 3, 1.0f
 
-#define MAX_SIGN		5
+#define MAX_SIGN		10
 
 //チュートリアル 看板
 class CMapSign : public CMapChip {
@@ -55,9 +55,21 @@ public:
 	{
 		mPriority = -100;
 		mRender = false;
-		swprintf(mSignText[0].text_buf, L"[プレイヤーの そうさせつめい]\nＰ いどう\n１ ヨーヨー なげ\n２ ジャンプ\n３ ダッシュ\n９ チュートリアルを スキップ\n０ タイトルに もどる");
-		for (int i = 1; i < MAX_SIGN; i++)
-			swprintf(mSignText[i].text_buf, L"Sign%02d", i);
+		for (int i = 0; i < MAX_SIGN; i++){
+			swprintf(mSignText[i].text_buf, L"Sign%02d", i + 1);
+		}
+		{
+			swprintf(mSignText[0].text_buf, L"[プレイヤーの そうさせつめい]\nＰ いどう\n１ ヨーヨー なげ\n２ ジャンプ\n３ ダッシュ\n９ チュートリアルを スキップ\n０ タイトルに もどる");
+			swprintf(mSignText[1].text_buf, L"[ダイヤモンドに ついて]\nダイヤモンドは ふれるか\nヨーヨーを あてることで\nてに いれることが\nできます。\nダイヤモンドがなくなると\nミスに なります。");
+			swprintf(mSignText[2].text_buf, L"[てきに ついて]\nてきは ヨーヨーを あてるか\nコンテナや てっこつを\nヨーヨーで おとして\nてきに あてることで\nたおすことが できます。");
+			swprintf(mSignText[3].text_buf, L"[スクロールに ついて]\nがめん ひだりや したから\nでてしまうと ミスに なります。");
+			swprintf(mSignText[4].text_buf, L"[こおりの あしばに ついて]\nこおりの あしばは\nとてもすべりやすいです。\nうまくプレイヤーを\nコントロールして\nてきの こうげきに\nあたらないように しましょう。");
+			swprintf(mSignText[5].text_buf, L"[ベルトコンベアに ついて]\nベルトコンベアに のると\nやじるしの ほうこうに\nながされて しまいます。");
+			swprintf(mSignText[6].text_buf, L"[おちるあしばに ついて]\nおちるあしばは のると\nしたに おちてしまいます。\nがめんの そとに おちると\nミスに なるので\nきをつけて すすみましょう。");
+			swprintf(mSignText[7].text_buf, L"[きりかわる あしばに ついて]\nヨーヨーを スイッチに あてると\nあかと あおの あしばが\nきりかわります。\nはんとうめいな あしばは\nさわることが できません。\nうまく スイッチを きりかえて\nすすみましょう。");
+			swprintf(mSignText[8].text_buf, L"おつかれさまでした。\nチュートリアルは これで\nおしまいです。\nみぎはしの かんばんに ふれると\nほんぺんの ステージが\nはじまります。");
+			swprintf(mSignText[9].text_buf, L"\n\nチュートリアル でぐち→");
+		}
 		CTaskManager::Get()->Add(this);
 	}
 	~CMapTextView(){

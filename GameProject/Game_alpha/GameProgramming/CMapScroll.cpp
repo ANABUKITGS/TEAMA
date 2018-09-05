@@ -8,6 +8,7 @@ float CMapScroll::add_scroll = 0.0f;
 bool CMapScroll::scroll_flg = false;
 bool CMapScroll::scroll_stop = false;
 bool CMapScroll::boss_scroll = false;
+bool CMapScroll::sign_scroll = false;
 CMapScroll *CMapScroll::mpScroll = 0;
 
 void CMapScroll::Update(){
@@ -25,7 +26,7 @@ void CMapScroll::Update(){
 
 	if (!CGame2::mCheat[CGame2::CHEAT_NUM::ESCROLL]){
 		if (!scroll_stop){
-			if (scroll_flg){
+			if (scroll_flg && !sign_scroll){
 				if (!boss_scroll)
 					add_scroll = SCROLL_SPEED;
 				else{

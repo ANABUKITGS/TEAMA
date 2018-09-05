@@ -17,6 +17,7 @@ public:
 	static bool scroll_flg;
 	static bool scroll_stop;
 	static bool boss_scroll;
+	static bool sign_scroll;
 	static CMapScroll *mpScroll;
 	CMapScroll()
 		: CRectangle(CVector2(0, 0), CVector2(0, 0), NULL)
@@ -24,6 +25,7 @@ public:
 		scroll_flg = false;
 		scroll_stop = false;
 		boss_scroll = false;
+		sign_scroll = false;
 		mRender = false;
 		mTag = ECELLNUM::ENONE;
 		CTaskManager::Get()->Add(this);

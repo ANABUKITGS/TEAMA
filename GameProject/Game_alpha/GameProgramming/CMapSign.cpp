@@ -17,8 +17,6 @@ void CMapSign::Update() {
 	else
 		mSignTag = NULL;
 
-	if (mView && CMapTextView::mpTextView != NULL)
-		CMapTextView::mpTextView->SignTag(mSignTag);
 	CMapChip::Update();
 }
 
@@ -28,10 +26,14 @@ bool CMapSign::Collision(CRectangle *r) {
 		if (r->mTag == EPLAYER){
 			if (CRectangle::Collision(r)){
 				mView = true;
-				CMapScroll::scroll_flg = false;
+				CMapScroll::sign_scroll = true;
+				CMapScroll::add_scroll = 0.0f;
+				if (CMapTextView::mpTextView != NULL)
+					CMapTextView::mpTextView->SignTag(mSignTag);
 				return true;
 			}
 			mView = false;
+			CMapScroll::sign_scroll = false;
 		}
 	}
 	return false;
@@ -43,7 +45,7 @@ void CMapSign::Render(){
 
 //
 void CMapTextView::Update(){
-	if (!CMapSign::mView && mpTextView != NULL)
+	if ((!CMapSign::mView && mpTextView != NULL) || CFade::mMapfile != CFade::EGAMEMAP_NUM::ETUTORIAL)
 		mEnabled = false;
 }
 
