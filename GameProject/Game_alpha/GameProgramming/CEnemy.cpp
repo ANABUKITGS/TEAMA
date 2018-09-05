@@ -107,10 +107,10 @@ void  CEnemy::Update(){
 						mAttackInterval = ATTACK_INTERVAL;
 						//“G‚Ìƒˆ[ƒˆ[‚ğ“G‚ÌˆÊ’u‚æ‚è‚à­‚µ‘O‚ÉŒÄ‚Ño‚·
 						if (mDirection)
-							mpEWeapon = new CWeapon(EEWEAPON, mPosition + CVector2(56.0f, 13.0f), mDirection);
+							mpEWeapon = new CWeapon(this,EEWEAPON, mPosition + CVector2(56.0f, 13.0f), mDirection);
 
 						else
-							mpEWeapon = new CWeapon(EEWEAPON, mPosition + CVector2(-56.0f, 13.0f), mDirection);
+							mpEWeapon = new CWeapon(this,EEWEAPON, mPosition + CVector2(-56.0f, 13.0f), mDirection);
 					}
 				}
 			}
@@ -314,13 +314,13 @@ void CEnemy::Render(){
 
 	case EENEMYANI::EYOYO:
 		if (mpEWeapon != NULL){
-			if (mDirection)
-				//ƒˆ[ƒˆ[‚Ì•R
-				mpEWeapon->mTexYoyo.DrawImage(ESTRING_UV_R, 1.0f);
+			//if (mDirection)
+			//	//ƒˆ[ƒˆ[‚Ì•R
+			//	mpEWeapon->mTexYoyo.DrawImage(ESTRING_UV_R, 1.0f);
 
-			else
-				//ƒˆ[ƒˆ[‚Ì•R
-				mpEWeapon->mTexYoyo.DrawImage(ESTRING_UV_L, 1.0f);
+			//else
+			//	//ƒˆ[ƒˆ[‚Ì•R
+			//	mpEWeapon->mTexYoyo.DrawImage(ESTRING_UV_L, 1.0f);
 
 			if (enemy_ani_count > 1)
 				enemy_ani_count = 1;

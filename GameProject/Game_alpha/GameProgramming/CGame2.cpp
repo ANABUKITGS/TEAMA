@@ -207,6 +207,7 @@ void CGame2::Render() {
 	CText::DrawStringImpact(time_buf, -620, 250, 40, 1.0f, 0);
 	swprintf(time_buf, L" × %02d", CPlayerT::mpPlayer->mJewel);
 	CText::DrawStringImpact(time_buf, -588, 258, 24, 1.0f, 0);
+
 	//ミニダイヤモンド
 	swprintf(time_buf, L"片");
 	CText::DrawStringImpact(time_buf, -612, 218, 24, 1.0f, 0);

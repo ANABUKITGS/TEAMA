@@ -11,6 +11,7 @@
 #define DAMAGEFEECT_LIFE 30
 #define DAMAGEEFECT_UV mPosition.x - 16 / 2, mPosition.x + 16 / 2, mPosition.y - 16 / 2, mPosition.y + 16 / 2, 0, 32, 32, 0
 #define BOSSEFECT_UV mPosition.x - 128 , mPosition.x + 128 , mPosition.y - 90 , mPosition.y +166 , 0+ani_num*512, 512+ani_num*512, 512, 0
+#define BOXEFECT_UV mPosition.x - 64, mPosition.x + 64, mPosition.y - 64, mPosition.y + 64, 0 + ani_num * 256, 256 + ani_num * 256, 256 , 0
 
 class CEfect :public CRectangle{
 public:
@@ -91,6 +92,28 @@ public:
 	{
 		SetRectangle(p->mPosition, CVector2(32, 90), NULL);
 		mpRect = p;
+	}
+	void Update();
+	void Render();
+};
+class CBoxEfect :public CRectangle{
+public:
+	int ani_num;
+	int ani_count;
+	CTexture mTexture;
+	CBoxEfect(){
+		ani_num = 0;
+		ani_count = 8;
+		mTag = ENONE;
+		mRender = false;
+		mTexture.Load(".\\Data\\Images\\Efect\\hako_effect.tga");
+		CTaskManager::Get()->Add(this);
+
+	}
+	CBoxEfect(CVector2 pos)
+		:CBoxEfect()
+	{
+		mPosition = pos;
 	}
 	void Update();
 	void Render();

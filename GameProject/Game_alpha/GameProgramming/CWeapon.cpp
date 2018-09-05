@@ -3,20 +3,40 @@
 #include "CEnemy.h"
 #include "CBoss.h"
 void CWeapon::Update(){
+	mPosInit = mpCharcter->mPosition;
 	mRotation += 10;			//毎フレーム10ずつ回転させる
 	mLife--;
 	if (mLife > 0){	//生存時間が20を超過
-		if (mDirection)	//右向き
-			mVelocity = WEAPOM_VELOCITY;
-		else			//左向き
-			mVelocity = -WEAPOM_VELOCITY;
+		if (mTag == EPWEAPON){
+			if (mDirection)	//右向き
+				mVelocity = WEAPOM_VELOCITY + CPlayerT::mpPlayer->mVelocityX;
+			else			//左向き
+				mVelocity = -WEAPOM_VELOCITY + CPlayerT::mpPlayer->mVelocityX;
+		}
+		else{
+			if (mDirection)	//右向き
+				mVelocity = WEAPOM_VELOCITY;
+			else			//左向き
+				mVelocity = -WEAPOM_VELOCITY;
+		}
 	}
 	else{				//生存時間が15以下
-		if (mDirection)	//右向き
-			mVelocity = -WEAPOM_VELOCITY;
-		else			//左向き
-			mVelocity = WEAPOM_VELOCITY;
+		if (mTag == EPWEAPON){
+			if (mDirection)	//右向き
+				mVelocity = -WEAPOM_VELOCITY + CPlayerT::mpPlayer->mVelocityX;
+			else			//左向き
+				mVelocity = WEAPOM_VELOCITY + CPlayerT::mpPlayer->mVelocityX;
+		}
+		else{
+			if (mDirection)	//右向き
+				mVelocity = -WEAPOM_VELOCITY;
+			else			//左向き
+				mVelocity = WEAPOM_VELOCITY;
+		}
+		float mVelocityY = (mPosition.y - mPosInit.y) / abs((mPosition.x - mPosInit.x) / WEAPOM_VELOCITY);
+		mPosition.y -= mVelocityY;
 	}
+	
 	mPosition.x += mVelocity;
 	if (mDirection){
 		if (mPosition.x < mPosInit.x){
@@ -51,13 +71,24 @@ void CWeapon::Update(){
 
 }
 void CWeapon::Render(){
-	if (mTag == ECELLNUM::EPWEAPON){
-		if (mDirection)
-			mTexYoyo.DrawImage(PSTRING_UV_R, 1.0f);
+	
 
-		else
-			mTexYoyo.DrawImage(PSTRING_UV_L, 1.0f);
+	//線描画スタイルの指定
+	glBegin(GL_LINES);
+
+	//頂点指定
+	if (mTag == EBWEAPON){
+		glVertex2d(mPosInit.x, mPosInit.y + 32);
+		glVertex2d(mPosition.x, mPosition.y);
 	}
+	else{
+		glVertex2d(mPosInit.x, mPosInit.y + 16);
+		glVertex2d(mPosition.x, mPosition.y);
+	}
+	
+
+	//線描画スタイルの指定終了
+	glEnd();
 
 	/*------ 敵のヨーヨーの紐は CEnemy::Render()にある ------*/
 
