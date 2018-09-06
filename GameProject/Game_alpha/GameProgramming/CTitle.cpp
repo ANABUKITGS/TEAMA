@@ -50,9 +50,13 @@ void CTitle::Update(){
 			break;
 		}
 	}
+	if(CKey::Once(VK_ESCAPE))
+		CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::EEXIT);
+
+#ifdef _DEBUG
 	if (CGamePad::Once(PAD_9))
 		CText::DrawSppedReset();
-
+#endif
 	/*ÉJÅ[É\Éã*/
 	switch (cursor_num){
 	case CSceneChange::ECSCENECHANGE_NUM::EGAME:
