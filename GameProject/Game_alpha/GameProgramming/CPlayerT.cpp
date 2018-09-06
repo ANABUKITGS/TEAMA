@@ -3,6 +3,7 @@
 #include "CScene.h"
 #include "CFade.h"
 #include "CEfect.h"
+#include "CUi.h"
 #include "CMapScroll.h"
 #include "CMapSign.h"
 #include "CBoss.h"
@@ -314,12 +315,15 @@ bool CPlayerT::Collision(CRectangle *p) {
 
 				case ECELLNUM::EJEWELRY:
 					mJewel++;
+					CJewelUi::mAnimation = true;
 					break;
 
 				case ECELLNUM::EJEWELRY2:
 					mMiniJewel++;
+					CMiniJewelUi::mAnimation = true;
 					if (mMiniJewel == 10){
 						mJewel++;
+						CJewelUi::mAnimation = true;
 						mMiniJewel = 0;
 					}
 					break;
