@@ -189,7 +189,7 @@ bool CEnemy::Collision(CRectangle*p){
 			case ECELLNUM::EBOX:
 			case ECELLNUM::ESTEEL:
 				mIce = false;
-				if (p->mBreak)
+				if (p->mBreak && p->mAlpha >= 1.0f)
 					enemy_ani = EENEMYANI::EDAMAGE;
 				break;
 

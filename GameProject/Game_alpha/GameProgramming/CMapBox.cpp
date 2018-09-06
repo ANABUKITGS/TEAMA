@@ -11,6 +11,7 @@ void CMapBox::Update() {
 			mPosition = mDefaultPos;
 			mVelocityY = 0.0f;
 			mBreak = false;
+			mAlpha = 1.0f;
 		}
 	}
 	CMapChip::Update();
@@ -26,7 +27,7 @@ bool CMapBox::Collision(CRectangle *r) {
 		CVector2 aj;
 		if (CRectangle::Collision(r, &aj)) {
 			//Ý’uó‘Ô
-			if (!mBreak){
+			if (!mBreak && mAlpha >= 1.0f){
 				//“–‚½‚Á‚½‘¼l‚ð‰Ÿ‚µ•Ô‚·“–‚½‚è”»’è
 				if (r->mTag == EPLAYER ||
 					r->mTag == EENEMY1 ||
@@ -73,14 +74,21 @@ bool CMapBox::Collision(CRectangle *r) {
 					mBreak = true;
 			}
 			
-			else if (r->mTag == EENEMY1 ||
-				r->mTag == EENEMY2 ||
-				r->mTag == EENEMY3 ||
-				r->mTag == EBOSS){
-				new CBoxEfect(mPosition);
-				mEnabled = false;
+			else if (mBreak && mAlpha >= 1.0f){
+				if (r->mTag == EENEMY1 ||
+					r->mTag == EENEMY2 ||
+					r->mTag == EENEMY3 ||
+					r->mTag == EBOSS){
+					new CBoxEfect(mPosition);
+					//mEnabled = false;
+					mAlpha = 0.0f;
+				}
+				else if (r->mTag == EPLAYER && mPosition.y > CPlayerT::mpPlayer->mPosition.y + CPlayerT::mpPlayer->mScale.y){
+					new CBoxEfect(mPosition);
+					//mEnabled = false;
+					mAlpha = 0.0f;
+				}
 			}
-
 			return true;
 		}
 	}
@@ -88,7 +96,7 @@ bool CMapBox::Collision(CRectangle *r) {
 }
 
 void CMapBox::Render(){
-	mTexBox.DrawImage(BOX_UV, 1.0f);
+	mTexBox.DrawImage(BOX_UV, mAlpha);
 }
 
 void CMapBox::Gravity(){

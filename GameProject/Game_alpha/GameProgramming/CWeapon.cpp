@@ -41,28 +41,28 @@ void CWeapon::Update(){
 		if (mPosition.x < mPosInit.x){
 			mReturn = true;
 			mEnabled = false;
-			if (CPlayerT::player_ani != CPlayerT::EPLAYERANI::EDOWN){
-				if (CPlayerT::mpPlayer->mAir)
-					CPlayerT::mpPlayer->player_ani = CPlayerT::EPLAYERANI::EJUMP;
-				else
-					CPlayerT::mpPlayer->player_ani = CPlayerT::EPLAYERANI::EIDOL;
-				CPlayerT::mpPlayer->player_ani_count = 0;
-				CPlayerT::mpPlayer->player_ani_count_frame = 0;
-			}
+			//if (CPlayerT::player_ani != CPlayerT::EPLAYERANI::EDOWN){
+			//	if (CPlayerT::mpPlayer->mAir)
+			//		CPlayerT::mpPlayer->player_ani = CPlayerT::EPLAYERANI::EJUMP;
+			//	else
+			//		CPlayerT::mpPlayer->player_ani = CPlayerT::EPLAYERANI::EIDOL;
+			//	CPlayerT::mpPlayer->player_ani_count = 0;
+			//	CPlayerT::mpPlayer->player_ani_count_frame = 0;
+			//}
 		}
 	}
 	else{
 		if (mPosition.x > mPosInit.x){
 			mReturn = true;
 			mEnabled = false;
-			if (CPlayerT::player_ani != CPlayerT::EPLAYERANI::EDOWN){
-				if (CPlayerT::mpPlayer->mAir)
-					CPlayerT::mpPlayer->player_ani = CPlayerT::EPLAYERANI::EJUMP;
-				else
-					CPlayerT::mpPlayer->player_ani = CPlayerT::EPLAYERANI::EIDOL;
-				CPlayerT::mpPlayer->player_ani_count = 0;
-				CPlayerT::mpPlayer->player_ani_count_frame = 0;
-			}
+			//if (CPlayerT::player_ani != CPlayerT::EPLAYERANI::EDOWN){
+			//	if (CPlayerT::mpPlayer->mAir)
+			//		CPlayerT::mpPlayer->player_ani = CPlayerT::EPLAYERANI::EJUMP;
+			//	else
+			//		CPlayerT::mpPlayer->player_ani = CPlayerT::EPLAYERANI::EIDOL;
+			//	CPlayerT::mpPlayer->player_ani_count = 0;
+			//	CPlayerT::mpPlayer->player_ani_count_frame = 0;
+			//}
 		}
 	}
 
