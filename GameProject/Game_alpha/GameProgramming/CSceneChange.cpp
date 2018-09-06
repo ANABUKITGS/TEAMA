@@ -40,6 +40,7 @@ void CSceneChange::Update(){
 	case ECSCENECHANGE_NUM::EGAME:
 		mGame2.Update();
 		mGame2.Render();
+		if (CSceneResult::mResultTag == CSceneResult::ERANKING)			CSceneResult::mResultTag = CSceneResult::ESCORE;
 		break;
 
 	case ECSCENECHANGE_NUM::ERANKING:
@@ -49,8 +50,7 @@ void CSceneChange::Update(){
 		break;
 
 	case ECSCENECHANGE_NUM::ERESULT:
-		if (CSceneResult::mResultTag == CSceneResult::ESCORE)
-			CSceneResult::mResultTag = CSceneResult::ESCORE;
+		
 		mResult.Update();
 		break;
 

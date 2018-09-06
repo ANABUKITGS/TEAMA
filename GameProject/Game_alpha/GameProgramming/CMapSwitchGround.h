@@ -53,7 +53,7 @@ public:
 	int mCollisionInterval;	//次に衝突できるまでのインターバル
 	CMapSwitch(const CVector2& pos)
 		//CMapChipで初期化
-		:CMapChip(pos, CVector2(CELLSIZE / 4, CELLSIZE / 2), NULL, NULL, NULL, NULL, NULL, ECELLNUM::ESWITCH)
+		:CMapChip(pos, CVector2(CELLSIZE / 4, 40), NULL, NULL, NULL, NULL, NULL, ECELLNUM::ESWITCH)
 		, mCollision(false)
 	{
 		mRender = false;

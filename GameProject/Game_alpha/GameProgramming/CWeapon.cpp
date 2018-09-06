@@ -5,21 +5,19 @@
 void CWeapon::Update(){
 
 	mPosInit = mpCharcter->mPosition;
+	if (mTag == EPWEAPON && CPlayerT::mpPlayer->EYOYO){
+		if (mDirection)
+			mPosInit.x += 51;
+		else
+			mPosInit.x -= 51;
+	}
 	mRotation += 10;			//毎フレーム10ずつ回転させる
 	mLife--;
 	if (mLife > 0){	//生存時間が20を超過
-		if (mTag == EPWEAPON){
-			if (mDirection)	//右向き
-				mVelocity = WEAPOM_VELOCITY + CPlayerT::mpPlayer->mVelocityX;
-			else			//左向き
-				mVelocity = -WEAPOM_VELOCITY + CPlayerT::mpPlayer->mVelocityX;
-		}
-		else{
-			if (mDirection)	//右向き
-				mVelocity = WEAPOM_VELOCITY;
-			else			//左向き
-				mVelocity = -WEAPOM_VELOCITY;
-		}
+		if (mDirection)	//右向き
+			mVelocity = WEAPOM_VELOCITY;
+		else			//左向き
+			mVelocity = -WEAPOM_VELOCITY;
 	}
 	else{				//生存時間が15以下
 		if (mTag == EPWEAPON){
@@ -73,7 +71,7 @@ void CWeapon::Update(){
 }
 void CWeapon::Render(){
 	
-
+	CRectangle::Render();
 	//線描画スタイルの指定
 	glBegin(GL_LINES);
 
@@ -91,9 +89,7 @@ void CWeapon::Render(){
 	//線描画スタイルの指定終了
 	glEnd();
 
-	/*------ 敵のヨーヨーの紐は CEnemy::Render()にある ------*/
-
-	CRectangle::Render();
+	
 }
 
 bool CWeapon::Collision(CRectangle *p){

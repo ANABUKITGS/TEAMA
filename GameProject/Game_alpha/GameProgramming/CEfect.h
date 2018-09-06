@@ -33,6 +33,7 @@ public:
 		:CEfect()
 	{
 		CRectangle(pos, CVector2(32, 32), &mTexkira);
+		SetRectangle(pos, CVector2(32, 32), &mTexkira);
 		mPosition.x = pos.x + (float)(rand() % 80 - 40);
 		mPosition.y = pos.y + (float)(rand() % 80 - 40);
 

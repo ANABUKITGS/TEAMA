@@ -123,6 +123,7 @@
     <ClCompile Include="CText.cpp" />
     <ClCompile Include="CTexture.cpp" />
     <ClCompile Include="CTitle.cpp" />
+    <ClCompile Include="CUi.cpp" />
     <ClCompile Include="CVector2.cpp" />
     <ClCompile Include="CWeapon.cpp" />
     <ClCompile Include="main.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="CText.h" />
     <ClInclude Include="CTexture.h" />
     <ClInclude Include="CTitle.h" />
+    <ClInclude Include="CUi.h" />
     <ClInclude Include="CVector2.h" />
     <ClInclude Include="CWeapon.h" />
     <ClInclude Include="resource.h" />

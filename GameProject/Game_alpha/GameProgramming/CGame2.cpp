@@ -5,6 +5,7 @@
 #include "CMapChip.h"
 #include "CPlayerT.h"
 #include "CScene.h"
+#include "CUi.h"
 #include "CScore.h"
 #include "CTime.h"
 #include "CBGM.h"
@@ -20,6 +21,9 @@ int CGame2::mTime;
 int CGame2::mTimeMin;
 float CGame2::mTimeSec;
 CMapBackImage *mBackImage[4];
+
+CJewelUi mJewelUi;
+CMiniJewelUi mMiniJewelUi;
 
 CCamera2D CGame2::mCamera;
 
@@ -202,17 +206,23 @@ void CGame2::Render() {
 	swprintf(time_buf, L"%03d", (int)(CTime::GetTime()));
 	CText::DrawStringImpact(time_buf, -620, 300, 32, 1.0f, 0);
 
-	//ダイヤモンド
-	swprintf(time_buf, L"宝");
-	CText::DrawStringImpact(time_buf, -620, 250, 40, 1.0f, 0);
-	swprintf(time_buf, L" × %02d", CPlayerT::mpPlayer->mJewel);
-	CText::DrawStringImpact(time_buf, -588, 258, 24, 1.0f, 0);
 
-	//ミニダイヤモンド
-	swprintf(time_buf, L"片");
-	CText::DrawStringImpact(time_buf, -612, 218, 24, 1.0f, 0);
-	swprintf(time_buf, L" × %02d", CPlayerT::mpPlayer->mMiniJewel);
-	CText::DrawStringImpact(time_buf, -588, 218, 24, 1.0f, 0);
+	mJewelUi.Animation();
+	mMiniJewelUi.Animation();
+	mJewelUi.Render();
+	mMiniJewelUi.Render();
+
+	////ダイヤモンド
+	//swprintf(time_buf, L"宝");
+	//CText::DrawStringImpact(time_buf, -620, 250, 40, 1.0f, 0);
+	//swprintf(time_buf, L" × %02d", CPlayerT::mpPlayer->mJewel);
+	//CText::DrawStringImpact(time_buf, -588, 258, 24, 1.0f, 0);
+
+	////ミニダイヤモンド
+	//swprintf(time_buf, L"片");
+	//CText::DrawStringImpact(time_buf, -612, 218, 24, 1.0f, 0);
+	//swprintf(time_buf, L" × %02d", CPlayerT::mpPlayer->mMiniJewel);
+	//CText::DrawStringImpact(time_buf, -588, 218, 24, 1.0f, 0);
 
 	//残機
 	swprintf(time_buf, L"命×%1d", CPlayerT::mpPlayer->mLife);
