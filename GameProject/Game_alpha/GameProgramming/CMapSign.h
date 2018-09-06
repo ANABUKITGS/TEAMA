@@ -8,7 +8,7 @@
 #define SIGN_UV				mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE / 2, mPosition.y + CELLSIZE / 2, 0, 64, 64, 0
 #define BOSSROOM_SIGN_UV	mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 0, 64, mTexPosY + 128, mTexPosY
 #define BOSSROOM_SIGN_UV2	mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 0, 64, 256, 128
-#define TEXTVIEW_UV			CGame2::mCamera.x - 256, CGame2::mCamera.x + 256, CGame2::mCamera.y - 128, CGame2::mCamera.y + 128, 0, 512, 512, 0
+#define TEXTVIEW_UV			CGame2::mCamera.x - 256 - 8, CGame2::mCamera.x + 256 + 8, CGame2::mCamera.y - 128 - 8, CGame2::mCamera.y + 128 + 8, 0, 512, 512, 0
 
 #define DRAWSTRING_UV	text_buf, -256, 192, 32, 3, 1.0f
 
@@ -59,10 +59,11 @@ public:
 			swprintf(mSignText[i].text_buf, L"Sign%02d", i + 1);
 		}
 		{
-			swprintf(mSignText[0].text_buf, L"[プレイヤーの そうさせつめい]\nＰ いどう\n１ ヨーヨー なげ\n２ ジャンプ\n３ ダッシュ\n９ チュートリアルを スキップ\n０ タイトルに もどる");
+			//swprintf(mSignText[0].text_buf, L"[プレイヤーの そうさせつめい]\nＰ いどう\n１ ヨーヨー なげ\n２ ジャンプ\n３ ダッシュ\n９ チュートリアルを スキップ\n０ タイトルに もどる");
+			swprintf(mSignText[0].text_buf, L"[スクロールに ついて]\nがめん ひだりや したから\nでてしまうと ミスに なります。\nミスに ならないように\nきをつけましょう。");
 			swprintf(mSignText[1].text_buf, L"[ダイヤモンドに ついて]\nダイヤモンドは ふれるか\nヨーヨーを あてることで\nてに いれることが\nできます。\nダイヤモンドがなくなると\nミスに なります。");
-			swprintf(mSignText[2].text_buf, L"[てきに ついて]\nてきは ヨーヨーを あてるか\nコンテナや てっこつを\nヨーヨーで おとして\nてきに あてることで\nたおすことが できます。");
-			swprintf(mSignText[3].text_buf, L"[スクロールに ついて]\nがめん ひだりや したから\nでてしまうと ミスに なります。");
+			swprintf(mSignText[2].text_buf, L"[チェックポイントに ついて]\nチェックポイントに ふれると\nミスを しても\nチェックポイントの ちてんから\nふっかつ することが できます。");
+			swprintf(mSignText[3].text_buf, L"[てきに ついて]\nてきは ヨーヨーを あてるか\nコンテナや てっこつを\nヨーヨーで おとして\nてきに あてることで\nたおすことが できます。");
 			swprintf(mSignText[4].text_buf, L"[こおりの あしばに ついて]\nこおりの あしばは\nとてもすべりやすいです。\nうまくプレイヤーを\nコントロールして\nてきの こうげきに\nあたらないように しましょう。");
 			swprintf(mSignText[5].text_buf, L"[ベルトコンベアに ついて]\nベルトコンベアに のると\nやじるしの ほうこうに\nながされて しまいます。");
 			swprintf(mSignText[6].text_buf, L"[おちるあしばに ついて]\nおちるあしばは のると\nしたに おちてしまいます。\nがめんの そとに おちると\nミスに なるので\nきをつけて すすみましょう。");
