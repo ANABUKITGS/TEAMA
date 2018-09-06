@@ -2,6 +2,8 @@
 *.v12.suo
 *.opensdf
 *.user
+*.tmp
+*.temp
 ~$*
 RANKING.BIN
 desktop.ini
