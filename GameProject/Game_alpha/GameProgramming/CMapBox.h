@@ -21,6 +21,7 @@ public:
 		mBreak = false;
 		mTexBox.Load(".\\Data\\Images\\Map\\MapBox.tga");
 		mDefaultPos = pos + CVector2(0.0f, CELLSIZE / 2);
+		mAlpha = 1.0f;
 	}
 	void Update();	//“®‚«‚ğˆ—‚·‚é
 	void Render();	//•`‰æ‚ğˆ—‚·‚é
