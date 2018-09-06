@@ -73,7 +73,11 @@ int main(void)
 		return -1;
 
 	/* Create a windowed mode window and its OpenGL context */
+	//フルスクリーン
 	//window = glfwCreateWindow(1280, 720, "Get Back Diamond", glfwGetPrimaryMonitor(), NULL);
+	//マウスカーソルの非表示
+	//ShowCursor(false);
+	//ウィンドウ表示
 	window = glfwCreateWindow(1280, 720, "Get Back Diamond", NULL, NULL);
 	if (!window)
 	{
