@@ -32,61 +32,61 @@ void CMain::Update() {
 	/*１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ*/
 #ifdef _DEBUG
 	if (CGamePad::Push(PAD_1))
-		swprintf(gamepad_name, L"１\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ");
+		swprintf(gamepad_name, L"１");
 	else if (CGamePad::Push(PAD_2))
-		swprintf(gamepad_name, L"２\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ");
+		swprintf(gamepad_name, L"２");
 	else if (CGamePad::Push(PAD_3))
-		swprintf(gamepad_name, L"３\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ");
+		swprintf(gamepad_name, L"３");
 	else if (CGamePad::Push(PAD_4))
-		swprintf(gamepad_name, L"４\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ");
+		swprintf(gamepad_name, L"４");
 	else if (CGamePad::Push(PAD_5))
-		swprintf(gamepad_name, L"５\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ");
+		swprintf(gamepad_name, L"５");
 	else if (CGamePad::Push(PAD_6))
-		swprintf(gamepad_name, L"６\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ");
+		swprintf(gamepad_name, L"６");
 	else if (CGamePad::Push(PAD_7))
-		swprintf(gamepad_name, L"７\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ");
+		swprintf(gamepad_name, L"７");
 	else if (CGamePad::Push(PAD_8))
-		swprintf(gamepad_name, L"８\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ");
+		swprintf(gamepad_name, L"８");
 	else if (CGamePad::Push(PAD_9))
-		swprintf(gamepad_name, L"９\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ");
+		swprintf(gamepad_name, L"９");
 	else if (CGamePad::Push(PAD_10))
-		swprintf(gamepad_name, L"０\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ");
+		swprintf(gamepad_name, L"０");
 	else if (CGamePad::Push(PAD_11))
-		swprintf(gamepad_name, L"Ａ\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ");
+		swprintf(gamepad_name, L"Ａ");
 	else if (CGamePad::Push(PAD_12))
-		swprintf(gamepad_name, L"Ｂ\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ");
+		swprintf(gamepad_name, L"Ｂ");
 	else if (CGamePad::Push(PAD_UP))
-		swprintf(gamepad_name, L"Ｃ\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ");
+		swprintf(gamepad_name, L"Ｃ");
 	else if (CGamePad::Push(PAD_RIGHT))
-		swprintf(gamepad_name, L"Ｄ\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ");
+		swprintf(gamepad_name, L"Ｄ");
 	else if (CGamePad::Push(PAD_DOWN))
-		swprintf(gamepad_name, L"Ｅ\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ");
+		swprintf(gamepad_name, L"Ｅ");
 	else if (CGamePad::Push(PAD_LEFT))
-		swprintf(gamepad_name, L"Ｆ\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ");
+		swprintf(gamepad_name, L"Ｆ");
 	else if (CGamePad::Push(PAD_LSTICKY, 0.1f))
-		swprintf(gamepad_name, L"Ｇ%.3f\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ", CGamePad::GetStick(PAD_LSTICKY));
+		swprintf(gamepad_name, L"Ｇ%.3f", CGamePad::GetStick(PAD_LSTICKY));
 	else if (CGamePad::Push(PAD_LSTICKX, 0.1f))
-		swprintf(gamepad_name, L"Ｈ%.3f\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ", CGamePad::GetStick(PAD_LSTICKX));
+		swprintf(gamepad_name, L"Ｈ%.3f", CGamePad::GetStick(PAD_LSTICKX));
 	else if (CGamePad::Push(PAD_LSTICKY, -0.1f))
-		swprintf(gamepad_name, L"Ｉ%.3f\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ", CGamePad::GetStick(PAD_LSTICKY));
+		swprintf(gamepad_name, L"Ｉ%.3f", CGamePad::GetStick(PAD_LSTICKY));
 	else if (CGamePad::Push(PAD_LSTICKX, -0.1f))
-		swprintf(gamepad_name, L"Ｊ%.3f\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ", CGamePad::GetStick(PAD_LSTICKX));
+		swprintf(gamepad_name, L"Ｊ%.3f", CGamePad::GetStick(PAD_LSTICKX));
 	else if (CGamePad::Push(PAD_RSTICKY, 0.1f))
-		swprintf(gamepad_name, L"Ｋ%.3f\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ", CGamePad::GetStick(PAD_RSTICKY));
+		swprintf(gamepad_name, L"Ｋ%.3f", CGamePad::GetStick(PAD_RSTICKY));
 	else if (CGamePad::Push(PAD_RSTICKX, 0.1f))
-		swprintf(gamepad_name, L"Ｌ%.3f\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ", CGamePad::GetStick(PAD_RSTICKX));
+		swprintf(gamepad_name, L"Ｌ%.3f", CGamePad::GetStick(PAD_RSTICKX));
 	else if (CGamePad::Push(PAD_RSTICKY, -0.1f))
-		swprintf(gamepad_name, L"Ｍ%.3f\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ", CGamePad::GetStick(PAD_RSTICKY));
+		swprintf(gamepad_name, L"Ｍ%.3f", CGamePad::GetStick(PAD_RSTICKY));
 	else if (CGamePad::Push(PAD_RSTICKX, -0.1f))
-		swprintf(gamepad_name, L"Ｎ%.3f\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ", CGamePad::GetStick(PAD_RSTICKX));
+		swprintf(gamepad_name, L"Ｎ%.3f", CGamePad::GetStick(PAD_RSTICKX));
 	else
-		swprintf(gamepad_name, L"おされてないよ\n１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ");
+		swprintf(gamepad_name, L"おされてないよ");
 
 	CText::DrawStringW(gamepad_name, -640, -328, 32, 1.0f, 3);
 
 	//漢字 テスト
-	if (CSceneChange::changenum == CSceneChange::ECSCENECHANGE_NUM::ETITLE)
-	CText::DrawStringW(L"かんじの ひょうじテスト\n[制作チーム]\n前田  拓磨\n長尾  蓮\n小見山 嶺治\n南木  彩希\n石田  萌夏\n\n[先生]\n高橋  忍  先生\n平田  大  先生\n井上  萌美 先生", -640, 328, 32, 1.0f, 0);
+	//if (CSceneChange::changenum == CSceneChange::ECSCENECHANGE_NUM::ETITLE)
+	//CText::DrawStringW(L"かんじの ひょうじテスト\n[制作チーム]\n前田  拓磨\n長尾  蓮\n小見山 嶺治\n南木  彩希\n石田  萌夏\n\n[先生]\n高橋  忍  先生\n平田  大  先生\n井上  萌美 先生", -640, 328, 32, 1.0f, 0);
 #endif
 
 	CFade mFade;

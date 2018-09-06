@@ -290,7 +290,7 @@ void CPlayerT::Forward(){
 
 
 bool CPlayerT::Collision(CRectangle *p) {
-	if (player_ani != EPLAYERANI::EDAMAGE && player_ani != EPLAYERANI::EDOWN){
+	if (player_ani != EPLAYERANI::EDAMAGE){
 		if (p->GetEnabled()) {
 			CVector2 aj;
 			if (CRectangle::Collision(p, &aj)) {
@@ -350,8 +350,21 @@ bool CPlayerT::Collision(CRectangle *p) {
 				case ECELLNUM::EBOX:
 				case ECELLNUM::ESTEEL:
 					mIce = false;
-					//if (p->mBreak)
-					//	player_ani = EPLAYERANI::EDAMAGE;
+					if (!mUnrivaled &&
+						p->mPosition.y > mPosition.y + mScale.y &&
+						p->mBreak){
+						mUnrivaled = true;
+						player_ani = EPLAYERANI::EDAMAGE;
+						player_ani_count = 0;
+						player_ani_count_frame = 0;
+						if (mJewel >= 0){
+							if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI]){
+								Damage(p->mTag);
+								for (int i = 0; i < mDamage; i++)
+									new CDamageEfect(mPosition);
+							}
+						}
+					}
 					break;
 
 				case ECELLNUM::EENEMY1:
@@ -418,6 +431,10 @@ bool CPlayerT::Collision(CRectangle *p) {
 }
 
 void CPlayerT::Render(){
+	//ダメージの待ち時間
+	static int DamageTime = 0;
+	if (player_ani != EPLAYERANI::EDAMAGE)
+		DamageTime = 0;
 	//やられてからの待ち時間
 	static int mDownTime = 0;
 	//ゲームオーバーでの待ち時間
@@ -522,6 +539,16 @@ void CPlayerT::Render(){
 			mTexPlayer.DrawImage(PLAYER_TEX_POS, player_ani_count * 128, (player_ani_count + 1) * 128, 640, 512, mAlpha);
 		else				//右向き
 			mTexPlayer.DrawImage(PLAYER_TEX_POS, (player_ani_count + 1) * 128, player_ani_count * 128, 640, 512, mAlpha);
+
+		if (DamageTime > 30) {
+			if (mAir)
+				player_ani = EPLAYERANI::EJUMP;
+			else
+				player_ani = EPLAYERANI::EIDOL;
+			player_ani_count = 0;
+			player_ani_count_frame = 0;
+		}
+		DamageTime++;
 		break;
 
 	case EPLAYERANI::EYOYO:
@@ -611,6 +638,8 @@ void CPlayerT::Die(){
 void CPlayerT::Damage(ECELLNUM tag){
 	if (player_ani != EPLAYERANI::EDOWN){
 		switch (tag){
+		case ECELLNUM::EBOX:
+		case ECELLNUM::ESTEEL:
 		case ECELLNUM::EEWEAPON:
 			mDamage = 1;
 			mJewel-=mDamage;

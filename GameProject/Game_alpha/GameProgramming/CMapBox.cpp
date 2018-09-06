@@ -74,16 +74,21 @@ bool CMapBox::Collision(CRectangle *r) {
 					mBreak = true;
 			}
 			
-			else if (r->mTag == EENEMY1 ||
-				r->mTag == EENEMY2 ||
-				r->mTag == EENEMY3 ||
-				r->mTag == EBOSS){
-				if (mAlpha >= 1.0f)
+			else if (mBreak && mAlpha >= 1.0f){
+				if (r->mTag == EENEMY1 ||
+					r->mTag == EENEMY2 ||
+					r->mTag == EENEMY3 ||
+					r->mTag == EBOSS){
 					new CBoxEfect(mPosition);
-				//mEnabled = false;
-				mAlpha = 0.0f;
+					//mEnabled = false;
+					mAlpha = 0.0f;
+				}
+				else if (r->mTag == EPLAYER && mPosition.y > CPlayerT::mpPlayer->mPosition.y + CPlayerT::mpPlayer->mScale.y){
+					new CBoxEfect(mPosition);
+					//mEnabled = false;
+					mAlpha = 0.0f;
+				}
 			}
-
 			return true;
 		}
 	}
