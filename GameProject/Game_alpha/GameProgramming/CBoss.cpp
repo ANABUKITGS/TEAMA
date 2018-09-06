@@ -265,8 +265,7 @@ void CBoss::Boss_A_BehP(){
 			mBossDownTime++;
 			if (mBossDownTime >= BOSS_DOWN_TIME && CSDiamond::mGetFlg){
 				CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ERESULT);
-				CGame2::mTimeMin = CTime::ElapsedTimeMin();
-				CGame2::mTimeSec = CTime::ElapsedTimeSec();
+				CGame2::mTime = CTime::GetTime();
 				CScore::GetScore();
 				return;
 			}

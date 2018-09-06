@@ -124,8 +124,7 @@ void CGame2::Update() {
 	}
 #ifndef _DEBUG
 	if (CKey::Push('P')) {
-		mTimeMin = CTime::ElapsedTimeMin();
-		mTimeSec = CTime::ElapsedTimeSec();
+		mTime=CTime::GetTime();
 		CScore::GetScore();
 		CSceneResult::mResultTag = CSceneResult::ESCORE;
 		CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ERESULT);

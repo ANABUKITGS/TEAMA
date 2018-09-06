@@ -5,12 +5,12 @@
 void CWeapon::Update(){
 
 	mPosInit = mpCharcter->mPosition;
-	if (mTag == EPWEAPON && CPlayerT::mpPlayer->EYOYO){
+	/*if (mTag == EPWEAPON && CPlayerT::mpPlayer->player_ani==CPlayerT::EYOYO){
 		if (mDirection)
 			mPosInit.x += 51;
 		else
 			mPosInit.x -= 51;
-	}
+	}*/
 	mRotation += 10;			//–ˆƒtƒŒ[ƒ€10‚¸‚Â‰ñ“]‚³‚¹‚é
 	mLife--;
 	if (mLife > 0){	//¶‘¶ŽžŠÔ‚ª20‚ð’´‰ß
@@ -79,6 +79,16 @@ void CWeapon::Render(){
 	if (mTag == EBWEAPON){
 		glVertex2d(mPosInit.x, mPosInit.y + 32);
 		glVertex2d(mPosition.x, mPosition.y);
+	}
+	else if(mTag == EPWEAPON && CPlayerT::mpPlayer->player_ani == CPlayerT::EYOYO){
+		if (mDirection){
+			glVertex2d(mPosInit.x+51, mPosInit.y + 16);
+			glVertex2d(mPosition.x, mPosition.y);
+		}
+		else{
+			glVertex2d(mPosInit.x-51, mPosInit.y + 16);
+			glVertex2d(mPosition.x, mPosition.y);
+		}
 	}
 	else{
 		glVertex2d(mPosInit.x, mPosInit.y + 16);

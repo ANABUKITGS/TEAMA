@@ -55,10 +55,10 @@ void CPlayerT::Update(){
 
 				
 			}
-			else if (mpWeapon->mReturn){		//•Ší‚Ì¶‘¶ŠÔ‚ª0ˆÈ‰º
+			else if (mpWeapon->mReturn){		
 				mpWeapon = 0;
 			}
-			else {								//•Ší‚Ì¶‘¶ŠÔ‚ª0‚ğ’´‰ß
+			else {								
 				player_ani = EPLAYERANI::EYOYO;
 			}
 			if (mJumpCount < 2 && (CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_RIGHT))){
