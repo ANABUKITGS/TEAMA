@@ -2,6 +2,7 @@
 #include "CSE.h"
 #include "CWeapon.h"
 #include "CEfect.h"
+#include "CBoss.h"
 
 CSDiamond *CSDiamond::mpSDiamond = NULL;
 bool CSDiamond::mGetFlg = false;
@@ -92,6 +93,9 @@ void CSDiamond::Update(){
 		Gravity();
 	else
 		mPosition.y = 160.0f;
+
+	if (CBoss::mpBoss != NULL)
+		mPosition.x = CBoss::mpBoss->mPosition.x;
 }
 
 bool CSDiamond::Collision(CRectangle *r){
