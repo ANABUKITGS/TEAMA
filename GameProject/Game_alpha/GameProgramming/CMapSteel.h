@@ -21,6 +21,7 @@ public:
 		mBreak = false;
 		mTexSteel.Load(".\\Data\\Images\\Map\\MapSteel.tga");
 		mDefaultPos = pos;
+		mAlpha = 1.0f;
 	}
 	void Update();	//“®‚«‚ğˆ—‚·‚é
 	void Render();	//•`‰æ‚ğˆ—‚·‚é

@@ -24,36 +24,80 @@ void CPlayerT::Update(){
 	if (player_ani != EPLAYERANI::EDAMAGE && player_ani != EPLAYERANI::EDOWN){
 		if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
 			if (mpWeapon == 0){
-				if ((CGamePad::Push(PAD_1) || CKey::Push(VK_UP))){
+				//if ((CGamePad::Push(PAD_1) || CKey::Push(VK_UP))){
+				//	player_ani_count = 0;
+				//	player_ani_count_frame = 0;
+				//	player_ani = EPLAYERANI::EYOYO;
+				//	if (mAir){
+				//		if (mAerialAttack){
+				//			mAerialAttack = false;
+				//			if (mDirection){
+				//				mpWeapon = new CWeapon(this,EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
+				//				mpWeapon->mPosition.x += 51.0f;
+				//			}
+				//			else{
+				//				mpWeapon = new CWeapon(this,EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
+				//				mpWeapon->mPosition.x -= 51.0f;
+				//			}
+				//		}
+				//	}
+				//	else{
+				//		if (mDirection){
+				//			mpWeapon = new CWeapon(this,EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
+				//			mpWeapon->mPosition.x += 51.0f;
+				//		}
+				//		else{
+				//			mpWeapon = new CWeapon(this,EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
+				//			mpWeapon->mPosition.x -= 51.0f;
+				//		}
+				//	}
+				//}
+				if (CGamePad::Once(PAD_7) || CGamePad::Once(PAD_5)){
 					player_ani_count = 0;
 					player_ani_count_frame = 0;
 					player_ani = EPLAYERANI::EYOYO;
+					mDirection = false;
 					if (mAir){
 						if (mAerialAttack){
 							mAerialAttack = false;
 							if (mDirection){
-								mpWeapon = new CWeapon(this,EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
+								mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
 								mpWeapon->mPosition.x += 51.0f;
 							}
 							else{
-								mpWeapon = new CWeapon(this,EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
+								mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
 								mpWeapon->mPosition.x -= 51.0f;
 							}
 						}
 					}
 					else{
-						if (mDirection){
-							mpWeapon = new CWeapon(this,EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
-							mpWeapon->mPosition.x += 51.0f;
-						}
-						else{
-							mpWeapon = new CWeapon(this,EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
-							mpWeapon->mPosition.x -= 51.0f;
-						}
+						mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
+						mpWeapon->mPosition.x -= 51.0f;
 					}
 				}
-
-				
+				if (CGamePad::Once(PAD_8) || CGamePad::Once(PAD_6)){
+					player_ani_count = 0;
+					player_ani_count_frame = 0;
+					player_ani = EPLAYERANI::EYOYO;
+					mDirection = true;
+					if (mAir){
+						if (mAerialAttack){
+							mAerialAttack = false;
+							if (mDirection){
+								mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
+								mpWeapon->mPosition.x += 51.0f;
+							}
+							else{
+								mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
+								mpWeapon->mPosition.x -= 51.0f;
+							}
+						}
+					}
+					else{
+						mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
+						mpWeapon->mPosition.x += 51.0f;
+					}
+				}
 			}
 			else if (mpWeapon->mReturn){		
 				mpWeapon = 0;
@@ -61,11 +105,11 @@ void CPlayerT::Update(){
 			else {								
 				player_ani = EPLAYERANI::EYOYO;
 			}
-			if (mJumpCount < 2 && (CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_RIGHT))){
+			if (mJumpCount < 2 && (CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_RIGHT)) && mpWeapon == 0){
 				player_ani_count = 0;
 				player_ani_count_frame = 0;
 			}
-			if (mJumpCount < 2 && (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) || CKey::Push(VK_RIGHT))){		//ジャンプ回数２未満かつ２キーまたは→キー入力
+			if (mJumpCount < 2 && (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) || CKey::Push(VK_RIGHT)) && mpWeapon == 0){		//ジャンプ回数２未満かつ２キーまたは→キー入力
 				mAerialAttack = true;
 				//mAir = true;
 				if (!mJump)
@@ -123,7 +167,7 @@ void CPlayerT::Update(){
 //前進処理
 void CPlayerT::Forward(){
 	if (player_ani != EPLAYERANI::EDAMAGE && player_ani != EPLAYERANI::EDOWN){
-		if (CGamePad::Push(PAD_LSTICKX, 0.1f) || CGamePad::Push(PAD_LSTICKX, -0.1f)){
+		if (mpWeapon == 0 && (CGamePad::Push(PAD_LSTICKX, 0.1f) || CGamePad::Push(PAD_LSTICKX, -0.1f))){
 			if (!CMapScroll::scroll_flg){
 				CMapScroll::scroll_flg = true;
 				if (player_ani != EPLAYERANI::EDOWN && !CGame2::mCheat[CGame2::CHEAT_NUM::ESCROLL])

@@ -70,8 +70,6 @@ void CWeapon::Update(){
 
 }
 void CWeapon::Render(){
-	
-	CRectangle::Render();
 	//線描画スタイルの指定
 	glBegin(GL_LINES);
 
