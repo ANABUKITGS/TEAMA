@@ -400,7 +400,8 @@ bool CPlayerT::Collision(CRectangle *p) {
 					mIce = false;
 					if (!mUnrivaled &&
 						p->mPosition.y > mPosition.y + mScale.y &&
-						p->mBreak){
+						p->mBreak &&
+						p->mAlpha >= 1.0f){
 						mUnrivaled = true;
 						player_ani = EPLAYERANI::EDAMAGE;
 						player_ani_count = 0;

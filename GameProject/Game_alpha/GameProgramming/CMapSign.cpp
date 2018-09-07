@@ -1,6 +1,7 @@
 #include "CMapSign.h"
 #include "CFade.h"
 #include "CBossLifeBar.h"
+#include "CBossGimmick.h"
 
 CMapEndSign *CMapEndSign::mpEndSign = 0;
 CMapBossRoomSign *CMapBossRoomSign::mpBossRoomSign = 0;
@@ -129,13 +130,19 @@ bool CMapBossRoomSign::Collision(CRectangle *r) {
 				CMapScroll::scroll_stop = false;
 				if (mPosition.x + CELLSIZE / 2 < r->mPosition.x && !mColFlg){
 					mColFlg = true;
-					if (CBossLifeBar::mpBossLifeBar == NULL)
-						CBossLifeBar::mpBossLifeBar = new CBossLifeBar();
 
-					if (CBossLifeBar::mpBossLifeBar != NULL)
-						CBossLifeBar::mpBossLifeBar->mScale.x = 0.0f;
 					CPlayerT::mpPlayer->mMaxJewel = CPlayerT::mpPlayer->mJewel;
 					CPlayerT::mpPlayer->player_ani = CPlayerT::EPLAYERANI::EIDOL;
+
+					//HPバー 生成
+					if (CBossLifeBar::mpBossLifeBar == NULL)
+						CBossLifeBar::mpBossLifeBar = new CBossLifeBar();
+					if (CBossLifeBar::mpBossLifeBar != NULL)
+						CBossLifeBar::mpBossLifeBar->mScale.x = 0.0f;
+
+					//落下ギミック 生成
+					if (CBossGimmick::mpBossGimmick == NULL)
+						CBossGimmick::mpBossGimmick = new CBossGimmick();
 					return true;
 				}
 			}
