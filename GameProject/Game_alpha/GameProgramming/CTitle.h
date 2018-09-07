@@ -12,9 +12,11 @@ public:
 	struct  STitleNum{
 		float mPositionX;
 		float mPositionY;
+		int mSize;
+		float mColor[3];
 		bool mAnimation;
 		int mAnimationTime;
-		float mColor[3];
+		
 	};
 	STitleNum mTitleNum[4];
 	

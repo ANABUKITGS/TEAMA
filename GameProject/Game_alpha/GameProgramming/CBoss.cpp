@@ -6,10 +6,15 @@
 #include "CTime.h"
 #include "CMapSign.h"
 #include "CMapScroll.h"
+#include "CBossGimmick.h"
 
 CBoss *CBoss::mpBoss = 0;
 
-
+//乱数を初期化してランダムな値を出す
+int CBoss::GetRand(int random){
+	srand((unsigned)time(NULL) - clock());
+	return rand() % random;
+}
 
 //-----------------------------------------------------BossBehP処理開始---------------------------------------------------------------------
 /*
@@ -37,7 +42,7 @@ void CBoss::BossBehP(BehP BP){
 		break;
 	case BehP::ETELEPO_4://4はプレイヤーの後ろにテレポート
 		//プレイヤーの後ろに現れるタイミングをランダムにする
-		mBossAttackItr = rand() / 100 % BOSSTELEPOA + 1;
+		mBossAttackItr = GetRand(BOSSTELEPOA + 1);
 		IdolInterval = NULL;
 		//透明になる動作に入る
 		mTelepoEnabled = false;
@@ -61,12 +66,13 @@ BossBehP関数から繋がる新たな行動の追加や変更はここで
 */
 void CBoss::Boss_A_BehP(){
 	//待機状態からランダムで行動をとる(移動、ジャンプ、攻撃のどれか)
-	mBossIBehavior = rand() / 1000 % BehP::ESIZE_7;
+	mBossIBehavior = EIDOL_5;//GetRand(BehP::ESIZE_7);
 
 	//行動パターン処理
 	switch (mAttackBehavior){
 		//待機状態
 	case EIDOL:
+		
 		if (mPosition.x > CPlayerT::mpPlayer->mPosition.x)
 			mDirection = false;
 		else
@@ -83,6 +89,41 @@ void CBoss::Boss_A_BehP(){
 			}
 		}
 		mpBWeapon = 0;
+
+		if (CBossGimmick::mpBossGimmick != NULL && CBossGimmick::mpBossGimmick->mGimmickFlg){
+			//ボスが左にいるとき
+			if (mPosition.x<CMapScroll::mpScroll->mPosition.x){
+				//プレイヤーが左にいるとき
+				if (CPlayerT::mpPlayer->mPosition.x < CMapScroll::mpScroll->mPosition.x){
+					//ボスを右に向かせる
+					mDirection = true;
+					mVelocityX = BOSSMOVESPEED * 3;
+				}
+				//プレイヤーが右にいるとき
+				else{
+					//ボスを左に向かせる
+					mDirection = false;
+					break;
+				}
+			}
+			//ボスが右にいるとき
+			else{
+				//プレイヤーが右にいるとき
+				if (CPlayerT::mpPlayer->mPosition.x > CMapScroll::mpScroll->mPosition.x){
+					//ボスを左にむかせる
+					mDirection = false;
+					mVelocityX = -BOSSMOVESPEED * 3;
+				}
+				//プレイヤーが左にいるとき
+				else{
+					//ボスを右に向かせる
+					mDirection = true;
+					break;
+				}
+			}
+			mAttackBehavior = EJUMP;
+			mVelocityY = BOSSGVELOCITY;
+		}
 		break;
 		//待機状態処理終了
 
@@ -288,9 +329,47 @@ void CBoss::Boss_A_BehP(){
 			mBossAnimeFream = 0;
 			mAttackBehavior = EIDOL;
 		}
-		break;
 
+		if (CBossGimmick::mpBossGimmick != NULL && CBossGimmick::mpBossGimmick->mGimmickFlg){
+			//ボスが左にいるとき
+			if (mPosition.x<CMapScroll::mpScroll->mPosition.x){
+				//プレイヤーが左にいるとき
+				if (CPlayerT::mpPlayer->mPosition.x < CMapScroll::mpScroll->mPosition.x){
+					//ボスを右に向かせる
+					mDirection = true;
+					mVelocityX = BOSSMOVESPEED * 3;
+				}
+				//プレイヤーが右にいるとき
+				else{
+					//ボスを左に向かせる
+					mDirection = false;
+					break;
+				}
+			}
+			//ボスが右にいるとき
+			else{
+				//プレイヤーが右にいるとき
+				if (CPlayerT::mpPlayer->mPosition.x > CMapScroll::mpScroll->mPosition.x){
+					//ボスを左にむかせる
+					mDirection = false;
+					mVelocityX = -BOSSMOVESPEED * 3;
+				}
+				//プレイヤーが左にいるとき
+				else{
+					//ボスを右に向かせる
+					mDirection = true;
+					break;
+				}
+			}
+			mAttackBehavior = EJUMP;
+			mVelocityY = BOSSGVELOCITY;
+		}
+		break;
 		//ガード処理終了
+
+	case EAVOIDANCE:
+
+		break;
 	}
 }
 //-----------------------------------------------------Boss_A_BehP処理終了------------------------------------------------------------------
@@ -312,7 +391,7 @@ void CBoss::Update(){
 				mBossJcnt++;
 			//一定時間経過すると乱数を出す
 			else{
-				mBossJumprad = rand() / 100 % 7;
+				mBossJumprad = GetRand(7);
 				mBossJcnt = NULL;
 			}
 			//ジャンプの処理ここまで

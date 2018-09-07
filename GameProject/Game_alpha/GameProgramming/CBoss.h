@@ -60,6 +60,7 @@ private:
 		ESIZE_7,
 	};
 	void BossBehP(BehP);				//ボスが待機から行動起こす関数プロトタイプ
+	int GetRand(int);					//乱数を取得する関数
 
 	//引数無しコンストラクタで変数等の初期化処理
 	CBoss()
@@ -105,6 +106,7 @@ public:
 		EDOWN,							//ダウン
 		ETELEPO,						//瞬間移動
 		EGUARD,							//ガード
+		EAVOIDANCE,						//回避
 		ESIZE,
 	};
 

@@ -12,13 +12,19 @@ extern CCharcter player;
 extern CTitle mTitle;
 extern CScore mScore;
 
+#define TITLE_TEXT_POS(i) (mTitleNum[i].mPositionX+32)-mTitleNum[i].mSize, (mTitleNum[i].mPositionY+32)-mTitleNum[i].mSize
+
 void CTitle::Init(){
 	cursor_num = CSceneChange::EGAME;
 	//テクスチャを読み込む
 	mTexTitle.Load(".//Data//Images//Title//Title.tga");
+	mTitleNum[0].mPositionX = -112;
+	mTitleNum[1].mPositionX = -80;
+	mTitleNum[2].mPositionX = -144;
+	mTitleNum[3].mPositionX = -144;
 	for (int i = 0; i < 4; i++){
-		mTitleNum[i].mPositionX = -200;
-		mTitleNum[i].mPositionY = 0 - (i * 32);
+		mTitleNum[i].mPositionY = 0 - (i * 64);
+		mTitleNum[i].mSize =32;
 		mTitleNum[i].mAnimation= false;
 		mTitleNum[i].mColor[0] = 1.0f; mTitleNum[i].mColor[1] = 1.0f; mTitleNum[i].mColor[2] = 1.0f;
 	}
@@ -71,7 +77,7 @@ void CTitle::Update(){
 	case CSceneChange::ECSCENECHANGE_NUM::EGAME:
 		//swprintf(cursor_buf, L"→");
 		mTitleNum[0].mAnimation = true;
-		mTitleNum[0].mColor[0] = 0.0f; mTitleNum[0].mColor[1] = 0.0f; mTitleNum[0].mColor[2] = 0.0f;
+		mTitleNum[0].mColor[0] = 0.2f; mTitleNum[0].mColor[1] = 0.8f; mTitleNum[0].mColor[2] = 0.4f;
 		mTitleNum[1].mColor[0] = 1.0f; mTitleNum[1].mColor[1] = 1.0f; mTitleNum[1].mColor[2] = 1.0f;
 		mTitleNum[2].mColor[0] = 1.0f; mTitleNum[2].mColor[1] = 1.0f; mTitleNum[2].mColor[2] = 1.0f;
 		mTitleNum[3].mColor[0] = 1.0f; mTitleNum[3].mColor[1] = 1.0f; mTitleNum[3].mColor[2] = 1.0f;
@@ -81,27 +87,28 @@ void CTitle::Update(){
 		//swprintf(cursor_buf, L"\n→");
 		mTitleNum[1].mAnimation = true;
 		mTitleNum[0].mColor[0] = 1.0f; mTitleNum[0].mColor[1] = 1.0f; mTitleNum[0].mColor[2] = 1.0f;
-		mTitleNum[1].mColor[0] = 0.0f; mTitleNum[1].mColor[1] = 0.0f; mTitleNum[1].mColor[2] = 0.0f;
+		mTitleNum[1].mColor[0] = 0.0f; mTitleNum[1].mColor[1] = 0.0f; mTitleNum[1].mColor[2] = 1.0f;
 		mTitleNum[2].mColor[0] = 1.0f; mTitleNum[2].mColor[1] = 1.0f; mTitleNum[2].mColor[2] = 1.0f;
 		mTitleNum[3].mColor[0] = 1.0f; mTitleNum[3].mColor[1] = 1.0f; mTitleNum[3].mColor[2] = 1.0f;
 		break;
 
 	case CSceneChange::ECSCENECHANGE_NUM::EEDITER:
 		//swprintf(cursor_buf, L"\n\n→");
-		mTitleNum[2].mAnimation = true;
-		mTitleNum[0].mColor[0] = 1.0f; mTitleNum[0].mColor[1] = 1.0f; mTitleNum[0].mColor[2] = 1.0f;
-		mTitleNum[1].mColor[0] = 1.0f; mTitleNum[1].mColor[1] = 1.0f; mTitleNum[1].mColor[2] = 1.0f;
-		mTitleNum[2].mColor[0] = 0.0f; mTitleNum[2].mColor[1] = 0.0f; mTitleNum[2].mColor[2] = 0.0f;
-		mTitleNum[3].mColor[0] = 1.0f; mTitleNum[3].mColor[1] = 1.0f; mTitleNum[3].mColor[2] = 1.0f;
-		break;
-
-	case CSceneChange::ECSCENECHANGE_NUM::EEXIT:
-		//swprintf(cursor_buf, L"\n\n\n→");
 		mTitleNum[3].mAnimation = true;
 		mTitleNum[0].mColor[0] = 1.0f; mTitleNum[0].mColor[1] = 1.0f; mTitleNum[0].mColor[2] = 1.0f;
 		mTitleNum[1].mColor[0] = 1.0f; mTitleNum[1].mColor[1] = 1.0f; mTitleNum[1].mColor[2] = 1.0f;
 		mTitleNum[2].mColor[0] = 1.0f; mTitleNum[2].mColor[1] = 1.0f; mTitleNum[2].mColor[2] = 1.0f;
-		mTitleNum[3].mColor[0] = 0.0f; mTitleNum[3].mColor[1] = 0.0f; mTitleNum[3].mColor[2] = 0.0f;
+		mTitleNum[3].mColor[0] = 0.0f; mTitleNum[3].mColor[1] = 0.0f; mTitleNum[3].mColor[2] = 1.0f;
+		
+		break;
+
+	case CSceneChange::ECSCENECHANGE_NUM::EEXIT:
+		//swprintf(cursor_buf, L"\n\n\n→");
+		mTitleNum[2].mAnimation = true;
+		mTitleNum[0].mColor[0] = 1.0f; mTitleNum[0].mColor[1] = 1.0f; mTitleNum[0].mColor[2] = 1.0f;
+		mTitleNum[1].mColor[0] = 1.0f; mTitleNum[1].mColor[1] = 1.0f; mTitleNum[1].mColor[2] = 1.0f;
+		mTitleNum[2].mColor[0] = 0.0f; mTitleNum[2].mColor[1] = 0.0f; mTitleNum[2].mColor[2] = 1.0f;
+		mTitleNum[3].mColor[0] = 1.0f; mTitleNum[3].mColor[1] = 1.0f; mTitleNum[3].mColor[2] = 1.0f;
 		break;
 
 	default:
@@ -111,14 +118,14 @@ void CTitle::Update(){
 }
 
 void CTitle::Render(){
-	CText::DrawStringWSetColor(L" ゲームスタート", mTitleNum[0].mPositionX, mTitleNum[0].mPositionY, 32, mTitleNum[0].mColor[0], mTitleNum[0].mColor[1], mTitleNum[0].mColor[2], 1.0f, 0);
-	CText::DrawStringWSetColor(cursor_buf, mTitleNum[0].mPositionX, mTitleNum[0].mPositionY, 32, mTitleNum[0].mColor[0], mTitleNum[0].mColor[1], mTitleNum[0].mColor[2], 1.0f, 0);
-	CText::DrawStringWSetColor(L" ランキング", mTitleNum[1].mPositionX, mTitleNum[1].mPositionY, 32, mTitleNum[1].mColor[0], mTitleNum[1].mColor[1], mTitleNum[1].mColor[2], 1.0f, 0);
-	CText::DrawStringWSetColor(cursor_buf, mTitleNum[1].mPositionX, mTitleNum[1].mPositionY, 32, mTitleNum[1].mColor[0], mTitleNum[1].mColor[1], mTitleNum[1].mColor[2], 1.0f, 0);
-	CText::DrawStringWSetColor(L" ゲームしゅうりょう", mTitleNum[2].mPositionX, mTitleNum[2].mPositionY, 32, mTitleNum[2].mColor[0], mTitleNum[2].mColor[1], mTitleNum[2].mColor[2], 1.0f, 0);
-	CText::DrawStringWSetColor(cursor_buf, mTitleNum[2].mPositionX, mTitleNum[2].mPositionY, 32, mTitleNum[2].mColor[0], mTitleNum[2].mColor[1], mTitleNum[2].mColor[2], 1.0f, 0);
-	CText::DrawStringWSetColor(L" エディター(かり)", mTitleNum[3].mPositionX, mTitleNum[3].mPositionY, 32, mTitleNum[3].mColor[0], mTitleNum[3].mColor[1], mTitleNum[3].mColor[2], 1.0f, 0);
-	CText::DrawStringWSetColor(cursor_buf, mTitleNum[3].mPositionX, mTitleNum[3].mPositionY, 32, mTitleNum[3].mColor[0], mTitleNum[3].mColor[1], mTitleNum[3].mColor[2], 1.0f, 0);
+	CText::DrawStringWSetColor(L"ゲームスタート", TITLE_TEXT_POS(0), mTitleNum[0].mSize, mTitleNum[0].mColor[0], mTitleNum[0].mColor[1], mTitleNum[0].mColor[2], 1.0f, 0);
+	/*CText::DrawStringWSetColor(cursor_buf, mTitleNum[0].mPositionX, mTitleNum[0].mPositionY, mTitleNum[0].mSize, mTitleNum[0].mColor[0], mTitleNum[0].mColor[1], mTitleNum[0].mColor[2], 1.0f, 0);*/
+	CText::DrawStringWSetColor(L"ランキング", TITLE_TEXT_POS(1), mTitleNum[1].mSize, mTitleNum[1].mColor[0], mTitleNum[1].mColor[1], mTitleNum[1].mColor[2], 1.0f, 0);
+	/*CText::DrawStringWSetColor(cursor_buf, mTitleNum[1].mPositionX, mTitleNum[1].mPositionY, mTitleNum[0].mSize, mTitleNum[1].mColor[0], mTitleNum[1].mColor[1], mTitleNum[1].mColor[2], 1.0f, 0);*/
+	CText::DrawStringWSetColor(L"ゲームしゅうりょう", TITLE_TEXT_POS(2), mTitleNum[2].mSize, mTitleNum[2].mColor[0], mTitleNum[2].mColor[1], mTitleNum[2].mColor[2], 1.0f, 0);
+	/*CText::DrawStringWSetColor(cursor_buf, mTitleNum[2].mPositionX, mTitleNum[2].mPositionY, mTitleNum[0].mSize, mTitleNum[2].mColor[0], mTitleNum[2].mColor[1], mTitleNum[2].mColor[2], 1.0f, 0);*/
+	CText::DrawStringWSetColor(L"エディター(かり)", TITLE_TEXT_POS(3), mTitleNum[3].mSize, mTitleNum[3].mColor[0], mTitleNum[3].mColor[1], mTitleNum[3].mColor[2], 1.0f, 0);
+	/*CText::DrawStringWSetColor(cursor_buf, mTitleNum[3].mPositionX, mTitleNum[3].mPositionY, mTitleNum[0].mSize, mTitleNum[3].mColor[0], mTitleNum[3].mColor[1], mTitleNum[3].mColor[2], 1.0f, 0);*/
 }
 
 void CTitle::Animation(){
@@ -126,9 +133,9 @@ void CTitle::Animation(){
 		if (mTitleNum[i].mAnimation){
 			mTitleNum[i].mAnimationTime--;
 			if (mTitleNum[i].mAnimationTime>15)
-				mTitleNum[i].mPositionY += 0.5;
+				mTitleNum[i].mSize += 1;
 			else if (mTitleNum[i].mAnimationTime > 1)
-				mTitleNum[i].mPositionY -= 0.5;
+				mTitleNum[i].mSize -= 1;
 			else if (mTitleNum[i].mAnimationTime < 0){
 				mTitleNum[i].mAnimationTime = 30;
 				mTitleNum[i].mAnimation = false;

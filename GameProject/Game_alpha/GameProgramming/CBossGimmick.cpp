@@ -5,11 +5,16 @@ CBossGimmick *CBossGimmick::mpBossGimmick = NULL;
 
 void CBossGimmick::Update(){
 	mPosition = CPlayerT::mpPlayer->mPosition;
-	if (!mWait && GetRandom(BOX_PROBABILITY)){
+	if (!mWait && GetRandom(BOX_PROBABILITY) && CBoss::mpBoss->mBossLife > 0){
 		new CMapBox(CVector2(CPlayerT::mpPlayer->mPosition.x, 720.0f), true);
+		mGimmickFlg = true;
+		mWait = 1;
+		return;
 	}
-	if (mWait < WAIT_TIME)
+	if (mWait < WAIT_TIME){
 		mWait++;
+		mGimmickFlg = false;
+	}
 	else
 		mWait = 0;
 
@@ -35,7 +40,9 @@ bool CBossGimmick::GetRandom(int probability){
 	mBoxProbability[num] = mBoxProbability[max];
 	mBoxProbability[max] = ans;
 
+#ifdef _DEBUG
 	std::cout << ans << std::endl;
+#endif
 	
 	if (!ans){
 		max = probability;

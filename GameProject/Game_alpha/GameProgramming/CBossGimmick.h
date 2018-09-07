@@ -17,22 +17,21 @@ private:
 
 public:
 	static CBossGimmick *mpBossGimmick;
-	CMapBox *mpMapBox;
+	bool mGimmickFlg;
 
 	CBossGimmick()
 		:CRectangle(CMapBossRoomSign::mpBossRoomSign->mPosition, CVector2(0.0f, 0.0f), NULL)
 		, mWait(1)
+		, mGimmickFlg(false)
 	{
 		for (int i = 0; i < BOX_PROBABILITY; i++)
 			mBoxProbability[i] = i;
 
-		mpMapBox = NULL;
 		mTag = ECELLNUM::ENONE;
 		CTaskManager::Get()->Add(this);
 	}
 	~CBossGimmick(){
 		mpBossGimmick = NULL;
-		mpMapBox = NULL;
 	}
 	void Update();
 	bool GetRandom(int);

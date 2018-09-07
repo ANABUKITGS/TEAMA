@@ -2,6 +2,7 @@
 #include "CScene.h"
 #include "CEfect.h"
 #include "CPlayerT.h"
+#include "CBoss.h"
 
 void CMapBox::Update() {
 	if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
@@ -80,8 +81,15 @@ bool CMapBox::Collision(CRectangle *r) {
 			else if (mBreak && mAlpha >= 1.0f){
 				if (r->mTag == EENEMY1 ||
 					r->mTag == EENEMY2 ||
-					r->mTag == EENEMY3 ||
-					r->mTag == EBOSS){
+					r->mTag == EENEMY3){
+					new CBoxEfect(mPosition);
+					//mEnabled = false;
+					mAlpha = 0.0f;
+				}
+				if (r->mTag == EBOSS && CBoss::mpBoss != NULL &&
+					CBoss::mpBoss->mAttackBehavior != CBoss::AttackBehavior::EJUMP &&
+					CBoss::mpBoss->mAttackBehavior != CBoss::AttackBehavior::EDOWN &&
+					CBoss::mpBoss->mAlpha >= 1.0f){
 					new CBoxEfect(mPosition);
 					//mEnabled = false;
 					mAlpha = 0.0f;
