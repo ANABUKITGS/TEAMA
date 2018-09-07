@@ -52,7 +52,7 @@ void CPlayerT::Update(){
 				//		}
 				//	}
 				//}
-				if (CGamePad::Once(PAD_7) || CGamePad::Once(PAD_5)){
+				if (CGamePad::Once(PAD_7) || CGamePad::Once(PAD_5) || CKey::Once(VK_LEFT)){
 					player_ani_count = 0;
 					player_ani_count_frame = 0;
 					player_ani = EPLAYERANI::EYOYO;
@@ -75,7 +75,7 @@ void CPlayerT::Update(){
 						mpWeapon->mPosition.x -= 51.0f;
 					}
 				}
-				if (CGamePad::Once(PAD_8) || CGamePad::Once(PAD_6)){
+				if (CGamePad::Once(PAD_8) || CGamePad::Once(PAD_6) || CKey::Once(VK_RIGHT)){
 					player_ani_count = 0;
 					player_ani_count_frame = 0;
 					player_ani = EPLAYERANI::EYOYO;
@@ -105,11 +105,11 @@ void CPlayerT::Update(){
 			else {								
 				player_ani = EPLAYERANI::EYOYO;
 			}
-			if (mJumpCount < 2 && (CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_RIGHT)) && mpWeapon == 0){
+			if (mJumpCount < 2 && (CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_UP)) && mpWeapon == 0){
 				player_ani_count = 0;
 				player_ani_count_frame = 0;
 			}
-			if (mJumpCount < 2 && (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) || CKey::Push(VK_RIGHT)) && mpWeapon == 0){		//ジャンプ回数２未満かつ２キーまたは→キー入力
+			if (mJumpCount < 2 && (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) || CKey::Push(VK_UP)) && mpWeapon == 0){		//ジャンプ回数２未満かつ２キーまたは→キー入力
 				mAerialAttack = true;
 				//mAir = true;
 				if (!mJump)
