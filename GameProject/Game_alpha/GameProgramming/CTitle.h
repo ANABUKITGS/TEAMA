@@ -9,9 +9,19 @@ private:
 
 public:
 	int cursor_num;
+	struct  STitleNum{
+		float mPositionX;
+		float mPositionY;
+		bool mAnimation;
+		int mAnimationTime;
+		float mColor[3];
+	};
+	STitleNum mTitleNum[4];
+	
 	CTexture mTexTitle;
 	void Init();
 	void Update();
 	void Render();
+	void Animation();
 };
 #endif
