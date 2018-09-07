@@ -8,6 +8,7 @@ class CMapBox : public CMapChip {
 private:
 	CTexture mTexBox;
 	CVector2 mDefaultPos;
+	bool mBossGimmick;
 
 public:
 	float mVelocityY;
@@ -19,6 +20,7 @@ public:
 		mVelocityX = 0.0f;
 		mRender = false;
 		mBreak = Break;
+		mBossGimmick = Break;
 		mTexBox.Load(".\\Data\\Images\\Map\\MapBox.tga");
 		mDefaultPos = pos + CVector2(0.0f, CELLSIZE / 2);
 		mAlpha = 1.0f;

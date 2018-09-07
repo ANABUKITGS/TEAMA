@@ -8,7 +8,10 @@ void CMapBox::Update() {
 		if (mBreak)
 		Gravity();
 		if (mPosition.y < -10000.0f){
-			mPosition = mDefaultPos;
+			if (!mBossGimmick)
+				mPosition = mDefaultPos;
+			else
+				mEnabled = false;
 			mVelocityY = 0.0f;
 			mBreak = false;
 			mAlpha = 1.0f;
