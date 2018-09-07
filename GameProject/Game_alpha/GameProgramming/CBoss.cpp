@@ -66,7 +66,7 @@ BossBehP関数から繋がる新たな行動の追加や変更はここで
 */
 void CBoss::Boss_A_BehP(){
 	//待機状態からランダムで行動をとる(移動、ジャンプ、攻撃のどれか)
-	mBossIBehavior = EIDOL_5;//GetRand(BehP::ESIZE_7);
+	mBossIBehavior = GetRand(BehP::ESIZE_7);
 
 	//行動パターン処理
 	switch (mAttackBehavior){

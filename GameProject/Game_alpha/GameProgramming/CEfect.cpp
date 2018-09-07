@@ -1,4 +1,5 @@
 #include "CEfect.h"
+#include "CBoss.h"
 
 void CEfect::Update(){
 	mAlpha-=0.025;
@@ -46,11 +47,18 @@ void CBossEfect::Update(){
 		ani_count = 5;
 	}
 	mPosition = mpRect->mPosition;
+	if (CBoss::mpBoss->mBossLife > 0)
+		mAlpha = CBoss::mpBoss->mAlpha;
+	else
+		mAlpha -= 0.05f;
+
+	if (mAlpha <= 0.0f)
+		mAlpha = 0.0f;
 	CRectangle::Update();
 }
 
 void CBossEfect::Render(){
-	mTexture.DrawImage(BOSSEFECT_UV, 1.0f);
+	mTexture.DrawImage(BOSSEFECT_UV, mAlpha);
 }
 
 void CBoxEfect::Update(){

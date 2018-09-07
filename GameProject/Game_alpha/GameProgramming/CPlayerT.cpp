@@ -233,7 +233,7 @@ void CPlayerT::Forward(){
 				}
 			}
 		}
-		else if (CKey::Push('D') || CKey::Push('A')){
+		else if (mpWeapon == 0 && (CKey::Push('D') || CKey::Push('A'))){
 			if (!CMapScroll::scroll_flg){
 				CMapScroll::scroll_flg = true;
 				if (player_ani != EPLAYERANI::EDOWN && !CGame2::mCheat[CGame2::CHEAT_NUM::ESCROLL])

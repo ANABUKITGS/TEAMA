@@ -91,6 +91,7 @@ public:
 	CBossEfect(CRectangle *p)
 		:CBossEfect()
 	{
+		mAlpha = 1.0f;
 		SetRectangle(p->mPosition, CVector2(32, 90), NULL);
 		mpRect = p;
 	}

@@ -6,6 +6,7 @@
 #include "CPlayerT.h"
 #include <stdlib.h>
 #include <time.h>
+#include "CEfect.h"
 
 #define BEHAVIOR 270.0f					//ボスの行動切り替え定数(移動から攻撃)
 #define BOSS_DELCNT 200					//ボスの消滅カウント（とりあえず100frameに設定）
@@ -91,6 +92,7 @@ private:
 		mPriority = 10;					//優先度を設定
 		mRender = false;				//当たり判定の描画を削除
 		mTexture.Load(".\\Data\\Images\\Boss\\Boss.tga");//テクスチャデータを読み込む
+		new CBossEfect(this);
 		CTaskManager::Get()->Add(this);	//タスクリストにボスキャラクターを追加
 	}
 
