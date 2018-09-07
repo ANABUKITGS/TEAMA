@@ -11,14 +11,14 @@ private:
 
 public:
 	float mVelocityY;
-	CMapBox(const CVector2& pos)
+	CMapBox(const CVector2& pos, bool Break = false)
 		//CMapChipÇ≈èâä˙âª
 		: CMapChip(pos + CVector2(0.0f, CELLSIZE / 2), CVector2(CELLSIZE, CELLSIZE), NULL, NULL, NULL, NULL, NULL, ECELLNUM::EBOX)
 		, mVelocityY(0.0f)
 	{
 		mVelocityX = 0.0f;
 		mRender = false;
-		mBreak = false;
+		mBreak = Break;
 		mTexBox.Load(".\\Data\\Images\\Map\\MapBox.tga");
 		mDefaultPos = pos + CVector2(0.0f, CELLSIZE / 2);
 		mAlpha = 1.0f;
