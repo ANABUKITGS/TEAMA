@@ -113,9 +113,10 @@ void CPlayerT::Update(){
 			if (mJumpCount < 2 && (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) || CKey::Push(VK_UP)) && mpWeapon == 0){		//ジャンプ回数２未満かつ２キーまたは→キー入力
 				mAerialAttack = true;
 				//mAir = true;
-				if (!mJump)
+				if (!mJump){
 					CSE::mSoundJump.Play();
 					mVelocityY = PLAYER_VELOCITY_Y;
+				}
 
 				if (!mAir)
 					player_ani = EPLAYERANI::EIDOL;
