@@ -12,12 +12,13 @@ CSound CBGM::mSoundRanking;		//ƒ‰ƒ“ƒLƒ“ƒO—p
 
 void CBGM::Init(){
 	starttime = clock();
-	mSoundTitle.Load("");
-	mSoundTutorial.Load(".\\Data\\Sound\\BGM\\BGM0.wav");
-	mSoundMain.Load("");
+	mSoundTitle.Load(".\\Data\\Sound\\BGM\\Title.wav");
+	mSoundTutorial.Load(".\\Data\\Sound\\BGM\\Tutorial.wav");
+	mSoundMain.Load(".\\Data\\Sound\\BGM\\Main.wav");
 	mSoundBoss.Load("");
 	mSoundResult.Load("");
 	mSoundRanking.Load("");
+	CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETITLE);
 }
 
 void CBGM::Update(){
