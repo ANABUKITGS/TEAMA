@@ -15,7 +15,7 @@ void CBGM::Init(){
 	mSoundTitle.Load(".\\Data\\Sound\\BGM\\Title.wav");
 	mSoundTutorial.Load(".\\Data\\Sound\\BGM\\Tutorial.wav");
 	mSoundMain.Load(".\\Data\\Sound\\BGM\\Main.wav");
-	mSoundBoss.Load("");
+	mSoundBoss.Load(".\\Data\\Sound\\BGM\\Boss.wav");
 	mSoundResult.Load("");
 	mSoundRanking.Load("");
 	CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETITLE);

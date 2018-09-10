@@ -6,7 +6,7 @@
 #define SOUND_TITLE		72465	//タイトル BGM (ミリ秒)
 #define SOUND_TUTORIAL	153602	//チュートリアル BGM (ミリ秒)
 #define SOUND_MAIN		128009	//本編 BGM (ミリ秒)
-#define SOUND_BOSS		0		//ボス BGM (ミリ秒)
+#define SOUND_BOSS		141803		//ボス BGM (ミリ秒)
 #define SOUND_RESULT	0		//リザルト BGM (ミリ秒)
 #define SOUND_RANKING	0		//ランキング BGM (ミリ秒)
 

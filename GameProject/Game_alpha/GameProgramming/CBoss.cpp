@@ -16,6 +16,88 @@ int CBoss::GetRand(int random){
 	return rand() % random;
 }
 
+//-----------------------------------------------------Update処理開始-----------------------------------------------------------------------
+/*
+更新処理を行う
+行動以外で細かな変更や追加はここで
+*/
+void CBoss::Update(){
+	if (CMapBossRoomSign::mpBossRoomSign != NULL && CMapBossRoomSign::mpBossRoomSign->mColFlg && mBossBattle){
+		if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
+			//ボスとプレイヤーとのベクトルを出す
+			mAttack_Search = CPlayerT::mpPlayer->mPosition - mPosition;
+			//一定間隔でジャンプの乱数を出す(とりあえず1秒に一回)
+			if (mBossJcnt < BOSSJUMPTIME)
+				mBossJcnt++;
+			//一定時間経過すると乱数を出す
+			else{
+				mBossJumprad = GetRand(7);
+				mBossJcnt = NULL;
+			}
+			//ジャンプの処理ここまで
+
+			//ダメージを受けた時に行う処理
+			if (Invincible){
+				mBossInvincibleTime--;
+				//無敵時間を追加
+				if (mBossInvincibleTime % 10 == 0)
+					mAlpha = 0.0f;
+				else
+					mAlpha = 1.0f;
+				if (!mBossInvincibleTime){
+					mBossInvincibleTime = BOSSINVINCIBLE;
+					mAlpha = 1.0f;
+					Invincible = false;
+				}
+			}
+			//ダメージを受けた時に行う処理ここまで
+
+			//ボスの慣性法則
+			if (mVelocityX > 0.0f)
+				mVelocityX -= 0.25f;
+
+			if (mVelocityX < 0.0f)
+				mVelocityX += 0.25f;
+
+
+			mPosition.x += mVelocityX;
+			//ボスの慣性法則ここまで
+
+			//ボスのHP処理
+			mBossLifeProportion = static_cast <float> (mBossLife) / static_cast <float> (mBossMaxLife);
+
+			//総行動処理
+			Boss_A_BehP();
+
+			//重力処理
+			Gravity();
+
+			//基底クラスの更新処理
+			CRectangle::Update();
+		}
+	}
+	else if (CMapBossRoomSign::mpBossRoomSign != NULL && !CMapBossRoomSign::mpBossRoomSign->mColFlg){
+		mBossBattle = false;
+		mPosition = mBossDefaultPos;
+		mAttackBehavior = EIDOL;
+		mVelocityX = mVelocityY = 0.0f;
+	}
+	//ボスの壁貫通バグ防止用処理
+	if (mPosition.y < -100){
+		mPosition.y = mBossDefaultPos.y;
+		if (CPlayerT::mpPlayer->mDirection == false){
+			mDirection = true;
+			mPosition.x = CPlayerT::mpPlayer->mPosition.x - BOSSTELEPO;
+		}
+		else{
+			mDirection = false;
+			mPosition.x = CPlayerT::mpPlayer->mPosition.x + BOSSTELEPO;
+		}
+	}
+	//処理終了
+}
+//-----------------------------------------------------Update処理終了-----------------------------------------------------------------------
+
 //-----------------------------------------------------BossBehP処理開始---------------------------------------------------------------------
 /*
 BossBehP
@@ -72,7 +154,7 @@ void CBoss::Boss_A_BehP(){
 	switch (mAttackBehavior){
 		//待機状態
 	case EIDOL:
-		
+
 		if (mPosition.x > CPlayerT::mpPlayer->mPosition.x)
 			mDirection = false;
 		else
@@ -374,90 +456,6 @@ void CBoss::Boss_A_BehP(){
 	}
 }
 //-----------------------------------------------------Boss_A_BehP処理終了------------------------------------------------------------------
-
-
-
-//-----------------------------------------------------Update処理開始-----------------------------------------------------------------------
-/*
-更新処理を行う
-行動以外で細かな変更や追加はここで
-*/
-void CBoss::Update(){
-	if (CMapBossRoomSign::mpBossRoomSign != NULL && CMapBossRoomSign::mpBossRoomSign->mColFlg && mBossBattle){
-		if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
-			//ボスとプレイヤーとのベクトルを出す
-			mAttack_Search = CPlayerT::mpPlayer->mPosition - mPosition;
-			//一定間隔でジャンプの乱数を出す(とりあえず1秒に一回)
-			if (mBossJcnt < BOSSJUMPTIME)
-				mBossJcnt++;
-			//一定時間経過すると乱数を出す
-			else{
-				mBossJumprad = GetRand(7);
-				mBossJcnt = NULL;
-			}
-			//ジャンプの処理ここまで
-
-			//ダメージを受けた時に行う処理
-			if (Invincible){
-				mBossInvincibleTime--;
-				//無敵時間を追加
-				if (mBossInvincibleTime % 10 == 0)
-					mAlpha = 0.0f;
-				else
-					mAlpha = 1.0f;
-				if (!mBossInvincibleTime){
-					mBossInvincibleTime = BOSSINVINCIBLE;
-					mAlpha = 1.0f;
-					Invincible = false;
-				}
-			}
-			//ダメージを受けた時に行う処理ここまで
-
-			//ボスの慣性法則
-			if (mVelocityX > 0.0f)
-				mVelocityX -= 0.25f;
-
-			if (mVelocityX < 0.0f)
-				mVelocityX += 0.25f;
-
-
-			mPosition.x += mVelocityX;
-			//ボスの慣性法則ここまで
-
-			//ボスのHP処理
-			mBossLifeProportion = static_cast <float> (mBossLife) / static_cast <float> (mBossMaxLife);
-
-			//総行動処理
-			Boss_A_BehP();
-
-			//重力処理
-			Gravity();
-
-			//基底クラスの更新処理
-			CRectangle::Update();
-		}
-	}
-	else if (CMapBossRoomSign::mpBossRoomSign != NULL && !CMapBossRoomSign::mpBossRoomSign->mColFlg){
-		mBossBattle = false;
-		mPosition = mBossDefaultPos;
-		mAttackBehavior = EIDOL;
-		mVelocityX = mVelocityY = 0.0f;
-	}
-	//ボスの壁貫通バグ防止用処理
-	if (mPosition.y < -100){
-		mPosition.y = mBossDefaultPos.y;
-		if (CPlayerT::mpPlayer->mDirection == false){
-			mDirection = true;
-			mPosition.x = CPlayerT::mpPlayer->mPosition.x - BOSSTELEPO;
-		}
-		else{
-			mDirection = false;
-			mPosition.x = CPlayerT::mpPlayer->mPosition.x + BOSSTELEPO;
-		}
-	}
-	//処理終了
-}
-//-----------------------------------------------------Update処理終了-----------------------------------------------------------------------
 
 
 

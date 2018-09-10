@@ -2,6 +2,7 @@
 #include "CFade.h"
 #include "CBossLifeBar.h"
 #include "CBossGimmick.h"
+#include "CBGM.h"
 
 CMapEndSign *CMapEndSign::mpEndSign = 0;
 CMapBossRoomSign *CMapBossRoomSign::mpBossRoomSign = 0;
@@ -143,6 +144,7 @@ bool CMapBossRoomSign::Collision(CRectangle *r) {
 					//óéâ∫ÉMÉ~ÉbÉN ê∂ê¨
 					if (CBossGimmick::mpBossGimmick == NULL)
 						CBossGimmick::mpBossGimmick = new CBossGimmick();
+					CBGM::ChangeMusic(CBGM::EMUSIC_NUM::EBOSS);
 					return true;
 				}
 			}
