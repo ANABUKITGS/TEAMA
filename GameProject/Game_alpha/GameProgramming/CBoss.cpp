@@ -66,7 +66,7 @@ BossBehP関数から繋がる新たな行動の追加や変更はここで
 */
 void CBoss::Boss_A_BehP(){
 	//待機状態からランダムで行動をとる(移動、ジャンプ、攻撃のどれか)
-	mBossIBehavior = GetRand(BehP::ESIZE_7);
+	mBossIBehavior = ETELEPO_4;//GetRand(BehP::ESIZE_7);
 
 	//行動パターン処理
 	switch (mAttackBehavior){
@@ -442,10 +442,19 @@ void CBoss::Update(){
 		mAttackBehavior = EIDOL;
 		mVelocityX = mVelocityY = 0.0f;
 	}
+	//ボスの壁貫通バグ防止用処理
 	if (mPosition.y < -100){
 		mPosition.y = mBossDefaultPos.y;
-		mPosition.x = CMapScroll::mpScroll->mPosition.x;
+		if (CPlayerT::mpPlayer->mDirection == false){
+			mDirection = true;
+			mPosition.x = CPlayerT::mpPlayer->mPosition.x - BOSSTELEPO;
+		}
+		else{
+			mDirection = false;
+			mPosition.x = CPlayerT::mpPlayer->mPosition.x + BOSSTELEPO;
+		}
 	}
+	//処理終了
 }
 //-----------------------------------------------------Update処理終了-----------------------------------------------------------------------
 
@@ -549,6 +558,7 @@ bool CBoss::Collision(CRectangle*p){
 						//mAttackBehavior = EIDOL;
 						if (mIce)
 							mVelocityX = 0.0f;
+						
 					}
 				}
 				else if (aj.x < 0) {

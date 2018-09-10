@@ -136,9 +136,9 @@ public:
 	//Õ“Ëˆ—
 	bool Collision(CRectangle*);
 
-protected://‹^—“I‚Éprivate‚ÉŒ©‚¹‚Ä‚¢‚é(‘½•ª‚â‚è•û‚ªˆá‚¤‚Æv‚¤)
+protected:
 	void Boss_A_BehP();
-	friend class CBoss;
+	friend class CPlayerT;
 };
 
 #endif
