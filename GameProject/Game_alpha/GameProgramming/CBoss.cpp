@@ -211,6 +211,7 @@ void CBoss::Boss_A_BehP(){
 				}
 				//ë“ã@èÛë‘Ç…Ç∑ÇÈ
 				if (mpBWeapon == 0){
+					mBossAnimeFream = 0;
 					mAttackBehavior = EIDOL;
 				}
 			}
