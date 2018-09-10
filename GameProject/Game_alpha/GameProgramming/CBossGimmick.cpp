@@ -2,17 +2,32 @@
 #include <iostream>
 
 CBossGimmick *CBossGimmick::mpBossGimmick = NULL;
+CBossGimmickSign *CBossGimmickSign::mpBossGimmickSign = NULL;
 
 void CBossGimmick::Update(){
 	mPosition = CPlayerT::mpPlayer->mPosition;
-	if (!mWait && GetRandom(BOX_PROBABILITY) && CBoss::mpBoss->mBossLife > 0){
-		new CMapBox(CVector2(CPlayerT::mpPlayer->mPosition.x, 720.0f), true);
+	if (!mGimmickFlg && !mWait && GetRandom(BOX_PROBABILITY) && CBoss::mpBoss->mBossLife > 0)
 		mGimmickFlg = true;
-		mWait = 1;
+
+
+	if (mGimmickFlg){
+		if (CBossGimmickSign::mpBossGimmickSign == NULL){
+			mFallingPos = CVector2(CPlayerT::mpPlayer->mPosition.x, 640.0f);
+			CBossGimmickSign::mpBossGimmickSign = new CBossGimmickSign(mFallingPos);
+		}
+		if (mLag >= LAG_TIME){
+			new CMapBox(mFallingPos, true);
+			mWait = 1;
+			mLag = 0;
+			mGimmickFlg = false;
+			return;
+		}
+		mLag++;
 		return;
 	}
 	if (mWait < WAIT_TIME){
 		mWait++;
+		mLag = 0;
 		mGimmickFlg = false;
 	}
 	else
@@ -50,4 +65,25 @@ bool CBossGimmick::GetRandom(int probability){
 	}
 	else
 		return false;
+}
+
+void CBossGimmickSign::Update(){
+	if (CBossGimmick::mpBossGimmick != NULL){
+		if (mAnime >= LAG_TIME){
+			mEnabled = false;
+			return;
+		}
+
+		if (mAnime % 8 >= 0 && mAnime % 8 < 4)
+			mAlpha = 1.0f;
+		else
+			mAlpha = 0.0f;
+		mAnime++;
+	}
+	else
+		mEnabled = false;
+}
+
+void CBossGimmickSign::Render(){
+	mTexExclamation.DrawImage(EXCLAMATION_UV, mAlpha);
 }
