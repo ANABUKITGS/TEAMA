@@ -4,6 +4,7 @@
 #include "CPlayerT.h"
 #include "CTime.h"
 #include "CGame2.h"
+#include "CSE.h"
 #include <stdio.h>
 #include <string.h>
 #include <Windows.h>
@@ -66,6 +67,7 @@ void CScore::Update(){
 	mTexResultTitle.DrawImage(-255, 255, 158, 300, 0, 510, 143, 0, 1.0f);
 	if (mScore[mScoreNum] <= mCount[mScoreNum])
 		mScoreNum++;
+	if (mScore[4] > mCount[4])
 	mCount[mScoreNum]=CountUp(mScore[mScoreNum], mCount[mScoreNum]);
 	swprintf(bufw, L"•ó      %3d ~%4d  = %4d\n\n•Ð      %3d ~%4d  = %4d\n\n–½      %3d ~%4d  = %4d\n\nƒ^ƒCƒ}[   %03d ~ %3d  = %4d\n\n\n\nƒXƒRƒA                 %4d", CPlayerT::mpPlayer->mJewel, mJewelScore, mCount[0], CPlayerT::mpPlayer->mMiniJewel, mMiniJewelScore, mCount[1], CPlayerT::mpPlayer->mLife, mLifeScore, mCount[2], CGame2::mTime, -mTimerScore, -mCount[3], mCount[4]);
 	CText::DrawStringW(bufw, -350, 100, 30, 1.0f, 0);
@@ -83,10 +85,15 @@ void CScore::Update(){
 int CScore::CountUp(int max,int count){
 	if (max>0){
 		if (max > count){
-			if (max - count > 10)
+			if (max - count > 10){
 				count += 10;
-			else
+				CSE::mSoundScore.Play();
+			}
+
+			else{
 				count++;
+				CSE::mSoundScore.Play();
+			}
 			return count;
 		}
 	}

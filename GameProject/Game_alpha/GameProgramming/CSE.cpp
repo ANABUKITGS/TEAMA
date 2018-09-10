@@ -5,6 +5,8 @@ CSound CSE::mSoundJewelry;
 CSound CSE::mSoundChikuwa;
 CSound CSE::mSoundJump;
 CSound CSE::mSoundDamage;
+CSound CSE::mSoundSelect;
+CSound CSE::mSoundScore;
 
 void CSE::Init(){
 	mSoundText.Load(".\\Data\\Sound\\SE\\Text.wav");
@@ -12,6 +14,8 @@ void CSE::Init(){
 	mSoundChikuwa.Load(".\\Data\\Sound\\SE\\Chikuwa.wav");
 	mSoundJump.Load(".\\Data\\Sound\\SE\\Jump.wav");
 	mSoundDamage.Load(".\\Data\\Sound\\SE\\Damage.wav");
+	mSoundScore.Load(".\\Data\\Sound\\SE\\Score.wav");
+	mSoundSelect.Load(".\\Data\\Sound\\SE\\Select.wav");
 }
 
 void CSE::AllStop(){
@@ -20,4 +24,6 @@ void CSE::AllStop(){
 	mSoundChikuwa.Stop();
 	mSoundJump.Stop();
 	mSoundDamage.Stop();
+	mSoundScore.Stop();
+	mSoundSelect.Stop();
 }

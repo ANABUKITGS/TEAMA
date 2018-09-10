@@ -10,6 +10,8 @@ public:
 	static CSound mSoundChikuwa;
 	static CSound mSoundJump;
 	static CSound mSoundDamage;
+	static CSound mSoundScore;
+	static CSound mSoundSelect;
 
 	static void Init();
 	static void AllStop();

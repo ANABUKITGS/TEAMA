@@ -3,6 +3,7 @@
 #include "CGame2.h"
 #include "CTime.h"
 #include "CBGM.h"
+#include "CSE.h"
 #include "CFade.h"
 
 extern CEditer mEditer;
@@ -12,7 +13,7 @@ extern CCharcter player;
 extern CTitle mTitle;
 extern CScore mScore;
 
-#define TITLE_TEXT_POS(i) (mTitleNum[i].mPositionX+32)-mTitleNum[i].mSize, (mTitleNum[i].mPositionY+32)-mTitleNum[i].mSize
+#define TITLE_TEXT_POS(i) mTitleNum[i].mPositionX-(((float)(mTitleNum[i].mSize)-32)/2)*(float)(mTitleNum[i].mTextSize), mTitleNum[i].mPositionY-(mTitleNum[i].mSize-32)/2
 
 void CTitle::Init(){
 	cursor_num = CSceneChange::EGAME;
@@ -22,6 +23,10 @@ void CTitle::Init(){
 	mTitleNum[1].mPositionX = -80;
 	mTitleNum[2].mPositionX = -144;
 	mTitleNum[3].mPositionX = -144;
+	mTitleNum[0].mTextSize = 7;
+	mTitleNum[1].mTextSize = 5;
+	mTitleNum[2].mTextSize = 9;
+	mTitleNum[3].mTextSize = 9;
 	for (int i = 0; i < 4; i++){
 		mTitleNum[i].mPositionY = 0 - (i * 64);
 		mTitleNum[i].mSize =32;
@@ -34,11 +39,13 @@ void CTitle::Update(){
 	mTexTitle.DrawImage(-640, 640, -360, 360, 0, 1280, 720, 0, 1.0f);
 	if ((CGamePad::OncePush(PAD_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f) || CKey::OncePush(VK_DOWN) || CKey::OncePush('S')) && cursor_num < CSceneChange::ESIZE - 1){
 		cursor_num++;
+		CSE::mSoundSelect.Play();
 	}
 
 
 	if ((CGamePad::OncePush(PAD_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f) || CKey::OncePush(VK_UP) || CKey::OncePush('W')) && cursor_num > CSceneChange::EGAME){
 		cursor_num--;
+		CSE::mSoundSelect.Play();
 	}
 	
 	if (CGamePad::Once(PAD_2) || CKey::Once(VK_RETURN) || CKey::Once(VK_SPACE)){

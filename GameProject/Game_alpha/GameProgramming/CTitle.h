@@ -16,7 +16,7 @@ public:
 		float mColor[3];
 		bool mAnimation;
 		int mAnimationTime;
-		
+		int mTextSize;
 	};
 	STitleNum mTitleNum[4];
 	
