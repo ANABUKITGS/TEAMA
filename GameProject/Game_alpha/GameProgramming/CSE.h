@@ -8,6 +8,8 @@ public:
 
 	static CSound mSoundJewelry;
 	static CSound mSoundChikuwa;
+	static CSound mSoundJump;
+	static CSound mSoundDamage;
 
 	static void Init();
 	static void AllStop();

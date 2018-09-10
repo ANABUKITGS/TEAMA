@@ -3,6 +3,7 @@
 #include "CScene.h"
 #include "CFade.h"
 #include "CEfect.h"
+#include "CSE.h"
 #include "CUi.h"
 #include "CMapScroll.h"
 #include "CMapSign.h"
@@ -113,6 +114,7 @@ void CPlayerT::Update(){
 				mAerialAttack = true;
 				//mAir = true;
 				if (!mJump)
+					CSE::mSoundJump.Play();
 					mVelocityY = PLAYER_VELOCITY_Y;
 
 				if (!mAir)
@@ -344,6 +346,7 @@ bool CPlayerT::Collision(CRectangle *p) {
 				case ECELLNUM::EBWEAPON:
 					if (!mUnrivaled){
 						mUnrivaled = true;
+						CSE::mSoundDamage.Play();
 						player_ani = EPLAYERANI::EDAMAGE;
 						player_ani_count = 0;
 						player_ani_count_frame = 0;
@@ -403,6 +406,7 @@ bool CPlayerT::Collision(CRectangle *p) {
 						p->mBreak &&
 						p->mAlpha >= 1.0f){
 						mUnrivaled = true;
+						CSE::mSoundDamage.Play();
 						player_ani = EPLAYERANI::EDAMAGE;
 						player_ani_count = 0;
 						player_ani_count_frame = 0;
