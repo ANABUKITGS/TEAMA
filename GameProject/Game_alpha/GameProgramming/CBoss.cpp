@@ -67,7 +67,7 @@ void CBoss::Boss_A_BehP(){
 	//待機状態からランダムで行動をとる(移動、ジャンプ、攻撃のどれか)
 #if _DEBUG
 	//デバッグの時に各行動を確認したい時はこっち
-	mBossIBehavior = ETELEPO_4;
+	mBossIBehavior = EDASH_0;
 #else
 	//リリース用
 	mBossIBehavior = GetRand(BehP::ESIZE_7);
@@ -210,8 +210,7 @@ void CBoss::Boss_A_BehP(){
 		}
 		//敵のヨーヨーが発射された時の処理を行う
 		else {
-			CVector2 mWeaponVec;
-			mWeaponVec = mpBWeapon->mPosition - mPosition;
+			mWeaponVec = mPosition- mpBWeapon->mPosition;
 			//ボスのヨーヨーの寿命が来たら
 			if (mpBWeapon->mLife < 0){
 				if (abs(mWeaponVec.x)>mPosition.x){
@@ -230,9 +229,16 @@ void CBoss::Boss_A_BehP(){
 	case ETELEPO://瞬間移動
 		if (Invincible)
 			mAttackBehavior = EIDOL;
-		else if (mAlpha >= 1.0f && !mTelepoEnabled)
+		else if (mAlpha >= 1.0f){
+			if (!mTelepoEnabled)
+				//消える効果音を再生
+				CSE::mSoundBossTelepo[0].Play();
+		}
+		else{
+			if (mTelepoEnabled)
 			//消える効果音を再生
-			CSE::mSoundBossTelepo.Play();
+			CSE::mSoundBossTelepo[1].Play();
+		}
 		//プレイヤーの後ろに出現した時
 		if (mTelepoEnabled){
 			//ボスの壁貫通バグ防止用処理
@@ -255,11 +261,11 @@ void CBoss::Boss_A_BehP(){
 				}
 			}
 			//処理終了
-			//消えるアニーメーションを最初に戻す
-			mBossAnimeFreamT = 4;
 			//アルファ値が一定値を超えているとき
 			if (mAlpha >= 1.0){
-				if (mBossAnimeFream == 4){
+				if (mBossAnimeFream > 4){
+					//消えるアニーメーションを最初に戻す
+					mBossAnimeFreamT = 4;
 					mBossAnimeFream = 0;
 					mAttackBehavior = EBWEAPON;
 				}
@@ -268,6 +274,7 @@ void CBoss::Boss_A_BehP(){
 			else{
 				//超えるまで加算する
 				mAlpha += 0.03;
+				mBossAnimeFreamT = 0;
 			}
 			if (mAlpha <= 0.03){
 				//プレイヤーの後ろに移動させる
@@ -291,10 +298,10 @@ void CBoss::Boss_A_BehP(){
 				if (mAlpha <= 0.0f){
 					//カウントが0になるまで減算する
 					mBossAttackItr--;
-					//消える動作にはいったら出現するアニメーションを最初にもどす
-					mBossAnimeFream = 0;
 					//カウントが0になったら
 					if (mBossAttackItr <= 0){
+						//消える動作にはいったら出現するアニメーションを最初にもどす
+						//mBossAnimeFream = 0;
 						//プレイヤーの後ろに出現させる
 						mTelepoEnabled = true;
 					}
@@ -734,17 +741,17 @@ void CBoss::Render(){
 				mTexture.DrawImage(BOSS_TEX_POS, mBossAnimeFreamT * 256, (mBossAnimeFreamT + 1) * 256, 512, 256, mAlpha);
 		}
 		else if(mTelepoEnabled){
-			//テクスチャの枚数-1よりも値が大きくなれば
-			if (mBossAnimeFream > 4)
-				//ループの先頭に戻る
-				mBossAnimeFream = 4;
-			//次のコマに行くタイミング
-			Boss_Ani_Count_Frame = 6;
+				//テクスチャの枚数-1よりも値が大きくなれば
+				if (mBossAnimeFream > 4)
+					//ループの先頭に戻る
+					mBossAnimeFream = 4;
+				//次のコマに行くタイミング
+				Boss_Ani_Count_Frame = 6;
 
-			if (!mDirection)	//左向き
-				mTexture.DrawImage(BOSS_TEX_POS, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 512, 256, mAlpha);
-			else				//右向き
-				mTexture.DrawImage(BOSS_TEX_POS, mBossAnimeFream * 256, (mBossAnimeFream + 1) * 256, 512, 256, mAlpha);
+				if (!mDirection)	//左向き
+					mTexture.DrawImage(BOSS_TEX_POS, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 512, 256, mAlpha);
+				else				//右向き
+					mTexture.DrawImage(BOSS_TEX_POS, mBossAnimeFream * 256, (mBossAnimeFream + 1) * 256, 512, 256, mAlpha);
 		}
 		break;
 
@@ -800,10 +807,10 @@ void CBoss::Render(){
 	Boss_Ani_Count++;
 	//一コマのフレーム数よりも大きくなれば
 	if (Boss_Ani_Count > Boss_Ani_Count_Frame){
-		if (mAttackBehavior == ETELEPO)
-			mBossAnimeFreamT--;
 		//次のコマに行く
 		mBossAnimeFream++;
+		if (mAttackBehavior == ETELEPO)
+			mBossAnimeFreamT--;
 		//カウントをリセットする
 		Boss_Ani_Count = 0;
 	}

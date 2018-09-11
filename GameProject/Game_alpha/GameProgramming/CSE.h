@@ -17,7 +17,7 @@ public:
 	static CSound mSoundSelect;
 	static CSound mSoundTurn;
 	static CSound mSoundContinue;
-	static CSound mSoundBossTelepo;
+	static CSound mSoundBossTelepo[2];
 	static void Init();
 	static void AllStop();
 };

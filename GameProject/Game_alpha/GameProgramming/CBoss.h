@@ -32,6 +32,7 @@ private:
 	CTexture mTexture;					//ボスに貼り付けるテクスチャ
 	CVector2 mAttack_Search;			//ボスとプレイヤーとの距離を出す
 	CVector2 mBossDefaultPos;			//ボスの初期位置
+	CVector2 mWeaponVec;
 	CWeapon*mpBWeapon;					//ボスの武器使用クラスをインスタンスにする
 	float mBossBehavior;				//敵の各行動に入る判別距離
 	int mBossTelepo;					//瞬間移動した場所をランダムにする
@@ -69,6 +70,7 @@ private:
 		:mpBWeapon(0)
 	{
 		srand((unsigned)clock());	//乱数を初期化(一回のみ)
+		mWeaponVec = CVector2(0, 0);
 		mVelocityY = 0;
 		mVelocityX = 0;
 		mBossInvincibleTime = BOSSINVINCIBLE;
