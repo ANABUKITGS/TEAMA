@@ -72,12 +72,18 @@ void CScore::Update(){
 	swprintf(bufw, L"•ó      %3d ~%4d  = %4d\n\n•Ð      %3d ~%4d  = %4d\n\n–½      %3d ~%4d  = %4d\n\nƒ^ƒCƒ}[   %03d ~ %3d  = %4d\n\n\n\nƒXƒRƒA                 %4d", CPlayerT::mpPlayer->mJewel, mJewelScore, mCount[0], CPlayerT::mpPlayer->mMiniJewel, mMiniJewelScore, mCount[1], CPlayerT::mpPlayer->mLife, mLifeScore, mCount[2], CGame2::mTime, -mTimerScore, -mCount[3], mCount[4]);
 	CText::DrawStringW(bufw, -350, 100, 30, 1.0f, 0);
 	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2)){
-		CSceneResult::mResultTag = CSceneResult::ENAME;
-		mSort = true;
-		for (int i = 0; i < 3; i++){
-			CName::name[i] = 'A';
+		if (mScore[0] == mCount[0] && mScore[1] == mCount[1] && mScore[2] == mCount[2] && mScore[3] == mCount[3] &&mScore[4] == mCount[4]){
+			CSceneResult::mResultTag = CSceneResult::ENAME;
+			mSort = true;
+			for (int i = 0; i < 3; i++){
+				CName::name[i] = 'A';
+			}
+			CName::charnum = 0;
 		}
-		CName::charnum = 0;
+		else{
+			for (int i = 0; i < 5; i++)
+				mCount[i] = mScore[i];
+		}
 	}
 	
 }
