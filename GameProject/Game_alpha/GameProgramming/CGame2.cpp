@@ -176,7 +176,7 @@ void CGame2::Render() {
 		CSE::AllStop();
 		MessageBox(NULL, "マップにプレイヤーが設置されていません。", "エラー", 0x00040010L);
 		CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ETITLE;
-		CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETITLE);
+		CBGM::mSoundTitle.Repeat();
 		return;
 	}
 //	CCamera2D::Begin(0.0, WINDOW_SIZE_W, 0.0, WINDOW_SIZE_H);
