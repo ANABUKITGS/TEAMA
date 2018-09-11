@@ -2,12 +2,14 @@
 #define CFADE_H
 #include "CRectangle.h"
 
-#define FADE_UV -640, 640, -360, 360, 0, 1280, 720 , 0
+#define FADE_UV	-640, 640, -360, 360, 0, 1280, 720 , 0
+#define LOGO_UV	-384, 384, -40, 40, 0, 768, 80, 0
 
 class CFade{
 private:
 	static CRectangle mRectFade;
 	static CTexture mTexFade;
+	static CTexture mTexLogo;
 	static float mAlpha;
 	static int change_scene;
 

@@ -46,6 +46,7 @@
     <ClCompile Include="CBossLifeBar.cpp" />
     <ClCompile Include="CUi.cpp" />
     <ClCompile Include="CBossGimmick.cpp" />
+    <ClCompile Include="CCredit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCamera2D.h" />
@@ -94,6 +95,7 @@
     <ClInclude Include="CBossLifeBar.h" />
     <ClInclude Include="CUi.h" />
     <ClInclude Include="CBossGimmick.h" />
+    <ClInclude Include="CCredit.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />

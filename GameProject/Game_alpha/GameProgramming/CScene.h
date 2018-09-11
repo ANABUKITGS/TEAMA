@@ -34,6 +34,7 @@ public:
 		ETITLE = 1,
 		EGAME,
 		ERANKING,
+		ECREDIT,
 		EEXIT,
 		EEDITER,
 		ESIZE,

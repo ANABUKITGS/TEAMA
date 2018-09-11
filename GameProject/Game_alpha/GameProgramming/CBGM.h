@@ -12,6 +12,7 @@ public:
 	static CSound mSoundResult;		//リザルト用
 	static CSound mSoundRanking;	//ランキング用
 	static CSound mSoundEditer;		//エディター用
+	static CSound mSoundCredit;		//クレジット用
 
 	void Init();
 	void Update();

@@ -90,6 +90,7 @@
     <ClCompile Include="CCamera2D.cpp" />
     <ClCompile Include="CCharcter.cpp" />
     <ClCompile Include="CCollision.cpp" />
+    <ClCompile Include="CCredit.cpp" />
     <ClCompile Include="CEditer.cpp" />
     <ClCompile Include="CEfect.cpp" />
     <ClCompile Include="CEnemy.cpp" />
@@ -137,6 +138,7 @@
     <ClInclude Include="CCamera2D.h" />
     <ClInclude Include="CCharcter.h" />
     <ClInclude Include="CCollision.h" />
+    <ClInclude Include="CCredit.h" />
     <ClInclude Include="CEfect.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CFade.h" />

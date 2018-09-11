@@ -2,6 +2,7 @@
 #include "CScore.h"
 #include "CBGM.h"
 #include "CGame2.h"
+#include "CCredit.h"
 
 CCharcter player;
 CEditer mEditer;
@@ -13,6 +14,7 @@ CScore mScore;
 CRanking mRanking;
 CName mName;
 CBGM mBGM;
+CCredit mCredit;
 
 int CSceneChange::changenum = ETITLE;
 
@@ -26,6 +28,7 @@ void CSceneChange::Init(){
 	mScore.Init();
 	mName.Init();
 	mBGM.Init();
+	mCredit.Init();
 }
 
 void CSceneChange::Update(){
@@ -49,7 +52,6 @@ void CSceneChange::Update(){
 		break;
 
 	case ECSCENECHANGE_NUM::ERESULT:
-		
 		mResult.Update();
 		break;
 
@@ -62,6 +64,11 @@ void CSceneChange::Update(){
 		CTaskManager::Get()->Destroy();
 		_sleep(500);
 		exit(0);
+		break;
+
+	case ECSCENECHANGE_NUM::ECREDIT:
+		mCredit.Update();
+		mCredit.Render();
 		break;
 
 	default:

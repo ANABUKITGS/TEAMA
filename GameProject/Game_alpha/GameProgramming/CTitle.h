@@ -18,7 +18,7 @@ public:
 		int mAnimationTime;
 		int mTextSize;
 	};
-	STitleNum mTitleNum[4];
+	STitleNum mTitleNum[5];
 	
 	CTexture mTexTitle;
 	void Init();

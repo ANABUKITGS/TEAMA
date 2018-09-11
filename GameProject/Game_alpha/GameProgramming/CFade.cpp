@@ -14,11 +14,13 @@ int CFade::change_scene = CSceneChange::ECSCENECHANGE_NUM::ETITLE;
 CFade::EGAMEMAP_NUM CFade::mMapfile = CFade::EGAMEMAP_NUM::ETUTORIAL;
 CFade::EFADE_NUM CFade::mFade = CFade::EFADE_NUM::EFALSE;		//フェード効果
 CTexture CFade::mTexFade;
+CTexture CFade::mTexLogo;
 CRectangle CFade::mRectFade;
 extern CTitle mTitle;
 
 void CFade::Init(){
 	mAlpha = 0.0f;
+	mTexLogo.Load(".\\Data\\Images\\Loading\\Logo.tga");
 	change_scene = CSceneChange::ECSCENECHANGE_NUM::ETITLE;
 	mMapfile = EGAMEMAP_NUM::ETUTORIAL;
 	mFade = EFADE_NUM::EFALSE;
@@ -93,6 +95,11 @@ void CFade::RenderFade(){
 				CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::EEXIT;
 				break;
 
+			case CSceneChange::ECSCENECHANGE_NUM::ECREDIT:
+				CBGM::mSoundCredit.Repeat();
+				CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ECREDIT;
+				break;
+
 			case CSceneChange::ECSCENECHANGE_NUM::ERESULT:
 				CBGM::mSoundResult.Repeat();
 				CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ERESULT;
@@ -151,6 +158,8 @@ void CFade::RenderFade(){
 	}
 	mTexFade.DrawImageSetColor(FADE_UV, BLACK, mAlpha);
 	//mRectFade.Render(BLACK, mAlpha);
-	if (mFade != EFADE_NUM::ETRUE && (change_scene == CSceneChange::ECSCENECHANGE_NUM::EGAME || change_scene == CSceneChange::ECSCENECHANGE_NUM::EEDITER))
+	if (mFade != EFADE_NUM::ETRUE && (change_scene == CSceneChange::ECSCENECHANGE_NUM::EGAME || change_scene == CSceneChange::ECSCENECHANGE_NUM::EEDITER)){
 		CText::DrawStringW(L"Now Loading...", 192, -360, 32, mAlpha, 0);
+		mTexLogo.DrawImage(LOGO_UV, mAlpha);
+	}
 }

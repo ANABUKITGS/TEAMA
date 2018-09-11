@@ -244,6 +244,62 @@ void CText::DrawTextW(wchar_t a, float left, float right, float bottom, float to
 		CText::uv[2] = CSIZE * 11;
 		CText::uv[3] = CSIZE * 10;
 	}
+	else if (a == L'終'){					//U+7D42
+		CText::uv[0] = 1 * CSIZE;
+		CText::uv[1] = CText::uv[0] + CSIZE;
+		CText::uv[2] = CSIZE * 11;
+		CText::uv[3] = CSIZE * 10;
+	}
+	else if (a == L'了'){					//U+4E86
+		CText::uv[0] = 2 * CSIZE;
+		CText::uv[1] = CText::uv[0] + CSIZE;
+		CText::uv[2] = CSIZE * 11;
+		CText::uv[3] = CSIZE * 10;
+	}
+	else if (a == L'素'){					//U+7D20
+		CText::uv[0] = 3 * CSIZE;
+		CText::uv[1] = CText::uv[0] + CSIZE;
+		CText::uv[2] = CSIZE * 11;
+		CText::uv[3] = CSIZE * 10;
+	}
+	else if (a == L'材'){					//U+6750
+		CText::uv[0] = 4 * CSIZE;
+		CText::uv[1] = CText::uv[0] + CSIZE;
+		CText::uv[2] = CSIZE * 11;
+		CText::uv[3] = CSIZE * 10;
+	}
+	else if (a == L'借'){					//U+501F
+		CText::uv[0] = 5 * CSIZE;
+		CText::uv[1] = CText::uv[0] + CSIZE;
+		CText::uv[2] = CSIZE * 11;
+		CText::uv[3] = CSIZE * 10;
+	}
+	else if (a == L'用'){					//U+7528
+		CText::uv[0] = 6 * CSIZE;
+		CText::uv[1] = CText::uv[0] + CSIZE;
+		CText::uv[2] = CSIZE * 11;
+		CText::uv[3] = CSIZE * 10;
+	}
+	/*------ 魔王魂 ------*/
+	else if (a == L'魔'){					//U+9B54
+		CText::uv[0] = 7 * CSIZE;
+		CText::uv[1] = CText::uv[0] + CSIZE;
+		CText::uv[2] = CSIZE * 11;
+		CText::uv[3] = CSIZE * 10;
+	}
+	else if (a == L'王'){					//U+738B
+		CText::uv[0] = 8 * CSIZE;
+		CText::uv[1] = CText::uv[0] + CSIZE;
+		CText::uv[2] = CSIZE * 11;
+		CText::uv[3] = CSIZE * 10;
+	}
+	else if (a == L'魂'){					//U+9B42
+		CText::uv[0] = 9 * CSIZE;
+		CText::uv[1] = CText::uv[0] + CSIZE;
+		CText::uv[2] = CSIZE * 11;
+		CText::uv[3] = CSIZE * 10;
+	}
+
 	else if (a == L'宝'){					//U+5B9D	アイテム フォント
 		CText::uv[0] = 0 * CSIZE_ITEM;
 		CText::uv[1] = CText::uv[0] + CSIZE_ITEM;
@@ -271,190 +327,190 @@ void CText::DrawTextW(wchar_t a, float left, float right, float bottom, float to
 
 	/*------ 人名など ------*/
 	else if (a == L'前'){					//U+524D
-		CText::uv[0] = 1 * CSIZE;
+		CText::uv[0] = 0 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'田'){					//U+7530
-		CText::uv[0] = 2 * CSIZE;
+		CText::uv[0] = 1 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'拓'){					//U+62D3
-		CText::uv[0] = 3 * CSIZE;
+		CText::uv[0] = 2 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'磨'){					//U+78E8
-		CText::uv[0] = 4 * CSIZE;
+		CText::uv[0] = 3 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'長'){					//U+9577
-		CText::uv[0] = 5 * CSIZE;
+		CText::uv[0] = 4 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'尾'){					//U+5C3E
-		CText::uv[0] = 6 * CSIZE;
+		CText::uv[0] = 5 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'蓮'){					//U+84EE
-		CText::uv[0] = 7 * CSIZE;
+		CText::uv[0] = 6 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'小'){					//U+5C0F
-		CText::uv[0] = 8 * CSIZE;
+		CText::uv[0] = 7 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'見'){					//U+898B
-		CText::uv[0] = 9 * CSIZE;
+		CText::uv[0] = 8 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'山'){					//U+5C71
-		CText::uv[0] = 10 * CSIZE;
+		CText::uv[0] = 9 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'嶺'){					//U+5DBA
-		CText::uv[0] = 11 * CSIZE;
+		CText::uv[0] = 10 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'治'){					//U+6CBB
-		CText::uv[0] = 12 * CSIZE;
+		CText::uv[0] = 11 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'南'){					//U+5357
-		CText::uv[0] = 13 * CSIZE;
+		CText::uv[0] = 12 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'木'){					//U+6728
-		CText::uv[0] = 14 * CSIZE;
+		CText::uv[0] = 13 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'彩'){					//U+5F69
-		CText::uv[0] = 15 * CSIZE;
+		CText::uv[0] = 14 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'希'){					//U+5E0C
-		CText::uv[0] = 16 * CSIZE;
+		CText::uv[0] = 15 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'石'){					//U+77F3
-		CText::uv[0] = 17 * CSIZE;
+		CText::uv[0] = 16 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'萌'){					//U+840C
-		CText::uv[0] = 18 * CSIZE;
+		CText::uv[0] = 17 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'夏'){					//U+590F
-		CText::uv[0] = 19 * CSIZE;
+		CText::uv[0] = 18 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'制'){					//U+5236
-		CText::uv[0] = 20 * CSIZE;
+		CText::uv[0] = 19 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'作'){					//U+4F5C
-		CText::uv[0] = 21 * CSIZE;
+		CText::uv[0] = 20 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'高' || a == 0x9AD9){		//U+9AD8	表示は、U+9AD9
-		CText::uv[0] = 22 * CSIZE;
+		CText::uv[0] = 21 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'橋'){					//U+6A4B
-		CText::uv[0] = 23 * CSIZE;
+		CText::uv[0] = 22 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'忍'){					//U+5FCD
-		CText::uv[0] = 24 * CSIZE;
+		CText::uv[0] = 23 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'平'){					//U+5E73
-		CText::uv[0] = 25 * CSIZE;
+		CText::uv[0] = 24 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'大'){					//U+5927
-		CText::uv[0] = 26 * CSIZE;
+		CText::uv[0] = 25 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'井'){					//U+4E95
-		CText::uv[0] = 27 * CSIZE;
+		CText::uv[0] = 26 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'上'){					//U+4E0A
-		CText::uv[0] = 28 * CSIZE;
+		CText::uv[0] = 27 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 	else if (a == L'美'){					//U+7F8E
+		CText::uv[0] = 28 * CSIZE;
+		CText::uv[1] = CText::uv[0] + CSIZE;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
+	}
+	else if (a == L'教'){					//U+6559
 		CText::uv[0] = 29 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
-	else if (a == L'先'){					//U+5148
+	else if (a == L'員'){					//U+54E1
 		CText::uv[0] = 30 * CSIZE;
 		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
-	}
-	else if (a == L'生'){					//U+751F
-		CText::uv[0] = 31 * CSIZE;
-		CText::uv[1] = CText::uv[0] + CSIZE;
-		CText::uv[2] = CSIZE * 11;
-		CText::uv[3] = CSIZE * 10;
+		CText::uv[2] = CSIZE * 12;
+		CText::uv[3] = CSIZE * 11;
 	}
 
 	else if (isupper(a)){					//U+0041 ~ U+005A

@@ -33,7 +33,7 @@ extern CRanking mRanking;
 
 void CSceneResult::Init(){
 	mTexResult.Load(".\\Data\\Images\\Result\\result.tga");
-	mTexResultback.Load(".\\Data\\Images\\Result\\titleback.tga");
+	mTexResultback.Load(".\\Data\\Images\\Result\\Back.tga");
 	mResultTag = ESCORE;
 }
 void CSceneResult::Update(){
