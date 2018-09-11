@@ -63,7 +63,7 @@ void CCharcter::Forward(){
 void CCharcter::Scroll(){
 	if (mGame.mapsctoll_flag){
 		//ƒXƒNƒ[ƒ‹
-		mPosition.x -= SCROLL_SPEED;
+		mPosition.x -= 2;
 	}
 	//‰æ–Ê§ŒÀ
 	if (mPosition.x >= 608.0f)

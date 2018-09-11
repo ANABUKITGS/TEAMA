@@ -49,6 +49,7 @@ void CTitle::Update(){
 	}
 	
 	if (CGamePad::Once(PAD_2) || CKey::Once(VK_RETURN) || CKey::Once(VK_SPACE)){
+		CSE::mSoundContinue.Play();
 		switch (cursor_num){
 		case CSceneChange::ECSCENECHANGE_NUM::EGAME:
 			CFade::mMapfile = CFade::EGAMEMAP_NUM::ETUTORIAL;
@@ -72,8 +73,10 @@ void CTitle::Update(){
 			break;
 		}
 	}
-	if(CKey::Once(VK_ESCAPE))
+	if (CKey::Once(VK_ESCAPE)){
+		CSE::mSoundContinue.Play();
 		CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::EEXIT);
+	}
 
 #ifdef _DEBUG
 	if (CGamePad::Once(PAD_9))

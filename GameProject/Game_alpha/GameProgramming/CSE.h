@@ -16,6 +16,7 @@ public:
 	static CSound mSoundScore;
 	static CSound mSoundSelect;
 	static CSound mSoundTurn;
+	static CSound mSoundContinue;
 
 	static void Init();
 	static void AllStop();

@@ -71,8 +71,9 @@ void CScore::Update(){
 	mCount[mScoreNum]=CountUp(mScore[mScoreNum], mCount[mScoreNum]);
 	swprintf(bufw, L"•ó      %3d ~%4d  = %4d\n\n•Ð      %3d ~%4d  = %4d\n\n–½      %3d ~%4d  = %4d\n\nƒ^ƒCƒ}[   %03d ~ %3d  = %4d\n\n\n\nƒXƒRƒA                 %4d", CPlayerT::mpPlayer->mJewel, mJewelScore, mCount[0], CPlayerT::mpPlayer->mMiniJewel, mMiniJewelScore, mCount[1], CPlayerT::mpPlayer->mLife, mLifeScore, mCount[2], CGame2::mTime, -mTimerScore, -mCount[3], mCount[4]);
 	CText::DrawStringW(bufw, -350, 100, 30, 1.0f, 0);
-	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2)){
+	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE)){
 		if (mScore[0] == mCount[0] && mScore[1] == mCount[1] && mScore[2] == mCount[2] && mScore[3] == mCount[3] &&mScore[4] == mCount[4]){
+			CSE::mSoundContinue.Play();
 			CSceneResult::mResultTag = CSceneResult::ENAME;
 			mSort = true;
 			for (int i = 0; i < 3; i++){
@@ -125,7 +126,7 @@ void CName::Init(){
 }
 void CName::Update(){
 	mTexName.DrawImage(-254, 254, 208, 300, 0, 508, 92, 0, 1.0f);
-	if (CKey::Once(VK_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f)){
+	if (CKey::OncePush('S') || CKey::OncePush(VK_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f) || CGamePad::OncePush(PAD_LEFT)){
 		if (name[charnum] == 'Z')
 			name[charnum] = '0';
 		else if (name[charnum] == '9')
@@ -135,7 +136,7 @@ void CName::Update(){
 		else
 			name[charnum]++;
 	}
-	if (CKey::Once(VK_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f)){
+	if (CKey::OncePush('W') || CKey::OncePush(VK_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f) || CGamePad::OncePush(PAD_RIGHT)){
 		if (name[charnum] == 'A')
 			name[charnum] = '.';
 		else if (name[charnum] == '.')
@@ -145,14 +146,20 @@ void CName::Update(){
 		else
 			name[charnum]--;
 	}
-	if (CKey::Once(VK_LEFT) || CGamePad::Once(PAD_LSTICKX, -0.5f))
-	if (charnum > 0)
-		charnum--;
-	if (CKey::Once(VK_RIGHT) || CGamePad::Once(PAD_LSTICKX, 0.5f))
-	if (charnum < 2)
-		charnum++;
-	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2))
+	if (CKey::Once('A') || CKey::Once(VK_LEFT) || CGamePad::Once(PAD_LSTICKX, -0.5f) || CGamePad::Once(PAD_LEFT)){
+		CSE::mSoundSelect.Play();
+		if (charnum > 0)
+			charnum--;
+	}
+	if (CKey::Once('D') || CKey::Once(VK_RIGHT) || CGamePad::Once(PAD_LSTICKX, 0.5f) || CGamePad::Once(PAD_RIGHT)){
+		CSE::mSoundSelect.Play();
+		if (charnum < 2)
+			charnum++;
+	}
+	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE)){
+		CSE::mSoundContinue.Play();
 		CSceneResult::mResultTag = CSceneResult::ERANKING;
+	}
 	glColor4f(1.0f, 1.0f, 0.0f, 1.0f);  //•`‰æF@‰©F
 	sprintf(buf, "%s", name);
 	CText::DrawString(buf, -100, 0, 50, 1.0f, 0);
@@ -193,8 +200,10 @@ void CRanking::Update(){
 		sprintf(buf2, "%3s", mRanking[i].n);
 		CText::DrawString(buf2, -60, 100 + i * -100, 40, 1.0f, 0);
 	}
-	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2))
+	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_ESCAPE) || CGamePad::Once(PAD_3)){
+		CSE::mSoundContinue.Play();
 		CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
+	}
 }
 void CRanking::Sort(int score, char *name){
 	if (mRanking[2].s <= score){

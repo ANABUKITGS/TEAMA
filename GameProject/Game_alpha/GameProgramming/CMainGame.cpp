@@ -48,11 +48,11 @@ void CGame::Update(){
 
 void CGame::Scroll(){
 	if (mapsctoll_flag){
-		mapscrollnum += SCROLL_SPEED;
+		mapscrollnum += 2;
 		for (int i = 0; i < MAP_SIZEY; i++){
 			for (int j = 0; j < MAP_SIZEX; j++){
-				gamemap_rect[i][j].mLeft -= SCROLL_SPEED;
-				gamemap_rect[i][j].mRight -= SCROLL_SPEED;
+				gamemap_rect[i][j].mLeft -= 2;
+				gamemap_rect[i][j].mRight -= 2;
 			}
 		}
 	}

@@ -8,6 +8,7 @@ CSound CSE::mSoundDamage;
 CSound CSE::mSoundSelect;
 CSound CSE::mSoundScore;
 CSound CSE::mSoundTurn;
+CSound CSE::mSoundContinue;
 
 void CSE::Init(){
 	mSoundText.Load(".\\Data\\Sound\\SE\\Text.wav");
@@ -18,6 +19,7 @@ void CSE::Init(){
 	mSoundScore.Load(".\\Data\\Sound\\SE\\Score.wav");
 	mSoundSelect.Load(".\\Data\\Sound\\SE\\Select.wav");
 	mSoundTurn.Load(".\\Data\\Sound\\SE\\Turn.wav");
+	mSoundContinue.Load(".\\Data\\Sound\\SE\\Continue.wav");
 }
 
 void CSE::AllStop(){
@@ -29,4 +31,5 @@ void CSE::AllStop(){
 	mSoundScore.Stop();
 	mSoundSelect.Stop();
 	mSoundTurn.Stop();
+	mSoundContinue.Stop();
 }

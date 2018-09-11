@@ -5,11 +5,9 @@
 #include "CMap.h"
 #include "CGame2.h"
 
-#define SCROLL_SPEED			0.9f
-#define ADD_SCROLL_SPEED		SCROLL_SPEED * 5
+#define SCROLL_SPEED			1.5f
+#define ADD_SCROLL_SPEED		SCROLL_SPEED * 2
 #define BOSSROOM_SCROLL_SPEED	0.75f * 10
-
-#define DISPLAY_LEFT mPosition
 
 class CMapScroll : public CRectangle{
 public:
