@@ -33,11 +33,6 @@ void CBoss::BossBehP(BehP BP){
 			CEnemy::mpEnemy = new CEnemy(mPosition, EENEMY1);
 		}
 		IdolInterval = NULL;
-		mVelocityY = BOSSGVELOCITY;
-		if (!mDirection)
-			mVelocityX = -BOSSMOVESPEED * 3;
-		else
-			mVelocityX = BOSSMOVESPEED * 3;
 		mAttackBehavior = EJUMP;
 		break;
 	case BehP::ETELEPO_4://4はプレイヤーの後ろにテレポート
@@ -67,16 +62,25 @@ BossBehP関数から繋がる新たな行動の追加や変更はここで
 void CBoss::Boss_A_BehP(){
 	//ボスとプレイヤーとのベクトルを出す
 	mAttack_Search = CPlayerT::mpPlayer->mPosition - mPosition;
+
 	//待機状態からランダムで行動をとる(移動、ジャンプ、攻撃のどれか)
+#if _DEBUG
+	//デバッグの時に各行動を確認したい時はこっち
+	mBossIBehavior = EIDOL_5;
+#else
+	//リリース用
 	mBossIBehavior = GetRand(BehP::ESIZE_7);
+
+#endif
 
 	//行動パターン処理
 	switch (mAttackBehavior){
 		//待機状態
 	case EIDOL:
-
+		//プレイヤーの位置が左側なら、左を向く
 		if (mPosition.x > CPlayerT::mpPlayer->mPosition.x)
 			mDirection = false;
+		//プレイヤーの位置が右側なら、右を向く
 		else
 			mDirection = true;
 
@@ -99,12 +103,11 @@ void CBoss::Boss_A_BehP(){
 				if (CPlayerT::mpPlayer->mPosition.x < CMapScroll::mpScroll->mPosition.x){
 					//ボスを右に向かせる
 					mDirection = true;
-					mVelocityX = BOSSMOVESPEED * 3;
 				}
 				//プレイヤーが右にいるとき
 				else{
 					//ボスを左に向かせる
-					mDirection = false;
+					//mDirection = false;
 					break;
 				}
 			}
@@ -114,17 +117,15 @@ void CBoss::Boss_A_BehP(){
 				if (CPlayerT::mpPlayer->mPosition.x > CMapScroll::mpScroll->mPosition.x){
 					//ボスを左にむかせる
 					mDirection = false;
-					mVelocityX = -BOSSMOVESPEED * 3;
 				}
 				//プレイヤーが左にいるとき
 				else{
 					//ボスを右に向かせる
-					mDirection = true;
+					//mDirection = true;
 					break;
 				}
 			}
 			mAttackBehavior = EJUMP;
-			mVelocityY = BOSSGVELOCITY;
 		}
 		break;
 		//待機状態処理終了
@@ -149,14 +150,8 @@ void CBoss::Boss_A_BehP(){
 			mVelocityX = BOSSMOVESPEED;
 
 		//乱数値が真(1)の時だけボスがジャンプをする
-		if (mBossJumprad == 1){
-			mVelocityY = BOSSGVELOCITY;
-			if (!mDirection)
-				mVelocityX = -BOSSMOVESPEED * 3;
-			else
-				mVelocityX = BOSSMOVESPEED * 3;
+		if (mBossJumprad == 1)
 			mAttackBehavior = EJUMP;//ボスの行動をジャンプにする
-		}
 		else{
 			//プレイヤーとの距離が一定範囲内に入れば、攻撃を出す
 			if (abs(mAttack_Search.x) < mBossBehavior){
@@ -173,7 +168,18 @@ void CBoss::Boss_A_BehP(){
 	case EJUMP:
 		if (mBossAnimeFream == 4){
 			mBossAnimeFream = 0;
+			mJumpTmEnabled = true;
 			mAttackBehavior = EIDOL;
+		}
+		else{
+			if (mJumpTmEnabled){
+				mVelocityY = BOSSGVELOCITY;
+				if (!mDirection)
+					mVelocityX = -BOSSMOVESPEED * 3;
+				else
+					mVelocityX = BOSSMOVESPEED * 3;
+				mJumpTmEnabled = false;
+			}
 		}
 		break;
 		//ジャンプ処理終了
@@ -340,7 +346,6 @@ void CBoss::Boss_A_BehP(){
 				if (CPlayerT::mpPlayer->mPosition.x < CMapScroll::mpScroll->mPosition.x){
 					//ボスを右に向かせる
 					mDirection = true;
-					mVelocityX = BOSSMOVESPEED * 3;
 				}
 				//プレイヤーが右にいるとき
 				else{
@@ -355,7 +360,6 @@ void CBoss::Boss_A_BehP(){
 				if (CPlayerT::mpPlayer->mPosition.x > CMapScroll::mpScroll->mPosition.x){
 					//ボスを左にむかせる
 					mDirection = false;
-					mVelocityX = -BOSSMOVESPEED * 3;
 				}
 				//プレイヤーが左にいるとき
 				else{
@@ -365,7 +369,6 @@ void CBoss::Boss_A_BehP(){
 				}
 			}
 			mAttackBehavior = EJUMP;
-			mVelocityY = BOSSGVELOCITY;
 		}
 		break;
 		//ガード処理終了
@@ -427,6 +430,10 @@ void CBoss::Update(){
 
 			//総行動処理
 			Boss_A_BehP();
+
+			//攻撃行動以外ではヨーヨーを削除する処理を行う
+			if (mAttackBehavior != EBWEAPON)
+				mpBWeapon = 0;
 
 			//重力処理
 			Gravity();
@@ -557,7 +564,6 @@ bool CBoss::Collision(CRectangle*p){
 						//mAttackBehavior = EIDOL;
 						if (mIce)
 							mVelocityX = 0.0f;
-						
 					}
 				}
 				else if (aj.x < 0) {

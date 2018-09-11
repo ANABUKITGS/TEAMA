@@ -49,6 +49,7 @@ private:
 	int IdolInterval;					//待機状態から次の行動に移るまでの時間
 	bool Invincible;					//無敵時間用変数を追加
 	bool mTelepoEnabled;
+	bool mJumpTmEnabled;
 	enum BehP{
 		EDASH_0,
 		EDASH_1,
@@ -85,6 +86,7 @@ private:
 		mBossDeleteTime = BOSS_DELCNT;	//ボスの消滅時間を初期化
 		Invincible = false;				//無敵時間は最初偽にして初期化
 		mDirection = false;				//最初の向きを左向きにする
+		mJumpTmEnabled = true;
 		mBossBehavior = BEHAVIOR;		//敵の行動値を代入
 		mBossBattle = false;
 		mAttackBehavior = EIDOL;		//待機状態にする
