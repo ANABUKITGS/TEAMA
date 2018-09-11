@@ -6,6 +6,7 @@ CSound CBGM::mSoundMain;		//本編用
 CSound CBGM::mSoundBoss;		//ボス用
 CSound CBGM::mSoundResult;		//リザルト用
 CSound CBGM::mSoundRanking;		//ランキング用
+CSound CBGM::mSoundEditer;		//エディター用
 
 void CBGM::Init(){
 	mSoundTitle.Load(".\\Data\\Sound\\BGM\\Title.mp3");
@@ -14,6 +15,8 @@ void CBGM::Init(){
 	mSoundBoss.Load(".\\Data\\Sound\\BGM\\Boss.mp3");
 	mSoundResult.Load("");
 	mSoundRanking.Load("");
+	mSoundEditer.Load(".\\Data\\Sound\\BGM\\Editer.mp3");
+
 	mSoundTitle.Repeat();
 }
 
@@ -24,4 +27,5 @@ void CBGM::AllStop(){
 	mSoundBoss.Stop();
 	mSoundResult.Stop();
 	mSoundRanking.Stop();
+	mSoundEditer.Stop();
 }

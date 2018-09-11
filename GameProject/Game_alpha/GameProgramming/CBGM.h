@@ -11,6 +11,7 @@ public:
 	static CSound mSoundBoss;		//ボス用
 	static CSound mSoundResult;		//リザルト用
 	static CSound mSoundRanking;	//ランキング用
+	static CSound mSoundEditer;		//エディター用
 
 	void Init();
 	void Update();
