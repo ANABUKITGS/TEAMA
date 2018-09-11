@@ -12,11 +12,11 @@ void CBossGimmick::Update(){
 
 	if (mGimmickFlg){
 		if (CBossGimmickSign::mpBossGimmickSign == NULL){
-			mFallingPos = CVector2(CPlayerT::mpPlayer->mPosition.x, 640.0f);
-			CBossGimmickSign::mpBossGimmickSign = new CBossGimmickSign(mFallingPos);
+			mFallingPos = CPlayerT::mpPlayer->mPosition.x;
+			CBossGimmickSign::mpBossGimmickSign = new CBossGimmickSign(CVector2(mFallingPos, 640.0f));
 		}
 		if (mLag >= LAG_TIME){
-			new CMapBox(mFallingPos, true);
+			new CMapBox(CVector2(mFallingPos, 720.0f), true);
 			mWait = 1;
 			mLag = 0;
 			mGimmickFlg = false;

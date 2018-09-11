@@ -18,7 +18,7 @@ private:
 	int mWait;								//クールタイム 計測
 	int mLag;								//落下 遅延 時間
 	int mBoxProbability[BOX_PROBABILITY];	//確率
-	CVector2 mFallingPos;					//落下位置
+	float mFallingPos;					//落下位置
 
 public:
 	static CBossGimmick *mpBossGimmick;
@@ -30,7 +30,7 @@ public:
 		, mWait(1)
 		, mGimmickFlg(false)
 	{
-		mFallingPos = CVector2(0.0f, 0.0f);
+		mFallingPos = 0.0f;
 		mRender = false;
 		for (int i = 0; i < BOX_PROBABILITY; i++)
 			mBoxProbability[i] = i;
