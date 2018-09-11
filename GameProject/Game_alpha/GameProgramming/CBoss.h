@@ -4,9 +4,10 @@
 #include "CCharcter.h"
 #include "CEnemy.h"
 #include "CPlayerT.h"
+#include "CEfect.h"
+#include "CSE.h"
 #include <stdlib.h>
 #include <time.h>
-#include "CEfect.h"
 
 #define BEHAVIOR 270.0f					//ボスの行動切り替え定数(移動から攻撃)
 #define BOSS_DELCNT 200					//ボスの消滅カウント（とりあえず100frameに設定）
@@ -24,7 +25,6 @@
 #define BOSSTELEPO 120					//瞬間移動場所の値
 
 #define BOSS_TEX_POS mPosition.x - CELLSIZE * 2, mPosition.x + CELLSIZE * 2, mPosition.y - mScale.y, mPosition.y - mScale.y + CELLSIZE * 4	//テクスチャー Position
-
 
 class CBoss : public CCharcter{
 //自クラスだけ使用可能

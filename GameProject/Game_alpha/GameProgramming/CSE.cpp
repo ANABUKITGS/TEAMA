@@ -9,6 +9,7 @@ CSound CSE::mSoundSelect;
 CSound CSE::mSoundScore;
 CSound CSE::mSoundTurn;
 CSound CSE::mSoundContinue;
+CSound CSE::mSoundBossTelepo;
 
 void CSE::Init(){
 	mSoundText.Load(".\\Data\\Sound\\SE\\Text.wav");
@@ -20,6 +21,7 @@ void CSE::Init(){
 	mSoundSelect.Load(".\\Data\\Sound\\SE\\Select.wav");
 	mSoundTurn.Load(".\\Data\\Sound\\SE\\Turn.wav");
 	mSoundContinue.Load(".\\Data\\Sound\\SE\\Continue.wav");
+	mSoundBossTelepo.Load(".\\Data\\Sound\\SE\\BossTelepo.wav");
 }
 
 void CSE::AllStop(){
@@ -32,4 +34,5 @@ void CSE::AllStop(){
 	mSoundSelect.Stop();
 	mSoundTurn.Stop();
 	mSoundContinue.Stop();
+	mSoundBossTelepo.Stop();
 }

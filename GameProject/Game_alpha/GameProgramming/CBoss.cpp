@@ -230,8 +230,11 @@ void CBoss::Boss_A_BehP(){
 	case ETELEPO://瞬間移動
 		if (Invincible)
 			mAttackBehavior = EIDOL;
+		else if (mAlpha >= 1.0f && !mTelepoEnabled)
+			//消える効果音を再生
+			CSE::mSoundBossTelepo.Play();
 		//プレイヤーの後ろに出現した時
-		else if (mTelepoEnabled){
+		if (mTelepoEnabled){
 			//ボスの壁貫通バグ防止用処理
 			if (mPosition.y < -100){
 				mPosition.y = mBossDefaultPos.y;
@@ -700,17 +703,8 @@ void CBoss::Render(){
 		break;
 
 	case EBWEAPON://攻撃
-		if (mpBWeapon != NULL){
-			//if (!mDirection)
-			//	//ヨーヨーの紐
-			//	mpBWeapon->mTexYoyo.DrawImage(BSTRING_UV_L, 1.0f);
-
-			//else
-			//	//ヨーヨーの紐
-			//	mpBWeapon->mTexYoyo.DrawImage(BSTRING_UV_R, 1.0f);
-
-				mBossAnimeFream = 3;
-		}
+		if (mpBWeapon != NULL)
+			mBossAnimeFream = 3;
 		else{
 			if (mBossAnimeFream > 2)
 				mBossAnimeFream = 3;
