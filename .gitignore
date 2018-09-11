@@ -4,6 +4,7 @@
 *.user
 *.tmp
 *.temp
+*.bak
 ~$*
 RANKING.BIN
 desktop.ini

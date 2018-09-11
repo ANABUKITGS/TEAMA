@@ -7,6 +7,7 @@
 #include "CMapSign.h"
 #include "CMapScroll.h"
 #include "CBossGimmick.h"
+#include "CMapSign.h"
 
 CBoss *CBoss::mpBoss = 0;
 
@@ -66,7 +67,7 @@ void CBoss::Boss_A_BehP(){
 	//待機状態からランダムで行動をとる(移動、ジャンプ、攻撃のどれか)
 #if _DEBUG
 	//デバッグの時に各行動を確認したい時はこっち
-	mBossIBehavior = EIDOL_5;
+	mBossIBehavior = ETELEPO_4;
 #else
 	//リリース用
 	mBossIBehavior = GetRand(BehP::ESIZE_7);
@@ -231,6 +232,26 @@ void CBoss::Boss_A_BehP(){
 			mAttackBehavior = EIDOL;
 		//プレイヤーの後ろに出現した時
 		else if (mTelepoEnabled){
+			//ボスの壁貫通バグ防止用処理
+			if (mPosition.y < -100){
+				mPosition.y = mBossDefaultPos.y;
+				if (CPlayerT::mpPlayer->mDirection == false){
+					mDirection = true;
+					mPosition.x = CPlayerT::mpPlayer->mPosition.x - BOSSTELEPO;
+				}
+				else{
+					mDirection = false;
+					mPosition.x = CPlayerT::mpPlayer->mPosition.x + BOSSTELEPO;
+				}
+			}
+			if (mPosition.x <= CMapScroll::mpScroll->mPosition.x - 640.0){
+				mPosition.y = mBossDefaultPos.y;
+				if (CPlayerT::mpPlayer->mDirection){
+					mDirection = false;
+					mPosition.x = CPlayerT::mpPlayer->mPosition.x + BOSSTELEPO;
+				}
+			}
+			//処理終了
 			//消えるアニーメーションを最初に戻す
 			mBossAnimeFreamT = 4;
 			//アルファ値が一定値を超えているとき
@@ -448,19 +469,6 @@ void CBoss::Update(){
 		mAttackBehavior = EIDOL;
 		mVelocityX = mVelocityY = 0.0f;
 	}
-	//ボスの壁貫通バグ防止用処理
-	if (mPosition.y < -100){
-		mPosition.y = mBossDefaultPos.y;
-		if (CPlayerT::mpPlayer->mDirection == false){
-			mDirection = true;
-			mPosition.x = CPlayerT::mpPlayer->mPosition.x - BOSSTELEPO;
-		}
-		else{
-			mDirection = false;
-			mPosition.x = CPlayerT::mpPlayer->mPosition.x + BOSSTELEPO;
-		}
-	}
-	//処理終了
 }
 //-----------------------------------------------------Update処理終了-----------------------------------------------------------------------
 
