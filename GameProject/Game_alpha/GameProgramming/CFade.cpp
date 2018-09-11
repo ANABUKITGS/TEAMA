@@ -69,7 +69,7 @@ void CFade::RenderFade(){
 				}
 				else if (mMapfile == CFade::EGAMEMAP_NUM::EEDITER){
 					mGame2.Init(EDITER_MAP);	//エディター用 マップを読み込む(仮)
-					CBGM::mSoundTutorial.Repeat();
+					CBGM::mSoundEditer.Repeat();
 				}
 				CTime::GetStartTime();
 				CSceneChange::changenum = mTitle.cursor_num;
@@ -83,7 +83,7 @@ void CFade::RenderFade(){
 				break;
 
 			case CSceneChange::ECSCENECHANGE_NUM::EEDITER:
-				CBGM::mSoundTutorial.Repeat();
+				CBGM::mSoundEditer.Repeat();
 				CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::EEDITER;
 				break;
 
@@ -128,7 +128,7 @@ void CFade::RenderFade(){
 					CBGM::mSoundMain.Repeat();
 
 				else if (mMapfile == CFade::EGAMEMAP_NUM::EEDITER)
-					CBGM::mSoundTutorial.Repeat();
+					CBGM::mSoundEditer.Repeat();
 				break;
 
 			default:

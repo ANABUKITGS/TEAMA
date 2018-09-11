@@ -73,15 +73,20 @@ int main(void)
 		return -1;
 
 	/* Create a windowed mode window and its OpenGL context */
-//#if _DEBUG
-	//ウィンドウ表示
-	window = glfwCreateWindow(W_H, W_V, "Get Back Diamond", NULL, NULL);
-//#else
+	int msg_button = MessageBox(NULL, "フルスクリーンモードに切り替えますか?", "Get Back Diamond", 0x00040024L);
 	//フルスクリーン
-	//window = glfwCreateWindow(W_H, W_V, "Get Back Diamond", glfwGetPrimaryMonitor(), NULL);
-	//マウスカーソルの非表示
-	//ShowCursor(false);
-//#endif
+	if (msg_button == IDYES){
+		window = glfwCreateWindow(W_H, W_V, "Get Back Diamond", glfwGetPrimaryMonitor(), NULL);
+		//マウスカーソルの非表示
+		ShowCursor(false);
+	}
+	//ウィンドウ表示
+	else if (msg_button == IDNO)
+		window = glfwCreateWindow(W_H, W_V, "Get Back Diamond", NULL, NULL);
+
+	else
+		exit(0);
+
 	if (!window)
 	{
 		glfwTerminate();
