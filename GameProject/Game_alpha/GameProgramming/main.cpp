@@ -75,10 +75,10 @@ int main(void)
 	/* Create a windowed mode window and its OpenGL context */
 //#if _DEBUG
 	//ウィンドウ表示
-	window = glfwCreateWindow(1280, 720, "Get Back Diamond", NULL, NULL);
+	window = glfwCreateWindow(W_H, W_V, "Get Back Diamond", NULL, NULL);
 //#else
 	//フルスクリーン
-	//window = glfwCreateWindow(1280, 720, "Get Back Diamond", glfwGetPrimaryMonitor(), NULL);
+	//window = glfwCreateWindow(W_H, W_V, "Get Back Diamond", glfwGetPrimaryMonitor(), NULL);
 	//マウスカーソルの非表示
 	//ShowCursor(false);
 //#endif
@@ -111,7 +111,7 @@ int main(void)
 
 	// ウィンドウのサイズ変更時に呼び出す処理の登録
 	glfwSetWindowSizeCallback(window, reshape);
-	reshape(window, 1280, 720);
+	reshape(window, W_H, W_V);
 
 	//ライトの設定（3D必要 2D不要）
 	//固定シェーダー用
