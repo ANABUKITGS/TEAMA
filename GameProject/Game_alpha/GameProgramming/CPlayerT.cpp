@@ -548,6 +548,7 @@ void CPlayerT::Render(){
 		break;
 
 	case EPLAYERANI::ETURN:
+		CSE::mSoundTurn.Play();
 		if (player_ani_count > 0)
 			player_ani_count = 0;
 

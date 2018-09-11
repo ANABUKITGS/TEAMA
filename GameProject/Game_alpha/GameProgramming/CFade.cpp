@@ -54,22 +54,22 @@ void CFade::RenderFade(){
 			CBGM::AllStop();
 			switch (change_scene){
 			case CSceneChange::ECSCENECHANGE_NUM::ETITLE:
-				CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETITLE);
+				CBGM::mSoundTitle.Repeat();
 				CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ETITLE;
 				break;
 
 			case CSceneChange::ECSCENECHANGE_NUM::EGAME:
 				if (mMapfile == CFade::EGAMEMAP_NUM::ETUTORIAL){
 					mGame2.Init(TUTORIAL_MAP);	//チュートリアル用 マップを 読み込む
-					CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETUTORIAL);
+					CBGM::mSoundTutorial.Repeat();
 				}
 				else if (mMapfile == CFade::EGAMEMAP_NUM::EMAIN){
 					mGame2.Init(GAME_MAP);		//本編用 マップを 読み込む
-					CBGM::ChangeMusic(CBGM::EMUSIC_NUM::EMAIN);
+					CBGM::mSoundMain.Repeat();
 				}
 				else if (mMapfile == CFade::EGAMEMAP_NUM::EEDITER){
 					mGame2.Init(EDITER_MAP);	//エディター用 マップを読み込む(仮)
-					CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETUTORIAL);
+					CBGM::mSoundTutorial.Repeat();
 				}
 				CTime::GetStartTime();
 				CSceneChange::changenum = mTitle.cursor_num;
@@ -78,12 +78,12 @@ void CFade::RenderFade(){
 				break;
 
 			case CSceneChange::ECSCENECHANGE_NUM::ERANKING:
-				CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ERANKING);
+				CBGM::mSoundRanking.Repeat();
 				CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ERANKING;
 				break;
 
 			case CSceneChange::ECSCENECHANGE_NUM::EEDITER:
-				CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETUTORIAL);
+				CBGM::mSoundTutorial.Repeat();
 				CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::EEDITER;
 				break;
 
@@ -94,7 +94,7 @@ void CFade::RenderFade(){
 				break;
 
 			case CSceneChange::ECSCENECHANGE_NUM::ERESULT:
-				CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ERESULT);
+				CBGM::mSoundResult.Repeat();
 				CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ERESULT;
 				break;
 
@@ -122,13 +122,13 @@ void CFade::RenderFade(){
 					CPlayerT::mpPlayer->mJewel = CPlayerT::mpPlayer->mBackupJewel;
 				}
 				if (mMapfile == CFade::EGAMEMAP_NUM::ETUTORIAL)
-					CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETUTORIAL);
+					CBGM::mSoundTutorial.Repeat();
 
 				else if (mMapfile == CFade::EGAMEMAP_NUM::EMAIN)
-					CBGM::ChangeMusic(CBGM::EMUSIC_NUM::EMAIN);
+					CBGM::mSoundMain.Repeat();
 
 				else if (mMapfile == CFade::EGAMEMAP_NUM::EEDITER)
-					CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETUTORIAL);
+					CBGM::mSoundTutorial.Repeat();
 				break;
 
 			default:

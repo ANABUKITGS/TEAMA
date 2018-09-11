@@ -144,7 +144,8 @@ bool CMapBossRoomSign::Collision(CRectangle *r) {
 					//óéâ∫ÉMÉ~ÉbÉN ê∂ê¨
 					if (CBossGimmick::mpBossGimmick == NULL)
 						CBossGimmick::mpBossGimmick = new CBossGimmick();
-					CBGM::ChangeMusic(CBGM::EMUSIC_NUM::EBOSS);
+					CBGM::AllStop();
+					CBGM::mSoundBoss.Repeat();
 					return true;
 				}
 			}

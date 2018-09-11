@@ -1,6 +1,9 @@
 #ifndef CSE_H
 #define CSE_H
+#include <time.h>
 #include "CSound.h"
+
+#define SOUND_TURN 178
 
 class CSE{
 public:
@@ -12,6 +15,7 @@ public:
 	static CSound mSoundDamage;
 	static CSound mSoundScore;
 	static CSound mSoundSelect;
+	static CSound mSoundTurn;
 
 	static void Init();
 	static void AllStop();

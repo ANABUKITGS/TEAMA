@@ -29,7 +29,6 @@ void CSceneChange::Init(){
 }
 
 void CSceneChange::Update(){
-	mBGM.Update();
 	switch (changenum){
 	case ECSCENECHANGE_NUM::ETITLE:
 		CTaskManager::Get()->Destroy();
