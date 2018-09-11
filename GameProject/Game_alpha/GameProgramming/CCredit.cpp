@@ -16,13 +16,20 @@ void CCredit::Init(){
 
 void CCredit::Update(){
 	//èIóπ
-	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_ESCAPE) || CGamePad::Once(PAD_3) || CGamePad::Once(PAD_10)){
+	if (CKey::Once(VK_ESCAPE) || CGamePad::Once(PAD_3) || CGamePad::Once(PAD_10)){
 		CSE::mSoundContinue.Play();
 		CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
 	}
 
 	//ëÅëóÇË
-	if (CGamePad::Push(PAD_LSTICKY, 0.1f) || CGamePad::Push(PAD_LSTICKY, -0.1f)){
+	if (CKey::Push(VK_RETURN) || CKey::Push(VK_SPACE) ||
+		CKey::Push(VK_UP) || CKey::Push('W') || CGamePad::Push(PAD_2) || CGamePad::Push(PAD_UP))
+		mTextPos += 10.0f;
+
+	else if (CKey::Push(VK_DOWN) || CKey::Push('S') || CGamePad::Push(PAD_DOWN))
+		mTextPos += 0.0f;
+
+	else if (CGamePad::Push(PAD_LSTICKY, 0.1f) || CGamePad::Push(PAD_LSTICKY, -0.1f)){
 		if (CGamePad::Push(PAD_LSTICKY, 0.1f))
 			mTextPos += 1.0f + 9.0f * CGamePad::GetStick(PAD_LSTICKY);
 
@@ -44,6 +51,7 @@ void CCredit::Render(){
 	CText::DrawStringW(L"[ã≥àı]", -16 * 4, mTextPos - 32 * 11, 32, 1.0f, 0);
 	CText::DrawStringW(L"çÇã¥ îE\nïΩìc ëÂ\nà‰è„ ñGî¸", -16 * 4, mTextPos - 32 * 12, 32, 1.0f, 0);
 	CText::DrawStringW(L"[ëfçﬁéÿóp]", -16 * 6, mTextPos - 32 * 20, 32, 1.0f, 0);
-	CText::DrawStringW(L"ñÇâ§ç∞", -16 * 3, mTextPos - 32 * 21, 32, 1.0f, 0);
-	CText::DrawStringW(L"Music is VFR", -16 * 12, mTextPos - 32 * 22, 32, 1.0f, 0);
+	CText::DrawStringW(L"M+FONTS", -16 * 7, mTextPos - 32 * 21, 32, 1.0f, 0);
+	CText::DrawStringW(L"ñÇâ§ç∞", -16 * 3, mTextPos - 32 * 22, 32, 1.0f, 0);
+	CText::DrawStringW(L"Music is VFR", -16 * 12, mTextPos - 32 * 23, 32, 1.0f, 0);
 }
