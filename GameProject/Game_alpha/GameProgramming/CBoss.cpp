@@ -24,6 +24,8 @@ BossBehP
 待機状態から新たに行動を起こしたり、変更する場合はここで
 */
 void CBoss::BossBehP(BehP BP){
+	//ボスとプレイヤーとのベクトルを出す
+	mAttack_Search = CPlayerT::mpPlayer->mPosition - mPosition;
 	switch (BP){
 	case EDASH_0: case EDASH_1: case EDASH_2://0,1,2は移動
 		IdolInterval = NULL;
@@ -37,13 +39,26 @@ void CBoss::BossBehP(BehP BP){
 		mAttackBehavior = EJUMP;
 		break;
 	case BehP::ETELEPO_4://4はプレイヤーの後ろにテレポート
-		//プレイヤーの後ろに現れるタイミングをランダムにする
-		mBossAttackItr = GetRand(BOSSTELEPOA + 1);
+		mBossAnimeFreamT = 4;
+		//無敵時間がoffの時
+		if (!Invincible){
+			//プレイヤーの後ろに現れるタイミングをランダムにする
+			mBossAttackItr = GetRand(BOSSTELEPOA + 1);
+			//透明になる動作に入る
+			mTelepoEnabled = false;
+			//テレポート動作に移動
+			mAttackBehavior = ETELEPO;
+		}
+		//無敵時間がonの時
+		else{
+			mBossAnimeFream = 0;
+			//プレイヤーとの距離が一定範囲内まで縮まれば
+			if (abs(mAttack_Search.x) < mBossBehavior)
+				mAttackBehavior = EBWEAPON;
+			else
+				mAttackBehavior = EJUMP;
+		}
 		IdolInterval = NULL;
-		//透明になる動作に入る
-		mTelepoEnabled = false;
-		//テレポート動作に移動
-		mAttackBehavior = ETELEPO;
 		break;
 	default:
 		IdolInterval = 50;
@@ -67,7 +82,7 @@ void CBoss::Boss_A_BehP(){
 	//待機状態からランダムで行動をとる(移動、ジャンプ、攻撃のどれか)
 #if _DEBUG
 	//デバッグの時に各行動を確認したい時はこっち
-	mBossIBehavior = EJUMP_3;
+	mBossIBehavior = EDASH_0;
 #else
 	//リリース用
 	mBossIBehavior = GetRand(BehP::ESIZE_7);
@@ -92,7 +107,8 @@ void CBoss::Boss_A_BehP(){
 			//指定した秒数を超えれば行動をランダムでとる
 			else{
 				//整数型から列挙型へキャスト変換
-				BossBehP(static_cast<BehP>(mBossIBehavior));
+				//sraric_cast<Behp>(mBossIBehavior)でも可能
+				BossBehP((BehP)(mBossIBehavior));
 			}
 		}
 		mpBWeapon = 0;
@@ -146,9 +162,9 @@ void CBoss::Boss_A_BehP(){
 	case EDASH:
 
 		if (!mDirection)
-			mVelocityX = -BOSSMOVESPEED;
+			mVelocityX = -BOSSMOVESPEED-mBossSpeedUp;
 		else
-			mVelocityX = BOSSMOVESPEED;
+			mVelocityX = BOSSMOVESPEED+mBossSpeedUp;
 
 		//乱数値が真(1)の時だけボスがジャンプをする
 		if (mBossJumprad == 1)
@@ -176,9 +192,9 @@ void CBoss::Boss_A_BehP(){
 			if (mJumpTmEnabled){
 				mVelocityY = BOSSGVELOCITY;
 				if (!mDirection)
-					mVelocityX = -BOSSMOVESPEED * 3;
+					mVelocityX = (-BOSSMOVESPEED * 3 )- mBossSpeedUp;
 				else
-					mVelocityX = BOSSMOVESPEED * 3;
+					mVelocityX = (BOSSMOVESPEED * 3 )+ mBossSpeedUp;
 				mJumpTmEnabled = false;
 			}
 		}
@@ -216,12 +232,12 @@ void CBoss::Boss_A_BehP(){
 		else if (mAlpha >= 1.0f){
 			if (!mTelepoEnabled)
 				//消える効果音を再生
-				CSE::mSoundBossTelepo[0].Play();
+				CSE::mSoundBossTelepo[ETELEPOIN].Play();
 		}
 		else{
 			if (mTelepoEnabled&&mBossAnimeFreamT==0)
 			//消える効果音を再生
-			CSE::mSoundBossTelepo[1].Play();
+			CSE::mSoundBossTelepo[ETELEPOOUT].Play();
 		}
 		//プレイヤーの後ろに出現した時
 		if (mTelepoEnabled){
@@ -305,8 +321,10 @@ void CBoss::Boss_A_BehP(){
 		if (mBossLife <= 0)
 			mAttackBehavior = EDOWN;
 
-		else if (mBossAnimeFream > 1){
-			mAttackBehavior = EIDOL;
+		else {
+			if (mBossAnimeFream > 1){
+				mAttackBehavior = EIDOL;
+			}
 		}
 		break;//ループ終了
 
@@ -404,6 +422,7 @@ void CBoss::Boss_A_BehP(){
 void CBoss::Update(){
 	if (CMapBossRoomSign::mpBossRoomSign != NULL && CMapBossRoomSign::mpBossRoomSign->mColFlg && mBossBattle){
 		if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
+			printf("%d\n", mBossSpeedUp);
 			//一定間隔でジャンプの乱数を出す(とりあえず1秒に一回)
 			if (mBossJcnt < BOSSJUMPTIME)
 				mBossJcnt++;
@@ -441,8 +460,15 @@ void CBoss::Update(){
 			mPosition.x += mVelocityX;
 			//ボスの慣性法則ここまで
 
-			//ボスのHP処理
+			//ボスの現在HPの割合を出す処理
 			mBossLifeProportion = static_cast <float> (mBossLife) / static_cast <float> (mBossMaxLife);
+
+			//HPが50%以下、20%より大きい時はスピードを2上げる
+			if (mBossLifeProportion<=0.5&&mBossLifeProportion>0.2)
+				mBossSpeedUp = 2;
+			//HPが20%以下になるとスピードを3上げる
+			else if (mBossLifeProportion<=0.2)
+				mBossSpeedUp = 3;
 
 			//総行動処理
 			Boss_A_BehP();
@@ -480,7 +506,7 @@ bool CBoss::Collision(CRectangle*p){
 		if (CRectangle::Collision(p, &aj)) {
 			switch (p->mTag){
 			case ECELLNUM::EUNDER:
-				if ((mPosition.y > p->mPosition.y) && mVelocityY <= 0.0f){
+				if ((mPosition.y > p->mPosition.y)&&mVelocityY<=0.0){
 					mVelocityY = 0.0f;
 					mPosition.y = mPosition.y + aj.y;
 				}
@@ -488,7 +514,7 @@ bool CBoss::Collision(CRectangle*p){
 			case ECELLNUM::EPWEAPON://プレイヤーのヨーヨーと衝突した時
 				//ボスが無敵状態、ジャンプ中、ダウン中、透明攻撃のいずれかの状態の時は判定しない
 				if (Invincible || mAttackBehavior == EJUMP || mAttackBehavior == EDOWN || mAttackBehavior == ETELEPO)
-					break;
+					return false;
 				//アルファ値がMAX値よりも小さい時は攻撃はヒットしない
 				else if (mAlpha < 1.0)
 					return false;
@@ -625,7 +651,7 @@ void CBoss::Render(){
 		//アニメーションの最初に戻る
 		mBossAnimeFream = 0;
 		//アニメーションの速さを指定(減値:速いアニメーション,増値:遅いアニメーション)
-		Boss_Ani_Count_Frame = 10;
+		Boss_Ani_Count_Frame = 10 - mBossSpeedUp;
 		if (!mDirection)//左向き
 			mTexture.DrawImage(BOSS_TEX_POS, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 2304, 2048, mAlpha);
 		else			//右向き
@@ -674,10 +700,7 @@ void CBoss::Render(){
 		}
 		//ジャンプ下向中
 		else if (mVelocityY < -0.1f){
-			if (mBossAnimeFream >0)
-				mBossAnimeFream = 0;
-
-			Boss_Ani_Count_Frame = 10;
+			mBossAnimeFream = 0;
 
 			if (!mDirection)	//左向き
 				mTexture.DrawImage(BOSS_TEX_POS, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 1792, 1536, mAlpha);
@@ -691,7 +714,7 @@ void CBoss::Render(){
 				mBossAnimeFream = 4;//ループ開始位置(1枚目のアニメーション)に戻る
 
 			//アニメーションの速さを指定(減値:速いアニメーション,増値:遅いアニメーション)
-			Boss_Ani_Count_Frame = 7;
+			Boss_Ani_Count_Frame = 5;
 
 			if (!mDirection)//左向き
 				mTexture.DrawImage(BOSS_TEX_POS, (mBossAnimeFream+1) * 256, mBossAnimeFream * 256, 1792, 1536, mAlpha);
@@ -708,7 +731,7 @@ void CBoss::Render(){
 			if (mBossAnimeFream > 2)
 				mBossAnimeFream = 3;
 		}
-		Boss_Ani_Count_Frame = 5;
+		Boss_Ani_Count_Frame = 5-mBossSpeedUp;
 
 			//左向き
 			if (!mDirection)
@@ -725,7 +748,7 @@ void CBoss::Render(){
 				//ループの先頭に戻る
 				mBossAnimeFreamT = 0;
 			//次のコマに行くタイミング
-			Boss_Ani_Count_Frame = 6;
+			Boss_Ani_Count_Frame = 6 - mBossSpeedUp;
 
 			if (!mDirection)	//左向き
 				mTexture.DrawImage(BOSS_TEX_POS, (mBossAnimeFreamT + 1) * 256, mBossAnimeFreamT * 256, 512, 256, mAlpha);
@@ -735,8 +758,6 @@ void CBoss::Render(){
 		else if (mTelepoEnabled){
 			if (mAlpha <=1.0f){
 				mBossAnimeFreamT = 0;
-				//次のコマに行くタイミング
-				Boss_Ani_Count_Frame = 6;
 
 				if (!mDirection)	//左向き
 					mTexture.DrawImage(BOSS_TEX_POS, (mBossAnimeFreamT + 1) * 256, mBossAnimeFreamT * 256, 512, 256, mAlpha);
@@ -749,7 +770,7 @@ void CBoss::Render(){
 					//ループの先頭に戻る
 					mBossAnimeFream = 0;
 				//次のコマに行くタイミング
-				Boss_Ani_Count_Frame = 6;
+				Boss_Ani_Count_Frame = 5 - mBossSpeedUp;
 
 				if (!mDirection)	//左向き
 					mTexture.DrawImage(BOSS_TEX_POS, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 512, 256, mAlpha);

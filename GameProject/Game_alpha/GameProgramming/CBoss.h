@@ -48,9 +48,14 @@ private:
 	int mBossInvincibleTime;			//ボスの無敵時間
 	int mBossIBehavior;					//待機状態からのランダム行動
 	int IdolInterval;					//待機状態から次の行動に移るまでの時間
+	int mBossSpeedUp;					//ボスの行動の速さを上げる
 	bool Invincible;					//無敵時間用変数を追加
 	bool mTelepoEnabled;
 	bool mJumpTmEnabled;
+	enum BossSE{
+		ETELEPOIN,
+		ETELEPOOUT,
+	};
 	enum BehP{
 		EDASH_0,
 		EDASH_1,
@@ -79,6 +84,7 @@ private:
 		mBossAnimeFream=0;
 		mBossLife = mBossMaxLife = BOSS_LIFE;
 		mBossLifeProportion = 0.0f;
+		mBossSpeedUp = 0;				//初期化
 		mBossAnimeFreamT = 4;			//逆再生アニメーション変数を初期化
 		mBossIBehavior = 0;				//待機状態から行動開始する変数
 		mBossTelepo = 0;				//瞬間移動の値を初期化
