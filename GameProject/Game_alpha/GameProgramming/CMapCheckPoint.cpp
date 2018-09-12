@@ -34,6 +34,7 @@ void CMapCheckPoint::Render(){
 bool CMapCheckPoint::Collision(CRectangle *r) {
 	if (CRectangle::Collision(r) && mCheck == ECHECKPOINT_NUM::EENEMY){
 		if (r->mTag == ECELLNUM::EPLAYER){
+			CSE::mSoundCheckPoint.Play();
 			mCheck = ECHECKPOINT_NUM::ECHANGE;
 			check_ani_count = 0;
 		return true;
