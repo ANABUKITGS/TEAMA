@@ -65,10 +65,12 @@ void CPlayerT::Update(){
 								if (mDirection){
 									mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
 									mpWeapon->mPosition.x += 51.0f;
+									CSE::mSoundYoyo.Play();
 								}
 								else{
 									mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
 									mpWeapon->mPosition.x -= 51.0f;
+									CSE::mSoundYoyo.Play();
 								}
 								CSE::mSoundYoyo.Play();
 							}
@@ -77,6 +79,7 @@ void CPlayerT::Update(){
 						else{
 							mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
 							mpWeapon->mPosition.x -= 51.0f;
+							CSE::mSoundYoyo.Play();
 						}
 					}
 					if (CGamePad::Once(PAD_8) || CGamePad::Once(PAD_6) || CKey::Once(VK_RIGHT)){
@@ -90,17 +93,19 @@ void CPlayerT::Update(){
 								if (mDirection){
 									mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
 									mpWeapon->mPosition.x += 51.0f;
+									CSE::mSoundYoyo.Play();
 								}
 								else{
 									mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
 									mpWeapon->mPosition.x -= 51.0f;
+									CSE::mSoundYoyo.Play();
 								}
-								CSE::mSoundYoyo.Play();
 							}
 						}
 						else{
 							mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
 							mpWeapon->mPosition.x += 51.0f;
+							CSE::mSoundYoyo.Play();
 						}
 					}
 				}
