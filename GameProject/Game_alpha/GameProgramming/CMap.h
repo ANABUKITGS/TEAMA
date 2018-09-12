@@ -13,6 +13,7 @@
 #define MAP_SIZEY		11		//マップ 上限 Y
 #define MAP_SIZEX		256		//マップ 上限 X
 #define CURSOR_NUM		-1		//カーソル
+#define UPDATE_NUM		-2		//更新マス
 
 #define WINDOW_SIZE_W 1280
 #define WINDOW_SIZE_H 720
@@ -33,7 +34,7 @@ private:
 		ESIZE,
 	};
 	int cursor_num = EBACK;
-	wchar_t cursor_buf[32];
+	CTexture mTexBack;
 
 public:
 	bool pauseflag;									//ポーズメニュー
@@ -45,6 +46,7 @@ public:
 class CEditer : public CPauseMenu{
 private:
 	int editmap_cursor[MAP_SIZEY][MAP_SIZEX];		//マップ カーソル
+	int editmap_update[MAP_SIZEY][MAP_SIZEX];		//マップ 更新マス
 	int cursor_posX;								//カーソル 場所 X
 	int cursor_posY;								//カーソル 場所 Y
 	int setcell;									//マップ 配置内容
@@ -52,11 +54,12 @@ private:
 	bool guideIO;									//ガイド ON OFF
 	bool prtscrIO;									//スクリーンショット用? カーソル等非表示
 	CRectangle editmap_rect[MAP_SIZEY][MAP_SIZEX];	//マップ 描画
+	CTexture mTexUI;								//UI テクスチャー
+	CTexture mTexSetCell;							//UI オブジェクト
+	CTexture mTexBack;								//背景
 
 public:
 	int editmap[MAP_SIZEY][MAP_SIZEX];				//マップ
-	CTexture mTexUI;								//UI テクスチャー
-	CTexture mTexSetCell;							//UI オブジェクト
 
 	void Init();
 	void Update();

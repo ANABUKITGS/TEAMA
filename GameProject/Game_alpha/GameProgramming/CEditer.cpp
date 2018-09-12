@@ -26,6 +26,7 @@ void CEditer::Init(){
 		for (int j = 0; j < MAP_SIZEX; j++){
 			editmap[i][j] = ENONE;
 			editmap_cursor[i][j] = ENONE;
+			editmap_update[i][j] = ENONE;
 		}
 	}
 
@@ -46,6 +47,7 @@ void CEditer::Init(){
 	}
 	mTexUI.Load(".\\Data\\Images\\Map\\MapUI.tga");
 	mTexSetCell.Load(".\\Data\\Images\\Map\\SetCell.tga");
+	mTexBack.Load(".\\Data\\Images\\Result\\Back.tga");
 }
 
 void CEditer::Update(){
@@ -126,8 +128,10 @@ void CEditer::Update(){
 					if (temp_setcell == ECELLNUM::EPLAYER){
 						for (int i = 0; i < MAP_SIZEY; i++){
 							for (int j = 0; j < MAP_SIZEX; j++){
-								if (editmap[i][j] == EPLAYER)
+								if (editmap[i][j] == EPLAYER){
 									editmap[i][j] = ENONE;
+									editmap_update[i][j] = UPDATE_NUM;
+								}
 							}
 						}
 					}
@@ -146,10 +150,16 @@ void CEditer::Update(){
 							if (editmap[cursor_posY + 1][cursor_posX] == temp_setcell){
 								editmap[cursor_posY][cursor_posX] = setcell;
 								editmap[cursor_posY + 1][cursor_posX] = setcell;
+
+								editmap_update[cursor_posY][cursor_posX] = UPDATE_NUM;
+								editmap_update[cursor_posY + 1][cursor_posX] = UPDATE_NUM;
 							}
 							else{
 								editmap[cursor_posY][cursor_posX] = setcell;
 								editmap[cursor_posY - 1][cursor_posX] = setcell;
+
+								editmap_update[cursor_posY][cursor_posX] = UPDATE_NUM;
+								editmap_update[cursor_posY - 1][cursor_posX] = UPDATE_NUM;
 							}
 						}
 						else{
@@ -157,6 +167,9 @@ void CEditer::Update(){
 								return;
 							editmap[cursor_posY][cursor_posX] = setcell;
 							editmap[cursor_posY - 1][cursor_posX] = setcell;
+
+							editmap_update[cursor_posY][cursor_posX] = UPDATE_NUM;
+							editmap_update[cursor_posY - 1][cursor_posX] = UPDATE_NUM;
 						}
 					}
 				}
@@ -168,16 +181,24 @@ void CEditer::Update(){
 					if (editmap[cursor_posY + 1][cursor_posX] == temp_setcell){
 						editmap[cursor_posY][cursor_posX] = setcell;
 						editmap[cursor_posY + 1][cursor_posX] = ENONE;
+
+						editmap_update[cursor_posY][cursor_posX] = UPDATE_NUM;
+						editmap_update[cursor_posY + 1][cursor_posX] = UPDATE_NUM;
 					}
 					else{
 						editmap[cursor_posY][cursor_posX] = setcell;
 						editmap[cursor_posY - 1][cursor_posX] = ENONE;
+
+						editmap_update[cursor_posY][cursor_posX] = UPDATE_NUM;
+						editmap_update[cursor_posY - 1][cursor_posX] = UPDATE_NUM;
 					}
 				}
-				else
+				else{
 					editmap[cursor_posY][cursor_posX] = setcell;
+					editmap_update[cursor_posY][cursor_posX] = UPDATE_NUM;
+				}
 			}
-			MakeTaskList((int *)editmap);
+			//MakeTaskList((int *)editmap);
 		}
 
 		if (CGamePad::Push(PAD_3) || CKey::Once(VK_DELETE) || CKey::Once(VK_BACK)){	//削除
@@ -189,15 +210,30 @@ void CEditer::Update(){
 				if (editmap[cursor_posY + 1][cursor_posX] == temp_setcell){
 					editmap[cursor_posY][cursor_posX] = ENONE;
 					editmap[cursor_posY + 1][cursor_posX] = ENONE;
+
+					editmap_update[cursor_posY][cursor_posX] = UPDATE_NUM;
+					editmap_update[cursor_posY + 1][cursor_posX] = UPDATE_NUM;
 				}
 				else{
 					editmap[cursor_posY][cursor_posX] = ENONE;
 					editmap[cursor_posY - 1][cursor_posX] = ENONE;
+
+					editmap_update[cursor_posY][cursor_posX] = UPDATE_NUM;
+					editmap_update[cursor_posY - 1][cursor_posX] = UPDATE_NUM;
 				}
 			}
-			else
+			else{
 				editmap[cursor_posY][cursor_posX] = ENONE;
+				editmap_update[cursor_posY][cursor_posX] = UPDATE_NUM;
+			}
+			//MakeTaskList((int *)editmap);
+		}
+
+		if (CGamePad::Once(PAD_1) || CKey::Once(VK_F5)){	//更新
 			MakeTaskList((int *)editmap);
+			for (int i = 0; i < MAP_SIZEY; i++)
+				for (int j = 0; j < MAP_SIZEX; j++)
+					editmap_update[i][j] = ENONE;
 		}
 
 		if (CGamePad::Once(PAD_10) || CKey::Once(VK_ESCAPE)){
@@ -219,7 +255,7 @@ void CEditer::Update(){
 					for (int j = 0; j < MAP_SIZEX; j++)
 						editmap[i][j] = ENONE;
 				}
-				MakeTaskList((int *)editmap);
+				//MakeTaskList((int *)editmap);
 			}
 		}
 
@@ -265,6 +301,7 @@ void CEditer::Update(){
 }
 
 void CEditer::Render(){
+	mTexBack.DrawImage(-640.0f, 640.0f, -360.0f, 360.0f, 0, 1280, 720, 0, 1.0f);
 	CCamera2D mCamera;
 	mCamera.SetOrtho(-editmap_rect[0][0].mRight + CELLSIZE / 2, editmap_rect[0][0].mTop + CELLSIZE, WINDOW_SIZE_W / 2, WINDOW_SIZE_H / 2);
 
@@ -273,12 +310,22 @@ void CEditer::Render(){
 	CTaskManager::Get()->Render();
 	CCamera2D::End();
 
-	cursor_anime++;
 	for (int i = 0; i < MAP_SIZEY; i++){
 		for (int j = 0; j < MAP_SIZEX; j++){
 			//ガイド
 			if (guideIO)
 				mTexUI.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 0, 64, 0, 64, 1.0f);
+
+			//更新マス
+			if (editmap_update[i][j] == UPDATE_NUM){
+				if (cursor_anime >= 0 && cursor_anime < 30)
+					mTexUI.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 0, 64, 128, 192, 1.0f);
+				else if (cursor_anime >= 30 && cursor_anime < 60)
+					mTexUI.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 64, 128, 128, 192, 1.0f);
+				else{
+					int hoge = cursor_anime;
+				}
+			}
 
 			//カーソル
 			if (editmap_cursor[i][j] == CURSOR_NUM && !prtscrIO){
@@ -293,11 +340,14 @@ void CEditer::Render(){
 					mTexUI.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 0, 64, 128, 64, 1.0f);
 				else if (cursor_anime >= 30 && cursor_anime < 60)
 					mTexUI.DrawImage(editmap_rect[i][j].mLeft, editmap_rect[i][j].mRight, editmap_rect[i][j].mBottom, editmap_rect[i][j].mTop, 64, 128, 128, 64, 1.0f);
-				else if (cursor_anime >= 60)
-					cursor_anime = 0;
 			}
 		}
 	}
+	if (cursor_anime < 59)
+		cursor_anime++;
+	else
+		cursor_anime = 0;
+
 	if (!prtscrIO)
 		CText::DrawStringW(L"マップエディター", -640, 300, 48, 1.0f, 0);
 

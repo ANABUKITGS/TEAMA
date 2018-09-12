@@ -182,17 +182,21 @@ void CGame::Render(){
 
 void CPauseMenu::Update(){
 	if (pauseflag){
-		if ((CGamePad::OncePush(PAD_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f) || CKey::Once('S')) && cursor_num < ESIZE - 1)
+		if ((CGamePad::OncePush(PAD_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f) || CKey::Once('S') || CKey::Once(VK_UP)) && cursor_num < ESIZE - 1){
+			CSE::mSoundSelect.Play();
 			cursor_num++;
-
-		if ((CGamePad::OncePush(PAD_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f) || CKey::Once('W')) && cursor_num > EBACK)
+		}
+		if ((CGamePad::OncePush(PAD_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f) || CKey::Once('W') || CKey::Once(VK_DOWN)) && cursor_num > EBACK){
+			CSE::mSoundSelect.Play();
 			cursor_num--;
+		}
 		if (CGamePad::Once(PAD_10) || CGamePad::Once(PAD_3) || CKey::Once(VK_ESCAPE)){
 			cursor_num = EBACK;
 			pauseflag = false;
 		}
 
-		if (CGamePad::Once(PAD_2) || CKey::Once(VK_RETURN)){
+		if (CGamePad::Once(PAD_2) || CKey::Once(VK_RETURN) || CKey::Once(VK_SPACE)){
+			CSE::mSoundContinue.Play();
 			switch (cursor_num){
 			case EBACK:
 				pauseflag = false;
@@ -209,26 +213,26 @@ void CPauseMenu::Update(){
 				break;
 			}
 		}
-
-		/*カーソル*/
-		switch (cursor_num){
-		default:
-			break;
-
-		case EBACK:
-			swprintf(cursor_buf, L"→");
-			break;
-
-		case ETITLE:
-			swprintf(cursor_buf, L"\n→");
-			break;
-		}
 	}
 }
 
 void CPauseMenu::Render(){
 	if (pauseflag){
-		CText::DrawStringW(L" ゲームに もどる\n タイトルに もどる", -200, 100, 32, 1.0f, 0);
-		CText::DrawStringW(cursor_buf, -200, 100, 32, 1.0f, 0);
+		mTexBack.DrawImageSetColor(-640.0f, 640.0f, -360.0f, 360.0f, 0, 0, 0, 0, BLACK, 0.5f);
+		/*カーソル*/
+		switch (cursor_num){
+		case EBACK:
+			CText::DrawStringWSetColor(L"ゲームに もどる", -16 * 8, 0, 32, 0.2f, 0.8f, 0.4f, 1.0f, 0);
+			CText::DrawStringWSetColor(L"タイトルに もどる", -16 * 9, -32, 32, WHITE, 1.0f, 0);
+			break;
+
+		case ETITLE:
+			CText::DrawStringWSetColor(L"ゲームに もどる", -16 * 8, 0, 32, WHITE, 1.0f, 0);
+			CText::DrawStringWSetColor(L"タイトルに もどる", -16 * 9, -32, 32, 0.2f, 0.8f, 0.4f, 1.0f, 0);
+			break;
+
+		default:
+			break;
+		}
 	}
 }
