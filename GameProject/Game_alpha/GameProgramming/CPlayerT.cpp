@@ -325,6 +325,8 @@ void CPlayerT::Forward(){
 				else
 					mVelocityX -= PLAYER_VELOCITY_X2_ICE;
 			}
+			if (mVelocityX <= PLAYER_VELOCITY_X2 && mVelocityX >= -PLAYER_VELOCITY_X2)
+				mVelocityX = 0.0f;
 
 			if (!mAir && mpWeapon==0)
 				player_ani = EPLAYERANI::EIDOL;
@@ -344,8 +346,6 @@ void CPlayerT::Forward(){
 			}
 		}
 	}
-	if (mVelocityX - PLAYER_VELOCITY_X2_ICE < 0.0f && mVelocityX + PLAYER_VELOCITY_X2_ICE > 0.0f)
-		mVelocityX = 0.0f;
 }
 
 

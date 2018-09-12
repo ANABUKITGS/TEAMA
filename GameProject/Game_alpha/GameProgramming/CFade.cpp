@@ -54,6 +54,8 @@ void CFade::RenderFade(){
 			mAlpha = 1.0f;
 			CSE::AllStop();
 			CBGM::AllStop();
+			CMapSign::mView = false;
+			CMapSign::mCol = false;
 			switch (change_scene){
 			case CSceneChange::ECSCENECHANGE_NUM::ETITLE:
 				CBGM::mSoundTitle.Repeat();

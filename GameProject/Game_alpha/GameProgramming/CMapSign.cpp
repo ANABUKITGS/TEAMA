@@ -55,7 +55,7 @@ bool CMapSign::Collision(CRectangle *r) {
 				return true;
 			}
 			mCol = false;
-			//mView = false;
+			mView = false;
 			CMapScroll::sign_scroll = false;
 		}
 	}
