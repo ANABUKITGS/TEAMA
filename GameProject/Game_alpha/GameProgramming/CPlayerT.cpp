@@ -454,16 +454,12 @@ bool CPlayerT::Collision(CRectangle *p) {
 							   //‰E‹ó‚«
 							   if (!(p->mColFlg & EDT_RIGHT)) {
 								   mPosition.x = mPosition.x + aj.x;
-								   if (mIce)
-									   mVelocityX = 0.0f;
 							   }
 						   }
 						   else if (aj.x < 0) {
 							   //¶‹ó‚«
 							   if (!(p->mColFlg & EDT_LEFT)) {
 								   mPosition.x = mPosition.x + aj.x;
-								   if (mIce)
-									   mVelocityX = 0.0f;
 							   }
 						   }
 						   if (CRectangle::Collision(p, &aj, &ad)) {
