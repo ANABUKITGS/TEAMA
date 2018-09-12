@@ -9,6 +9,7 @@
 #define BOSSROOM_SIGN_UV	mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 0, 64, mTexPosY + 128, mTexPosY
 #define BOSSROOM_SIGN_UV2	mPosition.x - CELLSIZE / 2, mPosition.x + CELLSIZE / 2, mPosition.y - CELLSIZE, mPosition.y + CELLSIZE, 0, 64, 256, 128
 #define TEXTVIEW_UV			CGame2::mCamera.x - 256 - 8, CGame2::mCamera.x + 256 + 8, CGame2::mCamera.y - 128 - 8, CGame2::mCamera.y + 128 + 8, 0, 512, 512, 0
+#define MSGBUTTON_UV		mPosition.x - 32, mPosition.x + 32, mPosition.y - 32, mPosition.y + 32, 0, 64, 64, 0
 
 #define DRAWSTRING_UV	text_buf, -256, 192, 32, 3, 1.0f
 
@@ -18,10 +19,12 @@
 class CMapSign : public CMapChip {
 private:
 	CTexture mTexSign;
+	bool mOnceCol;
 
 public:
 	int mSignTag;
 	static bool mView;
+	static bool mCol;
 	CMapSign(const CVector2& pos)
 		//CMapChip‚Å‰Šú‰»
 		: CMapChip(pos, CVector2(CELLSIZE / 2, CELLSIZE / 2), NULL, NULL, NULL, NULL, NULL, ECELLNUM::ESIGN)
@@ -32,6 +35,7 @@ public:
 		mTag = ECELLNUM::ESIGN;
 		mSignTag = NULL;
 		mView = false;
+		mOnceCol = false;
 	}
 	void Update();
 	bool Collision(CRectangle *r);	//Õ“ËŽž‚Ìˆ—
@@ -130,6 +134,31 @@ public:
 	}
 	void Update();
 	bool Collision(CRectangle *r);	//Õ“ËŽž‚Ìˆ—
+	void Render();
+};
+
+class CMsgButton : public CRectangle{
+private:
+	CTexture mTexButton;
+
+public:
+	static CMsgButton *mpMsgButton;
+	CMsgButton(CVector2 pos)
+		:CRectangle(pos, CVector2(0.0f, 0.0f), NULL)
+	{
+		if (mTexButton.id == NULL)
+			mTexButton.Load(".\\Data\\Images\\Player\\MsgButton.tga");
+
+		mAlpha = 0.0f;
+		mTag = ECELLNUM::ENONE;
+		mRender = false;
+		CTaskManager::Get()->Add(this);
+	}
+	~CMsgButton(){
+		mpMsgButton = NULL;
+	}
+
+	void Update();
 	void Render();
 };
 #endif

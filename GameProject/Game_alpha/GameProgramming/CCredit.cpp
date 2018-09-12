@@ -40,18 +40,24 @@ void CCredit::Update(){
 		mTextPos += 1.0f;
 
 	//終わったら終了
-	if (mTextPos - 32 * 22 > 360.0f)
+	if (mTextPos - 32 * 24 > 360.0f)
 		CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
 }
 
 void CCredit::Render(){
 	mTexBack.DrawImage(-640.0f, 640.0f, -360.0f, 360.0f, 0, 1280, 720, 0, 1.0f);
-	CText::DrawStringW(L"[制作チーム]", -16 * 7, mTextPos, 32, 1.0f, 0);
-	CText::DrawStringW(L"前田  拓磨\n長尾  蓮\n小見山 嶺治\n南木  彩希\n石田  萌夏", -16 * 6, mTextPos - 32 * 1, 32, 1.0f, 0);
-	CText::DrawStringW(L"[教員]", -16 * 4, mTextPos - 32 * 11, 32, 1.0f, 0);
-	CText::DrawStringW(L"高橋 忍\n平田 大\n井上 萌美", -16 * 4, mTextPos - 32 * 12, 32, 1.0f, 0);
-	CText::DrawStringW(L"[素材借用]", -16 * 6, mTextPos - 32 * 20, 32, 1.0f, 0);
-	CText::DrawStringW(L"M+FONTS", -16 * 7, mTextPos - 32 * 21, 32, 1.0f, 0);
-	CText::DrawStringW(L"魔王魂", -16 * 3, mTextPos - 32 * 22, 32, 1.0f, 0);
-	CText::DrawStringW(L"Music is VFR", -16 * 12, mTextPos - 32 * 23, 32, 1.0f, 0);
+	CText::DrawStringW(L"[制作チーム]",	-16 * 7, mTextPos, 32, 1.0f, 0);
+	CText::DrawStringW(L"前田 拓磨",		-16 * 5, mTextPos - 32 * 1, 32, 1.0f, 0);
+	CText::DrawStringW(L"長尾 蓮",		-16 * 4, mTextPos - 32 * 2, 32, 1.0f, 0);
+	CText::DrawStringW(L"小見山 嶺治",	-16 * 6, mTextPos - 32 * 3, 32, 1.0f, 0);
+	CText::DrawStringW(L"南木 彩希",		-16 * 5, mTextPos - 32 * 4, 32, 1.0f, 0);
+	CText::DrawStringW(L"石田 萌夏",		-16 * 5, mTextPos - 32 * 5, 32, 1.0f, 0);
+	CText::DrawStringW(L"[教員]",		-16 * 4, mTextPos - 32 * 12, 32, 1.0f, 0);
+	CText::DrawStringW(L"高橋 忍",		-16 * 4, mTextPos - 32 * 13, 32, 1.0f, 0);
+	CText::DrawStringW(L"平田 大",		-16 * 4, mTextPos - 32 * 14, 32, 1.0f, 0);
+	CText::DrawStringW(L"井上 萌美",		-16 * 5, mTextPos - 32 * 15, 32, 1.0f, 0);
+	CText::DrawStringW(L"[素材借用]",	-16 * 6, mTextPos - 32 * 21, 32, 1.0f, 0);
+	CText::DrawStringW(L"M+FONTS",		-16 * 7, mTextPos - 32 * 22, 32, 1.0f, 0);
+	CText::DrawStringW(L"魔王魂",		-16 * 3, mTextPos - 32 * 23, 32, 1.0f, 0);
+	CText::DrawStringW(L"Music is VFR",	-16 * 12, mTextPos - 32 * 24, 32, 1.0f, 0);
 }
