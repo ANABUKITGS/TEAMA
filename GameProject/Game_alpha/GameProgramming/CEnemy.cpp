@@ -3,6 +3,7 @@
 #include "CBoss.h"
 #include "CMapBox.h"
 #include "CMapSteel.h"
+#include "CMapSign.h"
 
 /*
 敵の索敵範囲
@@ -17,7 +18,7 @@
 
 
 void  CEnemy::Update(){
-	if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
+	if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER && !CMapSign::mCol){
 		mAttackInterval--;
 		//敵の歩く、待機アニメーションを行う処理
 		switch (enemy_ani){

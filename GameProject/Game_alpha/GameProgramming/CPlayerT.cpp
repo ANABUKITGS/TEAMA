@@ -53,56 +53,55 @@ void CPlayerT::Update(){
 				//		}
 				//	}
 				//}
-				if (CGamePad::Once(PAD_7) || CGamePad::Once(PAD_5) || CKey::Once(VK_LEFT)){
-					player_ani_count = 0;
-					player_ani_count_frame = 0;
-					player_ani = EPLAYERANI::EYOYO;
-					mDirection = false;
-					if (mAir){
-						if (mAerialAttack){
-							mAerialAttack = false;
-							if (mDirection){
-								mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
-								mpWeapon->mPosition.x += 51.0f;
+				if (!CMapSign::mView){
+					if (CGamePad::Once(PAD_7) || CGamePad::Once(PAD_5) || CKey::Once(VK_LEFT)){
+						player_ani_count = 0;
+						player_ani_count_frame = 0;
+						player_ani = EPLAYERANI::EYOYO;
+						mDirection = false;
+						if (mAir){
+							if (mAerialAttack){
+								mAerialAttack = false;
+								if (mDirection){
+									mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
+									mpWeapon->mPosition.x += 51.0f;
+								}
+								else{
+									mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
+									mpWeapon->mPosition.x -= 51.0f;
+								}
 								CSE::mSoundYoyo.Play();
 							}
-							else{
-								mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
-								mpWeapon->mPosition.x -= 51.0f;
+								CSE::mSoundYoyo.Play();
+						}
+						else{
+							mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
+							mpWeapon->mPosition.x -= 51.0f;
+						}
+					}
+					if (CGamePad::Once(PAD_8) || CGamePad::Once(PAD_6) || CKey::Once(VK_RIGHT)){
+						player_ani_count = 0;
+						player_ani_count_frame = 0;
+						player_ani = EPLAYERANI::EYOYO;
+						mDirection = true;
+						if (mAir){
+							if (mAerialAttack){
+								mAerialAttack = false;
+								if (mDirection){
+									mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
+									mpWeapon->mPosition.x += 51.0f;
+								}
+								else{
+									mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
+									mpWeapon->mPosition.x -= 51.0f;
+								}
 								CSE::mSoundYoyo.Play();
 							}
 						}
-					}
-					else{
-						mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
-						mpWeapon->mPosition.x -= 51.0f;
-						CSE::mSoundYoyo.Play();
-					}
-				}
-				if (CGamePad::Once(PAD_8) || CGamePad::Once(PAD_6) || CKey::Once(VK_RIGHT)){
-					player_ani_count = 0;
-					player_ani_count_frame = 0;
-					player_ani = EPLAYERANI::EYOYO;
-					mDirection = true;
-					if (mAir){
-						if (mAerialAttack){
-							mAerialAttack = false;
-							if (mDirection){
-								mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
-								mpWeapon->mPosition.x += 51.0f;
-								CSE::mSoundYoyo.Play();
-							}
-							else{
-								mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
-								mpWeapon->mPosition.x -= 51.0f;
-								CSE::mSoundYoyo.Play();
-							}
+						else{
+							mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
+							mpWeapon->mPosition.x += 51.0f;
 						}
-					}
-					else{
-						mpWeapon = new CWeapon(this, EPWEAPON, mPosition + CVector2(0.0f, 16.0f), mDirection);
-						mpWeapon->mPosition.x += 51.0f;
-						CSE::mSoundYoyo.Play();
 					}
 				}
 			}
@@ -112,30 +111,32 @@ void CPlayerT::Update(){
 			else {								
 				player_ani = EPLAYERANI::EYOYO;
 			}
-			if (mJumpCount < 2 && (CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_UP)) && mpWeapon == 0){
-				player_ani_count = 0;
-				player_ani_count_frame = 0;
-			}
-			if (mJumpCount < 2 && (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) || CKey::Push(VK_UP)) && mpWeapon == 0){		//ジャンプ回数２未満かつ２キーまたは→キー入力
-				mAerialAttack = true;
-				//mAir = true;
-				if (!mJump){
-					CSE::mSoundJump.Play();
-					mVelocityY = PLAYER_VELOCITY_Y;
+			if (!CMapSign::mView && !CMapSign::mCol){
+				if (mJumpCount < 2 && (CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_UP)) && mpWeapon == 0){
+					player_ani_count = 0;
+					player_ani_count_frame = 0;
 				}
+				if (mJumpCount < 2 && (CGamePad::Push(PAD_2) || CKey::Push(VK_SPACE) || CKey::Push(VK_UP)) && mpWeapon == 0){		//ジャンプ回数２未満かつ２キーまたは→キー入力
+					mAerialAttack = true;
+					//mAir = true;
+					if (!mJump){
+						CSE::mSoundJump.Play();
+						mVelocityY = PLAYER_VELOCITY_Y;
+					}
 
-				if (!mAir)
-					player_ani = EPLAYERANI::EIDOL;
-				else{
-					if (mpWeapon != 0 && mpWeapon->mLife > 0 && !mpWeapon->mReturn)
-						player_ani = EPLAYERANI::EJUMP;
+					if (!mAir)
+						player_ani = EPLAYERANI::EIDOL;
+					else{
+						if (mpWeapon != 0 && mpWeapon->mLife > 0 && !mpWeapon->mReturn)
+							player_ani = EPLAYERANI::EJUMP;
+					}
+					mJump = true;
 				}
-				mJump = true;
-			}
-			else if (mJump){
-				mJumpCount++;
-				mJump = false;
-				mVelocityY = 0;
+				else if (mJump){
+					mJumpCount++;
+					mJump = false;
+					mVelocityY = 0;
+				}
 			}
 				Dash();
 				Gravity();
@@ -175,7 +176,7 @@ void CPlayerT::Update(){
 
 //前進処理
 void CPlayerT::Forward(){
-	if (player_ani != EPLAYERANI::EDAMAGE && player_ani != EPLAYERANI::EDOWN){
+	if (player_ani != EPLAYERANI::EDAMAGE && player_ani != EPLAYERANI::EDOWN && !CMapSign::mView){
 		if (mpWeapon == 0 && (CGamePad::Push(PAD_LSTICKX, 0.1f) || CGamePad::Push(PAD_LSTICKX, -0.1f))){
 			if (!CMapScroll::scroll_flg){
 				CMapScroll::scroll_flg = true;

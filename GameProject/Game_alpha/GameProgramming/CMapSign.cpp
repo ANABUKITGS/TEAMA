@@ -7,9 +7,11 @@
 CMapEndSign *CMapEndSign::mpEndSign = 0;
 CMapBossRoomSign *CMapBossRoomSign::mpBossRoomSign = 0;
 bool CMapSign::mView = false;
+bool CMapSign::mCol = false;
 CMapTextView *CMapTextView::mpTextView = 0;
 CMapTextView::SMapSign CMapTextView::mSignText[MAX_SIGN];
 wchar_t CMapTextView::view_text_buf[MAX_PATH];
+CMsgButton *CMsgButton::mpMsgButton = NULL;
 
 //チュートリアル 看板
 void CMapSign::Update() {
@@ -27,14 +29,33 @@ bool CMapSign::Collision(CRectangle *r) {
 	if (mPosition.x <= CPlayerT::mpPlayer->mPosition.x + CELLSIZE * 2 && mPosition.x >= CPlayerT::mpPlayer->mPosition.x - CELLSIZE * 2){
 		if (r->mTag == EPLAYER){
 			if (CRectangle::Collision(r)){
-				mView = true;
+				if (CMsgButton::mpMsgButton == NULL)
+					CMsgButton::mpMsgButton = new CMsgButton(CPlayerT::mpPlayer->mPosition);
+				mCol = true;
+				if (!mOnceCol){
+					mView = true;
+				}
+
+				if (mView)
+					CPlayerT::mpPlayer->player_ani = CPlayerT::EPLAYERANI::EIDOL;
+
 				CMapScroll::sign_scroll = true;
 				CMapScroll::add_scroll = 0.0f;
 				if (CMapTextView::mpTextView != NULL)
 					CMapTextView::mpTextView->SignTag(mSignTag);
+
+				if (CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_UP) || CKey::Once(VK_RETURN)){
+					if (!mView)
+						mView = true;
+					else{
+						mView = false;
+						mOnceCol = true;
+					}
+				}
 				return true;
 			}
-			mView = false;
+			mCol = false;
+			//mView = false;
 			CMapScroll::sign_scroll = false;
 		}
 	}
@@ -160,4 +181,30 @@ void CMapBossRoomSign::Render(){
 
 	else
 		mTexBossRoomSign.DrawImage(BOSSROOM_SIGN_UV2, 0.5f);
+}
+
+void CMsgButton::Update(){
+	mPosition = CVector2(CPlayerT::mpPlayer->mPosition.x + 32, CPlayerT::mpPlayer->mPosition.y + 96);
+
+	if (!CMapSign::mCol){
+		if (mAlpha > 0.0f)
+			mAlpha -= 0.1f;
+
+		else if (mAlpha <= 0.0f){
+			mAlpha = 0.0f;
+			mEnabled = false;
+			return;
+		}
+	}
+	else{
+		if (mAlpha < 1.0f)
+			mAlpha += 0.1f;
+
+		else if (mAlpha >= 1.0f)
+			mAlpha = 1.0f;
+	}
+}
+
+void CMsgButton::Render(){
+	mTexButton.DrawImage(MSGBUTTON_UV, mAlpha);
 }
