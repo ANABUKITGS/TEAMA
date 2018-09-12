@@ -82,7 +82,7 @@ void CBoss::Boss_A_BehP(){
 	//待機状態からランダムで行動をとる(移動、ジャンプ、攻撃のどれか)
 #if _DEBUG
 	//デバッグの時に各行動を確認したい時はこっち
-	mBossIBehavior = EDASH_0;
+	mBossIBehavior = GetRand(BehP::ESIZE_7);
 #else
 	//リリース用
 	mBossIBehavior = GetRand(BehP::ESIZE_7);
@@ -321,7 +321,7 @@ void CBoss::Boss_A_BehP(){
 		if (mBossLife <= 0)
 			mAttackBehavior = EDOWN;
 
-		else {
+		else if (mBossLife > 0) {
 			if (mBossAnimeFream > 1){
 				mAttackBehavior = EIDOL;
 			}
@@ -354,6 +354,7 @@ void CBoss::Boss_A_BehP(){
 				return;
 			}
 		}
+		return;
 		break;
 		//ダメージ処理終了
 
@@ -470,6 +471,9 @@ void CBoss::Update(){
 			else if (mBossLifeProportion<=0.2)
 				mBossSpeedUp = 3;
 
+			if (mBossLife <= 0)
+				mAttackBehavior = EDOWN;
+
 			//総行動処理
 			Boss_A_BehP();
 
@@ -559,7 +563,7 @@ bool CBoss::Collision(CRectangle*p){
 						Invincible = true;
 						//攻撃を受けた時のアニメーションをする
 						//一定回数以上の攻撃を受けてない時にアニメーションされる
-						if (mAttackBehavior != EDOWN || mAttackBehavior != ETELEPO){
+						if (mAttackBehavior != EDOWN&&mAttackBehavior != ETELEPO){
 							mAttackBehavior = EDAMAGE;
 						}
 					}
