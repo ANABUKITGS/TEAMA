@@ -361,6 +361,7 @@ void CEditer::Render(){
 }
 
 void CEditer::MakeTaskList(int *gamemap) {
+	CText::DrawStringW(L"‚µ‚Î‚ç‚­ ‚¨‚Ü‚¿‚­‚¾‚³‚¢", -32 * 12, -32, 64, 1.0f, 0);
 	static CTexture mTexUI;// .Load(".\\Data\\Images\\Map\\MapUI.tga");
 	static CTexture mTexObject;// .Load(".\\Data\\Images\\Map\\MapObject.tga");
 	static CTexture mTexGround;
