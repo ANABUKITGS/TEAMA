@@ -14,6 +14,6 @@ bool CMapChip::Collision(CRectangle *r) {
 
 void CMapChip::Render() {
 	if (mEnabled) {
-		CRectangle::Render();
+		//CRectangle::Render();
 	}
 }
