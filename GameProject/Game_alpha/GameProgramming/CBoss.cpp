@@ -67,7 +67,7 @@ void CBoss::Boss_A_BehP(){
 	//待機状態からランダムで行動をとる(移動、ジャンプ、攻撃のどれか)
 #if _DEBUG
 	//デバッグの時に各行動を確認したい時はこっち
-	mBossIBehavior = EDASH_0;
+	mBossIBehavior = EJUMP_3;
 #else
 	//リリース用
 	mBossIBehavior = GetRand(BehP::ESIZE_7);
@@ -208,22 +208,6 @@ void CBoss::Boss_A_BehP(){
 					mpBWeapon->mPosition.x -= 10;
 			}
 		}
-		//敵のヨーヨーが発射された時の処理を行う
-		else {
-			mWeaponVec = mPosition- mpBWeapon->mPosition;
-			//ボスのヨーヨーの寿命が来たら
-			if (mpBWeapon->mLife < 0){
-				if (abs(mWeaponVec.x)>mPosition.x){
-					//ヨーヨーを消す
-					mpBWeapon = NULL;
-				}
-				//待機状態にする
-				if (mpBWeapon == 0){
-					mBossAnimeFream = 0;
-					mAttackBehavior = EIDOL;
-				}
-			}
-		}
 		break;//ループ終了
 		//攻撃処理終了
 	case ETELEPO://瞬間移動
@@ -235,7 +219,7 @@ void CBoss::Boss_A_BehP(){
 				CSE::mSoundBossTelepo[0].Play();
 		}
 		else{
-			if (mTelepoEnabled)
+			if (mTelepoEnabled&&mBossAnimeFreamT==0)
 			//消える効果音を再生
 			CSE::mSoundBossTelepo[1].Play();
 		}
@@ -261,6 +245,17 @@ void CBoss::Boss_A_BehP(){
 				}
 			}
 			//処理終了
+			if (mAlpha <= 0.03){
+				//プレイヤーの後ろに移動させる
+				if (CPlayerT::mpPlayer->mDirection){
+					mPosition = CVector2(CPlayerT::mpPlayer->mPosition.x - BOSSTELEPO, CPlayerT::mpPlayer->mPosition.y);
+					mDirection = true;
+				}
+				else{
+					mPosition = CVector2(CPlayerT::mpPlayer->mPosition.x + BOSSTELEPO, CPlayerT::mpPlayer->mPosition.y);
+					mDirection = false;
+				}
+			}
 			//アルファ値が一定値を超えているとき
 			if (mAlpha >= 1.0){
 				if (mBossAnimeFream > 4){
@@ -274,18 +269,6 @@ void CBoss::Boss_A_BehP(){
 			else{
 				//超えるまで加算する
 				mAlpha += 0.03;
-				mBossAnimeFreamT = 0;
-			}
-			if (mAlpha <= 0.03){
-				//プレイヤーの後ろに移動させる
-				if (CPlayerT::mpPlayer->mDirection){
-					mPosition = CVector2(CPlayerT::mpPlayer->mPosition.x - BOSSTELEPO, CPlayerT::mpPlayer->mPosition.y);
-					mDirection = true;
-				}
-				else{
-					mPosition = CVector2(CPlayerT::mpPlayer->mPosition.x + BOSSTELEPO, CPlayerT::mpPlayer->mPosition.y);
-					mDirection = false;
-				}
 			}
 		}
 		//ボスが消える動作に入ったとき
@@ -300,8 +283,9 @@ void CBoss::Boss_A_BehP(){
 					mBossAttackItr--;
 					//カウントが0になったら
 					if (mBossAttackItr <= 0){
+						mBossAnimeFreamT = 4;
 						//消える動作にはいったら出現するアニメーションを最初にもどす
-						//mBossAnimeFream = 0;
+						mBossAnimeFream = 0;
 						//プレイヤーの後ろに出現させる
 						mTelepoEnabled = true;
 					}
@@ -312,6 +296,7 @@ void CBoss::Boss_A_BehP(){
 
 		//攻撃を受けた時
 	case EDAMAGE:
+		mpBWeapon = 0;
 		if (!mDirection)
 			mVelocityX = 5;
 		else
@@ -503,7 +488,7 @@ bool CBoss::Collision(CRectangle*p){
 			case ECELLNUM::EPWEAPON://プレイヤーのヨーヨーと衝突した時
 				//ボスが無敵状態、ジャンプ中、ダウン中、透明攻撃のいずれかの状態の時は判定しない
 				if (Invincible || mAttackBehavior == EJUMP || mAttackBehavior == EDOWN || mAttackBehavior == ETELEPO)
-					return false;
+					break;
 				//アルファ値がMAX値よりも小さい時は攻撃はヒットしない
 				else if (mAlpha < 1.0)
 					return false;
@@ -520,8 +505,11 @@ bool CBoss::Collision(CRectangle*p){
 					Invincible = true;
 					//攻撃を受けた時のアニメーションをする
 					//一定回数以上の攻撃を受けてない時にアニメーションされる
-					if (mAttackBehavior != EDOWN)
+					if (mAttackBehavior != EDOWN){
+						if (mpBWeapon)
+							mpBWeapon = 0;
 						mAttackBehavior = EDAMAGE;
+					}
 				}
 				if (CPlayerT::mpPlayer->mpWeapon->mPosition.x > mPosition.x)
 					mDirection = true;
@@ -534,8 +522,8 @@ bool CBoss::Collision(CRectangle*p){
 				//落下中のオブジェクトと接触した場合
 				if (p->mBreak){
 
-					if (mAttackBehavior == EJUMP||Invincible||mAttackBehavior==EDOWN||mAlpha<1.0)
-						return false;
+					if (mAttackBehavior == EJUMP || Invincible || mAttackBehavior == EDOWN || mAlpha < 1.0)
+						break;
 
 					//無敵時間のフラグがOFFの時にダメージを加算する
 					else if (!Invincible){
@@ -545,10 +533,15 @@ bool CBoss::Collision(CRectangle*p){
 						Invincible = true;
 						//攻撃を受けた時のアニメーションをする
 						//一定回数以上の攻撃を受けてない時にアニメーションされる
-						if (mAttackBehavior != EDOWN||mAttackBehavior!=ETELEPO)
+						if (mAttackBehavior != EDOWN || mAttackBehavior != ETELEPO){
 							mAttackBehavior = EDAMAGE;
+						}
 					}
 				}
+				break;
+
+			case ECELLNUM::EBWEAPON:
+				mAttackBehavior = EIDOL;
 				break;
 
 			case ECELLNUM::ESWITCH_GROUND1:
@@ -559,7 +552,6 @@ bool CBoss::Collision(CRectangle*p){
 			case ECELLNUM::EBELTR:
 			case ECELLNUM::ESIGN:
 			case ECELLNUM::EEWEAPON:
-			case ECELLNUM::EBWEAPON:
 			case ECELLNUM::ESEARCH:
 			case ECELLNUM::ESWITCH:
 			case ECELLNUM::EPLAYER:
@@ -740,11 +732,22 @@ void CBoss::Render(){
 			else				//右向き
 				mTexture.DrawImage(BOSS_TEX_POS, mBossAnimeFreamT * 256, (mBossAnimeFreamT + 1) * 256, 512, 256, mAlpha);
 		}
-		else if(mTelepoEnabled){
+		else if (mTelepoEnabled){
+			if (mAlpha <=1.0f){
+				mBossAnimeFreamT = 0;
+				//次のコマに行くタイミング
+				Boss_Ani_Count_Frame = 6;
+
+				if (!mDirection)	//左向き
+					mTexture.DrawImage(BOSS_TEX_POS, (mBossAnimeFreamT + 1) * 256, mBossAnimeFreamT * 256, 512, 256, mAlpha);
+				else				//右向き
+					mTexture.DrawImage(BOSS_TEX_POS, mBossAnimeFreamT * 256, (mBossAnimeFreamT + 1) * 256, 512, 256, mAlpha);
+			}
+			else{
 				//テクスチャの枚数-1よりも値が大きくなれば
 				if (mBossAnimeFream > 4)
 					//ループの先頭に戻る
-					mBossAnimeFream = 4;
+					mBossAnimeFream = 0;
 				//次のコマに行くタイミング
 				Boss_Ani_Count_Frame = 6;
 
@@ -752,6 +755,7 @@ void CBoss::Render(){
 					mTexture.DrawImage(BOSS_TEX_POS, (mBossAnimeFream + 1) * 256, mBossAnimeFream * 256, 512, 256, mAlpha);
 				else				//右向き
 					mTexture.DrawImage(BOSS_TEX_POS, mBossAnimeFream * 256, (mBossAnimeFream + 1) * 256, 512, 256, mAlpha);
+			}
 		}
 		break;
 
