@@ -132,6 +132,7 @@ void CGame2::Update() {
 	}
 #endif
 	if (CGamePad::Once(PAD_10) || CKey::Once(VK_ESCAPE)){
+		CSE::mSoundBack.Play();
 		CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
 		//CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ETITLE;
 		//CBGM::ChangeMusic(CBGM::EMUSIC_NUM::ETITLE);

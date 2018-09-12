@@ -230,6 +230,7 @@ void CEditer::Update(){
 		}
 
 		if (CGamePad::Once(PAD_1) || CKey::Once(VK_F5)){	//更新
+			CSE::mSoundContinue.Play();
 			MakeTaskList((int *)editmap);
 			for (int i = 0; i < MAP_SIZEY; i++)
 				for (int j = 0; j < MAP_SIZEX; j++)
@@ -237,6 +238,7 @@ void CEditer::Update(){
 		}
 
 		if (CGamePad::Once(PAD_10) || CKey::Once(VK_ESCAPE)){
+			CSE::mSoundContinue.Play();
 			pauseflag = true;
 		}
 
@@ -261,13 +263,16 @@ void CEditer::Update(){
 
 		//マップデータを開く
 		if (CKey::Once('O')) {
+			CSE::mSoundContinue.Play();
 			mMapIO.LoadDialog(NULL);
 			MakeTaskList((int *)editmap);
 		}
 
 		//マップデータを保存
-		if (CKey::Once('P'))
+		if (CKey::Once('P')){
+			CSE::mSoundContinue.Play();
 			mMapIO.SaveDialog(NULL);
+		}
 
 		if (CKey::Once('M')){
 			if (prtscrIO)

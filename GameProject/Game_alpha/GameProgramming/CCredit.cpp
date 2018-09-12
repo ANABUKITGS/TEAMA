@@ -16,8 +16,12 @@ void CCredit::Init(){
 
 void CCredit::Update(){
 	//èIóπ
-	if (CKey::Once(VK_ESCAPE) || CGamePad::Once(PAD_3) || CGamePad::Once(PAD_10)){
+	if (CGamePad::Once(PAD_10)){
 		CSE::mSoundContinue.Play();
+		CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
+	}
+	if (CKey::Once(VK_ESCAPE) || CGamePad::Once(PAD_3)){
+		CSE::mSoundBack.Play();
 		CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
 	}
 

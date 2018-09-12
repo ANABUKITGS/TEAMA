@@ -20,6 +20,7 @@ public:
 	static CSound mSoundBossTelepo[2];
 	static CSound mSoundYoyo;
 	static CSound mSoundCheckPoint;
+	static CSound mSoundBack;
 	static void Init();
 	static void AllStop();
 };

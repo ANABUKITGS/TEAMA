@@ -191,6 +191,7 @@ void CPauseMenu::Update(){
 			cursor_num--;
 		}
 		if (CGamePad::Once(PAD_10) || CGamePad::Once(PAD_3) || CKey::Once(VK_ESCAPE)){
+			CSE::mSoundBack.Play();
 			cursor_num = EBACK;
 			pauseflag = false;
 		}

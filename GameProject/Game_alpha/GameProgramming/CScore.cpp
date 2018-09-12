@@ -160,6 +160,7 @@ void CName::Update(){
 		CSE::mSoundContinue.Play();
 		CSceneResult::mResultTag = CSceneResult::ERANKING;
 	}
+
 	glColor4f(1.0f, 1.0f, 0.0f, 1.0f);  //ï`âÊêFÅ@â©êF
 	sprintf(buf, "%s", name);
 	CText::DrawString(buf, -100, 0, 50, 1.0f, 0);
@@ -200,8 +201,12 @@ void CRanking::Update(){
 		sprintf(buf2, "%3s", mRanking[i].n);
 		CText::DrawString(buf2, -60, 100 + i * -100, 40, 1.0f, 0);
 	}
-	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_ESCAPE) || CGamePad::Once(PAD_3)){
+	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE)){
 		CSE::mSoundContinue.Play();
+		CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
+	}
+	if (CKey::Once(VK_ESCAPE) || CGamePad::Once(PAD_3)){
+		CSE::mSoundBack.Play();
 		CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
 	}
 }
