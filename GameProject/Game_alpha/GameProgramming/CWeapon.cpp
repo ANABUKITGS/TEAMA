@@ -74,7 +74,7 @@ void CWeapon::Render(){
 	glBegin(GL_LINES);
 
 	//’¸“_Žw’è
-	if (mTag == EBWEAPON){
+	if (mTag == EBWEAPON && CBoss::mpBoss->mAttackBehavior == CBoss::AttackBehavior::EATTACK){
 		glVertex2d(mPosInit.x, mPosInit.y + 32);
 		glVertex2d(mPosition.x, mPosition.y);
 	}
