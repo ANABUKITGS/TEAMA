@@ -175,8 +175,8 @@ void CRanking::Init(){
 	mRanking[1].s = 200;
 	mRanking[2].s = 100;
 	strcpy(mRanking[0].r, "1st");
-	strcpy(mRanking[1].r, "2st");
-	strcpy(mRanking[2].r, "3st");
+	strcpy(mRanking[1].r, "2ed");
+	strcpy(mRanking[2].r, "3rd");
 	strcpy(mRanking[0].n, "aaa");
 	strcpy(mRanking[1].n, "aaa");
 	strcpy(mRanking[2].n, "aaa");
@@ -219,8 +219,10 @@ void CRanking::Update(){
 		else
 			mDelete = false;
 	}
+	CRankingIO mRankingIO;
 	if (mDelete){
-		CText::DrawStringW(L"çÌèúíÜ",-60.0f,-300.0f,32.0f,1.0f,0);
+		CText::DrawStringW(L"[çÌèúíÜ]", -16.0f * 5, -268.0f, 32.0f, 1.0f, 0);
+		CText::DrawStringW(L"ÇP:1st ÇQ:2nd ÇR:3rd ÇO:ëSÇƒçÌèú", -16.0f * 24, -300.0f, 32.0f, 1.0f, 0);
 		if (CGamePad::Once(PAD_1)){
 			strcpy(mRanking[0].n, "???");
 			mDelete = false;
@@ -233,18 +235,21 @@ void CRanking::Update(){
 			strcpy(mRanking[2].n, "???");
 			mDelete = false;
 		}
+		if (CGamePad::Once(PAD_10)){
+			mRankingIO.Remove();
+			mRankingIO.Load();
+			mDelete = false;
+		}
 	}
 	else{
 		if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE)){
 			CSE::mSoundContinue.Play();
 			CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
-			CRankingIO mRankingIO;
 			mRankingIO.Save();
 		}
 		if (CKey::Once(VK_ESCAPE) || CGamePad::Once(PAD_3)){
 			CSE::mSoundBack.Play();
 			CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
-			CRankingIO mRankingIO;
 			mRankingIO.Save();
 		}
 	}

@@ -314,6 +314,13 @@ void CText::DrawTextW(wchar_t a, float left, float right, float bottom, float to
 		CText::uv[3] = CSIZE * 10;
 	}
 
+	else if (a == L'全'){					//U+5168
+		CText::uv[0] = 12 * CSIZE;
+		CText::uv[1] = CText::uv[0] + CSIZE;
+		CText::uv[2] = CSIZE * 11;
+		CText::uv[3] = CSIZE * 10;
+	}
+
 	else if (a == L'宝'){					//U+5B9D	アイテム フォント
 		CText::uv[0] = 0 * CSIZE_ITEM;
 		CText::uv[1] = CText::uv[0] + CSIZE_ITEM;

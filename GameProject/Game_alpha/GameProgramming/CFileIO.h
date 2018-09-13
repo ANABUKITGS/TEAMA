@@ -37,5 +37,7 @@ public:
 	void Load();
 
 	void Save();
+
+	void Remove();
 };
 #endif

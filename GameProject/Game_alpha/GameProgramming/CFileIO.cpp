@@ -254,3 +254,15 @@ void CRankingIO::Save(){
 	if (CMain::mDisplayMode == IDYES)
 		ShowCursor(false);
 }
+
+void CRankingIO::Remove(){
+	char savemsg[MAX_PATH + 8];
+	if (DeleteFile(RANKING_PATH)){
+		sprintf(savemsg, "Remove to %s\n", RANKING_PATH);
+		printf(savemsg);
+	}
+	else{
+		sprintf(savemsg, "Remove : fopen error!\n", RANKING_PATH);
+		printf(savemsg);
+	}
+}
