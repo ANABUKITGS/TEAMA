@@ -300,6 +300,20 @@ void CText::DrawTextW(wchar_t a, float left, float right, float bottom, float to
 		CText::uv[3] = CSIZE * 10;
 	}
 
+	/*------ 削除 ------*/
+	else if (a == L'削'){					//U+524A
+		CText::uv[0] = 10 * CSIZE;
+		CText::uv[1] = CText::uv[0] + CSIZE;
+		CText::uv[2] = CSIZE * 11;
+		CText::uv[3] = CSIZE * 10;
+	}
+	else if (a == L'除'){					//U+9664
+		CText::uv[0] = 11 * CSIZE;
+		CText::uv[1] = CText::uv[0] + CSIZE;
+		CText::uv[2] = CSIZE * 11;
+		CText::uv[3] = CSIZE * 10;
+	}
+
 	else if (a == L'宝'){					//U+5B9D	アイテム フォント
 		CText::uv[0] = 0 * CSIZE_ITEM;
 		CText::uv[1] = CText::uv[0] + CSIZE_ITEM;
