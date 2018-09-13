@@ -45,6 +45,7 @@ bool CMapSign::Collision(CRectangle *r) {
 					CMapTextView::mpTextView->SignTag(mSignTag);
 
 				if (CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE) || CKey::Once(VK_UP) || CKey::Once(VK_RETURN)){
+					CSE::mSoundContinue.Play();
 					if (!mView)
 						mView = true;
 					else{

@@ -19,7 +19,7 @@
 #define STARTBEHAVIOR 600				//ボス戦開始時のみ使用
 #define BOSSINVINCIBLE 120	
 #define BOSSNEXTBEHAVIOR 70				//ボスの待機から次の行動までの時間
-#define BOSS_DOWN_TIME 120				//やられてからの待ち時間
+#define BOSS_DOWN_TIME 60				//やられてからの待ち時間
 #define BOSS_LIFE 100					//ボスの初期HP
 #define BOSSTELEPOA 180					//透明になれる最大時間
 #define BOSSTELEPO 120					//瞬間移動場所の値
