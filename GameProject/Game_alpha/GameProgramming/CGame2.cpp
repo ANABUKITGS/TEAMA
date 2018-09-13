@@ -235,9 +235,14 @@ void CGame2::Render() {
 
 	static float mTextAlpha = 0.0f;
 	if (CPlayerT::mpPlayer->mLife < 1){
-		mTextAlpha += 0.1f;
-		CText::DrawStringW(L"ゲームオーバー", -224, -32, 64, mTextAlpha, 0);
-		CText::DrawStringW(L"２で タイトルに もどる", -192, -64, 24, mTextAlpha, 0);
+		if (mTextAlpha <= 0.0f){
+			CBGM::AllStop();
+			CBGM::mSoundGameOver.Play();
+		}
+		mTextAlpha += 0.01f;
+		mTexBack.DrawImageSetColor(-640.0f, 640.0f, -360.0f, 360.0f, 0, 0, 0, 0, BLACK, mTextAlpha);
+		CText::DrawStringW(L"GAME OVER", -32 * 9, -32, 64, mTextAlpha, 0);
+		CText::DrawStringW(L"２で タイトルに もどる", -12 * 12, -64, 24, mTextAlpha, 0);
 	}
 	else
 		mTextAlpha = 0.0f;

@@ -651,6 +651,7 @@ void CPlayerT::Render(){
 
 				else{
 					if ((CGamePad::Once(PAD_2) || CKey::Once(VK_RIGHT) || CKey::Once(VK_RETURN)) && mGameOverTime >= PLAYER_DOWN_TIME){
+						CSE::mSoundContinue.Play();
 						CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
 						mDownTime = 0;
 						mGameOverTime = 0;

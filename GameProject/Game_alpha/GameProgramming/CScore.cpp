@@ -214,6 +214,7 @@ void CRanking::Update(){
 		mButton9 = true;
 	}*/
 	if (CGamePad::Push(PAD_11) && CGamePad::Once(PAD_12)){
+		CSE::mSoundContinue.Play();
 		if (!mDelete)
 			mDelete = true;
 		else
@@ -224,18 +225,22 @@ void CRanking::Update(){
 		CText::DrawStringW(L"[çÌèúíÜ]", -16.0f * 5, -268.0f, 32.0f, 1.0f, 0);
 		CText::DrawStringW(L"ÇP:1st ÇQ:2nd ÇR:3rd ÇO:ëSÇƒçÌèú", -16.0f * 24, -300.0f, 32.0f, 1.0f, 0);
 		if (CGamePad::Once(PAD_1)){
+			CSE::mSoundBack.Play();
 			strcpy(mRanking[0].n, "???");
 			mDelete = false;
 		}
 		if (CGamePad::Once(PAD_2)){
+			CSE::mSoundBack.Play();
 			strcpy(mRanking[1].n, "???");
 			mDelete = false;
 		}
 		if (CGamePad::Once(PAD_3)){
+			CSE::mSoundBack.Play();
 			strcpy(mRanking[2].n, "???");
 			mDelete = false;
 		}
 		if (CGamePad::Once(PAD_10)){
+			CSE::mSoundBack.Play();
 			mRankingIO.Remove();
 			mRankingIO.Load();
 			mDelete = false;

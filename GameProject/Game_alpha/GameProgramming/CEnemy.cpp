@@ -107,11 +107,14 @@ void  CEnemy::Update(){
 					if (mAttackInterval2 < 0){
 						mAttackInterval = ATTACK_INTERVAL;
 						//敵のヨーヨーを敵の位置よりも少し前に呼び出す
-						if (mDirection)
-							mpEWeapon = new CWeapon(this,EEWEAPON, mPosition + CVector2(56.0f, 13.0f), mDirection);
-
-						else
-							mpEWeapon = new CWeapon(this,EEWEAPON, mPosition + CVector2(-56.0f, 13.0f), mDirection);
+						if (mDirection){
+							CSE::mSoundYoyo.Play();
+							mpEWeapon = new CWeapon(this, EEWEAPON, mPosition + CVector2(56.0f, 13.0f), mDirection);
+						}
+						else{
+							CSE::mSoundYoyo.Play();
+							mpEWeapon = new CWeapon(this, EEWEAPON, mPosition + CVector2(-56.0f, 13.0f), mDirection);
+						}
 					}
 				}
 			}
@@ -167,6 +170,7 @@ bool CEnemy::Collision(CRectangle*p){
 			switch (p->mTag){
 			case ECELLNUM::EPWEAPON:
 				if (enemy_ani != EENEMYANI::EDAMAGE && enemy_ani != EENEMYANI::EDOWN){
+					CSE::mSoundDamage.Play();
 						enemy_ani = EENEMYANI::EDAMAGE;
 						new CMapJewelry(p->mPosition);
 					mVelocityX = 0.0f;
