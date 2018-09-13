@@ -159,7 +159,6 @@ void  CEnemy::Update(){
 
 		if ((mAlpha < 1.0f && enemy_ani != EENEMYANI::EDOWN) ||
 			(CBoss::mpBoss != NULL && enemy_ani != EENEMYANI::EDOWN && CBoss::mpBoss->mAttackBehavior == CBoss::AttackBehavior::EDOWN)){
-			CSE::mSoundDamage.Play();
 			enemy_ani = EENEMYANI::EDAMAGE;
 		}
 	}
@@ -196,8 +195,12 @@ bool CEnemy::Collision(CRectangle*p){
 			case ECELLNUM::EBOX:
 			case ECELLNUM::ESTEEL:
 				mIce = false;
-				if (p->mBreak && p->mAlpha >= 1.0f)
+				if (p->mBreak && p->mAlpha >= 1.0f){
+					CSE::mSoundDamage.Play();
+					if (p->mTag == ECELLNUM::ESTEEL)
+						CSE::mSoundSteel.Play();
 					enemy_ani = EENEMYANI::EDAMAGE;
+				}
 				break;
 
 			case ECELLNUM::EENEMY1:
