@@ -17,6 +17,8 @@ CSound CSE::mSoundYoyo;
 CSound CSE::mSoundCheckPoint;
 CSound CSE::mSoundBack;
 CSound CSE::mSoundSwitch;
+CSound CSE::mSoundBox;
+CSound CSE::mSoundSteel;
 
 void CSE::Init(){
 	mSoundText.Load(".\\Data\\Sound\\SE\\Text.wav");
@@ -32,6 +34,8 @@ void CSE::Init(){
 	mSoundCheckPoint.Load(".\\Data\\Sound\\SE\\CheckPoint.wav");
 	mSoundBack.Load(".\\Data\\Sound\\SE\\Back.wav");
 	mSoundSwitch.Load(".\\Data\\Sound\\SE\\Switch.wav");
+	mSoundBox.Load(".\\Data\\Sound\\SE\\Box.wav");
+	mSoundSteel.Load(".\\Data\\Sound\\SE\\Steel.wav");
 
 	//ボスSE
 	mSoundBossTelepoIn.Load(".\\Data\\Sound\\SE\\BossTelepo.wav");
@@ -54,6 +58,8 @@ void CSE::AllStop(){
 	mSoundCheckPoint.Stop();
 	mSoundBack.Stop();
 	mSoundSwitch.Stop();
+	mSoundBox.Stop();
+	mSoundSteel.Stop();
 
 	//ボスSE
 	mSoundBossTelepoIn.Stop();

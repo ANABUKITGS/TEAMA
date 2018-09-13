@@ -158,8 +158,10 @@ void  CEnemy::Update(){
 		Gravity();
 
 		if ((mAlpha < 1.0f && enemy_ani != EENEMYANI::EDOWN) ||
-			(CBoss::mpBoss != NULL && enemy_ani != EENEMYANI::EDOWN && CBoss::mpBoss->mAttackBehavior == CBoss::AttackBehavior::EDOWN))
+			(CBoss::mpBoss != NULL && enemy_ani != EENEMYANI::EDOWN && CBoss::mpBoss->mAttackBehavior == CBoss::AttackBehavior::EDOWN)){
+			CSE::mSoundDamage.Play();
 			enemy_ani = EENEMYANI::EDAMAGE;
+		}
 	}
 	CRectangle::Update();
 }

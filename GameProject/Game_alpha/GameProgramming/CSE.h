@@ -25,6 +25,8 @@ public:
 	static CSound mSoundCheckPoint;
 	static CSound mSoundBack;
 	static CSound mSoundSwitch;
+	static CSound mSoundBox;
+	static CSound mSoundSteel;
 
 	static void Init();
 	static void AllStop();

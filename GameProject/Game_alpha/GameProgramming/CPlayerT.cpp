@@ -420,6 +420,8 @@ bool CPlayerT::Collision(CRectangle *p) {
 						p->mAlpha >= 1.0f){
 						mUnrivaled = true;
 						CSE::mSoundDamage.Play();
+						if (p->mTag == ECELLNUM::ESTEEL)
+							CSE::mSoundSteel.Play();
 						player_ani = EPLAYERANI::EDAMAGE;
 						player_ani_count = 0;
 						player_ani_count_frame = 0;

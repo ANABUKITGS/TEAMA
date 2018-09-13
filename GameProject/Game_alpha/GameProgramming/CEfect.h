@@ -4,6 +4,7 @@
 #include "CTexture.h"
 #include "CRectangle.h"
 #include "CTaskManager.h"
+#include "CSE.h"
 #include <stdlib.h>
 
 //#define EFECT_LIFE 30 
@@ -108,6 +109,7 @@ public:
 		ani_count = 8;
 		mTag = ENONE;
 		mRender = false;
+		CSE::mSoundBox.Play();
 		mTexture.Load(".\\Data\\Images\\Efect\\hako_effect.tga");
 		CTaskManager::Get()->Add(this);
 
