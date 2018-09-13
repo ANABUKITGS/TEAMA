@@ -59,6 +59,13 @@ void CFade::RenderFade(){
 			switch (change_scene){
 			case CSceneChange::ECSCENECHANGE_NUM::ETITLE:
 				CBGM::mSoundTitle.Repeat();
+				if(CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
+#if _DEBUG
+					mTitle.mEditerMode = 1;
+#else
+					mTitle.mEditerMode = 2;
+#endif
+				}
 				CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ETITLE;
 				break;
 

@@ -6,11 +6,12 @@
 class CTitle{
 private:
 	wchar_t cursor_buf[32];
-	int mEditerMode;	//1 : —LŒø | 2 : –³Œø
 
 public:
 	int cursor_num;
 	int mTexsize[5];
+	int mEditerMode;	//1 : —LŒø | 2 : –³Œø
+
 	struct  STitleNum{
 		float mSize[4];
 		bool mAnimation;
