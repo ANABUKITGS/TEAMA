@@ -13,6 +13,7 @@ CSound CSE::mSoundBoss[3];
 CSound CSE::mSoundYoyo;
 CSound CSE::mSoundCheckPoint;
 CSound CSE::mSoundBack;
+CSound CSE::mSoundSwitch;
 
 void CSE::Init(){
 	mSoundText.Load(".\\Data\\Sound\\SE\\Text.wav");
@@ -30,6 +31,7 @@ void CSE::Init(){
 	mSoundYoyo.Load(".\\Data\\Sound\\SE\\Yoyo.wav");
 	mSoundCheckPoint.Load(".\\Data\\Sound\\SE\\CheckPoint.wav");
 	mSoundBack.Load(".\\Data\\Sound\\SE\\Back.wav");
+	mSoundSwitch.Load(".\\Data\\Sound\\SE\\Switch.wav");
 }
 
 void CSE::AllStop(){
@@ -48,4 +50,5 @@ void CSE::AllStop(){
 	mSoundYoyo.Stop();
 	mSoundCheckPoint.Stop();
 	mSoundBack.Stop();
+	mSoundSwitch.Stop();
 }
