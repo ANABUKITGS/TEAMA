@@ -55,6 +55,7 @@ private:
 	enum BossSE{
 		ETELEPOIN,
 		ETELEPOOUT,
+		ESEWEAPON,
 	};
 	enum BehP{
 		EDASH_0,
