@@ -13,6 +13,7 @@ public:
 	static CSound mSoundRanking;	//ランキング用
 	static CSound mSoundEditer;		//エディター用
 	static CSound mSoundCredit;		//クレジット用
+	static CSound mSoundGameOver;	//ゲームオーバー用
 
 	void Init();
 	void Update();

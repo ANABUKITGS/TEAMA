@@ -8,6 +8,7 @@ CSound CBGM::mSoundResult;		//リザルト用
 CSound CBGM::mSoundRanking;		//ランキング用
 CSound CBGM::mSoundEditer;		//エディター用
 CSound CBGM::mSoundCredit;		//クレジット用
+CSound CBGM::mSoundGameOver;	//ゲームオーバー用
 
 void CBGM::Init(){
 	mSoundTitle.Load(".\\Data\\Sound\\BGM\\Title.mp3");
@@ -18,6 +19,7 @@ void CBGM::Init(){
 	mSoundRanking.Load(".\\Data\\Sound\\BGM\\Ranking.mp3");
 	mSoundEditer.Load(".\\Data\\Sound\\BGM\\Editer.mp3");
 	mSoundCredit.Load(".\\Data\\Sound\\BGM\\Credit.mp3");
+	mSoundGameOver.Load(".\\Data\\Sound\\BGM\\GameOver.mp3");
 
 	mSoundTitle.Repeat();
 }
@@ -31,4 +33,5 @@ void CBGM::AllStop(){
 	mSoundRanking.Stop();
 	mSoundEditer.Stop();
 	mSoundCredit.Stop();
+	mSoundGameOver.Stop();
 }

@@ -21,6 +21,7 @@ public:
 	static CSound mSoundYoyo;
 	static CSound mSoundCheckPoint;
 	static CSound mSoundBack;
+
 	static void Init();
 	static void AllStop();
 };
