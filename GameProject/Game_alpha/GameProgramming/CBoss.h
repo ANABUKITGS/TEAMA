@@ -111,7 +111,7 @@ public:
 	enum AttackBehavior{
 		EIDOL,							//待機
 		EMANTO,							//マント
-		EBWEAPON,						//武器を使用
+		EATTACK,						//武器を使用
 		EDASH,							//走る
 		EJUMP,							//ジャンプ
 		EDAMAGE,						//ダメージ
