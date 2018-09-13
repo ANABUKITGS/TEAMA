@@ -17,7 +17,10 @@ public:
 	static CSound mSoundSelect;
 	static CSound mSoundTurn;
 	static CSound mSoundContinue;
-	static CSound mSoundBoss[3];
+	static CSound mSoundBossTelepoIn;//消える動作の効果音
+	static CSound mSoundBossTelepoOut;//消える動作解除の効果音
+	static CSound mSoundBossYoyo;//ヨーヨーで攻撃する時の効果音
+	static CSound mSoundBossJump;//ジャンプの効果音
 	static CSound mSoundYoyo;
 	static CSound mSoundCheckPoint;
 	static CSound mSoundBack;

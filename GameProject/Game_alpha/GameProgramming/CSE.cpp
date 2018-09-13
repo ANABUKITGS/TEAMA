@@ -9,7 +9,10 @@ CSound CSE::mSoundSelect;
 CSound CSE::mSoundScore;
 CSound CSE::mSoundTurn;
 CSound CSE::mSoundContinue;
-CSound CSE::mSoundBoss[3];
+CSound CSE::mSoundBossTelepoIn;
+CSound CSE::mSoundBossTelepoOut;
+CSound CSE::mSoundBossYoyo;
+CSound CSE::mSoundBossJump;
 CSound CSE::mSoundYoyo;
 CSound CSE::mSoundCheckPoint;
 CSound CSE::mSoundBack;
@@ -25,13 +28,16 @@ void CSE::Init(){
 	mSoundSelect.Load(".\\Data\\Sound\\SE\\Select.wav");
 	mSoundTurn.Load(".\\Data\\Sound\\SE\\Turn.wav");
 	mSoundContinue.Load(".\\Data\\Sound\\SE\\Continue.wav");
-	mSoundBoss[0].Load(".\\Data\\Sound\\SE\\BossTelepo.wav");
-	mSoundBoss[1].Load(".\\Data\\Sound\\SE\\BossTelepo2.wav");
-	mSoundBoss[2].Load(".\\Data\\Sound\\SE\\BossYoyo.wav");
 	mSoundYoyo.Load(".\\Data\\Sound\\SE\\Yoyo.wav");
 	mSoundCheckPoint.Load(".\\Data\\Sound\\SE\\CheckPoint.wav");
 	mSoundBack.Load(".\\Data\\Sound\\SE\\Back.wav");
 	mSoundSwitch.Load(".\\Data\\Sound\\SE\\Switch.wav");
+
+	//ボスSE
+	mSoundBossTelepoIn.Load(".\\Data\\Sound\\SE\\BossTelepo.wav");
+	mSoundBossTelepoOut.Load(".\\Data\\Sound\\SE\\BossTelepo2.wav");
+	mSoundBossYoyo.Load(".\\Data\\Sound\\SE\\BossYoyo.wav");
+	mSoundBossJump.Load(".\\Data\\Sound\\SE\\BossJump.wav");
 }
 
 void CSE::AllStop(){
@@ -44,11 +50,14 @@ void CSE::AllStop(){
 	mSoundSelect.Stop();
 	mSoundTurn.Stop();
 	mSoundContinue.Stop();
-	mSoundBoss[0].Stop();
-	mSoundBoss[1].Stop();
-	mSoundBoss[2].Stop();
 	mSoundYoyo.Stop();
 	mSoundCheckPoint.Stop();
 	mSoundBack.Stop();
 	mSoundSwitch.Stop();
+
+	//ボスSE
+	mSoundBossTelepoIn.Stop();
+	mSoundBossTelepoOut.Stop();
+	mSoundBossYoyo.Stop();
+	mSoundBossJump.Stop();
 }

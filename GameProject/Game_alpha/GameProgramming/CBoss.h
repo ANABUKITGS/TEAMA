@@ -52,11 +52,6 @@ private:
 	bool Invincible;					//–³“GŠÔ—p•Ï”‚ğ’Ç‰Á
 	bool mTelepoEnabled;
 	bool mJumpTmEnabled;
-	enum BossSE{
-		ETELEPOIN,
-		ETELEPOOUT,
-		ESEWEAPON,
-	};
 	enum BehP{
 		EDASH_0,
 		EDASH_1,

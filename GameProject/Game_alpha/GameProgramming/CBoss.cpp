@@ -82,7 +82,7 @@ void CBoss::Boss_A_BehP(){
 	//待機状態からランダムで行動をとる(移動、ジャンプ、攻撃のどれか)
 #if _DEBUG
 	//デバッグの時に各行動を確認したい時はこっち
-	mBossIBehavior = ETELEPO_4;
+	mBossIBehavior = EJUMP_3;
 #else
 	//リリース用
 	mBossIBehavior = GetRand(BehP::ESIZE_7);
@@ -195,6 +195,7 @@ void CBoss::Boss_A_BehP(){
 					mVelocityX = (-BOSSMOVESPEED * 3 )- mBossSpeedUp;
 				else
 					mVelocityX = (BOSSMOVESPEED * 3 )+ mBossSpeedUp;
+				CSE::mSoundBossJump.Play();
 				mJumpTmEnabled = false;
 			}
 		}
@@ -208,7 +209,7 @@ void CBoss::Boss_A_BehP(){
 			//ボスのアニメーションが最後まで行くと
 			//ボスのヨーヨーを呼び出す
 			if (mBossAnimeFream > 3){
-				CSE::mSoundBoss[ESEWEAPON].Play();
+				CSE::mSoundBossYoyo.Play();
 				if (mDirection){
 					mpBWeapon = new CWeapon(this, ECELLNUM::EBWEAPON, mPosition + CVector2(82.0f, 32.0f), mDirection);
 				}
@@ -233,12 +234,12 @@ void CBoss::Boss_A_BehP(){
 		else if (mAlpha >= 1.0f){
 			if (!mTelepoEnabled)
 				//消える効果音を再生
-				CSE::mSoundBoss[ETELEPOIN].Play();
+				CSE::mSoundBossTelepoIn.Play();
 		}
 		else{
 			if (mTelepoEnabled&&mBossAnimeFreamT==0)
-			//消える効果音を再生
-			CSE::mSoundBoss[ETELEPOOUT].Play();
+			//透明解除効果音を再生
+			CSE::mSoundBossTelepoOut.Play();
 		}
 		//プレイヤーの後ろに出現した時
 		if (mTelepoEnabled){
