@@ -82,6 +82,8 @@ void CFade::RenderFade(){
 				break;
 
 			case CSceneChange::ECSCENECHANGE_NUM::ERANKING:
+				CRankingIO mRankingIO;
+				mRankingIO.Load();
 				CBGM::mSoundRanking.Repeat();
 				CSceneChange::changenum = CSceneChange::ECSCENECHANGE_NUM::ERANKING;
 				break;
