@@ -11,6 +11,7 @@ class CMain {
 public:
 	CMain() : mState(0) {}
 	static CScene::ESceneTag mSceneTag;
+	static int mDisplayMode;
 	void MainLoop() {
 		switch (mState)
 		{

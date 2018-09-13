@@ -20,13 +20,23 @@ void CMapIO::GameMapLoad(int map){
 	else if (map == EEDITERMAP)
 		sprintf(filepath, "%s", EDITER_MAP);
 	else{
+		//マウスカーソルの表示
+		ShowCursor(true);
 		MessageBox(NULL, "マップデータの指定がされていません。", "エラー", 0x00040010L);
+		//マウスカーソルの非表示
+		if (CMain::mDisplayMode == IDYES)
+			ShowCursor(false);
 		return;
 	}
 	FILE *fp = fopen(filepath, "rb");	//ファイルを開く(読み込み)
 	if (fp == NULL){	//NULLが返ってきたらエラー
+		//マウスカーソルの表示
+		ShowCursor(true);
 		MessageBox(NULL, "マップデータの読み込みに失敗しました。", "エラー", 0x00040010L);
 		printf("Load : fopen error!\n");
+		//マウスカーソルの非表示
+		if (CMain::mDisplayMode == IDYES)
+			ShowCursor(false);
 	}
 
 	else {
@@ -34,6 +44,8 @@ void CMapIO::GameMapLoad(int map){
 			for (int j = 0; j < MAP_SIZEX; j++){
 				fread(&mGame.gamemap[i][j], sizeof(int), 1, fp);
 				if (mGame.gamemap[i][j] >= ECELLNUM::ESIZE){
+					//マウスカーソルの表示
+					ShowCursor(true);
 					MessageBox(NULL, "マップデータが破損しているか、違うファイルです。", "エラー", 0x00040010L);
 					for (int i = 0; i < MAP_SIZEY; i++){
 						for (int j = 0; j < MAP_SIZEX; j++)
@@ -43,6 +55,9 @@ void CMapIO::GameMapLoad(int map){
 					sprintf(loadmsg, "Load to %s\n", filepath);
 					printf(loadmsg);
 					fclose(fp);	//ファイルを閉じる
+					//マウスカーソルの非表示
+					if (CMain::mDisplayMode == IDYES)
+						ShowCursor(false);
 					return;
 				}
 			}
@@ -57,8 +72,13 @@ void CMapIO::GameMapLoad(int map){
 void CMapIO::Load(){	//読み込み
 	FILE *fp = fopen(filepath, "rb");	//ファイルを開く(読み込み)
 	if (fp == NULL){	//NULLが返ってきたらエラー
+		//マウスカーソルの表示
+		ShowCursor(true);
 		MessageBox(NULL, "マップデータの読み込みに失敗しました。", "エラー", 0x00040010L);
 		printf("Load : fopen error!\n");
+		//マウスカーソルの非表示
+		if (CMain::mDisplayMode == IDYES)
+			ShowCursor(false);
 	}
 
 	else {
@@ -66,6 +86,8 @@ void CMapIO::Load(){	//読み込み
 			for (int j = 0; j < MAP_SIZEX; j++){
 				fread(&mEditer.editmap[i][j], sizeof(int), 1, fp);
 				if (mEditer.editmap[i][j] >= ECELLNUM::ESIZE){
+					//マウスカーソルの表示
+					ShowCursor(true);
 					MessageBox(NULL, "マップデータが破損しているか、違うファイルです。", "エラー", 0x00040010L);
 					for (int i = 0; i < MAP_SIZEY; i++){
 						for (int j = 0; j < MAP_SIZEX; j++)
@@ -75,6 +97,9 @@ void CMapIO::Load(){	//読み込み
 					sprintf(loadmsg, "Load to %s\n", filepath);
 					printf(loadmsg);
 					fclose(fp);	//ファイルを閉じる
+					//マウスカーソルの非表示
+					if (CMain::mDisplayMode == IDYES)
+						ShowCursor(false);
 					return;
 				}
 			}
@@ -89,8 +114,13 @@ void CMapIO::Load(){	//読み込み
 void CMapIO::Save(){	//書き込み
 	FILE *fp = fopen(filepath, "wb");	//ファイルを開く(書き込み)
 	if (fp == NULL){	//NULLが返ってきたらエラー発生
+		//マウスカーソルの表示
+		ShowCursor(true);
 		MessageBox(NULL, "マップデータの保存に失敗しました。", "エラー", 0x00040010L);
 		printf("Save : fopen error!\n");
+		//マウスカーソルの非表示
+		if (CMain::mDisplayMode == IDYES)
+			ShowCursor(false);
 	}
 
 	else {
@@ -106,6 +136,8 @@ void CMapIO::Save(){	//書き込み
 }
 
 void CMapIO::LoadDialog(HWND hWnd){	//開く ダイアログ
+	//マウスカーソルの表示
+	ShowCursor(true);
 	/*------ カレントディレクトリ 移動 ------*/
 	GetCurrentDirectory(MAX_PATH, cdir);	//プログラムの ディレクトリを 取得
 	SetCurrentDirectory(cdir);	//取得したディレクトリを カレントディレクトリに する
@@ -135,9 +167,14 @@ void CMapIO::LoadDialog(HWND hWnd){	//開く ダイアログ
 	}
 
 	SetCurrentDirectory(cdir);	//取得したディレクトリを カレントディレクトリに する
+	//マウスカーソルの非表示
+	if (CMain::mDisplayMode == IDYES)
+		ShowCursor(false);
 }
 
 void CMapIO::SaveDialog(HWND hWnd){	//保存 ダイアログ
+	//マウスカーソルの表示
+	ShowCursor(true);
 	/*------ カレントディレクトリ 移動 ------*/
 	GetCurrentDirectory(MAX_PATH, cdir);	//プログラムの ディレクトリを 取得
 	SetCurrentDirectory(cdir);	//取得したディレクトリを カレントディレクトリに する
@@ -165,6 +202,9 @@ void CMapIO::SaveDialog(HWND hWnd){	//保存 ダイアログ
 		CMapIO::Save();
 	}
 	SetCurrentDirectory(cdir);	//取得したディレクトリを カレントディレクトリに する
+	//マウスカーソルの非表示
+	if (CMain::mDisplayMode == IDYES)
+		ShowCursor(false);
 }
 
 void CRankingIO::Load(){
@@ -194,6 +234,8 @@ void CRankingIO::Load(){
 void CRankingIO::Save(){
 	FILE *fp = fopen(RANKING_PATH, "wb");	//ファイルを開く(書き込み)
 	if (fp == NULL){	//NULLが返ってきたらエラー発生
+		//マウスカーソルの表示
+		ShowCursor(true);
 		MessageBox(NULL, "ランキングデータの保存に失敗しました。", "エラー", 0x00040010L);
 		printf("Save : fopen error!\n");
 	}
@@ -208,4 +250,7 @@ void CRankingIO::Save(){
 		printf(savemsg);
 		fclose(fp);	//ファイルを閉じる
 	}
+	//マウスカーソルの非表示
+	if (CMain::mDisplayMode == IDYES)
+		ShowCursor(false);
 }

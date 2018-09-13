@@ -7,6 +7,7 @@
 
 CMain Main;
 
+int CMain::mDisplayMode;
 /* display関数
 1秒間に60回実行される
 */
@@ -73,15 +74,15 @@ int main(void)
 		return -1;
 
 	/* Create a windowed mode window and its OpenGL context */
-	int msg_button = MessageBox(NULL, "フルスクリーンモードに切り替えますか?", "Get Back Diamond", 0x00040024L);
+	CMain::mDisplayMode = MessageBox(NULL, "フルスクリーンモードに切り替えますか?", "Get Back Diamond", 0x00040024L);
 	//フルスクリーン
-	if (msg_button == IDYES){
+	if (CMain::mDisplayMode == IDYES){
 		window = glfwCreateWindow(W_H, W_V, "Get Back Diamond", glfwGetPrimaryMonitor(), NULL);
 		//マウスカーソルの非表示
 		ShowCursor(false);
 	}
 	//ウィンドウ表示
-	else if (msg_button == IDNO)
+	else if (CMain::mDisplayMode == IDNO)
 		window = glfwCreateWindow(W_H, W_V, "Get Back Diamond", NULL, NULL);
 
 	else

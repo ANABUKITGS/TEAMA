@@ -17,6 +17,8 @@
 
 #include "CBGM.h"
 
+#include "CMain.h"
+
 CEnemy *CEnemy::mpEnemy = 0;
 CMapIO mMapIO;
 
@@ -230,11 +232,16 @@ void CEditer::Update(){
 		}
 
 		if (CGamePad::Once(PAD_1) || CKey::Once(VK_F5)){	//更新
+			//マウスカーソルの表示
+			ShowCursor(true);
 			CSE::mSoundContinue.Play();
 			MakeTaskList((int *)editmap);
 			for (int i = 0; i < MAP_SIZEY; i++)
 				for (int j = 0; j < MAP_SIZEX; j++)
 					editmap_update[i][j] = ENONE;
+				//マウスカーソルの非表示
+				if (CMain::mDisplayMode == IDYES)
+					ShowCursor(false);
 		}
 
 		if (CGamePad::Once(PAD_10) || CKey::Once(VK_ESCAPE)){
@@ -250,6 +257,8 @@ void CEditer::Update(){
 		}
 
 		if (CGamePad::Once(PAD_4) || CKey::Once('R')){
+			//マウスカーソルの表示
+			ShowCursor(true);
 			int msg_button;
 			msg_button = MessageBox(NULL, "マップをリセットしますか?\n保存していないマップは失われます", "マップのリセット", 0x00040031L);
 			if (msg_button == IDYES || msg_button == IDOK){
@@ -259,6 +268,9 @@ void CEditer::Update(){
 				}
 				//MakeTaskList((int *)editmap);
 			}
+			//マウスカーソルの非表示
+			if (CMain::mDisplayMode == IDYES)
+				ShowCursor(false);
 		}
 
 		//マップデータを開く
@@ -361,7 +373,6 @@ void CEditer::Render(){
 }
 
 void CEditer::MakeTaskList(int *gamemap) {
-	CText::DrawStringW(L"しばらく おまちください", -32 * 12, -32, 64, 1.0f, 0);
 	static CTexture mTexUI;// .Load(".\\Data\\Images\\Map\\MapUI.tga");
 	static CTexture mTexObject;// .Load(".\\Data\\Images\\Map\\MapObject.tga");
 	static CTexture mTexGround;
@@ -631,5 +642,5 @@ void CEditer::MakeTaskList(int *gamemap) {
 			}
 		}
 	}
-
+	CText::DrawStringW(L"しばらく おまちください", -32 * 12, -32, 64, 1.0f, 0);
 }
