@@ -8,6 +8,7 @@
 
 #define BLACK 0.0f, 0.0f, 0.0f
 #define WHITE 1.0f, 1.0f, 1.0f
+#define GREEN 0.7f, 1.0f, 0.0f
 
 class CRectangle : public CTask{
 public:

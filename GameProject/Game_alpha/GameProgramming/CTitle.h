@@ -9,18 +9,22 @@ private:
 
 public:
 	int cursor_num;
+	int mTexsize[5];
 	struct  STitleNum{
-		float mPositionX;
-		float mPositionY;
-		int mSize;
-		float mColor[3];
+		float mSize[4];
 		bool mAnimation;
 		int mAnimationTime;
-		int mTextSize;
+		CVector2 mTextSize;
 	};
 	STitleNum mTitleNum[5];
 	
 	CTexture mTexTitle;
+	CTexture mTexStart;
+	CTexture mTexCredit;
+	CTexture mTexRanking;
+	CTexture mTexEnd;
+	CTexture mTexEdit;
+
 	void Init();
 	void Update();
 	void Render();
