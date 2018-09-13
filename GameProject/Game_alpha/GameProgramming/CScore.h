@@ -63,8 +63,18 @@ public:
 		int s;
 	};
 	SRanking mRanking[3];
+	/*bool mButton9;
+	bool mButton10;
+	bool mButton11;
+	bool mButton12;*/
+	bool mDelete;
 	CRanking(){
 		CScene::mSceneTag = CScene::ESceneTag::ERANKING;
+		/*mButton9 = false;
+		mButton10 = false;
+		mButton11 = false;
+		mButton12 = false;*/
+		mDelete = false;
 	}
 	void Init();
 	void Update();

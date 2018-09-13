@@ -201,13 +201,47 @@ void CRanking::Update(){
 		sprintf(buf2, "%3s", mRanking[i].n);
 		CText::DrawString(buf2, -60, 100 + i * -100, 40, 1.0f, 0);
 	}
-	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE)){
-		CSE::mSoundContinue.Play();
-		CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
+	/*if (CKey::Once(VK_ESCAPE) || CGamePad::Once(PAD_3)){
+		mButton9 = true;
 	}
 	if (CKey::Once(VK_ESCAPE) || CGamePad::Once(PAD_3)){
-		CSE::mSoundBack.Play();
-		CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
+		mButton9 = true;
+	}
+	if (CKey::Once(VK_ESCAPE) || CGamePad::Once(PAD_3)){
+		mButton9 = true;
+	}
+	if (CKey::Once(VK_ESCAPE) || CGamePad::Once(PAD_3)){
+		mButton9 = true;
+	}*/
+	if (CGamePad::Push(PAD_11) && CGamePad::Once(PAD_12)){
+		if (!mDelete)
+			mDelete = true;
+		else
+			mDelete = false;
+	}
+	if (mDelete){
+		if (CGamePad::Once(PAD_1)){
+			strcpy(mRanking[0].n, "???");
+			mDelete = false;
+		}
+		if (CGamePad::Once(PAD_2)){
+			strcpy(mRanking[1].n, "???");
+			mDelete = false;
+		}
+		if (CGamePad::Once(PAD_3)){
+			strcpy(mRanking[2].n, "???");
+			mDelete = false;
+		}
+	}
+	else{
+		if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE)){
+			CSE::mSoundContinue.Play();
+			CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
+		}
+		if (CKey::Once(VK_ESCAPE) || CGamePad::Once(PAD_3)){
+			CSE::mSoundBack.Play();
+			CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
+		}
 	}
 }
 void CRanking::Sort(int score, char *name){
