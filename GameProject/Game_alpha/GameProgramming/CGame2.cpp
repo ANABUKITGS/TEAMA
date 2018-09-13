@@ -122,7 +122,7 @@ void CGame2::Update() {
 	if (CKey::Push('A')) {
 		mCamera.x -= 5;
 	}
-#ifndef _DEBUG
+#ifdef _DEBUG
 	if (CKey::Push('P')) {
 		mTime=CTime::GetTime();
 		CScore::GetScore();

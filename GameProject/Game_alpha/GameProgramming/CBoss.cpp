@@ -54,7 +54,7 @@ void CBoss::BossBehP(BehP BP){
 			mBossAnimeFream = 0;
 			//プレイヤーとの距離が一定範囲内まで縮まれば
 			if (abs(mAttack_Search.x) < mBossBehavior)
-				mAttackBehavior = EBWEAPON;
+				mAttackBehavior = EATTACK;
 			else
 				mAttackBehavior = EJUMP;
 		}
@@ -82,7 +82,7 @@ void CBoss::Boss_A_BehP(){
 	//待機状態からランダムで行動をとる(移動、ジャンプ、攻撃のどれか)
 #if _DEBUG
 	//デバッグの時に各行動を確認したい時はこっち
-	mBossIBehavior = GetRand(BehP::ESIZE_7);
+	mBossIBehavior = EDASH_0;
 #else
 	//リリース用
 	mBossIBehavior = GetRand(BehP::ESIZE_7);
@@ -173,7 +173,7 @@ void CBoss::Boss_A_BehP(){
 			//プレイヤーとの距離が一定範囲内に入れば、攻撃を出す
 			if (abs(mAttack_Search.x) < mBossBehavior){
 				mBossAnimeFream = 0;
-				mAttackBehavior = EBWEAPON;
+				mAttackBehavior = EATTACK;
 				mVelocityX = 0;
 			}
 		}
@@ -202,7 +202,7 @@ void CBoss::Boss_A_BehP(){
 		//ジャンプ処理終了
 
 		//ボスの攻撃処理
-	case EBWEAPON:
+	case EATTACK:
 		//ボスがヨーヨーを出してない時
 		if (!mpBWeapon){
 			//ボスのアニメーションが最後まで行くと
@@ -278,7 +278,7 @@ void CBoss::Boss_A_BehP(){
 					//消えるアニーメーションを最初に戻す
 					mBossAnimeFreamT = 4;
 					mBossAnimeFream = 0;
-					mAttackBehavior = EBWEAPON;
+					mAttackBehavior = EATTACK;
 				}
 			}
 			//アルファ値が一定値を下回っている時
@@ -312,7 +312,6 @@ void CBoss::Boss_A_BehP(){
 
 		//攻撃を受けた時
 	case EDAMAGE:
-		mpBWeapon = 0;
 		if (!mDirection)
 			mVelocityX = 5;
 		else
@@ -477,10 +476,6 @@ void CBoss::Update(){
 			//総行動処理
 			Boss_A_BehP();
 
-			//攻撃行動以外ではヨーヨーを削除する処理を行う
-			if (mAttackBehavior != EBWEAPON)
-				mpBWeapon = 0;
-
 			//重力処理
 			Gravity();
 
@@ -524,11 +519,15 @@ bool CBoss::Collision(CRectangle*p){
 					return false;
 				//ボスと向かい合っている時にヨーヨーで攻撃するとガードをする
 				else if (CPlayerT::mpPlayer->mDirection != mDirection){
+					if (mpBWeapon)
+						mpBWeapon->mPosition = CVector2(mPosition.x, mPosition.y);
 					mAttackBehavior = EGUARD;
 					return false;
 				}
 				//無敵時間のフラグがOFFの時にダメージを加算する
 				else  if(!Invincible){
+					if (mpBWeapon)
+						mpBWeapon->mPosition = CVector2(mPosition.x, mPosition.y);
 					mVelocityY = 0.0f;
 					mBossLife--;
 					//無敵時間のフラグをONにする
@@ -536,8 +535,6 @@ bool CBoss::Collision(CRectangle*p){
 					//攻撃を受けた時のアニメーションをする
 					//一定回数以上の攻撃を受けてない時にアニメーションされる
 					if (mAttackBehavior != EDOWN){
-						if (mpBWeapon)
-							mpBWeapon = 0;
 						mAttackBehavior = EDAMAGE;
 					}
 				}
@@ -564,6 +561,8 @@ bool CBoss::Collision(CRectangle*p){
 						//攻撃を受けた時のアニメーションをする
 						//一定回数以上の攻撃を受けてない時にアニメーションされる
 						if (mAttackBehavior != EDOWN&&mAttackBehavior != ETELEPO){
+							if (mpBWeapon)
+								mpBWeapon->mPosition = CVector2(mPosition.x, mPosition.y);
 							mAttackBehavior = EDAMAGE;
 						}
 					}
@@ -571,6 +570,7 @@ bool CBoss::Collision(CRectangle*p){
 				break;
 
 			case ECELLNUM::EBWEAPON:
+				if (mAttackBehavior==EATTACK)
 				mAttackBehavior = EIDOL;
 				break;
 
@@ -728,7 +728,7 @@ void CBoss::Render(){
 		}
 		break;
 
-	case EBWEAPON://攻撃
+	case EATTACK://攻撃
 		if (mpBWeapon != NULL)
 			mBossAnimeFream = 3;
 		else{
