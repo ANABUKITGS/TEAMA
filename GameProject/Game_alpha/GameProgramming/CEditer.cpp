@@ -642,5 +642,4 @@ void CEditer::MakeTaskList(int *gamemap) {
 			}
 		}
 	}
-	CText::DrawStringW(L"‚µ‚Î‚ç‚­ ‚¨‚Ü‚¿‚­‚¾‚³‚¢", -32 * 12, -32, 64, 1.0f, 0);
 }

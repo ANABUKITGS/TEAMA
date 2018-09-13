@@ -44,7 +44,7 @@ void CCredit::Update(){
 		mTextPos += 1.0f;
 
 	//終わったら終了
-	if (mTextPos - 32 * 24 > 360.0f)
+	if (mTextPos - 32 * 25 > 360.0f)
 		CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
 }
 
@@ -64,4 +64,5 @@ void CCredit::Render(){
 	CText::DrawStringW(L"M+FONTS",		-16 * 7, mTextPos - 32 * 22, 32, 1.0f, 0);
 	CText::DrawStringW(L"魔王魂",		-16 * 3, mTextPos - 32 * 23, 32, 1.0f, 0);
 	CText::DrawStringW(L"Music is VFR",	-16 * 12, mTextPos - 32 * 24, 32, 1.0f, 0);
+	CText::DrawStringW(L"ポケットサウンド", -16 * 8, mTextPos - 32 * 25, 32, 1.0f, 0);
 }
