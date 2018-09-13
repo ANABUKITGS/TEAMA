@@ -1,5 +1,6 @@
 #include "CMapSwitchGround.h"
 #include "CPlayerT.h"
+#include "CSE.h"
 
 ECELLNUM CMapSwitchGround::mNumber;
 
@@ -89,6 +90,7 @@ bool CMapSwitch::Collision(CRectangle *r) {
 	if (CRectangle::Collision(r)) {
 		//•Ší‚ÉÕ“Ë
 		if (r->mTag == ECELLNUM::EPWEAPON && mCollisionInterval < 0) {
+			CSE::mSoundSwitch.Play();
 			if (CMapSwitchGround::mNumber == ECELLNUM::ESWITCH_GROUND1)
 				CMapSwitchGround::mNumber = ECELLNUM::ESWITCH_GROUND2;
 				else
