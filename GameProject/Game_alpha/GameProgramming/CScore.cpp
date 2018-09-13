@@ -220,6 +220,7 @@ void CRanking::Update(){
 			mDelete = false;
 	}
 	if (mDelete){
+		CText::DrawStringW(L"çÌèúíÜ",-60.0f,-300.0f,32.0f,1.0f,0);
 		if (CGamePad::Once(PAD_1)){
 			strcpy(mRanking[0].n, "???");
 			mDelete = false;
@@ -237,10 +238,14 @@ void CRanking::Update(){
 		if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE)){
 			CSE::mSoundContinue.Play();
 			CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
+			CRankingIO mRankingIO;
+			mRankingIO.Save();
 		}
 		if (CKey::Once(VK_ESCAPE) || CGamePad::Once(PAD_3)){
 			CSE::mSoundBack.Play();
 			CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ETITLE);
+			CRankingIO mRankingIO;
+			mRankingIO.Save();
 		}
 	}
 }
