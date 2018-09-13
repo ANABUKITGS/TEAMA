@@ -332,6 +332,7 @@ void CBoss::Boss_A_BehP(){
 	case EDOWN://プレイヤーに負けた時
 		//最後までアニメーションが進んだ時に処理開始
 		if (mBossAnimeFream == 3){
+			CSE::mSoundBossDown.Play();
 			//消滅までのカウントダウン開始
 			if (mBossDeleteTime){
 				//0になるまで減算する
@@ -473,7 +474,6 @@ void CBoss::Update(){
 				mBossSpeedUp = 3;
 
 			if (mBossLife <= 0){
-				CSE::mSoundBossDown.Play();
 				mAttackBehavior = EDOWN;
 			}
 
@@ -523,16 +523,12 @@ bool CBoss::Collision(CRectangle*p){
 					return false;
 				//ボスと向かい合っている時にヨーヨーで攻撃するとガードをする
 				else if (CPlayerT::mpPlayer->mDirection != mDirection){
-					if (mpBWeapon)
-						mpBWeapon->mPosition = CVector2(mPosition.x, mPosition.y);
 					CSE::mSoundBossGuard.Play();
 					mAttackBehavior = EGUARD;
 					return false;
 				}
 				//無敵時間のフラグがOFFの時にダメージを加算する
 				else if(!Invincible){
-					if (mpBWeapon)
-						mpBWeapon->mPosition = CVector2(mPosition.x, mPosition.y);
 					mVelocityY = 0.0f;
 					mBossLife--;
 					//無敵時間のフラグをONにする
@@ -554,9 +550,10 @@ bool CBoss::Collision(CRectangle*p){
 			case ECELLNUM::ESTEEL:
 				//落下中のオブジェクトと接触した場合
 				if (p->mBreak){
-
+					if (mAttackBehavior == EJUMP || Invincible || mAttackBehavior == EDOWN || mAlpha < 1.0)
+						break;
 					//無敵時間のフラグがOFFの時にダメージを加算する
-					if (!Invincible){
+					else if (!Invincible){
 						mVelocityY = 0.0f;
 						mBossLife -= static_cast <float> (mBossMaxLife)* 0.2;
 						//無敵時間のフラグをONにする
@@ -564,16 +561,12 @@ bool CBoss::Collision(CRectangle*p){
 						//攻撃を受けた時のアニメーションをする
 						//一定回数以上の攻撃を受けてない時にアニメーションされる
 						if (mAttackBehavior != EDOWN||mAttackBehavior != ETELEPO){
-							if (mpBWeapon)
-								mpBWeapon->mPosition = CVector2(mPosition.x, mPosition.y);
 							CSE::mSoundBossDamage.Play();
 							mAttackBehavior = EDAMAGE;
 							if (p->mTag == ECELLNUM::ESTEEL)
 								CSE::mSoundSteel.Play();
 						}
 					}
-					else if (mAttackBehavior == EJUMP || Invincible || mAttackBehavior == EDOWN || mAlpha < 1.0)
-						break;
 				}
 				break;
 
