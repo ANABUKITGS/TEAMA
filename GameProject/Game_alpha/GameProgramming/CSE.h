@@ -21,6 +21,9 @@ public:
 	static CSound mSoundBossTelepoOut;//消える動作解除の効果音
 	static CSound mSoundBossYoyo;//ヨーヨーで攻撃する時の効果音
 	static CSound mSoundBossJump;//ジャンプの効果音
+	static CSound mSoundBossDown;//ボスがダウンした時
+	static CSound mSoundBossGuard;//ガードした時
+	static CSound mSoundBossDamage;
 	static CSound mSoundYoyo;
 	static CSound mSoundCheckPoint;
 	static CSound mSoundBack;

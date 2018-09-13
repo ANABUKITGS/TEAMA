@@ -13,6 +13,9 @@ CSound CSE::mSoundBossTelepoIn;
 CSound CSE::mSoundBossTelepoOut;
 CSound CSE::mSoundBossYoyo;
 CSound CSE::mSoundBossJump;
+CSound CSE::mSoundBossDown;
+CSound CSE::mSoundBossGuard;
+CSound CSE::mSoundBossDamage;
 CSound CSE::mSoundYoyo;
 CSound CSE::mSoundCheckPoint;
 CSound CSE::mSoundBack;
@@ -42,6 +45,9 @@ void CSE::Init(){
 	mSoundBossTelepoOut.Load(".\\Data\\Sound\\SE\\BossTelepo2.wav");
 	mSoundBossYoyo.Load(".\\Data\\Sound\\SE\\BossYoyo.wav");
 	mSoundBossJump.Load(".\\Data\\Sound\\SE\\BossJump.wav");
+	mSoundBossDown.Load(".\\Data\\Sound\\SE\\BossDownVoice.wav");
+	mSoundBossGuard.Load(".\\Data\\Sound\\SE\\BossGuard.wav");
+	mSoundBossDamage.Load(".\\Data\\Sound\\SE\\BossDamage.wav");
 }
 
 void CSE::AllStop(){
@@ -66,4 +72,7 @@ void CSE::AllStop(){
 	mSoundBossTelepoOut.Stop();
 	mSoundBossYoyo.Stop();
 	mSoundBossJump.Stop();
+	mSoundBossDown.Stop();
+	mSoundBossGuard.Stop();
+	mSoundBossDamage.Stop();
 }

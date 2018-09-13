@@ -82,7 +82,7 @@ void CBoss::Boss_A_BehP(){
 	//待機状態からランダムで行動をとる(移動、ジャンプ、攻撃のどれか)
 #if _DEBUG
 	//デバッグの時に各行動を確認したい時はこっち
-	mBossIBehavior = EJUMP_3;
+	mBossIBehavior = EIDOL_5;
 #else
 	//リリース用
 	mBossIBehavior = GetRand(BehP::ESIZE_7);
@@ -331,7 +331,7 @@ void CBoss::Boss_A_BehP(){
 
 	case EDOWN://プレイヤーに負けた時
 		//最後までアニメーションが進んだ時に処理開始
-		if (mBossAnimeFream > 3){
+		if (mBossAnimeFream == 3){
 			//消滅までのカウントダウン開始
 			if (mBossDeleteTime){
 				//0になるまで減算する
@@ -472,8 +472,10 @@ void CBoss::Update(){
 			else if (mBossLifeProportion<=0.2)
 				mBossSpeedUp = 3;
 
-			if (mBossLife <= 0)
+			if (mBossLife <= 0){
+				CSE::mSoundBossDown.Play();
 				mAttackBehavior = EDOWN;
+			}
 
 			//総行動処理
 			Boss_A_BehP();
@@ -523,11 +525,12 @@ bool CBoss::Collision(CRectangle*p){
 				else if (CPlayerT::mpPlayer->mDirection != mDirection){
 					if (mpBWeapon)
 						mpBWeapon->mPosition = CVector2(mPosition.x, mPosition.y);
+					CSE::mSoundBossGuard.Play();
 					mAttackBehavior = EGUARD;
 					return false;
 				}
 				//無敵時間のフラグがOFFの時にダメージを加算する
-				else  if(!Invincible){
+				else if(!Invincible){
 					if (mpBWeapon)
 						mpBWeapon->mPosition = CVector2(mPosition.x, mPosition.y);
 					mVelocityY = 0.0f;
@@ -537,6 +540,7 @@ bool CBoss::Collision(CRectangle*p){
 					//攻撃を受けた時のアニメーションをする
 					//一定回数以上の攻撃を受けてない時にアニメーションされる
 					if (mAttackBehavior != EDOWN){
+						CSE::mSoundBossDamage.Play();
 						mAttackBehavior = EDAMAGE;
 					}
 				}
@@ -551,23 +555,25 @@ bool CBoss::Collision(CRectangle*p){
 				//落下中のオブジェクトと接触した場合
 				if (p->mBreak){
 
-					if (mAttackBehavior == EJUMP || Invincible || mAttackBehavior == EDOWN || mAlpha < 1.0)
-						break;
-
 					//無敵時間のフラグがOFFの時にダメージを加算する
-					else if (!Invincible){
+					if (!Invincible){
 						mVelocityY = 0.0f;
 						mBossLife -= static_cast <float> (mBossMaxLife)* 0.2;
 						//無敵時間のフラグをONにする
 						Invincible = true;
 						//攻撃を受けた時のアニメーションをする
 						//一定回数以上の攻撃を受けてない時にアニメーションされる
-						if (mAttackBehavior != EDOWN&&mAttackBehavior != ETELEPO){
+						if (mAttackBehavior != EDOWN||mAttackBehavior != ETELEPO){
 							if (mpBWeapon)
 								mpBWeapon->mPosition = CVector2(mPosition.x, mPosition.y);
+							CSE::mSoundBossDamage.Play();
 							mAttackBehavior = EDAMAGE;
+							if (p->mTag == ECELLNUM::ESTEEL)
+								CSE::mSoundSteel.Play();
 						}
 					}
+					else if (mAttackBehavior == EJUMP || Invincible || mAttackBehavior == EDOWN || mAlpha < 1.0)
+						break;
 				}
 				break;
 
