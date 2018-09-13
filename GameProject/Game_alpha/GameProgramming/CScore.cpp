@@ -175,7 +175,7 @@ void CRanking::Init(){
 	mRanking[1].s = 200;
 	mRanking[2].s = 100;
 	strcpy(mRanking[0].r, "1st");
-	strcpy(mRanking[1].r, "2ed");
+	strcpy(mRanking[1].r, "2nd");
 	strcpy(mRanking[2].r, "3rd");
 	strcpy(mRanking[0].n, "aaa");
 	strcpy(mRanking[1].n, "aaa");
