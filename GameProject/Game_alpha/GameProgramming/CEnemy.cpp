@@ -196,9 +196,11 @@ bool CEnemy::Collision(CRectangle*p){
 			case ECELLNUM::ESTEEL:
 				mIce = false;
 				if (p->mBreak && p->mAlpha >= 1.0f){
-					CSE::mSoundDamage.Play();
-					if (p->mTag == ECELLNUM::ESTEEL)
-						CSE::mSoundSteel.Play();
+					if (enemy_ani != EENEMYANI::EDAMAGE && enemy_ani != EENEMYANI::EDOWN){
+						CSE::mSoundDamage.Play();
+						if (p->mTag == ECELLNUM::ESTEEL)
+							CSE::mSoundSteel.Play();
+					}
 					enemy_ani = EENEMYANI::EDAMAGE;
 				}
 				break;

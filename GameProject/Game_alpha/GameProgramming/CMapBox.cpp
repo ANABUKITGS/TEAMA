@@ -59,7 +59,7 @@ bool CMapBox::Collision(CRectangle *r) {
 						if (mPosition.y + mScale.y < r->mPosition.y) {
 							r->mPosition.y = r->mPosition.y - aj.y;
 							r->mVelocityY = 0.0f;
-							if (r->mTag == ECELLNUM::EPLAYER)
+							if (r->mTag == ECELLNUM::EPLAYER && (CBoss::mpBoss == NULL || (CBoss::mpBoss != NULL && CBoss::mpBoss->mBossLife > 0)))
 								CPlayerT::mpPlayer->mJumpCount = 0;
 						}
 					}

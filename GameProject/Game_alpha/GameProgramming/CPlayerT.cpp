@@ -364,7 +364,7 @@ bool CPlayerT::Collision(CRectangle *p) {
 						player_ani_count = 0;
 						player_ani_count_frame = 0;
 						if (mJewel >= 0){
-							if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI]){
+							if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI] && CBoss::mpBoss->mBossLife > 0){
 								Damage(p->mTag);
 								for (int i = 0; i < mDamage;i++)
 									new CDamageEfect(mPosition);
@@ -426,7 +426,7 @@ bool CPlayerT::Collision(CRectangle *p) {
 						player_ani_count = 0;
 						player_ani_count_frame = 0;
 						if (mJewel >= 0){
-							if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI]){
+							if (!CGame2::mCheat[CGame2::CHEAT_NUM::EMUTEKI] && CBoss::mpBoss->mBossLife > 0){
 								Damage(p->mTag);
 								for (int i = 0; i < mDamage; i++)
 									new CDamageEfect(mPosition);
@@ -702,7 +702,7 @@ void CPlayerT::Die(){
 }
 
 void CPlayerT::Damage(ECELLNUM tag){
-	if (player_ani != EPLAYERANI::EDOWN){
+	if (player_ani != EPLAYERANI::EDOWN && (CBoss::mpBoss == NULL || (CBoss::mpBoss != NULL && CBoss::mpBoss->mBossLife > 0))){
 		switch (tag){
 		case ECELLNUM::EBOX:
 		case ECELLNUM::ESTEEL:

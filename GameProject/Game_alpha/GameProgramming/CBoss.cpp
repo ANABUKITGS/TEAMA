@@ -345,11 +345,9 @@ void CBoss::Boss_A_BehP(){
 			}
 		}
 		else {
-			static int mBossDownTime = 0;
 			if (CSDiamond::mpSDiamond == NULL && !CSDiamond::mGetFlg)
 				CSDiamond::mpSDiamond = new CSDiamond(CVector2(mPosition.x, mPosition.y));
-			mBossDownTime++;
-			if (mBossDownTime >= BOSS_DOWN_TIME && CSDiamond::mGetFlg){
+			if (CSDiamond::mGetFlg){
 				CFade::ChangeFade(CSceneChange::ECSCENECHANGE_NUM::ERESULT);
 				CGame2::mTime = CTime::GetTime();
 				CScore::GetScore();
@@ -425,7 +423,9 @@ void CBoss::Boss_A_BehP(){
 void CBoss::Update(){
 	if (CMapBossRoomSign::mpBossRoomSign != NULL && CMapBossRoomSign::mpBossRoomSign->mColFlg && mBossBattle){
 		if (CSceneChange::changenum != CSceneChange::ECSCENECHANGE_NUM::EEDITER){
+#ifdef _DEBUG
 			printf("%d\n", mBossSpeedUp);
+#endif
 			//一定間隔でジャンプの乱数を出す(とりあえず1秒に一回)
 			if (mBossJcnt < BOSSJUMPTIME)
 				mBossJcnt++;
@@ -553,7 +553,7 @@ bool CBoss::Collision(CRectangle*p){
 					if (mAttackBehavior == EJUMP || Invincible || mAttackBehavior == EDOWN || mAlpha < 1.0)
 						break;
 					//無敵時間のフラグがOFFの時にダメージを加算する
-					else if (!Invincible){
+					else if (!Invincible && p->mAlpha >= 1.0f){
 						mVelocityY = 0.0f;
 						mBossLife -= static_cast <float> (mBossMaxLife)* 0.2;
 						//無敵時間のフラグをONにする
