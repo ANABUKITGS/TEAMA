@@ -12,7 +12,7 @@
 #include "CFileIO.h"
 
 int CScore::mScore[5] = { 0, 0, 0, 0, 0 };;
-char CName::name[3] = { '   ' };
+char CName::name[4] = { '   \0' };
 int CName::charnum = 0;
 bool CScore::mSort = false;
 int CScore::mJewelScore;
@@ -123,10 +123,15 @@ void CScore::GetScore(){
 
 void CName::Init(){
 	mTexName.Load(".\\Data\\Images\\Result\\Name.tga");
+
+	/*------ NGワード ------*/
+	sprintf(mNGWord[0].n, "SEX");
+	sprintf(mNGWord[1].n, "ASS");
+	sprintf(mNGWord[2].n, "072");
 }
 void CName::Update(){
 	mTexName.DrawImage(-254, 254, 208, 300, 0, 508, 92, 0, 1.0f);
-	if (CKey::OncePush('S') || CKey::OncePush(VK_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f) || CGamePad::OncePush(PAD_LEFT)){
+	if (CKey::OncePush('S') || CKey::OncePush(VK_DOWN) || CGamePad::OncePush(PAD_LSTICKY, -0.5f) || CGamePad::OncePush(PAD_DOWN)){
 		if (name[charnum] == 'Z')
 			name[charnum] = '0';
 		else if (name[charnum] == '9')
@@ -136,7 +141,7 @@ void CName::Update(){
 		else
 			name[charnum]++;
 	}
-	if (CKey::OncePush('W') || CKey::OncePush(VK_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f) || CGamePad::OncePush(PAD_RIGHT)){
+	if (CKey::OncePush('W') || CKey::OncePush(VK_UP) || CGamePad::OncePush(PAD_LSTICKY, 0.5f) || CGamePad::OncePush(PAD_UP)){
 		if (name[charnum] == 'A')
 			name[charnum] = '.';
 		else if (name[charnum] == '.')
@@ -157,8 +162,12 @@ void CName::Update(){
 			charnum++;
 	}
 	if (CKey::Once(VK_RETURN) || CGamePad::Once(PAD_2) || CKey::Once(VK_SPACE)){
-		CSE::mSoundContinue.Play();
-		CSceneResult::mResultTag = CSceneResult::ERANKING;
+		if (CheckWord()){
+			CSE::mSoundContinue.Play();
+			CSceneResult::mResultTag = CSceneResult::ERANKING;
+		}
+		else
+			CSE::mSoundBack.Play();
 	}
 
 	glColor4f(1.0f, 1.0f, 0.0f, 1.0f);  //描画色　黄色
@@ -168,6 +177,14 @@ void CName::Update(){
 	CText::DrawStringW(bufw, -97+50*charnum, 50 , 40, 1.0f, 0);
 	swprintf(bufw, L"▼");
 	CText::DrawStringW(bufw, -97 + 50 * charnum, -50, 40, 1.0f, 0);
+}
+
+bool CName::CheckWord(){
+	for (int i = 0; i < NGWORD_NUM; i++){
+		if (strcmp(name, mNGWord[i].n) == 0)
+			return false;
+	}
+	return true;
 }
 
 void CRanking::Init(){

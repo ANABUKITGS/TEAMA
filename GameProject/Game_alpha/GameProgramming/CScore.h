@@ -4,6 +4,8 @@
 #include "CScene.h"
 #include "CMain.h"
 
+#define NGWORD_NUM	3
+
 class CSceneResult :public CScene{
 public:
 	CTexture mTexResult;
@@ -42,9 +44,14 @@ public:
 class CName:public CScene{
 private:
 	CTexture mTexName;
+	bool CheckWord();
+	struct  NGWord{
+		char n[4];
+	};
+	NGWord mNGWord[NGWORD_NUM];
 
 public:
-	static char name[3];
+	static char name[4];
 	static int charnum;
 	CName(){
 		CScene::mSceneTag = CScene::ESceneTag::ENAME;
