@@ -161,6 +161,8 @@ void  CEnemy::Update(){
 			(CBoss::mpBoss != NULL && enemy_ani != EENEMYANI::EDOWN && CBoss::mpBoss->mAttackBehavior == CBoss::AttackBehavior::EDOWN)){
 			enemy_ani = EENEMYANI::EDAMAGE;
 		}
+		if (mPosition.y < -100.0)
+			mEnabled = false;
 	}
 	CRectangle::Update();
 }
@@ -208,6 +210,61 @@ bool CEnemy::Collision(CRectangle*p){
 			case ECELLNUM::EENEMY1:
 			case ECELLNUM::EENEMY2:
 			case ECELLNUM::EENEMY3:
+				mVelocityX = 0.0f;
+				if (aj.x > 0) {
+					//“–‚½‚ç‚È‚¢•û‚Ì“G‚ª‰E‚ð‚Þ‚¢‚Ä‚é‚Æ‚«
+					if (mDirection){
+						//“–‚½‚è‚És‚­“G‚Ì‰E‚Æ“–‚½‚è‚És‚©‚È‚¢“G‚Ì¶‚ªÕ“Ë‚µ‚½Žž
+						if (!(p->mColFlg & EDT_LEFT) && !(mColFlg & EDT_RIGHT)){
+							enemy_ani = EENEMYANI::EIDOL;
+							if (p->mDirection)
+								static_cast<CEnemy*>(p)->enemy_ani = EENEMYANI::EIDOL;
+
+							if (!(mColFlg & EDT_LEFT))
+								static_cast<CEnemy*>(p)->enemy_ani = EENEMYANI::EIDOL;
+						}
+						//“–‚½‚è‚És‚­“G‚Ì¶‚Æ“–‚½‚è‚És‚©‚È‚¢“G‚Ì‰E‚ªÕ“Ë‚µ‚½Žž
+						else if (!(p->mColFlg & EDT_RIGHT) && !(mColFlg & EDT_LEFT)){
+							//Œü‚©‚¢‡‚Á‚½ó‘Ô‚ÅÕ“Ë‚·‚ê‚Î
+							if (!p->mDirection){
+								static_cast<CEnemy*>(p)->enemy_ani = EENEMYANI::EIDOL;
+								enemy_ani = EENEMYANI::EIDOL;
+							}
+							//‚Ç‚¿‚ç‚à‰EŒü‚«‚ÌŽž
+							else{
+								static_cast<CEnemy*>(p)->enemy_ani = EENEMYANI::EIDOL;
+								enemy_ani = EENEMYANI::EIDOL;
+							}
+						}
+					}
+					//“–‚½‚ç‚È‚¢•û‚Ì“G‚ª¶‚ð‚Þ‚¢‚Ä‚é‚Æ‚«
+					else{
+						//“–‚½‚è‚És‚­“G‚Ì‰E‚Æ“–‚½‚è‚És‚©‚È‚¢“G‚Ì¶‚ªÕ“Ë‚µ‚½Žž
+						if (!(p->mColFlg & EDT_LEFT) && !(mColFlg & EDT_RIGHT)){
+							if (p->mDirection){
+								static_cast<CEnemy*>(p)->enemy_ani = EENEMYANI::EIDOL;
+								enemy_ani = EENEMYANI::EIDOL;
+							}
+							else{
+								static_cast<CEnemy*>(p)->enemy_ani = EENEMYANI::EIDOL;
+								enemy_ani = EENEMYANI::EIDOL;
+							}
+						}
+						//“–‚½‚è‚És‚­“G‚Ì¶‚Æ“–‚½‚è‚És‚©‚È‚¢“G‚Ì‰E‚ªÕ“Ë‚µ‚½Žž
+						else if (!(p->mColFlg & EDT_RIGHT) && !(mColFlg & EDT_LEFT)){
+							if (p->mDirection){
+								static_cast<CEnemy*>(p)->enemy_ani = EENEMYANI::EIDOL;
+								enemy_ani = EENEMYANI::EIDOL;
+							}
+							else{
+								static_cast<CEnemy*>(p)->enemy_ani = EENEMYANI::EIDOL;
+								enemy_ani = EENEMYANI::EIDOL;
+							}
+						}
+					}
+				}
+				mPosition.x = mPosition.x + aj.x;
+				break;
 			case ECELLNUM::EBOSS:
 			case ECELLNUM::ENONE:
 			case ECELLNUM::ESEARCH:
