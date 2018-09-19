@@ -128,6 +128,9 @@ void CName::Init(){
 	sprintf(mNGWord[0].n, "SEX");
 	sprintf(mNGWord[1].n, "ASS");
 	sprintf(mNGWord[2].n, "072");
+	sprintf(mNGWord[3].n, "TNP");
+	sprintf(mNGWord[4].n, "TNK");
+	sprintf(mNGWord[5].n, "MNK");
 }
 void CName::Update(){
 	mTexName.DrawImage(-254, 254, 208, 300, 0, 508, 92, 0, 1.0f);
@@ -289,7 +292,7 @@ void CRanking::Sort(int score, char *name){
 		else if (mRanking[1].s < score){
 			mRanking[2].s = mRanking[1].s;
 			mRanking[1].s = score;
-			strcpy(mRanking[1].n, mRanking[0].n);
+			strcpy(mRanking[2].n, mRanking[1].n);
 			strcpy(mRanking[1].n, name);
 		}
 		else{

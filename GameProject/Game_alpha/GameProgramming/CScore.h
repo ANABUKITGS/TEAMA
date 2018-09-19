@@ -4,7 +4,7 @@
 #include "CScene.h"
 #include "CMain.h"
 
-#define NGWORD_NUM	3
+#define NGWORD_NUM	6
 
 class CSceneResult :public CScene{
 public:
